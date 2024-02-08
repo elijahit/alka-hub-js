@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "discord.js": "^14.14.1"
+  },
+  "name": "alka-hub",
+  "version": "1.0.0",
+  "description": "A bot javascript",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elijahit/alka-hub-js.git"
+  },
+  "author": "Elijah (Gabriele Mario Tosto)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elijahit/alka-hub-js/issues"
+  },
+  "homepage": "https://github.com/elijahit/alka-hub-js#readme"
+}
