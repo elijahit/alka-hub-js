@@ -55,7 +55,7 @@ client.on(Events.InteractionCreate, async interaction => {
 	const command = interaction.client.commands.get(interaction.commandName);
 
 	if (!command) {
-		console.error(`Il comando ${interaction.commandName} non è stato trovato.`);
+		console.error(`[WARNING] Il comando ${interaction.commandName} lanciato da ${interaction.user.username} non è stato trovato.`);
 		return;
 	}
 
