@@ -30,6 +30,32 @@ function executeFolder(mainDir) {
 
 executeFolder('commands');
 
+// EVENT LISTNER PER I COMANDI
+
+client.on(Events.InteractionCreate, async interaction => {
+	if (!interaction.isChatInputCommand()) return;
+
+	const command = interaction.client.commands.get(interaction.commandName);
+
+	if (!command) {
+		console.error(`Il comando ${interaction.commandName} non è stato trovato.`);
+		return;
+	}
+
+	try {
+		await command.execute(interaction);
+	} catch (error) {
+		console.error(error);
+		if (interaction.replied || interaction.deferred) {
+			await interaction.followUp({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', ephemeral: true });
+		} else {
+			await interaction.reply({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', ephemeral: true });
+		}
+	}
+});
+
+// EVENT LISTNER PER AVVIO DEL BOT
+
 client.once(Events.ClientReady, readyClient => {
   console.clear();
   console.log('-------------------------------------');
