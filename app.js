@@ -9,28 +9,34 @@ const client = new Client({intents: [GatewayIntentBits.Guilds]});
 client.commands = new Collection();
 
 // FUNZIONE PER RECUPERARE LE CARTELLE DI ESEGUZIONE DEL CODICE
-function executeFolder(mainDir) {
+function executeFolderCommand(mainDir) {
 
   const foldersPath = path.join(__dirname, mainDir);
   const commandsFolder = fs.readdirSync(foldersPath);
 
   for (const folder of commandsFolder) {
     const commandsPath = path.join(foldersPath, folder);
-    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
-    for(const file of commandFiles) {
-      const filePath = path.join(commandsPath, file);
-      const command = require(filePath);
+    try {
+      const commandFiles = fs.readdirSync(commandsPath+"/command").filter(file => file.endsWith('.js'));
+      for(const file of commandFiles) {
+        const filePath = path.join(commandsPath+"/command", file);
+        const command = require(filePath);
 
-      if ('data' in command && 'execute' in command) {
-        client.commands.set(command.data.name, command);
+        if ('data' in command && 'execute' in command) {
+          client.commands.set(command.data.name, command);
+        }
       }
+    }
+    catch {
+      console.error(`${commandsPath} - nessun comando trovato.`);
     }
   }
 }
 
-executeFolder('commands');
+executeFolderCommand('utils');
 
 // EVENT LISTNER PER I COMANDI
+// Questo EVENT LISTNER serve per ascoltare i comandi che vengono lanciati con (/) slashCommands dopo averli ascoltati li invierà all'esecutore che è presente nei file dei comandi.
 
 client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return;
