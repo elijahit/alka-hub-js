@@ -4,7 +4,7 @@ const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require(
 const {token, presenceStatusName, botState} = require('./config.json');
 
 
-const client = new Client({intents: [GatewayIntentBits.Guilds]});
+const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates]});
 
 client.commands = new Collection();
 
@@ -88,6 +88,5 @@ client.once(Events.ClientReady, readyClient => {
   status: 'online'
   });
 });
-
 
 client.login(token);

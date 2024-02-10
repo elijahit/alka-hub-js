@@ -1,12 +1,12 @@
 {
   "dependencies": {
-    "discord.js": "^14.14.1"
+    "discord.js": "^14.14.1",
+    "sqlite3": "^5.1.7"
   },
   "name": "alka-hub",
   "version": "1.0.0",
   "description": "A bot javascript",
   "main": "app.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
