@@ -8,32 +8,43 @@ const client = new Client({intents: [GatewayIntentBits.Guilds]});
 
 client.commands = new Collection();
 
-// FUNZIONE PER RECUPERARE LE CARTELLE DI ESEGUZIONE DEL CODICE
-function executeFolderCommand(mainDir) {
-
+// FUNZIONE PER RECUPERARE LE CARTELLE DI ESEGUZIONE DEL CODICE DEI MODULI
+function executeFolderModule(mainDir) {
   const foldersPath = path.join(__dirname, mainDir);
-  const commandsFolder = fs.readdirSync(foldersPath);
-
-  for (const folder of commandsFolder) {
-    const commandsPath = path.join(foldersPath, folder);
-    try {
-      const commandFiles = fs.readdirSync(commandsPath+"/command").filter(file => file.endsWith('.js'));
-      for(const file of commandFiles) {
-        const filePath = path.join(commandsPath+"/command", file);
+  const moduleFolder = fs.readdirSync(foldersPath);
+  
+  for (const folder of moduleFolder) {
+    const modulePath = path.join(foldersPath, folder);
+    const eventsPathResolve = `${modulePath}\\events`;
+    const commandsPathResolve = `${modulePath}\\command`;
+    const eventsFiles = fs.readdirSync(eventsPathResolve).filter(file => file.endsWith('.js'));
+    const commandFiles = fs.readdirSync(commandsPathResolve).filter(file => file.endsWith('.js'));
+    for(const file of commandFiles) {
+      try {
+        const filePath = path.join(commandsPathResolve, file);
         const command = require(filePath);
-
+        
         if ('data' in command && 'execute' in command) {
           client.commands.set(command.data.name, command);
         }
       }
+      catch {
+        console.error(`Nessun comando (${file}) trovato`);
+      }
     }
-    catch {
-      console.error(`${commandsPath} - nessun comando trovato.`);
+    for (const file of eventsFiles) {
+      try {
+        const filePath = path.join(eventsPathResolve, file);
+        const event = require(filePath);
+        client.on(event.name, (...args) => event.execute(...args));
+      }
+      catch {
+        console.error(`Nessun evento (${file}) trovato`);
+      }
     }
   }
 }
-
-executeFolderCommand('utils');
+executeFolderModule('utils');
 
 // EVENT LISTNER PER I COMANDI
 // Questo EVENT LISTNER serve per ascoltare i comandi che vengono lanciati con (/) slashCommands dopo averli ascoltati li invierà all'esecutore che è presente nei file dei comandi.
