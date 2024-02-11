@@ -1,9 +1,24 @@
 {
-  "logs_system": {
+  "voiceState": {
     "move_to": "User {1} has moved to another channel",
-    "join_now": "User {1} connected to voice channel {2}",
-    "left_now": "User {1} has disconnected from voice channel {2}",
+    "join_now": "User {1} has joined voice channel {2}",
+    "left_now": "User {1} has left voice channel {2}",
     "new_channel": "New Channel",
     "old_channel": "Old Channel"
+  },
+  "channelCreate": {
+    "created_channel": "A textual channel has been created on the server",
+    "created_channel_voice": "A voice channel has been created on the server",
+    "created_category": "A category has been created on the server",
+    "created_forum": "A forum for threads has been created on the server",
+    "created_media": "A media channel has been created on the server",
+    "created_private_thread": "A private thread channel has been created",
+    "created_public_thread": "A public thread channel has been created",
+    "created_stage": "A stage channel has been created",
+    "created_announce": "An announcement channel has been created",
+    "name_channel": "Channel Name",
+    "id_channel": "Channel ID",
+    "go_channel": "Go to Channel",
+    "category_channel": "Category"
   }
 }
