@@ -20,5 +20,19 @@
     "id_channel": "ID Canale",
     "go_channel": "Vai al Canale",
     "category_channel": "Categoria"
+  },
+  "channelDeleted": {
+    "deleted_channel": "E' stato cancellato un canale testuale nel server",
+    "deleted_channel_voice": "E' stato cancellato un canale vocale nel server",
+    "deleted_category": "E' stata cancellata una categoria nel server",
+    "deleted_forum": "E' stato cancellato un forum per threads nel server",
+    "deleted_media": "E' stato cancellato un canale per media nel server",
+    "deleted_private_thread": "E' stato cancellato un canale threads privato",
+    "deleted_public_thread": "E' stato cancellato un canale threads pubblico",
+    "deleted_stage": "E' stato cancellato un canale di stage",
+    "deleted_announce": "E' stato cancellato un canale di annunci",
+    "name_channel": "Nome Canale",
+    "id_channel": "ID Canale",
+    "category_channel": "Categoria"
   }
 }

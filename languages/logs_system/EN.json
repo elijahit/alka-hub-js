@@ -20,5 +20,19 @@
     "id_channel": "Channel ID",
     "go_channel": "Go to Channel",
     "category_channel": "Category"
+  },
+  "channelDeleted": {
+    "deleted_channel": "A textual channel has been deleted on the server",
+    "deleted_channel_voice": "A voice channel has been deleted on the server",
+    "deleted_category": "A category has been deleted on the server",
+    "deleted_forum": "A forum for threads has been deleted on the server",
+    "deleted_media": "A media channel has been deleted on the server",
+    "deleted_private_thread": "A private thread channel has been deleted",
+    "deleted_public_thread": "A public thread channel has been deleted",
+    "deleted_stage": "A stage channel has been deleted",
+    "deleted_announce": "An announcement channel has been deleted",
+    "name_channel": "Channel Name",
+    "id_channel": "Channel ID",
+    "category_channel": "Category"
   }
 }
