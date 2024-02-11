@@ -1,0 +1,9 @@
+{
+  "logs_system": {
+    "move_to": "User {1} has moved to another channel",
+    "join_now": "User {1} connected to voice channel {2}",
+    "left_now": "User {1} has disconnected from voice channel {2}",
+    "new_channel": "New Channel",
+    "old_channel": "Old Channel"
+  }
+}

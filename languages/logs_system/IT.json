@@ -1,5 +1,9 @@
 {
   "logs_system": {
-    "move_to": "L'utente {1} si è spostato in un altro canale"
+    "move_to": "L'utente {1} si è spostato in un altro canale",
+    "join_now": "L'utente {1} si è connesso al canale vocale {2}",
+    "left_now": "L'utente {1} si è disconnesso al canale vocale {2}",
+    "new_channel": "Nuovo Canale",
+    "old_channel": "Vecchio Canale"
   }
 }
