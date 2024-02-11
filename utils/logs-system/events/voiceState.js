@@ -1,7 +1,8 @@
-const { Events, EmbedBuilder, Embed } = require('discord.js');
+const { Events, EmbedBuilder } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const database = require('../../../bin/database');
+const { errorSendControls } = require('../../../bin/HandlingFunctions');
 
 // QUERY DEFINITION
 let sqlChannelId_log = `SELECT voiceStateJoin_channel FROM log_system_config WHERE guildId = ?`;
@@ -12,10 +13,11 @@ module.exports = {
   name: Events.VoiceStateUpdate,
   async execute(oldState, newState) {
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    database.db.get(sqlEnabledFeature, [newState.guild.id], (_, result) => {
-      if(result.logSystem_enabled != 1) return;
+    database.db.get(sqlEnabledFeature, [newState.guild.id], (_, result_Db) => {
+      if(result_Db.logSystem_enabled != 1) return;
       // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
       database.db.get(sqlChannelId_log, [newState.guild.id], (_, result) => {
+        if(result.voiceStateJoin_channel.length < 5) return;
         // CONTROLLO DELLA LINGUA
         if (oldState.guild?.id) {
           language.databaseCheck(oldState.guild.id)
@@ -37,7 +39,9 @@ module.exports = {
                       .setColor(0x2a647d);
                     channel.send({ embeds: [embedLog] });
                   })
-                  .catch(console.error);
+                  .catch((error) => {
+                    errorSendControls(error, oldState.client, oldState.guild, "\\logs_system\\VoiceState.js");
+                  });
               }
               // UN UTENTE HA EFFETTUATO L'ACCESSO IN UN NUOVO CANALE
               if(!oldState.channel?.id && newState.channel?.id) {
@@ -52,7 +56,9 @@ module.exports = {
                       .setColor(0x358f38);
                     channel.send({ embeds: [embedLog] });
                   })
-                  .catch(console.error);
+                  .catch((error) => {
+                    errorSendControls(error, oldState.client, oldState.guild, "\\logs_system\\VoiceState.js");
+                  });
               }
               // UN UTENTE SI E' DISCONNESSO DAI CANALI VOCALI
               if(oldState.channel?.id && !newState.channel?.id) {
@@ -67,7 +73,9 @@ module.exports = {
                       .setColor(0x7a3131);
                     channel.send({ embeds: [embedLog] });
                   })
-                  .catch(console.error);
+                  .catch((error) => {
+                    errorSendControls(error, oldState.client, oldState.guild, "\\logs_system\\VoiceState.js");
+                  });
               }
             });
         } 
