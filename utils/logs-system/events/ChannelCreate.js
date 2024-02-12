@@ -5,8 +5,8 @@ const database = require('../../../bin/database');
 const { errorSendControls } = require('../../../bin/HandlingFunctions');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT other_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT otherLogs_enabled FROM guilds_config WHERE guildId = ?`;
+let sqlChannelId_log = `SELECT channelState_channel FROM log_system_config WHERE guildId = ?`;
+let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
 // ------------ //
 
 module.exports = {
@@ -15,10 +15,10 @@ module.exports = {
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     database.db.get(sqlEnabledFeature, [channel.guild.id], (_, result_Db) => {
       if (!result_Db) return;
-      if (result_Db.otherLogs_enabled != 1) return;
+      if (result_Db.logSystem_enabled != 1) return;
       // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
       database.db.get(sqlChannelId_log, [channel.guild.id], (_, result) => {
-        if (result.other_channel.length < 5) return;
+        if (result.channelState_channel?.length < 5) return;
         // CONTROLLO DELLA LINGUA
         if (channel.guild?.id) {
           language.databaseCheck(channel.guild.id)
@@ -26,7 +26,7 @@ module.exports = {
               const langagues_path = readFileSync(`./languages/logs_system/${data}.json`);
               const language_result = JSON.parse(langagues_path);
 
-              channel.guild.channels.fetch(result.other_channel)
+              channel.guild.channels.fetch(result.channelState_channel)
               .then(channel_logs => {
                   // SE VIENE CREATO UN CANALE TESTUALE
                   if (channel.type == 0) {
