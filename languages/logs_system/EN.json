@@ -27,7 +27,7 @@
     "go_channel": "Go to Channel",
     "category_channel": "Category"
   },
-  "channelDeleted": {
+  "channelDelete": {
     "embed_title": "Alka Hub | Logs System 💨",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
@@ -43,5 +43,16 @@
     "name_channel": "Channel Name",
     "id_channel": "Channel ID",
     "category_channel": "Category"
+  },
+  "channelUpdate": {
+    "embed_title": "Alka Hub | Logs System 📐",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "id_channel": "Channel ID",
+    "category_channel": "Category",
+    "go_channel": "Go to Channel",
+    "new_name": "New Name",
+    "old_name": "Old Name",
+    "name_change_embed": "A channel name has been changed"
   }
 }
