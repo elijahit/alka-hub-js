@@ -3,6 +3,7 @@ const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const database = require('../../../bin/database');
 const { errorSendControls } = require('../../../bin/HandlingFunctions');
+const { url } = require('inspector');
 
 // QUERY DEFINITION
 let sqlChannelId_log = `SELECT other_channel FROM log_system_config WHERE guildId = ?`;
@@ -32,22 +33,24 @@ module.exports = {
                  if (channel.type == 0) {
                   if(channel.parentId != null) {
                     const embedLog = new EmbedBuilder()
-                    .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                    .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                     .addFields(
                       { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                       { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true },
                       {name: " ", value: " "},
                       { name: `${language_result.channelDeleted.category_channel}`, value: `${channel.parent.url}`, inline: true })         
                       .setDescription(language_result.channelDeleted.deleted_channel)
+                      .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                       .setColor(0x80131e);
                       channel_logs.send({ embeds: [embedLog] });
                   } else {
                     const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                      .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true })
                       .setDescription(language_result.channelDeleted.deleted_channel)
+                      .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                       .setColor(0x80131e);
                     channel_logs.send({ embeds: [embedLog] });
                   }
@@ -56,22 +59,24 @@ module.exports = {
                 else if (channel.type == 2) {
                   if(channel.parentId != null) {
                     const embedLog = new EmbedBuilder()
-                    .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                    .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                     .addFields(
                       { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                       { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true },
                       {name: " ", value: " "},
                       { name: `${language_result.channelDeleted.category_channel}`, value: `${channel.parent.url}`, inline: true })         
                       .setDescription(language_result.channelDeleted.deleted_channel_voice)
+                      .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                       .setColor(0x80131e);
                       channel_logs.send({ embeds: [embedLog] });
                   } else {
                     const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                      .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true })
                       .setDescription(language_result.channelDeleted.deleted_channel_voice)
+                      .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                       .setColor(0x80131e);
                     channel_logs.send({ embeds: [embedLog] });
                   }
@@ -79,11 +84,12 @@ module.exports = {
                 // SE VIENE CANCELLATA UNA CATEGORIA
                 else if (channel.type == 4) {
                   const embedLog = new EmbedBuilder()
-                    .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                    .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                     .addFields(
                       { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                       { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true })
                     .setDescription(language_result.channelDeleted.deleted_category)
+                    .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                     .setColor(0x80131e);
                   channel_logs.send({ embeds: [embedLog] });
                 }
@@ -91,22 +97,24 @@ module.exports = {
                 if (channel.type == 15) {
                   if(channel.parentId != null) {
                     const embedLog = new EmbedBuilder()
-                    .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                    .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                     .addFields(
                       { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                       { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true },
                       {name: " ", value: " "},
                       { name: `${language_result.channelDeleted.category_channel}`, value: `${channel.parent.url}`, inline: true })         
                       .setDescription(language_result.channelDeleted.deleted_forum)
+                      .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                       .setColor(0x80131e);
                       channel_logs.send({ embeds: [embedLog] });
                   } else {
                     const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                      .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true })
                       .setDescription(language_result.channelDeleted.deleted_forum)
+                      .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                       .setColor(0x80131e);
                     channel_logs.send({ embeds: [embedLog] });
                   }
@@ -114,33 +122,36 @@ module.exports = {
                 // SE VIENE CANCELLATO UN CANALE MEDIA
                 else if (channel.type == 16) {
                   const embedLog = new EmbedBuilder()
-                    .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                    .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                     .addFields(
                       { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                       { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true })
                     .setDescription(language_result.channelDeleted.deleted_media)
+                    .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                     .setColor(0x80131e);
                   channel_logs.send({ embeds: [embedLog] });
                 }
                 // SE VIENE CANCELLATO UN CANALE THREAD PRIVATO
                 else if (channel.type == 12) {
                   const embedLog = new EmbedBuilder()
-                    .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                    .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                     .addFields(
                       { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                       { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true })
                     .setDescription(language_result.channelDeleted.deleted_private_thread)
+                    .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                     .setColor(0x80131e);
                   channel_logs.send({ embeds: [embedLog] });
                 }
                 // SE VIENE CANCELLATO UN CANALE THREAD PUBBLICO
                 else if (channel.type == 11) {
                   const embedLog = new EmbedBuilder()
-                    .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                    .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                     .addFields(
                       { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                       { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true })
                     .setDescription(language_result.channelDeleted.deleted_public_thread)
+                    .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                     .setColor(0x80131e);
                   channel_logs.send({ embeds: [embedLog] });
                 }
@@ -148,22 +159,24 @@ module.exports = {
                 if (channel.type == 13) {
                   if(channel.parentId != null) {
                     const embedLog = new EmbedBuilder()
-                    .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                    .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                     .addFields(
                       { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                       { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true },
                       {name: " ", value: " "},
                       { name: `${language_result.channelDeleted.category_channel}`, value: `${channel.parent.url}`, inline: true })         
                       .setDescription(language_result.channelDeleted.deleted_stage)
+                      .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                       .setColor(0x80131e);
                       channel_logs.send({ embeds: [embedLog] });
                   } else {
                     const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                      .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true })
                       .setDescription(language_result.channelDeleted.deleted_stage)
+                      .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                       .setColor(0x80131e);
                     channel_logs.send({ embeds: [embedLog] });
                   }
@@ -172,29 +185,31 @@ module.exports = {
                 if (channel.type == 5) {
                   if(channel.parentId != null) {
                     const embedLog = new EmbedBuilder()
-                    .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                    .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                     .addFields(
                       { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                       { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true },
                       {name: " ", value: " "},
                       { name: `${language_result.channelDeleted.category_channel}`, value: `${channel.parent.url}`, inline: true })         
                       .setDescription(language_result.channelDeleted.deleted_announce)
+                      .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                       .setColor(0x80131e);
                       channel_logs.send({ embeds: [embedLog] });
                   } else {
                     const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 💨" })
+                      .setAuthor({ name: `${language_result.channelDeleted.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelDeleted.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelDeleted.id_channel}`, value: `${channel.id}`, inline: true })
                       .setDescription(language_result.channelDeleted.deleted_announce)
+                      .setFooter({text: `${language_result.channelDeleted.embed_footer}`, iconURL: `${language_result.channelDeleted.embed_icon_url}`})
                       .setColor(0x80131e);
                     channel_logs.send({ embeds: [embedLog] });
                   }
                 }
                 })
                 .catch((error) => {
-                  errorSendControls(error, channel.client, channel.guild, "\\logs_system\\ChannelCreate.js");
+                  errorSendControls(error, channel.client, channel.guild, "\\logs_system\\ChannelDelete.js");
                 });
             });
         }

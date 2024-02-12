@@ -25,7 +25,6 @@ module.exports = {
             .then(data => {
               const langagues_path = readFileSync(`./languages/logs_system/${data}.json`);
               const language_result = JSON.parse(langagues_path);
-              console.log(language_result)
 
               // UN UTENTE SI E' SPOSTATO DA UN CANALE A UN ALTRO
               if (oldState.channel?.id && newState.channel?.id) {
@@ -33,11 +32,12 @@ module.exports = {
                   .then(channel => {
                     // CREO IL MESSAGGIO EMBED DA MANDARE
                     const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 🔊" })
+                      .setAuthor({ name: `${language_result.voiceState.embed_title}` })
                       .addFields(
                         { name: `${language_result.voiceState.old_channel}`, value: `${oldState.channel}`, inline: true },
                         { name: `${language_result.voiceState.new_channel}`, value: `${newState.channel}`, inline: true })
                       .setDescription(language_result.voiceState.move_to.replace("{1}", oldState.member.user))
+                      .setFooter({text: `${language_result.voiceState.embed_footer}`, iconURL: `${language_result.voiceState.embed_icon_url}`})
                       .setColor(0x2a647d);
                     channel.send({ embeds: [embedLog] });
                   })
@@ -51,10 +51,11 @@ module.exports = {
                   .then(channel => {
                     // CREO IL MESSAGGIO EMBED DA MANDARE
                     const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 🔊" })
+                      .setAuthor({ name: `${language_result.voiceState.embed_title}` })
                       .setDescription(language_result.voiceState.join_now
                         .replace("{1}", newState.member.user)
                         .replace("{2}", newState.channel))
+                      .setFooter({text: `${language_result.voiceState.embed_footer}`, iconURL: `${language_result.voiceState.embed_icon_url}`})
                       .setColor(0x358f38);
                     channel.send({ embeds: [embedLog] });
                   })
@@ -68,10 +69,11 @@ module.exports = {
                   .then(channel => {
                     // CREO IL MESSAGGIO EMBED DA MANDARE
                     const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 🔊" })
+                      .setAuthor({ name: `${language_result.voiceState.embed_title}` })
                       .setDescription(language_result.voiceState.left_now
                         .replace("{1}", oldState.member.user)
                         .replace("{2}", oldState.channel))
+                      .setFooter({text: `${language_result.voiceState.embed_footer}`, iconURL: `${language_result.voiceState.embed_icon_url}`})
                       .setColor(0x7a3131);
                     channel.send({ embeds: [embedLog] });
                   })

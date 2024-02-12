@@ -1,5 +1,8 @@
 {
   "voiceState": {
+    "embed_title": "Alka Hub | Logs System 🔊",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "move_to": "User {1} has moved to another channel",
     "join_now": "User {1} has joined voice channel {2}",
     "left_now": "User {1} has left voice channel {2}",
@@ -7,6 +10,9 @@
     "old_channel": "Old Channel"
   },
   "channelCreate": {
+    "embed_title": "Alka Hub | Logs System  📥",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "created_channel": "A textual channel has been created on the server",
     "created_channel_voice": "A voice channel has been created on the server",
     "created_category": "A category has been created on the server",
@@ -22,6 +28,9 @@
     "category_channel": "Category"
   },
   "channelDeleted": {
+    "embed_title": "Alka Hub | Logs System 💨",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "deleted_channel": "A textual channel has been deleted on the server",
     "deleted_channel_voice": "A voice channel has been deleted on the server",
     "deleted_category": "A category has been deleted on the server",

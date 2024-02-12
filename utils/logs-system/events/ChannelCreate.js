@@ -32,7 +32,7 @@ module.exports = {
                   if (channel.type == 0) {
                     if(channel.parentId != null) {
                       const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                      .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
@@ -40,16 +40,18 @@ module.exports = {
                         { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}`, inline: true },
                         { name: `${language_result.channelCreate.category_channel}`, value: `${channel.parent.url}`, inline: true })         
                         .setDescription(language_result.channelCreate.created_channel)
+                        .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                         .setColor(0x318f22);
                         channel_logs.send({ embeds: [embedLog] });
                     } else {
                       const embedLog = new EmbedBuilder()
-                        .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                        .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                         .addFields(
                           { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                           { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
                           { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}` })
                         .setDescription(language_result.channelCreate.created_channel)
+                        .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                         .setColor(0x318f22);
                       channel_logs.send({ embeds: [embedLog] });
                     }
@@ -58,7 +60,7 @@ module.exports = {
                   else if (channel.type == 2) {
                     if(channel.parentId != null) {
                       const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                      .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
@@ -66,16 +68,18 @@ module.exports = {
                         { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}`, inline: true },
                         { name: `${language_result.channelCreate.category_channel}`, value: `${channel.parent.url}`, inline: true })         
                         .setDescription(language_result.channelCreate.created_channel_voice)
+                        .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                         .setColor(0x318f22);
                         channel_logs.send({ embeds: [embedLog] });
                     } else {
                       const embedLog = new EmbedBuilder()
-                        .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                        .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                         .addFields(
                           { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                           { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
                           { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}` })
                         .setDescription(language_result.channelCreate.created_channel_voice)
+                        .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                         .setColor(0x318f22);
                       channel_logs.send({ embeds: [embedLog] });
                     }
@@ -83,12 +87,13 @@ module.exports = {
                   // SE VIENE CREATA UNA CATEGORIA
                   else if (channel.type == 4) {
                     const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                      .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
                         { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}` })
                       .setDescription(language_result.channelCreate.created_category)
+                      .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                       .setColor(0x318f22);
                     channel_logs.send({ embeds: [embedLog] });
                   }
@@ -96,7 +101,7 @@ module.exports = {
                   if (channel.type == 15) {
                     if(channel.parentId != null) {
                       const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                      .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
@@ -104,16 +109,18 @@ module.exports = {
                         { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}`, inline: true },
                         { name: `${language_result.channelCreate.category_channel}`, value: `${channel.parent.url}`, inline: true })         
                         .setDescription(language_result.channelCreate.created_forum)
+                        .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                         .setColor(0x318f22);
                         channel_logs.send({ embeds: [embedLog] });
                     } else {
                       const embedLog = new EmbedBuilder()
-                        .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                        .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                         .addFields(
                           { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                           { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
                           { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}` })
                         .setDescription(language_result.channelCreate.created_forum)
+                        .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                         .setColor(0x318f22);
                       channel_logs.send({ embeds: [embedLog] });
                     }
@@ -121,36 +128,39 @@ module.exports = {
                   // SE VIENE CREATO UN CANALE MEDIA
                   else if (channel.type == 16) {
                     const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                      .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
                         { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}` })
                       .setDescription(language_result.channelCreate.created_media)
+                      .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                       .setColor(0x318f22);
                     channel_logs.send({ embeds: [embedLog] });
                   }
                   // SE VIENE CREATO UN CANALE THREAD PRIVATO
                   else if (channel.type == 12) {
                     const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                      .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
                         { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}` })
                       .setDescription(language_result.channelCreate.created_private_thread)
+                      .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                       .setColor(0x318f22);
                     channel_logs.send({ embeds: [embedLog] });
                   }
                   // SE VIENE CREATO UN CANALE THREAD PUBBLICO
                   else if (channel.type == 11) {
                     const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                      .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
                         { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}` })
                       .setDescription(language_result.channelCreate.created_public_thread)
+                      .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                       .setColor(0x318f22);
                     channel_logs.send({ embeds: [embedLog] });
                   }
@@ -158,7 +168,7 @@ module.exports = {
                   if (channel.type == 13) {
                     if(channel.parentId != null) {
                       const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                      .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
@@ -166,16 +176,18 @@ module.exports = {
                         { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}`, inline: true },
                         { name: `${language_result.channelCreate.category_channel}`, value: `${channel.parent.url}`, inline: true })         
                         .setDescription(language_result.channelCreate.created_stage)
+                        .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                         .setColor(0x318f22);
                         channel_logs.send({ embeds: [embedLog] });
                     } else {
                       const embedLog = new EmbedBuilder()
-                        .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                        .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                         .addFields(
                           { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                           { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
                           { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}` })
                         .setDescription(language_result.channelCreate.created_stage)
+                        .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                         .setColor(0x318f22);
                       channel_logs.send({ embeds: [embedLog] });
                     }
@@ -184,7 +196,7 @@ module.exports = {
                   if (channel.type == 5) {
                     if(channel.parentId != null) {
                       const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                      .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                         { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
@@ -192,16 +204,18 @@ module.exports = {
                         { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}`, inline: true },
                         { name: `${language_result.channelCreate.category_channel}`, value: `${channel.parent.url}`, inline: true })         
                         .setDescription(language_result.channelCreate.created_announce)
+                        .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                         .setColor(0x318f22);
                         channel_logs.send({ embeds: [embedLog] });
                     } else {
                       const embedLog = new EmbedBuilder()
-                        .setAuthor({ name: "Alka Hub | Logs System 📥" })
+                        .setAuthor({ name: `${language_result.channelCreate.embed_title}` })
                         .addFields(
                           { name: `${language_result.channelCreate.name_channel}`, value: `${channel.name}`, inline: true },
                           { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
                           { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}` })
                         .setDescription(language_result.channelCreate.created_announce)
+                        .setFooter({text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}`})
                         .setColor(0x318f22);
                       channel_logs.send({ embeds: [embedLog] });
                     }
