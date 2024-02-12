@@ -32,8 +32,7 @@ module.exports = {
                   if (channel.type == 0) {
                     const fields = [{ name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
                     { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true },
-                    { name: " ", value: " " },
-                    { name: `${language_result.channelDelete.go_channel}`, value: `${channel.url}`, inline: true }];
+                    { name: " ", value: " " }];
 
                     if (channel.parentId) {
                       fields.push({ name: `${language_result.channelDelete.category_channel}`, value: `${channel.parent.name}`, inline: true });
@@ -51,8 +50,7 @@ module.exports = {
                   else if (channel.type == 2) {
                     const fields = [{ name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
                     { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true },
-                    { name: " ", value: " " },
-                    { name: `${language_result.channelDelete.go_channel}`, value: `${channel.url}`, inline: true }];
+                    { name: " ", value: " " }];
 
                     if (channel.parentId) {
                       fields.push({ name: `${language_result.channelDelete.category_channel}`, value: `${channel.parent.name}`, inline: true });
@@ -83,8 +81,7 @@ module.exports = {
                   if (channel.type == 15) {
                     const fields = [{ name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
                     { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true },
-                    { name: " ", value: " " },
-                    { name: `${language_result.channelDelete.go_channel}`, value: `${channel.url}`, inline: true }];
+                    { name: " ", value: " " }];
 
                     if (channel.parentId) {
                       fields.push({ name: `${language_result.channelDelete.category_channel}`, value: `${channel.parent.name}`, inline: true });
@@ -102,8 +99,7 @@ module.exports = {
                   else if (channel.type == 16) {
                     const fields = [{ name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
                     { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true },
-                    { name: " ", value: " " },
-                    { name: `${language_result.channelDelete.go_channel}`, value: `${channel.url}`, inline: true }];
+                    { name: " ", value: " " }];
 
                     if (channel.parentId) {
                       fields.push({ name: `${language_result.channelDelete.category_channel}`, value: `${channel.parent.name}`, inline: true });
@@ -121,8 +117,7 @@ module.exports = {
                   else if (channel.type == 12) {
                     const fields = [{ name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
                     { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true },
-                    { name: " ", value: " " },
-                    { name: `${language_result.channelDelete.go_channel}`, value: `${channel.url}`, inline: true }];
+                    { name: " ", value: " " }];
 
                     if (channel.parentId) {
                       fields.push({ name: `${language_result.channelDelete.category_channel}`, value: `${channel.parent.name}`, inline: true });
@@ -140,8 +135,7 @@ module.exports = {
                   else if (channel.type == 11) {
                     const fields = [{ name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
                     { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true },
-                    { name: " ", value: " " },
-                    { name: `${language_result.channelDelete.go_channel}`, value: `${channel.url}`, inline: true }];
+                    { name: " ", value: " " }];
 
                     if (channel.parentId) {
                       fields.push({ name: `${language_result.channelDelete.category_channel}`, value: `${channel.parent.name}`, inline: true });
@@ -159,8 +153,7 @@ module.exports = {
                   if (channel.type == 13) {
                     const fields = [{ name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
                     { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true },
-                    { name: " ", value: " " },
-                    { name: `${language_result.channelDelete.go_channel}`, value: `${channel.url}`, inline: true }];
+                    { name: " ", value: " " }];
 
                     if (channel.parentId) {
                       fields.push({ name: `${language_result.channelDelete.category_channel}`, value: `${channel.parent.name}`, inline: true });
@@ -178,8 +171,7 @@ module.exports = {
                   if (channel.type == 5) {
                     const fields = [{ name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
                     { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true },
-                    { name: " ", value: " " },
-                    { name: `${language_result.channelDelete.go_channel}`, value: `${channel.url}`, inline: true }];
+                    { name: " ", value: " " }];
 
                     if (channel.parentId) {
                       fields.push({ name: `${language_result.channelDelete.category_channel}`, value: `${channel.parent.name}`, inline: true });
