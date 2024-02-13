@@ -53,6 +53,16 @@
     "go_channel": "Vai al Canale",
     "new_name": "Nuovo Nome",
     "old_name": "Vecchio Nome",
-    "name_change_embed": "E' stato cambiato il nome di un canale"
+    "name_change_embed": "E' stato cambiato il nome di un canale",
+    "category_change_embed": "La categoria del canale è stata cambiata",
+    "new_category": "Nuova Categoria",
+    "old_category": "Vecchia Categoria",
+    "empty_category": "Nessuna Categoria",
+    "bitrate_change_embed": "Il BitRate del canale è stato cambiato",
+    "old_bitrate": "Vecchio BitRate",
+    "new_bitrate": "Nuovo BitRate",
+    "userlimit_change_embed": "Il limite degli utenti nel canale è stato cambiato",
+    "old_userlimit": "Vecchio Limite",
+    "new_userlimit": "Nuovo Limite"
   }
 }
