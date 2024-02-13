@@ -63,6 +63,18 @@
     "new_bitrate": "Nuovo BitRate",
     "userlimit_change_embed": "Il limite degli utenti nel canale è stato cambiato",
     "old_userlimit": "Vecchio Limite",
-    "new_userlimit": "Nuovo Limite"
+    "new_userlimit": "Nuovo Limite",
+    "description_change_embed": "La descrizione del canale è stata cambiata",
+    "old_description": "Vecchia Descrizione",
+    "new_description": "Nuova Descrizione",
+    "old_description_empty": "Nessuna Descrizione",
+    "ratelimit_change_embed": "Lo slowmode del canale è stato cambiato",
+    "old_ratelimit": "Vecchio Limite",
+    "new_ratelimit": "Nuovo Limite",
+    "ratelimit_empty": "Nessun Limite",
+    "ratelimit_seconds": "secondi",
+    "permissions_change_embed": "I permessi nel canale sono cambiati",
+    "old_permissions": "Vecchi Permessi",
+    "new_permissions": "Nuovi Permessi"
   }
 }
