@@ -18,6 +18,7 @@ module.exports = {
       if (result_Db.logSystem_enabled != 1) return;
       // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
       database.db.get(sqlChannelId_log, [channel.guild.id], (_, result) => {
+        if (!result.channelState_channel) return;
         if (result.channelState_channel?.length < 5) return;
         // CONTROLLO DELLA LINGUA
         if (channel.guild?.id) {
