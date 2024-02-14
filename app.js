@@ -26,10 +26,11 @@ function executeFolderModule(mainDir) {
         
         if ('data' in command && 'execute' in command) {
           client.commands.set(command.data.name, command);
+          console.log(`[C] ${file} caricato`);
         }
       }
       catch {
-        console.error(`Nessun comando (${file}) trovato`);
+        console.error(`[!C] ${file} non caricato`);
       }
     }
     for (const file of eventsFiles) {
@@ -37,14 +38,14 @@ function executeFolderModule(mainDir) {
         const filePath = path.join(eventsPathResolve, file);
         const event = require(filePath);
         client.on(event.name, (...args) => event.execute(...args));
+        console.log(`[E] ${file} caricato`);
       }
       catch {
-        console.error(`Nessun evento (${file}) trovato`);
+        console.error(`[!E] ${file} non caricato`);
       }
     }
   }
 }
-executeFolderModule('utils');
 
 // EVENT LISTNER PER I COMANDI
 // Questo EVENT LISTNER serve per ascoltare i comandi che vengono lanciati con (/) slashCommands dopo averli ascoltati li invierà all'esecutore che è presente nei file dei comandi.
@@ -81,6 +82,8 @@ client.once(Events.ClientReady, readyClient => {
   console.log('Since: 2024');
   console.log('Technology: JavaScript - NodeJs');
   console.log('-------------------------------------');
+  // FUNZIONI
+  executeFolderModule('utils');
 
 
   client.user.setPresence({
