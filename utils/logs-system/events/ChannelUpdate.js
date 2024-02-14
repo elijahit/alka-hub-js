@@ -170,7 +170,7 @@ module.exports = {
                     channel_logs.send({ embeds: [embedLog] });
                   }
                   // SE I PERMESSI VENGONO AGGIORNATI
-                  if (oldChannel.permissionOverwrites != newChannel.permissionOverwrites) {
+                  if (oldChannel.permissionOverwrites.cache.difference(newChannel.permissionOverwrites.cache).size > 0) {
                     let oldValuePermissions = " ", newValuePermissions = " ";
                     oldChannel.permissionOverwrites.cache.each(perms => {
                       if(perms.type == 0) {
@@ -217,6 +217,7 @@ module.exports = {
                       channel_logs.send({ embeds: [embedLog] });
                    });
                   }
+                  console.log(newChannel.PermissionOverwriteManager)
                 })
                 .catch((error) => {
                   errorSendControls(error, oldChannel.client, oldChannel.guild, "\\logs_system\\ChannelCreate.js");
