@@ -215,9 +215,8 @@ module.exports = {
                         .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
                         .setColor(0xebb734);
                       channel_logs.send({ embeds: [embedLog] });
-                   });
+                   }, 2000);
                   }
-                  console.log(newChannel.PermissionOverwriteManager)
                 })
                 .catch((error) => {
                   errorSendControls(error, oldChannel.client, oldChannel.guild, "\\logs_system\\ChannelCreate.js");

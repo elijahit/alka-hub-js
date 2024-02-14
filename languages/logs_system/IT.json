@@ -76,5 +76,31 @@
     "permissions_change_embed": "I permessi nel canale sono cambiati",
     "old_permissions": "Vecchi Permessi",
     "new_permissions": "Nuovi Permessi"
+  },
+  "guildAuditLogsEntry": {
+    "embed_title": "Alka Hub | Logs System 📒",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "log_executor": "Azione da",
+    "id_executor": "ID Utente",
+    "action": "Azione",
+    "undefined": "Non disponibile",
+    "target_embed": "Eseguita a",
+    "target_guild": "Server",
+    "target_embed_guild_id": "ID Server",
+    "target_embed_channel_id": "ID Canale",
+    "target_embed_user_id": "ID Utente",
+    "target_embed_role_id": "ID Ruolo",
+    "target_embed_invite": "Invito",
+    "target_embed_invite_id": "ID Invito",
+    "target_embed_emoji": "Nome Emoji",
+    "target_embed_emoji_id": "ID Emoji",
+    "target_channel": "Canale",
+    "target_message_id": "ID Messaggio",
+    "target_changes_embed": "Log Cambiamenti 🔃",
+    "target_changes_key": "Chiave valore",
+    "target_changes_old": "Vecchi valori",
+    "target_changes_new": "Nuovi valori",
+    "nochanges": "Nessun cambiamento"
   }
 }
