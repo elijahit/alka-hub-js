@@ -293,7 +293,7 @@ module.exports = {
                         }
                       });
                     } else {
-                      fields.push({ name: ``, value: `${language_result.guildAuditLogsEntry.nochanges}` });
+                      fields.push({ name: ` `, value: `${language_result.guildAuditLogsEntry.nochanges}` });
                     }
 
                     setTimeout(() => {

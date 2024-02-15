@@ -141,5 +141,17 @@
     "emoji_not_avaliable": "Non disponibile",
     "emoji_state_avaliable": "Stato Disponibilità",
     "emoji_rappresentative": "Rappresentazione"
+  },
+  "guildBanAdd": {
+    "ban_title": "Alka Hub | Logs System 🚫",
+    "ban_footer": "Alka Hub by alkanetwork.eu",
+    "ban_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "ban_create": "Un utente è stato Bannato dal server",
+    "ban_user": "Utente",
+    "ban_user_id": "ID Utente",
+    "ban_username": "Username",
+    "ban_bot_embed": "Bot",
+    "ban_bot_response": "Si",
+    "ban_reason_embed": "Motivo"
   }
 }
