@@ -69,7 +69,7 @@ module.exports = {
 
 
                   if (oldMember._roles) {
-                    let rolesContainer = "";
+                    let rolesContainer = " ";
                     oldMember._roles.forEach(value => {
                       oldMember.guild.roles.fetch(value)
                         .then(roles => {
@@ -82,7 +82,7 @@ module.exports = {
                   }
 
                   if (newMember._roles) {
-                    let rolesContainer = "";
+                    let rolesContainer = " ";
                     newMember._roles.forEach(value => {
                       newMember.guild.roles.fetch(value)
                         .then(roles => {
