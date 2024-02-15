@@ -5,7 +5,7 @@
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "move_to": "L'utente {1} si è spostato in un altro canale",
     "join_now": "L'utente {1} si è connesso al canale vocale {2}",
-    "left_now": "L'utente {1} si è disconnesso al canale vocale {2}",
+    "left_now": "L'utente {1} si è disconnesso dal canale vocale {2}",
     "new_channel": "Nuovo Canale",
     "old_channel": "Vecchio Canale"
   },
