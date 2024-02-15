@@ -34,7 +34,8 @@ module.exports = {
                   fields.push(
                     {name: `${language_result.emojiDelete.emoji_name}`, value: `${emoji.name}`, inline: true},
                     {name: `${language_result.emojiDelete.emoji_id}`, value: `${emoji.id}`, inline: true}
-                    )
+                    );
+                  
                   setTimeout(() => {
                     const embedLog = new EmbedBuilder()
                       .setAuthor({ name: `${language_result.emojiDelete.embed_title}` })

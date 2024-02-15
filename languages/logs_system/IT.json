@@ -115,7 +115,8 @@
     "emoji_state": "Stato Emoji",
     "emoji_avaliable": "Disponibile",
     "emoji_not_avaliable": "Non disponibile",
-    "emoji_state_avaliable": "Stato Disponibilità"
+    "emoji_state_avaliable": "Stato Disponibilità",
+    "emoji_rappresentative": "Rappresentazione"
   },
   "emojiDelete": {
     "embed_title": "Alka Hub | Logs System 😎",
@@ -124,5 +125,21 @@
     "emoji_delete": "E' stata rimossa un Emoji dal server",
     "emoji_name": "Nome Emoji",
     "emoji_id": "ID Emoji"
+  },
+  "emojiUpdate": {
+    "embed_title": "Alka Hub | Logs System 😎",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "emoji_create": "E' stata modificata un Emoji nel server",
+    "emoji_name_old": "Vecchio Nome",
+    "emoji_name_new": "Nuovo Nome",
+    "emoji_id": "ID Emoji",
+    "emoji_animated": "Animata",
+    "emoji_not_animated": "Statica",
+    "emoji_state": "Stato Emoji",
+    "emoji_avaliable": "Disponibile",
+    "emoji_not_avaliable": "Non disponibile",
+    "emoji_state_avaliable": "Stato Disponibilità",
+    "emoji_rappresentative": "Rappresentazione"
   }
 }

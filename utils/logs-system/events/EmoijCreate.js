@@ -56,7 +56,16 @@ module.exports = {
                     {name: ` `, value: ` `},
                     {name: `${language_result.emojiCreate.emoji_state}`, value: `${animatedEmoji}`, inline: true},
                     {name: `${language_result.emojiCreate.emoji_state_avaliable}`, value: `${avaliableEmoji}`, inline: true}
-                    )
+                    );
+                  
+                    emoji.guild.emojis.fetch(emoji.id)
+                    .then(emojis => {
+                      fields.push({name: " ", value: `${language_result.emojiCreate.emoji_rappresentative}: ${emojis}`});
+                    })
+                    .catch((error) => {
+                      errorSendControls(error, oldEmoji.client, oldEmoji.guild, "\\logs_system\\EmojiCreate.js");
+                    });
+
                   setTimeout(() => {
                     const embedLog = new EmbedBuilder()
                       .setAuthor({ name: `${language_result.emojiCreate.embed_title}` })
