@@ -28,7 +28,7 @@ module.exports = {
               const language_result = JSON.parse(langagues_path);
 
               // UN UTENTE SI E' SPOSTATO DA UN CANALE A UN ALTRO
-              if (oldState.channel?.id && newState.channel?.id) {
+              if (oldState.channel?.id && newState.channel?.id && oldState.channel?.id != newState.channel?.id) {
                 newState.guild.channels.fetch(result.voiceStateJoin_channel)
                   .then(channel => {
                     // CREO IL MESSAGGIO EMBED DA MANDARE
