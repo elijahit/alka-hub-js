@@ -153,5 +153,17 @@
     "ban_bot_embed": "Bot",
     "ban_bot_response": "Yes",
     "ban_reason_embed": "Reason"
+  },
+  "guildBanRemove": {
+    "ban_title": "Alka Hub | Logs System ✅",
+    "ban_footer": "Alka Hub by alkanetwork.eu",
+    "ban_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "ban_remove": "A user has been unbanned from the server",
+    "ban_user": "User",
+    "ban_user_id": "User ID",
+    "ban_username": "Username",
+    "ban_bot_embed": "Bot",
+    "ban_bot_response": "Yes",
+    "ban_reason_embed": "Reason"
   }
 }

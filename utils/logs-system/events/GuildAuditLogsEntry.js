@@ -231,7 +231,7 @@ module.exports = {
                             fields.push({ name: `${language_result.guildAuditLogsEntry.target_embed_user_id}`, value: `${auditLogEntry.targetId}`, inline: true });
                           })
                           .catch((error) => {
-                            errorSendControls(error, guild.client, guild, "\\logs_system\\GuildAuditLogsEntry.js");
+                            //Vai avanti e basta
                           });
                         break;
                       case "Role":
