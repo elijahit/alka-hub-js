@@ -34,6 +34,9 @@ module.exports = {
                     guild.members.fetch(auditLogEntry.executorId)
                       .then(member => {
                         fields.push({ name: `${language_result.guildAuditLogsEntry.log_executor}`, value: `${member}`, inline: true }, { name: `${language_result.guildAuditLogsEntry.id_executor}`, value: `${member.id}`, inline: true });
+                      })
+                      .catch((error) => {
+                        errorSendControls(error, guild.client, guild, "\\logs_system\\GuildAuditLogsEntry.js");
                       });
                   }
                   setTimeout(() => {
@@ -227,6 +230,9 @@ module.exports = {
                             fields.push({ name: `${language_result.guildAuditLogsEntry.target_embed}`, value: `${user}`, inline: true });
                             fields.push({ name: `${language_result.guildAuditLogsEntry.target_embed_user_id}`, value: `${auditLogEntry.targetId}`, inline: true });
                           })
+                          .catch((error) => {
+                            errorSendControls(error, guild.client, guild, "\\logs_system\\GuildAuditLogsEntry.js");
+                          });
                         break;
                       case "Role":
                         fields.push({ name: `${language_result.guildAuditLogsEntry.target_embed}`, value: `${auditLogEntry.target}`, inline: true });
@@ -259,30 +265,35 @@ module.exports = {
                     }
                     fields.push({ name: `${language_result.guildAuditLogsEntry.target_changes_embed}`, value: `ID: (${auditLogEntry.id})` });
                     if (auditLogEntry.changes.length > 0) {
-                      auditLogEntry.changes.forEach(values => {
-                        fields.push({ name: `${language_result.guildAuditLogsEntry.target_changes_key}`, value: `${values.key}` });
-                        if (typeof values.old == 'object') {
-                          values.old.forEach(oldValue => {
-                            fields.push({ name: `${language_result.guildAuditLogsEntry.target_changes_old}`, value: `${JSON.stringify(oldValue)}` });
-                          });
-                        } else {
-                          fields.push({ name: `${language_result.guildAuditLogsEntry.target_changes_old}`, value: `${values.old}` });
-                        }
-                        if (typeof values.new == 'object') {
-                          values.new.forEach(newValue => {
-                            fields.push({
-                              name: `${language_result.guildAuditLogsEntry.target_changes_new}`, value: `- ${JSON.stringify(newValue)
-                                .replace("{", " ")
-                                .replace("}", " ")
-                                .replace(",", "  ")}`
+                      fields.push({name: "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯", value: " "});
+                      auditLogEntry.changes.forEach((values, index) => { 
+                        if(fields.length < 22) {
+                          fields.push({ name: `[${index}] ${language_result.guildAuditLogsEntry.target_changes_key}`, value: `${values.key}` });
+                          if (typeof values.old == 'object') {
+                            values.old.forEach(oldValue => {
+                              fields.push({ name: `[${index}] ${language_result.guildAuditLogsEntry.target_changes_old}`, value: `${JSON.stringify(oldValue)}` });
                             });
-                          });
-                        } else {
-                          fields.push({ name: `${language_result.guildAuditLogsEntry.target_changes_new}`, value: `${values.new}` });
+                          } else {
+                            fields.push({ name: `[${index}] ${language_result.guildAuditLogsEntry.target_changes_old}`, value: `${values.old}` });
+                          }
+                          if (typeof values.new == 'object') {
+                            values.new.forEach(newValue => {
+                              fields.push({
+                                name: `[${index}] ${language_result.guildAuditLogsEntry.target_changes_new}`, value: `- ${JSON.stringify(newValue)
+                                  .replace("{", " ")
+                                  .replace("}", " ")
+                                  .replace(",", "  ")}`
+                              });
+                              fields.push({name: "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯", value: " "});
+                            });
+                          } else {
+                            fields.push({ name: `[${index}] ${language_result.guildAuditLogsEntry.target_changes_new}`, value: `${values.new}` });
+                            fields.push({name: "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯", value: " "});
+                          }
                         }
                       });
                     } else {
-                      fields.push({ name: ` `, value: `${language_result.guildAuditLogsEntry.nochanges}` });
+                      fields.push({ name: ``, value: `${language_result.guildAuditLogsEntry.nochanges}` });
                     }
 
                     setTimeout(() => {
@@ -303,6 +314,9 @@ module.exports = {
                 .catch((error) => {
                   errorSendControls(error, guild.client, guild, "\\logs_system\\GuildAuditLogsEntry.js");
                 });
+            })
+            .catch((error) => {
+              errorSendControls(error, guild.client, guild, "\\logs_system\\GuildAuditLogsEntry.js");
             });
         }
       });

@@ -82,6 +82,9 @@ module.exports = {
                     errorSendControls(error, oldState.client, oldState.guild, "\\logs_system\\VoiceState.js");
                   });
               }
+            })
+            .catch((error) => {
+              errorSendControls(error, oldState.guild.client, oldState.guild, "\\logs_system\\ChannelCreate.js");
             });
         }
       });

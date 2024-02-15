@@ -190,6 +190,9 @@ module.exports = {
                 .catch((error) => {
                   errorSendControls(error, channel.client, channel.guild, "\\logs_system\\ChannelDelete.js");
                 });
+            })
+            .catch((error) => {
+              errorSendControls(error, channel.guild.client, channel.guild, "\\logs_system\\ChannelDelete.js");
             });
         }
       });

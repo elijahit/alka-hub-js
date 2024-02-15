@@ -179,11 +179,17 @@ module.exports = {
                           .then(value => {
                             oldValuePermissions += `${value}\n`
                           })
+                          .catch((error) => {
+                            errorSendControls(error, oldChannel.client, oldChannel.guild, "\\logs_system\\ChannelUpdate.js");
+                          });
                       } else if (perms.type == 1) {
                         oldChannel.guild.members.fetch(perms.id)
                         .then(value => {
                           oldValuePermissions += `${value}\n`
                         })
+                        .catch((error) => {
+                          errorSendControls(error, oldChannel.client, oldChannel.guild, "\\logs_system\\ChannelUpdate.js");
+                        });
                       }
                     });
                     newChannel.permissionOverwrites.cache.each(perms => {
@@ -192,11 +198,17 @@ module.exports = {
                           .then(value => {
                             newValuePermissions += `${value}\n`
                           })
+                          .catch((error) => {
+                            errorSendControls(error, oldChannel.client, oldChannel.guild, "\\logs_system\\ChannelUpdate.js");
+                          });
                       } else if (perms.type == 1) {
                         newChannel.guild.members.fetch(perms.id)
                         .then(value => {
                           newValuePermissions += `${value}\n`
                         })
+                        .catch((error) => {
+                          errorSendControls(error, oldChannel.client, oldChannel.guild, "\\logs_system\\ChannelUpdate.js");
+                        });
                       }
                     });
                     setTimeout(() => {
@@ -220,8 +232,11 @@ module.exports = {
                   }
                 })
                 .catch((error) => {
-                  errorSendControls(error, oldChannel.client, oldChannel.guild, "\\logs_system\\ChannelCreate.js");
+                  errorSendControls(error, oldChannel.client, oldChannel.guild, "\\logs_system\\ChannelUpdate.js");
                 });
+            })
+            .catch((error) => {
+              errorSendControls(error, oldChannel.client, oldChannel.guild, "\\logs_system\\ChannelUpdate.js");
             });
         }
       });
