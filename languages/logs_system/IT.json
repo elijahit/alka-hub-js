@@ -7,7 +7,7 @@
     "join_now": "L'utente {1} si è connesso al canale vocale {2}",
     "left_now": "L'utente {1} si è disconnesso al canale vocale {2}",
     "new_channel": "Nuovo Canale",
-    "old_channel": "Vecchio Canale" 
+    "old_channel": "Vecchio Canale"
   },
   "channelCreate": {
     "embed_title": "Alka Hub | Logs System  📥",
@@ -116,5 +116,13 @@
     "emoji_avaliable": "Disponibile",
     "emoji_not_avaliable": "Non disponibile",
     "emoji_state_avaliable": "Stato Disponibilità"
+  },
+  "emojiDelete": {
+    "embed_title": "Alka Hub | Logs System 😎",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "emoji_delete": "E' stata rimossa un Emoji dal server",
+    "emoji_name": "Nome Emoji",
+    "emoji_id": "ID Emoji"
   }
 }
