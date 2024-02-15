@@ -224,14 +224,14 @@ module.exports = {
                         fields.push({ name: `${language_result.guildAuditLogsEntry.target_embed}`, value: `${auditLogEntry.target}`, inline: true });
                         fields.push({ name: `${language_result.guildAuditLogsEntry.target_embed_channel_id}`, value: `${auditLogEntry.targetId}`, inline: true });
                         break;
-                      case "User": //target null
+                      case "User":
                         guild.members.fetch(auditLogEntry.targetId)
                           .then(user => {
                             fields.push({ name: `${language_result.guildAuditLogsEntry.target_embed}`, value: `${user}`, inline: true });
                             fields.push({ name: `${language_result.guildAuditLogsEntry.target_embed_user_id}`, value: `${auditLogEntry.targetId}`, inline: true });
                           })
                           .catch((error) => {
-                            //Vai avanti e basta
+                            //vai avanti e basta
                           });
                         break;
                       case "Role":
