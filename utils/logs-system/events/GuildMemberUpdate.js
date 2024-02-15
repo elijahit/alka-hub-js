@@ -32,36 +32,66 @@ module.exports = {
                   const fields = [];
 
                   fields.push(
-                    {name: `${language_result.guildMemberUpdate.embed_user}`, value: `${oldMember}`, inline: true},
-                    {name: `${language_result.guildMemberUpdate.embed_id}`, value: `${oldMember.id}`, inline: true},
-                    {name: " ", value: " "},
-                    {name: `${language_result.guildMemberUpdate.embed_username}`, value: `${oldMember.user.username}`, inline: true}
+                    { name: `${language_result.guildMemberUpdate.embed_user}`, value: `${oldMember}`, inline: true },
+                    { name: `${language_result.guildMemberUpdate.embed_id}`, value: `${oldMember.id}`, inline: true },
+                    { name: " ", value: " " },
+                    { name: `${language_result.guildMemberUpdate.embed_username}`, value: `${oldMember.user.username}`, inline: true }
                   );
 
                   if (oldMember.user.bot) {
-                    fields.push({name: `${language_result.guildMemberUpdate.bot_embed}`, value: `${language_result.guildMemberUpdate.bot_embed_response}`, inline: true});
+                    fields.push({ name: `${language_result.guildMemberUpdate.bot_embed}`, value: `${language_result.guildMemberUpdate.bot_embed_response}`, inline: true });
                   }
 
-                  fields.push({name: " ", value: " "});
+                  fields.push({ name: " ", value: " " });
 
-                  if(oldMember.nickname != newMember.nickname) {
+                  if (oldMember.nickname != newMember.nickname) {
                     let nicknameOld, nicknameNew;
-                    if(oldMember.nickname) {
-                      nicknameOld = language_result.guildMemberUpdate.empty_name; 
+
+                    if (!oldMember.nickname) {
+                      nicknameOld = language_result.guildMemberUpdate.empty_name;
                     } else {
-                      nicknameOld = newMember.nickname;
+                      nicknameOld = oldMember.nickname;
                     }
 
-                    if(newMember.nickname) {
-                      nicknameNew = language_result.guildMemberUpdate.empty_name; 
+                    if (!newMember.nickname) {
+                      nicknameNew = language_result.guildMemberUpdate.empty_name;
                     } else {
                       nicknameNew = newMember.nickname;
                     }
 
                     fields.push(
-                      {name: `${language_result.guildMemberUpdate.old_name}`, value: `${nicknameOld}`, inline: true},
-                      {name: `${language_result.guildMemberUpdate.new_name}`, value: `${nicknameNew}`, inline: true}
+                      { name: `${language_result.guildMemberUpdate.old_name}`, value: `${nicknameOld}`, inline: true },
+                      { name: `${language_result.guildMemberUpdate.new_name}`, value: `${nicknameNew}`, inline: true }
                     )
+                  }
+
+                  fields.push({ name: " ", value: " " });
+
+
+                  if (oldMember._roles) {
+                    let rolesContainer = "";
+                    oldMember._roles.forEach(value => {
+                      oldMember.guild.roles.fetch(value)
+                        .then(roles => {
+                          rolesContainer += `${roles} \n`
+                        });
+                    });
+                    setTimeout(() => {
+                      fields.push({ name: `${language_result.guildMemberUpdate.old_role}`, value: `${rolesContainer}`, inline: true });
+                    });
+                  }
+
+                  if (newMember._roles) {
+                    let rolesContainer = "";
+                    newMember._roles.forEach(value => {
+                      newMember.guild.roles.fetch(value)
+                        .then(roles => {
+                          rolesContainer += `${roles} \n`
+                        });
+                    });
+                    setTimeout(() => {
+                      fields.push({ name: `${language_result.guildMemberUpdate.new_role}`, value: `${rolesContainer}`, inline: true });
+                    });
                   }
 
                   setTimeout(() => {
@@ -70,8 +100,8 @@ module.exports = {
                       .addFields(fields)
                       .setFooter({ text: `${language_result.guildMemberUpdate.embed_footer}`, iconURL: `${language_result.guildMemberUpdate.embed_icon_url}` })
                       .setDescription(language_result.guildMemberUpdate.embed_description)
-                      .setColor(0x8c2929);
-                    if(oldMember.user.avatar) {
+                      .setColor(0x4287f5);
+                    if (oldMember.user.avatar) {
                       embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${oldMember.id}/${oldMember.user.avatar}.png`);
                     }
                     channel_logs.send({ embeds: [embedLog] });

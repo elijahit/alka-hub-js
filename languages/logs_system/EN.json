@@ -187,5 +187,21 @@
     "embed_username": "Username",
     "bot_embed": "Bot",
     "bot_embed_response": "Yes"
+  },
+  "guildMemberUpdate": {
+    "embed_title": "Alka Hub | Logs System 🤸‍♂️",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_description": "A modification has been made to the user",
+    "embed_user": "User",
+    "embed_id": "User ID",
+    "embed_username": "Username",
+    "bot_embed": "Bot",
+    "bot_embed_response": "Yes",
+    "old_name": "Old Name",
+    "new_name": "New Name",
+    "empty_name": "None",
+    "old_role": "Old Roles",
+    "new_role": "New Roles"
   }
 }
