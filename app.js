@@ -15,8 +15,8 @@ function executeFolderModule(mainDir) {
 
   for (const folder of moduleFolder) {
     const modulePath = path.join(foldersPath, folder);
-    const eventsPathResolve = `.${modulePath}/events`;
-    const commandsPathResolve = `.${modulePath}/command`;
+    const eventsPathResolve = `${modulePath}\\events`;
+    const commandsPathResolve = `${modulePath}\\command`;
     const eventsFiles = fs.readdirSync(eventsPathResolve).filter(file => file.endsWith('.js'));
     const commandFiles = fs.readdirSync(commandsPathResolve).filter(file => file.endsWith('.js'));
     for (const file of commandFiles) {
