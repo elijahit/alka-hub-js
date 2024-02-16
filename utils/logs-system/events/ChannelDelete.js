@@ -71,8 +71,7 @@ module.exports = {
                       .setAuthor({ name: `${language_result.channelDelete.embed_title}` })
                       .addFields(
                         { name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
-                        { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true },
-                        { name: `${language_result.channelDelete.go_channel}`, value: `${channel.url}` })
+                        { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true })
                       .setDescription(language_result.channelDelete.deleted_category)
                       .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
                       .setColor(0x80131e);
