@@ -67,31 +67,33 @@ module.exports = {
 
                   fields.push({ name: " ", value: " " });
 
+                  if(oldMember._roles.length != newMember._roles.length)
+                  {
+                    if (oldMember._roles) {
+                      let rolesContainer = " ";
+                      oldMember._roles.forEach(value => {
+                        oldMember.guild.roles.fetch(value)
+                          .then(roles => {
+                            rolesContainer += `${roles} \n`
+                          });
+                      });
+                      setTimeout(() => {
+                        fields.push({ name: `${language_result.guildMemberUpdate.old_role}`, value: `${rolesContainer}`, inline: true });
+                      });
+                    }
 
-                  if (oldMember._roles) {
-                    let rolesContainer = " ";
-                    oldMember._roles.forEach(value => {
-                      oldMember.guild.roles.fetch(value)
-                        .then(roles => {
-                          rolesContainer += `${roles} \n`
-                        });
-                    });
-                    setTimeout(() => {
-                      fields.push({ name: `${language_result.guildMemberUpdate.old_role}`, value: `${rolesContainer}`, inline: true });
-                    });
-                  }
-
-                  if (newMember._roles) {
-                    let rolesContainer = " ";
-                    newMember._roles.forEach(value => {
-                      newMember.guild.roles.fetch(value)
-                        .then(roles => {
-                          rolesContainer += `${roles} \n`
-                        });
-                    });
-                    setTimeout(() => {
-                      fields.push({ name: `${language_result.guildMemberUpdate.new_role}`, value: `${rolesContainer}`, inline: true });
-                    });
+                    if (newMember._roles) {
+                      let rolesContainer = " ";
+                      newMember._roles.forEach(value => {
+                        newMember.guild.roles.fetch(value)
+                          .then(roles => {
+                            rolesContainer += `${roles} \n`
+                          });
+                      });
+                      setTimeout(() => {
+                        fields.push({ name: `${language_result.guildMemberUpdate.new_role}`, value: `${rolesContainer}`, inline: true });
+                      });
+                    }
                   }
 
                   setTimeout(() => {
