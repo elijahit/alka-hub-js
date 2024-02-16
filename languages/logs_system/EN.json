@@ -204,5 +204,27 @@
     "empty_name": "None",
     "old_role": "Old Roles",
     "new_role": "New Roles"
+  },
+  "guildUpdate": {
+    "embed_title": "Alka Hub | Logs System 💻",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_empty": "None",
+    "embed_name": "Server Name Changed",
+    "old_name": "Old Name",
+    "new_name": "New Name",
+    "embed_afkchannel": "AFK Channel for inactive members changed",
+    "old_afkchannel": "Old Channel",
+    "new_afkchannel": "New Channel",
+    "embed_timeout": "AFK timeout changed",
+    "old_timeout": "Old Time",
+    "new_timeout": "New Time",
+    "embed_icon": "Server logo changed",
+    "embed_description": "Server description changed",
+    "old_desc": "Old Description",
+    "new_desc": "New Description",
+    "embed_owner": "Server owner changed",
+    "old_owner": "Old Owner",
+    "new_owner": "New Owner"
   }
 }

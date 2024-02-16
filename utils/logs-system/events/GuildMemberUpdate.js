@@ -30,6 +30,7 @@ module.exports = {
               oldMember.guild.channels.fetch(result.guildMemberState_channel)
                 .then(channel_logs => {
                   const fields = [];
+                  let changeCheck = false;
 
                   fields.push(
                     { name: `${language_result.guildMemberUpdate.embed_user}`, value: `${oldMember}`, inline: true },
@@ -45,6 +46,7 @@ module.exports = {
                   fields.push({ name: " ", value: " " });
 
                   if (oldMember.nickname != newMember.nickname) {
+                    changeCheck = true;
                     let nicknameOld, nicknameNew;
 
                     if (!oldMember.nickname) {
@@ -69,6 +71,7 @@ module.exports = {
 
                   if(oldMember._roles.length != newMember._roles.length)
                   {
+                    changeCheck = true;
                     if (oldMember._roles) {
                       let rolesContainer = " ";
                       oldMember._roles.forEach(value => {
@@ -95,7 +98,7 @@ module.exports = {
                       });
                     }
                   }
-
+                  if(!changeCheck) return;
                   setTimeout(() => {
                     const embedLog = new EmbedBuilder()
                       .setAuthor({ name: `${language_result.guildMemberUpdate.embed_title}` })
