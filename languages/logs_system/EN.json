@@ -42,6 +42,7 @@
     "deleted_announce": "An announcement channel has been deleted",
     "name_channel": "Channel Name",
     "id_channel": "Channel ID",
+    "go_channel": "Go to Channel",
     "category_channel": "Category"
   },
   "channelUpdate": {

@@ -42,6 +42,7 @@
     "deleted_announce": "E' stato cancellato un canale di annunci",
     "name_channel": "Nome Canale",
     "id_channel": "ID Canale",
+    "go_channel": "Vai al Canale",
     "category_channel": "Categoria"
   },
   "channelUpdate": {
