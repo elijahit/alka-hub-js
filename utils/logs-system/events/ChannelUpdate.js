@@ -47,7 +47,10 @@ module.exports = {
                       .setDescription(language_result.channelUpdate.name_change_embed)
                       .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
                       .setColor(0xebb734);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE LA CATEGORIA DI UN CANALE VIENE CAMBIATA
                   if (oldChannel.parentId != newChannel.parentId) {
@@ -74,7 +77,10 @@ module.exports = {
                       .setDescription(language_result.channelUpdate.category_change_embed)
                       .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
                       .setColor(0xebb734);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE IL BITRATE VIENE CAMBIATO
                   if (oldChannel.bitrate != newChannel.bitrate) {
@@ -94,7 +100,10 @@ module.exports = {
                       .setDescription(language_result.channelUpdate.bitrate_change_embed)
                       .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
                       .setColor(0xebb734);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE IL LIMITE DEGLI UTENTI VIENE CAMBIATO
                   if (oldChannel.userLimit != newChannel.userLimit) {
@@ -114,7 +123,10 @@ module.exports = {
                       .setDescription(language_result.channelUpdate.userlimit_change_embed)
                       .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
                       .setColor(0xebb734);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE LA DESCRIZIONE VIENE CAMBIATA
                   if (oldChannel.topic != newChannel.topic) {
@@ -139,7 +151,10 @@ module.exports = {
                       .setDescription(language_result.channelUpdate.description_change_embed)
                       .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
                       .setColor(0xebb734);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE LO SLOWMODE VIENE CAMBIATO
                   if (oldChannel.rateLimitPerUser != newChannel.rateLimitPerUser) {
@@ -168,7 +183,10 @@ module.exports = {
                       .setDescription(language_result.channelUpdate.ratelimit_change_embed)
                       .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
                       .setColor(0xebb734);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE I PERMESSI VENGONO AGGIORNATI
                   if (oldChannel.permissionOverwrites.cache.difference(newChannel.permissionOverwrites.cache).size > 0) {
@@ -227,12 +245,15 @@ module.exports = {
                         .setDescription(language_result.channelUpdate.permissions_change_embed)
                         .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
                         .setColor(0xebb734);
-                      channel_logs.send({ embeds: [embedLog] });
+                      channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                    }, 2000);
                   }
                 })
                 .catch((error) => {
-                  // vai avanti
+                  return;
                 });
             })
             .catch((error) => {

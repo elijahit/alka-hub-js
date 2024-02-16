@@ -43,7 +43,7 @@ module.exports = {
                     channel.send({ embeds: [embedLog] });
                   })
                   .catch((error) => {
-                    // vai avanti
+                    return;
                   });
               }
               // UN UTENTE HA EFFETTUATO L'ACCESSO IN UN NUOVO CANALE

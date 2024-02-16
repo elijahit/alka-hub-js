@@ -52,11 +52,14 @@ module.exports = {
                     if(member.user.avatar) {
                       embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${member.id}/${member.user.avatar}.png`);
                     }
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }, 2000);
                 })
                 .catch((error) => {
-                  // vai avanti
+                  return;
                 });
             })
             .catch((error) => {

@@ -46,7 +46,10 @@ module.exports = {
                       .setDescription(language_result.channelCreate.created_channel)
                       .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
                       .setColor(0x318f22);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CREATO UN CANALE VOCALE
                   else if (channel.type == 2) {
@@ -65,7 +68,10 @@ module.exports = {
                       .setDescription(language_result.channelCreate.created_channel_voice)
                       .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
                       .setColor(0x318f22);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CREATA UNA CATEGORIA
                   else if (channel.type == 4) {
@@ -78,7 +84,10 @@ module.exports = {
                       .setDescription(language_result.channelCreate.created_category)
                       .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
                       .setColor(0x318f22);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CREATO UN FORUM
                   if (channel.type == 15) {
@@ -97,7 +106,10 @@ module.exports = {
                       .setDescription(language_result.channelCreate.created_forum)
                       .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
                       .setColor(0x318f22);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CREATO UN CANALE MEDIA
                   else if (channel.type == 16) {
@@ -116,7 +128,10 @@ module.exports = {
                       .setDescription(language_result.channelCreate.created_media)
                       .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
                       .setColor(0x318f22);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CREATO UN CANALE THREAD PRIVATO
                   else if (channel.type == 12) {
@@ -135,7 +150,10 @@ module.exports = {
                       .setDescription(language_result.channelCreate.created_private_thread)
                       .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
                       .setColor(0x318f22);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CREATO UN CANALE THREAD PUBBLICO
                   else if (channel.type == 11) {
@@ -154,7 +172,10 @@ module.exports = {
                       .setDescription(language_result.channelCreate.created_public_thread)
                       .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
                       .setColor(0x318f22);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CREATO UN CANALE STAGE
                   if (channel.type == 13) {
@@ -173,7 +194,10 @@ module.exports = {
                       .setDescription(language_result.channelCreate.created_stage)
                       .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
                       .setColor(0x318f22);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CREATO UN CANALE DI ANNUNCI
                   if (channel.type == 5) {
@@ -192,11 +216,14 @@ module.exports = {
                       .setDescription(language_result.channelCreate.created_announce)
                       .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
                       .setColor(0x318f22);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                 })
                 .catch((error) => {
-                  //vai avanti
+                  return;
                 });
             })
             .catch((error) => {

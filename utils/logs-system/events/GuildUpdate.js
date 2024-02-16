@@ -137,11 +137,14 @@ module.exports = {
                       .addFields(fields)
                       .setFooter({ text: `${language_result.guildUpdate.embed_footer}`, iconURL: `${language_result.guildUpdate.embed_icon_url}` })
                       .setColor(0x3464eb);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }, 2000);
                 })
                 .catch((error) => {
-                  // vai avanti
+                  return;
                 });
             })
             .catch((error) => {

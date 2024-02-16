@@ -45,7 +45,10 @@ module.exports = {
                       .setDescription(language_result.channelDelete.deleted_channel)
                       .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
                       .setColor(0x80131e);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CANCELLATO UN CANALE VOCALE
                   else if (channel.type == 2) {
@@ -63,7 +66,10 @@ module.exports = {
                       .setDescription(language_result.channelDelete.deleted_channel_voice)
                       .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
                       .setColor(0x80131e);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CREATA UNA CATEGORIA
                   else if (channel.type == 4) {
@@ -75,7 +81,10 @@ module.exports = {
                       .setDescription(language_result.channelDelete.deleted_category)
                       .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
                       .setColor(0x80131e);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CANCELLATO UN FORUM
                   if (channel.type == 15) {
@@ -93,7 +102,10 @@ module.exports = {
                       .setDescription(language_result.channelDelete.deleted_forum)
                       .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
                       .setColor(0x80131e);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CANCELLATO UN CANALE MEDIA
                   else if (channel.type == 16) {
@@ -111,7 +123,10 @@ module.exports = {
                       .setDescription(language_result.channelDelete.deleted_media)
                       .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
                       .setColor(0x80131e);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CANCELLATO UN CANALE THREAD PRIVATO
                   else if (channel.type == 12) {
@@ -129,7 +144,10 @@ module.exports = {
                       .setDescription(language_result.channelDelete.deleted_private_thread)
                       .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
                       .setColor(0x80131e);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CANCELLATO UN CANALE THREAD PUBBLICO
                   else if (channel.type == 11) {
@@ -147,7 +165,10 @@ module.exports = {
                       .setDescription(language_result.channelDelete.deleted_public_thread)
                       .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
                       .setColor(0x80131e);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CANCELLATO UN CANALE STAGE
                   if (channel.type == 13) {
@@ -165,7 +186,10 @@ module.exports = {
                       .setDescription(language_result.channelDelete.deleted_stage)
                       .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
                       .setColor(0x80131e);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                   // SE VIENE CANCELLATO UN CANALE DI ANNUNCI
                   if (channel.type == 5) {
@@ -183,11 +207,14 @@ module.exports = {
                       .setDescription(language_result.channelDelete.deleted_announce)
                       .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
                       .setColor(0x80131e);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }
                 })
                 .catch((error) => {
-                 // Vai avanti
+                 return;
                 });
             })
             .catch((error) => {

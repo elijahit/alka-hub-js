@@ -73,11 +73,14 @@ module.exports = {
                       .setFooter({ text: `${language_result.emojiCreate.embed_footer}`, iconURL: `${language_result.emojiCreate.embed_icon_url}` })
                       .setDescription(language_result.emojiCreate.emoji_create)
                       .setColor(0xfcba03);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }, 2000);
                 })
                 .catch((error) => {
-                 // vai avanti
+                 return;
                 });
             })
             .catch((error) => {

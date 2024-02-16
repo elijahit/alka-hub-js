@@ -58,11 +58,14 @@ module.exports = {
                     if(ban.user.avatar) {
                       embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${ban.user.id}/${ban.user.avatar}.png`);
                     }
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }, 2000);
                 })
                 .catch((error) => {
-                  // vai avanti
+                  return;
                 });
             })
             .catch((error) => {

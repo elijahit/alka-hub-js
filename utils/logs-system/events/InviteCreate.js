@@ -72,11 +72,14 @@ module.exports = {
                       .setFooter({ text: `${language_result.inviteCreate.embed_footer}`, iconURL: `${language_result.inviteCreate.embed_icon_url}` })
                       .setDescription(language_result.inviteCreate.embed_description)
                       .setColor(0x32a852);
-                    channel_logs.send({ embeds: [embedLog] });
+                    channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                   }, 2000);
                 })
                 .catch((error) => {
-                  // vai avanti
+                  return;
                 });
             })
             .catch((error) => {

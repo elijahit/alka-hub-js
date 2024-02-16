@@ -231,7 +231,7 @@ module.exports = {
                             fields.push({ name: `${language_result.guildAuditLogsEntry.target_embed_user_id}`, value: `${auditLogEntry.targetId}`, inline: true });
                           })
                           .catch((error) => {
-                            //vai avanti e basta
+                            return;
                           });
                         break;
                       case "Role":
@@ -307,7 +307,10 @@ module.exports = {
                         .addFields(fields)
                         .setFooter({ text: `${language_result.guildAuditLogsEntry.embed_footer}`, iconURL: `${language_result.guildAuditLogsEntry.embed_icon_url}` })
                         .setColor(0x49207d);
-                      channel_logs.send({ embeds: [embedLog] });
+                      channel_logs.send({ embeds: [embedLog] })
+                      .catch(() => {
+                        return;
+                      });
                     }, 300);
                   }, 2000);
                 })
@@ -316,7 +319,7 @@ module.exports = {
                 });
             })
             .catch((error) => {
-              //vai avanti
+              return;
             });
         }
       });
