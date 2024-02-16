@@ -18,7 +18,7 @@ module.exports = {
       if (result_Db.logSystem_enabled != 1) return;
       // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
       database.db.get(sqlChannelId_log, [ban.guild.id], (_, result) => {
-        if (!result.guildBanState_channel) return;
+        if (!result?.guildBanState_channel) return;
         if (result.guildBanState_channel?.length < 5) return;
         // CONTROLLO DELLA LINGUA
         if (ban.guild?.id) {
@@ -62,7 +62,7 @@ module.exports = {
                   }, 2000);
                 })
                 .catch((error) => {
-                  errorSendControls(error, ban.client, ban.guild, "\\logs_system\\GuildBanAdd.js");
+                  // vai avanti
                 });
             })
             .catch((error) => {

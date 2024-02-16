@@ -18,7 +18,7 @@ module.exports = {
       if (result_Db.logSystem_enabled != 1) return;
       // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
       database.db.get(sqlChannelId_log, [guild.id], (_, result) => {
-        if (!result.guildAuditLogs_channel) return;
+        if (!result?.guildAuditLogs_channel) return;
         if (result.guildAuditLogs_channel?.length < 5) return;
         // CONTROLLO DELLA LINGUA
         if (guild?.id) {
@@ -316,7 +316,7 @@ module.exports = {
                 });
             })
             .catch((error) => {
-              errorSendControls(error, guild.client, guild, "\\logs_system\\GuildAuditLogsEntry.js");
+              //vai avanti
             });
         }
       });

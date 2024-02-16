@@ -18,7 +18,7 @@ module.exports = {
       if (result_Db.logSystem_enabled != 1) return;
       // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
       database.db.get(sqlChannelId_log, [oldMember.guild.id], (_, result) => {
-        if (!result.guildMemberState_channel) return;
+        if (!result?.guildMemberState_channel) return;
         if (result.guildMemberState_channel?.length < 5) return;
         // CONTROLLO DELLA LINGUA
         if (oldMember.guild?.id) {
@@ -108,7 +108,7 @@ module.exports = {
                   }, 2000);
                 })
                 .catch((error) => {
-                  errorSendControls(error, oldMember.client, oldMember.guild, "\\logs_system\\GuildMemberUpdate.js");
+                  // vai avanti
                 });
             })
             .catch((error) => {

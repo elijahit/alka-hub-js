@@ -18,7 +18,7 @@ module.exports = {
       if (result_Db.logSystem_enabled != 1) return;
       // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
       database.db.get(sqlChannelId_log, [newState.guild.id], (_, result) => {
-        if (!result.voiceStateJoin_channel) return;
+        if (!result?.voiceStateJoin_channel) return;
         if (result.voiceStateJoin_channel?.length < 5) return;
         // CONTROLLO DELLA LINGUA
         if (oldState.guild?.id) {
@@ -43,7 +43,7 @@ module.exports = {
                     channel.send({ embeds: [embedLog] });
                   })
                   .catch((error) => {
-                    errorSendControls(error, oldState.client, oldState.guild, "\\logs_system\\VoiceState.js");
+                    // vai avanti
                   });
               }
               // UN UTENTE HA EFFETTUATO L'ACCESSO IN UN NUOVO CANALE

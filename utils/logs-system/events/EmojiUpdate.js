@@ -18,7 +18,7 @@ module.exports = {
       if (result_Db.logSystem_enabled != 1) return;
       // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
       database.db.get(sqlChannelId_log, [oldEmoji.guild.id], (_, result) => {
-        if (!result.emojiState_channel) return;
+        if (!result?.emojiState_channel) return;
         if (result.emojiState_channel?.length < 5) return;
         // CONTROLLO DELLA LINGUA
         if (oldEmoji.guild?.id) {
@@ -78,7 +78,7 @@ module.exports = {
                   }, 2000);
                 })
                 .catch((error) => {
-                  errorSendControls(error, oldEmoji.client, oldEmoji.guild, "\\logs_system\\EmojiUpdate.js");
+                  // vai avanti
                 });
             })
             .catch((error) => {
