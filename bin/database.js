@@ -9,6 +9,13 @@ const db = new sqlite3.Database('./bin/database.db', error => {
   }, 1000);
 });
 
+function getValueDatabase (sqlquery, guildId, fn) {
+  db.get(sqlquery, [guildId], (_, result_Db) => {
+    fn(result_Db);
+  });
+}
+
 module.exports = {
-  db
+  db,
+  getValueDatabase,
 };
