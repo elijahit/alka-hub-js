@@ -156,7 +156,7 @@
     "ban_reason_embed": "Motivo"
   },
   "guildBanRemove": {
-    "ban_title": "Alka Hub | Logs System ✅",
+    "ban_title": "Alka Hub | Logs System",
     "ban_footer": "Alka Hub by alkanetwork.eu",
     "ban_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "ban_remove": "Un utente è stato Sbannato dal server",
