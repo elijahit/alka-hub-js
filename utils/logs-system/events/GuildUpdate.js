@@ -136,7 +136,7 @@ module.exports = {
           }
         }
         catch (error) {
-          errorSendControls(error, oldGuild.client, oldGuild, "\\logs_system\\InviteDelete.js");
+          errorSendControls(error, oldGuild.client, oldGuild, "\\logs_system\\GuildUpdate.js");
         }
       });
     });
