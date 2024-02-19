@@ -251,16 +251,28 @@
     "invite_code": "Code",
     "embed_url": "Invite Link"
   },
-  
-"messageDelete": {
-  "embed_title": "Alka Hub | Logs System - Deleted Message",
-  "embed_footer": "Alka Hub by alkanetwork.eu",
-  "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-  "embed_description": "Content",
-  "channel_message": "Channel",
-  "channel_message_id": "Channel ID",
-  "author_message": "Author",
-  "author_message_id": "Author ID",
-  "attachments_message": "Attached Links"
+  "messageDelete": {
+    "embed_title": "Alka Hub | Logs System - Deleted Message",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_description": "Content",
+    "channel_message": "Channel",
+    "channel_message_id": "Channel ID",
+    "author_message": "Author",
+    "author_message_id": "Author ID",
+    "attachments_message": "Attached Links"
+  },
+  "messageUpdate": {
+    "embed_title": "Alka Hub | Logs System - Message Edited",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_description": "Old Content",
+    "embed_description_new": "New Content",
+    "channel_message": "Channel",
+    "channel_message_id": "Channel ID",
+    "author_message": "Author",
+    "author_message_id": "Author ID",
+    "attachments_message": "Attached Links",
+    "go_message": "Go to Message"
   }
 }

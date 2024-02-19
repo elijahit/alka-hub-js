@@ -19,7 +19,7 @@ module.exports = {
       if (result_Db.logSystem_enabled != 1) return;
       // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
       database.getValueDatabase(sqlChannelId_log, message.guild.id, async (result) => {
-        // try {
+        try {
 
           if (!result?.messageState_channel) return;
           if (result.messageState_channel?.length < 5) return;
@@ -61,10 +61,10 @@ module.exports = {
               .setColor(0x80131e);
             channel_logs.send({ embeds: [embedLog] });
           }
-        // }
-        // catch (error) {
-        //   errorSendControls(error, message.client, message.guild, "\\logs_system\\MessageDelete.js");
-        // }
+        }
+        catch (error) {
+          errorSendControls(error, message.client, message.guild, "\\logs_system\\MessageDelete.js");
+        }
       });
     });
   },

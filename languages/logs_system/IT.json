@@ -261,5 +261,18 @@
     "author_message": "Autore",
     "author_message_id": "ID Autore",
     "attachments_message": "Link Allegati"
+  },
+  "messageUpdate": {
+    "embed_title": "Alka Hub | Logs System - Messaggio Modificato",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_description": "Vecchio Contenuto",
+    "embed_description_new": "Nuovo Contenuto",
+    "channel_message": "Canale",
+    "channel_message_id": "ID Canale",
+    "author_message": "Autore",
+    "author_message_id": "ID Autore",
+    "attachments_message": "Link Allegati",
+    "go_message": "Vai al Messaggio"
   }
 }
