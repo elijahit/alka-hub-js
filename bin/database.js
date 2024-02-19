@@ -13,9 +13,17 @@ function getValueDatabase (sqlquery, guildId, fn) {
   db.get(sqlquery, [guildId], (_, result_Db) => {
     fn(result_Db);
   });
+};
+
+function addValueDatabase (sqlquery, ...value) {
+  db.run(sqlquery, value, function(err) {
+    // get the last insert id
+
+  });
 }
 
 module.exports = {
   db,
   getValueDatabase,
+  addValueDatabase,
 };
