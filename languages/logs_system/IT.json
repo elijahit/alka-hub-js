@@ -274,5 +274,16 @@
     "author_message_id": "ID Autore",
     "attachments_message": "Link Allegati",
     "go_message": "Vai al Messaggio"
+  },
+  "messageReactionRemoveAll": {
+    "embed_title": "Alka Hub | Logs System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_description": "Le reazioni in un messaggio sono state resettate",
+    "message_channel": "Canale",
+    "message_channel_id": "ID Canale",
+    "message_embed": "Messaggio",
+    "message_embed_id": "ID Messaggio",
+    "embed_reactions": "Reazioni"
   }
 }
