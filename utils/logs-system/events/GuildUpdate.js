@@ -12,7 +12,7 @@ let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guild
 module.exports = {
   name: Events.GuildUpdate,
   async execute(oldGuild, newGuild) {
-    let customEmoji = await getEmojifromUrl(oldGuild.client, "guildupdates");
+    let customEmoji = await getEmojifromUrl(oldGuild.client, "guildupdate");
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     database.getValueDatabase(sqlEnabledFeature, oldGuild.id, (result_Db) => {
       if (!result_Db) return;
