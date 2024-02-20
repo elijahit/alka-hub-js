@@ -87,7 +87,7 @@ module.exports = {
 					}
 				}
 				catch (error) {
-					errorSendControls(error, interaction.client, interaction.guild, "\\ranks-system\\adminRanks.js");
+					errorSendControls(error, interaction.client, interaction.guild, "\\ranks-system\\permissions.js");
 				}
 			})
 		})
