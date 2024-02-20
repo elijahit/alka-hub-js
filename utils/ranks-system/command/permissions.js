@@ -51,10 +51,10 @@ module.exports = {
 					if (checkPass == false) {
 						let customEmoji = await getEmojifromUrl(interaction.client, "pexerror");
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.adminRanks.embed_title}`, iconURL: customEmoji })
-							.setDescription(language_result.adminRanks.hash_not_found
+							.setAuthor({ name: `${language_result.permissions.embed_title}`, iconURL: customEmoji })
+							.setDescription(language_result.permissions.hash_not_found
 								.replace("{0}", `${pex}`))
-							.setFooter({ text: `${language_result.adminRanks.embed_footer}`, iconURL: `${language_result.adminRanks.embed_icon_url}` })
+							.setFooter({ text: `${language_result.permissions.embed_footer}`, iconURL: `${language_result.permissions.embed_icon_url}` })
 							.setColor(0x22809c);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
@@ -65,11 +65,11 @@ module.exports = {
 						database.addValueDatabase(deleteSql, interaction.guild.id, role.id, pex);
 						let customEmoji = await getEmojifromUrl(interaction.client, "pexremoved");
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.adminRanks.embed_title}`, iconURL: customEmoji })
-							.setDescription(language_result.adminRanks.remove_hash
+							.setAuthor({ name: `${language_result.permissions.embed_title}`, iconURL: customEmoji })
+							.setDescription(language_result.permissions.remove_hash
 								.replace("{0}", `${pex}`)
 								.replace("{1}", `${role}`))
-							.setFooter({ text: `${language_result.adminRanks.embed_footer}`, iconURL: `${language_result.adminRanks.embed_icon_url}` })
+							.setFooter({ text: `${language_result.permissions.embed_footer}`, iconURL: `${language_result.permissions.embed_icon_url}` })
 							.setColor(0x9e2c24);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					} else { // SE UN RUOLO NON ESISTE LO AGGIUNGE ->
@@ -77,11 +77,11 @@ module.exports = {
 						database.addValueDatabase(insertSql, interaction.guild.id, role.id, pex);
 						let customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.adminRanks.embed_title}`, iconURL: customEmoji })
-							.setDescription(language_result.adminRanks.added_hash
+							.setAuthor({ name: `${language_result.permissions.embed_title}`, iconURL: customEmoji })
+							.setDescription(language_result.permissions.added_hash
 								.replace("{0}", `${pex}`)
 								.replace("{1}", `${role}`))
-							.setFooter({ text: `${language_result.adminRanks.embed_footer}`, iconURL: `${language_result.adminRanks.embed_icon_url}` })
+							.setFooter({ text: `${language_result.permissions.embed_footer}`, iconURL: `${language_result.permissions.embed_icon_url}` })
 							.setColor(0x3d9c22);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}

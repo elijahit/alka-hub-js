@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync } = require('fs');
 const database = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl, checkHavePermissions } = require('../../../bin/HandlingFunctions');
+const { errorSendControls, getEmojifromUrl, returnPermission } = require('../../../bin/HandlingFunctions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -15,11 +15,10 @@ module.exports = {
 				.setRequired(true)
 		),
 	async execute(interaction) {
-		let role, pex;
+		let role;
 		// RECUPERO LE OPZIONI INSERITE
 		await interaction.options._hoistedOptions.forEach(value => {
 			if (value.name == 'role') role = value.role;
-			if (value.name == 'pex') pex = value.value;
 		});
 
 		// RECUPERO LA LINGUA
@@ -27,16 +26,43 @@ module.exports = {
 		const langagues_path = readFileSync(`./languages/ranks-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLO SE IL VALORE ESISTE
-		let checkSqlRole = `SELECT * FROM rank_system_permissions WHERE guildId = ? AND roleId = ? AND hashRank = ?`;
-		let checkSqlHash = `SELECT hashName FROM rank_system_hash`;
-
+		let checkSqlHash = `SELECT * FROM rank_system_permissions WHERE guildId = ? AND roleId = ?`;
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
-		await checkHavePermissions(interaction.member, "permissionlist", result => {
-			if(result) {
+		await returnPermission(interaction, "permissionlist", async result => {
+			if (result) {
+				database.db.all(checkSqlHash, [interaction.guild.id, role.id], async (_, roleDb) => {
+					let roleContainer = "";
+					roleDb.forEach(value => {
+						roleContainer += `- ${value.hashRank}\n`
+					});
 
+					let fields = [];
+					if (roleContainer.length > 0) {
+						fields.push({ name: `${language_result.permissionList.permissionsfield_embed}`, value: `${roleContainer}` });
+					}
+					else {
+						fields.push({ name: `${language_result.permissionList.permissionsfield_embed}`, value: `${language_result.permissionList.permissions_empty}` });
+					}
+
+					let customEmoji = await getEmojifromUrl(interaction.client, "permissionlist");
+					const embedLog = new EmbedBuilder()
+						.setAuthor({ name: `${language_result.permissionList.embed_title}`, iconURL: customEmoji })
+						.setDescription(language_result.permissionList.permissions_embed
+							.replace("{0}", `${role}`))
+						.setFields(fields)
+						.setFooter({ text: `${language_result.permissionList.embed_footer}`, iconURL: `${language_result.permissionList.embed_icon_url}` })
+						.setColor(0x4287f5);
+					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+				})
 			}
 			else {
-				// NON HAI IL PERMESSO
+				let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
+				const embedLog = new EmbedBuilder()
+					.setAuthor({ name: `${language_result.noPermission.embed_title}`, iconURL: customEmoji })
+					.setDescription(language_result.noPermission.description_embed)
+					.setFooter({ text: `${language_result.noPermission.embed_footer}`, iconURL: `${language_result.noPermission.embed_icon_url}` })
+					.setColor(0x4287f5);
+				await interaction.reply({ embeds: [embedLog], ephemeral: true });
 			}
 		});
 	},
