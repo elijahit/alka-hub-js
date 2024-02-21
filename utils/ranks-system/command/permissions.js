@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync } = require('fs');
-const { readDb, readDbAllWithValue, runDb } = require('../../../bin/database');
+const { readDbWith3Params, readDbAllWithValue, runDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 
 module.exports = {
@@ -37,7 +37,7 @@ module.exports = {
 		let checkSql = `SELECT * FROM rank_system_permissions WHERE guildId = ? AND roleId = ? AND hashRank = ?`;
 
 		// AGGIUNGO O CANCELLO IL VALORE NEL DB
-		const result = await readDb(checkSql, interaction.guild, role.id, pex);
+		const result = await readDbWith3Params(checkSql, interaction.guild.id, role.id, pex);
 		// CONTROLLA SE L'HASH ESISTE
 		const resultCheck = await readDbAllWithValue("rank_system_hash", "hashName");
 		try {
@@ -62,7 +62,7 @@ module.exports = {
 			// SE UN RUOLO ESISTE LO RIMUOVE ->
 			if (result) {
 				let deleteSql = `DELETE FROM rank_system_permissions WHERE guildId = ? AND roleId = ? AND hashRank = ?`
-				await runDb(deleteSql, interaction.guild, role.id, pex);
+				await runDb(deleteSql, interaction.guild.id, role.id, pex);
 				let customEmoji = await getEmojifromUrl(interaction.client, "pexremoved");
 				const embedLog = new EmbedBuilder()
 					.setAuthor({ name: `${language_result.permissions.embed_title}`, iconURL: customEmoji })
@@ -74,7 +74,7 @@ module.exports = {
 				await interaction.reply({ embeds: [embedLog], ephemeral: true });
 			} else { // SE UN RUOLO NON ESISTE LO AGGIUNGE ->
 				let insertSql = `INSERT INTO rank_system_permissions(guildId, roleId, hashRank) VALUES(?, ?, ?)`
-				await runDb(insertSql, interaction.guild, role.id, pex);
+				await runDb(insertSql, interaction.guild.id, role.id, pex);
 				let customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
 				const embedLog = new EmbedBuilder()
 					.setAuthor({ name: `${language_result.permissions.embed_title}`, iconURL: customEmoji })
