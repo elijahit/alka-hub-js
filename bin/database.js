@@ -23,6 +23,20 @@ async function readDbAllWithValue(table, value) {
   return result;
 }
 
+async function readDbWith3Params(querysql, ...params) {
+  const db = await AsyncDatabase.open(database);
+  const result = await db.get(querysql, params[0], params[1], params[2]);
+  await db.close();
+  return result;
+}
+
+async function readDbAllWith2Params(querysql, ...params) {
+  const db = await AsyncDatabase.open(database);
+  const result = await db.all(querysql, params[0], params[1]);
+  await db.close();
+  return result;
+}
+
 async function runDb(querysql, ...params) {
   const db = await AsyncDatabase.open(database);
   await db.run(querysql, params);
@@ -35,4 +49,6 @@ module.exports = {
   readDbAll,
   runDb,
   readDbAllWithValue,
+  readDbWith3Params,
+  readDbAllWith2Params,
 };

@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync } = require('fs');
-const database = require('../../../bin/database');
+const { readDbAllWith2Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, returnPermission } = require('../../../bin/HandlingFunctions');
 
 module.exports = {
@@ -30,13 +30,14 @@ module.exports = {
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		await returnPermission(interaction, "permissionlist", async result => {
 			try {
-
 				if (result) {
-					database.db.all(checkSqlHash, [interaction.guild.id, role.id], async (_, roleDb) => {
+					const roleDb = await readDbAllWith2Params(checkSqlHash, interaction.guild.id, role.id);
 						let roleContainer = "";
-						roleDb.forEach(value => {
-							roleContainer += `- ${value.hashRank}\n`
-						});
+						if(roleDb) {
+							roleDb.forEach(value => {
+								roleContainer += `- ${value.hashRank}\n`
+							});
+						}
 	
 						let fields = [];
 						if (roleContainer.length > 0) {
@@ -55,7 +56,6 @@ module.exports = {
 							.setFooter({ text: `${language_result.permissionList.embed_footer}`, iconURL: `${language_result.permissionList.embed_icon_url}` })
 							.setColor(0x4287f5);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
-					})
 				}
 				else {
 					let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");

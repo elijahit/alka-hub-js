@@ -1,6 +1,6 @@
 const { guildMainId, guildMainChannelsControlsError, emojiGuildId_01 } = require('../config.json');
 const { EmbedBuilder } = require('discord.js');
-const database = require("../bin/database");
+const { readDbWith3Params } = require("../bin/database");
 
 function errorSendControls(error, client, guild_error, system) {
   // LA FUNZIONE GESTISCE GLI ERRORI E LI MANDA AL SERVER MAIN
@@ -61,36 +61,31 @@ async function getEmojifromUrl(client, name) {
   return `https://cdn.discordapp.com/emojis/${emoji}.webp?size=44&quality=lossless`;
 }
 
-function checkHavePermissions(interaction, pex) {
+async function checkHavePermissions(interaction, pex) {
   const member = interaction.member;
   // LA FUNZIONE CONTROLLA NEL DATABASE SE ALMENO UNO DEI RUOLI
   // E' PRESENTE NEL HASH DI PERMESSO
-  let checkSqlRole = `SELECT * FROM rank_system_permissions WHERE guildId = ? AND roleId = ? AND hashRank = ? LIMIT 1`;
+  let checkSqlRole = `SELECT * FROM rank_system_permissions WHERE guildId = ? AND roleId = ? AND hashRank = ?`;
   let check = false, admin = false;
-  return new Promise((resolve) => {
-    for (role of member.roles.cache) {
-      database.db.get(checkSqlRole, [member.guild.id, role[1].id, pex], (_, result) => {
-        // la funzione .has tende a dare errore se non sei admin, quindi crasha
-        // l'ho inserito in un try per non farlo crashare e gestire i valori
-        try {
-          if (member.permissionsIn(interaction.channel).has("ADMINISTRATOR")) {
-            admin = true;
-          }
-        }
-        catch {
-          admin = false;
-        }
-        if (result || admin) {
-          if (check == false) {
-            resolve(true);
-          }
-        }
-      })
+  for (role of member.roles.cache) {
+    const result = await readDbWith3Params(checkSqlRole, member.guild.id, role[1].id, pex);
+    // la funzione .has tende a dare errore se non sei admin, quindi crasha
+    // l'ho inserito in un try per non farlo crashare e gestire i valori
+    try {
+      if (member.permissionsIn(interaction.channel).has("ADMINISTRATOR")) {
+        admin = true;
+      }
     }
-    setTimeout(() => {
-      resolve(false);
-    });
-  })
+    catch {
+      admin = false;
+    }
+    if (result || admin) {
+      if (check == false) {
+        return check = true
+      }
+    }
+  }
+  return false;
 }
 
 async function returnPermission(interaction, pex, fn) {
