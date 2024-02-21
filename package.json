@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "discord.js": "^14.14.1",
+    "discord.js": "^14.12.1",
+    "promised-sqlite3": "^2.1.0",
     "sqlite3": "^5.1.7"
   },
   "name": "alka-hub",
