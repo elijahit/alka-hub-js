@@ -2,9 +2,9 @@ const { AsyncDatabase } = require('promised-sqlite3');
 const database = "./bin/database.db";
 
 
-async function readDb(querysql, ...parms) {
+async function readDb(querysql, parms) {
   const db = await AsyncDatabase.open(database);
-  const result = await db.get(querysql, ...parms);
+  const result = await db.get(querysql, parms);
   await db.close();
   return result;
 }

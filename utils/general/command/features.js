@@ -1,0 +1,82 @@
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const language = require('../../../languages/languages');
+const { readFileSync, read } = require('fs');
+const { readDb, runDb } = require('../../../bin/database');
+const { errorSendControls, getEmojifromUrl, returnPermission, noInitGuilds } = require('../../../bin/HandlingFunctions');
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('features')
+		.setDescription('Use this command to enable or disable the features')
+		.addStringOption(option =>
+			option
+				.addChoices({
+					name: "Logs System",
+					value: "logSystem_enabled",
+				})
+				.setName('choices')
+				.setDescription('Name of the system you want to enable or disable')
+				.setRequired(true)
+		),
+	async execute(interaction) {
+		let choices, nameChoices;
+		// RECUPERO LE OPZIONI INSERITE
+		await interaction.options._hoistedOptions.forEach(value => {
+			if (value.name == 'choices') {
+				choices = value.value;
+				nameChoices = value.value.split("_")[0];
+			} 
+		});
+
+		// RECUPERO LA LINGUA
+		let data = await language.databaseCheck(interaction.guild.id);
+		const langagues_path = readFileSync(`./languages/general/${data}.json`);
+		const language_result = JSON.parse(langagues_path);
+		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
+		await returnPermission(interaction, "features", async result => {
+			try {
+				if (result) {
+					const checkQuery = `SELECT ${choices} FROM guilds_config WHERE guildId = ?`
+					const checkFeature = await readDb(checkQuery, interaction.guild.id);
+
+					if (checkFeature != undefined) {
+						let updateSql = `UPDATE guilds_config SET ${choices} = ? WHERE guildId = ?`
+						if (checkFeature[choices] == 1) {
+							let customEmoji = await getEmojifromUrl(interaction.client, "pexremoved");
+							await runDb(updateSql, null, interaction.guild.id);
+							const embedLog = new EmbedBuilder()
+								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: customEmoji })
+								.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", nameChoices))
+								.setFooter({ text: `${language_result.disabledFeatures.embed_footer}`, iconURL: `${language_result.disabledFeatures.embed_icon_url}` })
+								.setColor(0xab2c09);
+							await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						} else {
+							let customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
+							await runDb(updateSql, 1, interaction.guild.id);
+							const embedLog = new EmbedBuilder()
+								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: customEmoji })
+								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", nameChoices))
+								.setFooter({ text: `${language_result.enabledFeatures.embed_footer}`, iconURL: `${language_result.enabledFeatures.embed_icon_url}` })
+								.setColor(0x119c05);
+							await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						}
+					} else {
+						await noInitGuilds(interaction);
+					}
+				}
+				else {
+					let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
+					const embedLog = new EmbedBuilder()
+						.setAuthor({ name: `${language_result.noPermission.embed_title}`, iconURL: customEmoji })
+						.setDescription(language_result.noPermission.description_embed)
+						.setFooter({ text: `${language_result.noPermission.embed_footer}`, iconURL: `${language_result.noPermission.embed_icon_url}` })
+						.setColor(0x4287f5);
+					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+				}
+			}
+			catch (error) {
+				errorSendControls(error, interaction.client, interaction.guild, "\\general\\features.js");
+			}
+		});
+	},
+};

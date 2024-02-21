@@ -96,10 +96,21 @@ async function returnPermission(interaction, pex, fn) {
   }
 }
 
+async function noInitGuilds(interaction) {
+  let customEmoji = await getEmojifromUrl(interaction.client, "checkinit");
+  const embedLog = new EmbedBuilder()
+    .setAuthor({ name: `Alka Hub | Init Controls`, iconURL: customEmoji })
+    .setDescription("You can't execute this command at the moment. You need to initialize Alka first with **/init**")
+    .setFooter({ text: `Alka Hub by alkanetwork.eu`, iconURL: `https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png` })
+    .setColor(0x4287f5);
+  return await interaction.reply({ embeds: [embedLog], ephemeral: true });
+}
+
 module.exports = {
   errorSendControls,
   getEmoji,
   getEmojifromUrl,
   checkHavePermissions,
   returnPermission,
+  noInitGuilds,
 }
