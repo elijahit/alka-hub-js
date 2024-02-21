@@ -1,29 +1,20 @@
-const sqlite3 = require('sqlite3').verbose();
+const { AsyncDatabase } = require('promised-sqlite3');
 
-const db = new sqlite3.Database('./bin/database.db', error => {
-  setTimeout(() => {
-    if(error) {
-      return console.error(error.message);
-    }
-    console.log('[SUCCESS] Connessione eseguita in-memory SQlite database.');
-  }, 1000);
-});
+async function readDb(querysql, ...parms) {
+  const db = await AsyncDatabase.open('./bin/database.db');
+  const result = await db.get(querysql, ...parms);
+  await db.close();
+  return result;
+}
 
-function getValueDatabase (sqlquery, guildId, fn) {
-  db.get(sqlquery, [guildId], (_, result_Db) => {
-    fn(result_Db);
-  });
-};
-
-function addValueDatabase (sqlquery, ...value) {
-  db.run(sqlquery, value, function(err) {
-    // get the last insert id
-
-  });
+async function readDbAll(table) {
+  const db = await AsyncDatabase.open('./bin/database.db');
+  const result = await db.all(`SELECT * from ${table}`);
+  await db.close();
+  return result;
 }
 
 module.exports = {
-  db,
-  getValueDatabase,
-  addValueDatabase,
+  readDb,
+  readDbAll,
 };
