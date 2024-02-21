@@ -7,7 +7,7 @@ const { errorSendControls, getEmojifromUrl, returnPermission } = require('../../
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('permissionlist')
-		.setDescription('Use the following command to set or remove role-based access levels!')
+		.setDescription('Use this command to view the permissions assigned to a role!')
 		.addRoleOption(option =>
 			option
 				.setName('role')
