@@ -1,7 +1,7 @@
 const { Events, EmbedBuilder, TextChannel } = require('discord.js');
-const { readFileSync } = require('fs');
+const { readFileSync, read } = require('fs');
 const language = require('../../../languages/languages');
-const database = require('../../../bin/database');
+const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 
 // QUERY DEFINITION
@@ -14,66 +14,64 @@ module.exports = {
   async execute(oldMessage, newMessage) {
     let customEmoji = await getEmojifromUrl(oldMessage.client, "update");
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    database.getValueDatabase(sqlEnabledFeature, oldMessage.guild.id, (result_Db) => {
-      if (!result_Db) return;
-      if (result_Db.logSystem_enabled != 1) return;
-      // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-      database.getValueDatabase(sqlChannelId_log, oldMessage.guild.id, async (result) => {
-        try {
+    const result_Db = await readDb(sqlEnabledFeature, oldMessage.guild.id);
+    if (!result_Db) return;
+    if (result_Db.logSystem_enabled != 1) return;
+    // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
+    const result = await readDb(sqlChannelId_log, oldMessage.guild.id);
+    try {
 
-          if (!result?.messageState_channel) return;
-          if (result.messageState_channel?.length < 5) return;
-          // CONTROLLO DELLA LINGUA
-          if (oldMessage.guild?.id) {
-            let data = await language.databaseCheck(oldMessage.guild.id);
-            const langagues_path = readFileSync(`./languages/logs_system/${data}.json`);
-            const language_result = JSON.parse(langagues_path);
-  
-            let channel_logs = await oldMessage.guild.channels.fetch(result.messageState_channel);
-            const fields = [];
+      if (!result?.messageState_channel) return;
+      if (result.messageState_channel?.length < 5) return;
+      // CONTROLLO DELLA LINGUA
+      if (oldMessage.guild?.id) {
+        let data = await language.databaseCheck(oldMessage.guild.id);
+        const langagues_path = readFileSync(`./languages/logs_system/${data}.json`);
+        const language_result = JSON.parse(langagues_path);
 
-            fields.push(
-              {name: `${language_result.messageUpdate.channel_message}`, value: `${oldMessage.channel}`, inline: true},
-              {name: `${language_result.messageUpdate.channel_message_id}`, value: `${oldMessage.channelId}`, inline: true},
-              {name: " ", value: " "},
-              {name: `${language_result.messageUpdate.author_message}`, value: `${oldMessage.author}`, inline: true},
-              {name: `${language_result.messageUpdate.author_message_id}`, value: `${oldMessage.author.id}`, inline: true},
-              {name: " ", value: " "}
-            );
+        let channel_logs = await oldMessage.guild.channels.fetch(result.messageState_channel);
+        const fields = [];
 
-            const embedLog = new EmbedBuilder();
-            if(oldMessage.content && !newMessage.content) {
-              embedLog
-              .setDescription(`**${language_result.messageUpdate.embed_description}:**\n${oldMessage.content}`);
-            } else if (!oldMessage.content && newMessage.content) {
-              embedLog
-              .setDescription(`**${language_result.messageUpdate.embed_description_new}:**\n${newMessage.content}`);
-            } else if (oldMessage.content && newMessage.content) {
-              embedLog
-              .setDescription(`**${language_result.messageUpdate.embed_description}:**\n${oldMessage.content}\n**${language_result.messageUpdate.embed_description_new}:**\n${newMessage.content}`);
-            }
+        fields.push(
+          { name: `${language_result.messageUpdate.channel_message}`, value: `${oldMessage.channel}`, inline: true },
+          { name: `${language_result.messageUpdate.channel_message_id}`, value: `${oldMessage.channelId}`, inline: true },
+          { name: " ", value: " " },
+          { name: `${language_result.messageUpdate.author_message}`, value: `${oldMessage.author}`, inline: true },
+          { name: `${language_result.messageUpdate.author_message_id}`, value: `${oldMessage.author.id}`, inline: true },
+          { name: " ", value: " " }
+        );
 
-            if(oldMessage.attachments.size > 0) {
-              let attachmentsContainer = "";
-              await oldMessage.attachments.each(value => {
-                attachmentsContainer += `${value.url}\n`;
-              });
-              fields.push({name: `${language_result.messageUpdate.attachments_message}`, value: `${attachmentsContainer}`});
-            }
-            fields.push({name: `${language_result.messageUpdate.go_message}`, value: `${oldMessage.url}`})
-
-            embedLog
-              .setAuthor({ name: `${language_result.messageUpdate.embed_title}`, iconURL: customEmoji })
-              .addFields(fields)
-              .setFooter({ text: `${language_result.messageUpdate.embed_footer}`, iconURL: `${language_result.messageUpdate.embed_icon_url}` })
-              .setColor(0xfcba03);
-            channel_logs.send({ embeds: [embedLog] });
-          }
+        const embedLog = new EmbedBuilder();
+        if (oldMessage.content && !newMessage.content) {
+          embedLog
+            .setDescription(`**${language_result.messageUpdate.embed_description}:**\n${oldMessage.content}`);
+        } else if (!oldMessage.content && newMessage.content) {
+          embedLog
+            .setDescription(`**${language_result.messageUpdate.embed_description_new}:**\n${newMessage.content}`);
+        } else if (oldMessage.content && newMessage.content) {
+          embedLog
+            .setDescription(`**${language_result.messageUpdate.embed_description}:**\n${oldMessage.content}\n**${language_result.messageUpdate.embed_description_new}:**\n${newMessage.content}`);
         }
-        catch (error) {
-          errorSendControls(error, oldMessage.client, oldMessage.guild, "\\logs_system\\MessageUpdate.js");
+
+        if (oldMessage.attachments.size > 0) {
+          let attachmentsContainer = "";
+          await oldMessage.attachments.each(value => {
+            attachmentsContainer += `${value.url}\n`;
+          });
+          fields.push({ name: `${language_result.messageUpdate.attachments_message}`, value: `${attachmentsContainer}` });
         }
-      });
-    });
+        fields.push({ name: `${language_result.messageUpdate.go_message}`, value: `${oldMessage.url}` })
+
+        embedLog
+          .setAuthor({ name: `${language_result.messageUpdate.embed_title}`, iconURL: customEmoji })
+          .addFields(fields)
+          .setFooter({ text: `${language_result.messageUpdate.embed_footer}`, iconURL: `${language_result.messageUpdate.embed_icon_url}` })
+          .setColor(0xfcba03);
+        channel_logs.send({ embeds: [embedLog] });
+      }
+    }
+    catch (error) {
+      errorSendControls(error, oldMessage.client, oldMessage.guild, "\\logs_system\\MessageUpdate.js");
+    }
   },
 };
