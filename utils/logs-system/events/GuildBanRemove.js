@@ -25,7 +25,7 @@ module.exports = {
       // CONTROLLO DELLA LINGUA
       if (ban.guild?.id) {
         let data = await language.databaseCheck(ban.guild.id);
-        const langagues_path = readFileSync(`./languages/logs_system/${data}.json`);
+        const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         let channel_logs = await ban.guild.channels.fetch(result.guildBanState_channel);

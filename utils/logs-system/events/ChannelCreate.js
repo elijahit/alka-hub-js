@@ -26,7 +26,7 @@ module.exports = {
       // CONTROLLO DELLA LINGUA
       if (channel.guild?.id) {
         let data = await language.databaseCheck(channel.guild.id);
-        const langagues_path = readFileSync(`./languages/logs_system/${data}.json`);
+        const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         let channel_logs = await channel.guild.channels.fetch(result.channelState_channel)

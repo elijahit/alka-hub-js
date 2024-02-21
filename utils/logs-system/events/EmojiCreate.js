@@ -25,7 +25,7 @@ module.exports = {
       // CONTROLLO DELLA LINGUA
       if (emoji.guild?.id) {
         let data = await language.databaseCheck(emoji.guild.id);
-        const langagues_path = readFileSync(`./languages/logs_system/${data}.json`);
+        const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         let channel_logs = await emoji.guild.channels.fetch(result.emojiState_channel);

@@ -26,7 +26,7 @@ module.exports = {
       // CONTROLLO DELLA LINGUA
       if (invite.guild?.id) {
         let data = await language.databaseCheck(invite.guild.id);
-        const langagues_path = readFileSync(`./languages/logs_system/${data}.json`);
+        const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         let channel_logs = await invite.guild.channels.fetch(result.inviteState_channel);

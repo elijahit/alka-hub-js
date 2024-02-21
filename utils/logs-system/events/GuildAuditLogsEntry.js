@@ -25,7 +25,7 @@ module.exports = { // HO DISABILITATO QUESTA FUNZIONE MODIFICANDO IL NOME EVENTO
       // CONTROLLO DELLA LINGUA
       if (guild?.id) {
         let data = await language.databaseCheck(guild.id);
-        const langagues_path = readFileSync(`./languages/logs_system/${data}.json`);
+        const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         let channel_logs = await guild.channels.fetch(result.guildAuditLogs_channel);

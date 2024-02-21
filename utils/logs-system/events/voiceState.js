@@ -26,7 +26,7 @@ module.exports = {
       // CONTROLLO DELLA LINGUA
       if (oldState.guild?.id) {
         let data = await language.databaseCheck(oldState.guild.id);
-        const langagues_path = readFileSync(`./languages/logs_system/${data}.json`);
+        const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         // UN UTENTE SI E' SPOSTATO DA UN CANALE A UN ALTRO
