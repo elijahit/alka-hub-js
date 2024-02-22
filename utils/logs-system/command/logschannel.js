@@ -54,7 +54,7 @@ module.exports = {
 				.setRequired(true)
 		),
 	async execute(interaction) {
-		let choices, channel;
+		let choices, channel, customEmoji;
 		// RECUPERO LE OPZIONI INSERITE
 		await interaction.options._hoistedOptions.forEach(value => {
 			if (value.name == 'state_event') {
@@ -75,20 +75,35 @@ module.exports = {
 				if (result) {
 					const checkQuery = `SELECT ${choices} FROM log_system_config WHERE guildId = ?`
 					const checkFeature = await readDb(checkQuery, interaction.guild.id);
-
+					const embedLog = new EmbedBuilder();
 					//CONTROLLO SE LA ROW E' GIA' PRESENTE NEL DB
 					if (checkFeature) {
-						runDb(`UPDATE log_system_config SET ${choices} = ? WHERE guildId = ?`, channel, interaction.guild.id);
+						checkChannelSql = await readDb(`SELECT ${choices} FROM log_system_config WHERE guildId = ?`, interaction.guild.id);
+						if(checkChannelSql[choices]) {
+							customEmoji = await getEmojifromUrl(interaction.client, "pexremoved");
+							runDb(`UPDATE log_system_config SET ${choices} = ? WHERE guildId = ?`, null, interaction.guild.id);
+							embedLog.setDescription(language_result.commandLogsChannel.description_embed_removed.replace("{0}", choices.split("_")[0]))
+							.setColor(0xeb4034);
+							console.log(checkChannelSql)
+						} else {
+							customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
+							runDb(`UPDATE log_system_config SET ${choices} = ? WHERE guildId = ?`, channel, interaction.guild.id);
+							embedLog
+							.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
+							.setColor(0x119c05);
+							console.log(checkChannelSql)
+						}
 
 					} else {
+						customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
 						runDb(`INSERT INTO log_system_config (guildId, ${choices}) VALUES(?, ?)`, interaction.guild.id, channel);
-					}
-					let customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
-					const embedLog = new EmbedBuilder()
-						.setAuthor({ name: `${language_result.commandLogsChannel.embed_title}`, iconURL: customEmoji })
+						embedLog
 						.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
-						.setFooter({ text: `${language_result.commandLogsChannel.embed_footer}`, iconURL: `${language_result.commandLogsChannel.embed_icon_url}` })
 						.setColor(0x119c05);
+					}
+					embedLog
+						.setAuthor({ name: `${language_result.commandLogsChannel.embed_title}`, iconURL: customEmoji })
+						.setFooter({ text: `${language_result.commandLogsChannel.embed_footer}`, iconURL: `${language_result.commandLogsChannel.embed_icon_url}` });
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 				}
 				else {
