@@ -1,12 +1,12 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Ranks System",
+    "embed_title": "Alka Hub | General",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "You do not have permission to use this command!"
   },
   "permissions": {
-    "embed_title": "Alka Hub | Ranks System",
+    "embed_title": "Alka Hub | General",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "remove_hash": "The permission **{0}** has been removed from the role {1}",
@@ -14,7 +14,7 @@
     "hash_not_found": "The permission **{0}** was not found in the list of allowed hashes"
   },
   "permissionList": {
-    "embed_title": "Alka Hub | Ranks System",
+    "embed_title": "Alka Hub | General",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "permissions_embed": "Below you'll find the list of permissions for role {0}",
