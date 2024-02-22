@@ -23,6 +23,7 @@ module.exports = {
 
       if (!result?.messageState_channel) return;
       if (result.messageState_channel?.length < 5) return;
+      if(oldMessage.author.id == oldMessage.client.user.id) return;
       // CONTROLLO DELLA LINGUA
       if (oldMessage.guild?.id) {
         let data = await language.databaseCheck(oldMessage.guild.id);
