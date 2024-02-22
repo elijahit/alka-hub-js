@@ -47,7 +47,7 @@ module.exports = {
 						if (!checkInit) {
 							runInitSql = `INSERT INTO guilds_config (guildId, languages) VALUES (?, ?) `
 							await runDb(runInitSql, interaction.guild.id, choices);
-							let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
+							let customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: customEmoji })
 								.setDescription(language_result.initCommand.description_embed)
