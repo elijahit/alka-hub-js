@@ -285,5 +285,11 @@
     "message_embed": "Messaggio",
     "message_embed_id": "ID Messaggio",
     "embed_reactions": "Reazioni"
+  },
+  "commandLogsChannel": {
+    "embed_title": "Alka Hub | Logs System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Hai inserito con successo il canale per l'evento **{0}**, adesso le tue logs saranno registrate li!"
   }
 }
