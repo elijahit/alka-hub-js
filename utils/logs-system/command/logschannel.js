@@ -84,14 +84,12 @@ module.exports = {
 							runDb(`UPDATE log_system_config SET ${choices} = ? WHERE guildId = ?`, null, interaction.guild.id);
 							embedLog.setDescription(language_result.commandLogsChannel.description_embed_removed.replace("{0}", choices.split("_")[0]))
 							.setColor(0xeb4034);
-							console.log(checkChannelSql)
 						} else {
 							customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
 							runDb(`UPDATE log_system_config SET ${choices} = ? WHERE guildId = ?`, channel, interaction.guild.id);
 							embedLog
 							.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
 							.setColor(0x119c05);
-							console.log(checkChannelSql)
 						}
 
 					} else {
