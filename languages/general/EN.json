@@ -1,20 +1,27 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Ranks System",
+    "embed_title": "Alka Hub | General",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "You do not have permission to use this command!"
   },
   "disabledFeatures": {
-    "embed_title": "Alka Hub | Ranks System",
+    "embed_title": "Alka Hub | General",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "You have successfully disabled the **{0}** feature."
   },
   "enabledFeatures": {
-    "embed_title": "Alka Hub | Ranks System",
+    "embed_title": "Alka Hub | General",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "You have successfully enabled the **{0}** feature."
+  },
+  "initCommand": {
+    "embed_title": "Alka Hub | General",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_already_embed": "This server has already been initialized. Further initialization is not possible. Use **/config** to modify its configuration.",
+    "description_embed": "You have successfully initialized Alka Hub. Now you can fully enjoy all the features of Alka Hub!"
   }
 }
