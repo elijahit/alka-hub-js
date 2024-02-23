@@ -11,11 +11,11 @@ module.exports = {
 		.addStringOption(option =>
 			option
 				.addChoices({
-					name: "Member Join State",
+					name: "Add Member State",
 					value: "addMember_channel",
 				})
 				.addChoices({
-					name: "Member Exit State",
+					name: "Remove Member State",
 					value: "removeMember_channel",
 				})
 				.addChoices({
