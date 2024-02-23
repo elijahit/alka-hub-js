@@ -99,7 +99,12 @@ module.exports = {
         if (oldMember.user.avatar) {
           embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${oldMember.id}/${oldMember.user.avatar}.png`);
         }
-        channel_logs.send({ embeds: [embedLog] });;
+        try {
+          channel_logs.send({ embeds: [embedLog] });;
+        }
+        catch {
+          return;
+        }
       }
     }
     catch (error) {

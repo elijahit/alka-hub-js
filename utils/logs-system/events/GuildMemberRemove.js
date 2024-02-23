@@ -5,7 +5,7 @@ const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT guildMemberState_channel FROM log_system_config WHERE guildId = ?`;
+let sqlChannelId_log = `SELECT removeMember_channel FROM log_system_config WHERE guildId = ?`;
 let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
 // ------------ //
 
@@ -20,15 +20,15 @@ module.exports = {
       if (result_Db.logSystem_enabled != 1) return;
       // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
       const result = await readDb(sqlChannelId_log, member.guild.id);
-      if (!result?.guildMemberState_channel) return;
-      if (result.guildMemberState_channel?.length < 5) return;
+      if (!result?.removeMember_channel) return;
+      if (result.removeMember_channel?.length < 5) return;
       // CONTROLLO DELLA LINGUA
       if (member.guild?.id) {
         let data = await language.databaseCheck(member.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await member.guild.channels.fetch(result.guildMemberState_channel);
+        let channel_logs = await member.guild.channels.fetch(result.removeMember_channel);
         const fields = [];
 
         fields.push(

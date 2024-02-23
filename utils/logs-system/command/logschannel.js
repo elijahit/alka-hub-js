@@ -11,6 +11,14 @@ module.exports = {
 		.addStringOption(option =>
 			option
 				.addChoices({
+					name: "Member Join State",
+					value: "addMember_channel",
+				})
+				.addChoices({
+					name: "Member Exit State",
+					value: "removeMember_channel",
+				})
+				.addChoices({
 					name: "Emoji State",
 					value: "emojiState_channel",
 				})
@@ -79,25 +87,25 @@ module.exports = {
 					//CONTROLLO SE LA ROW E' GIA' PRESENTE NEL DB
 					if (checkFeature) {
 						checkChannelSql = await readDb(`SELECT ${choices} FROM log_system_config WHERE guildId = ?`, interaction.guild.id);
-						if(checkChannelSql[choices]) {
+						if (checkChannelSql[choices]) {
 							customEmoji = await getEmojifromUrl(interaction.client, "pexremoved");
 							runDb(`UPDATE log_system_config SET ${choices} = ? WHERE guildId = ?`, null, interaction.guild.id);
 							embedLog.setDescription(language_result.commandLogsChannel.description_embed_removed.replace("{0}", choices.split("_")[0]))
-							.setColor(0xeb4034);
+								.setColor(0xeb4034);
 						} else {
 							customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
 							runDb(`UPDATE log_system_config SET ${choices} = ? WHERE guildId = ?`, channel, interaction.guild.id);
 							embedLog
-							.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
-							.setColor(0x119c05);
+								.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
+								.setColor(0x119c05);
 						}
 
 					} else {
 						customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
 						runDb(`INSERT INTO log_system_config (guildId, ${choices}) VALUES(?, ?)`, interaction.guild.id, channel);
 						embedLog
-						.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
-						.setColor(0x119c05);
+							.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
+							.setColor(0x119c05);
 					}
 					embedLog
 						.setAuthor({ name: `${language_result.commandLogsChannel.embed_title}`, iconURL: customEmoji })
