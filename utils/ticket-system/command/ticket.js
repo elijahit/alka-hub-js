@@ -58,7 +58,6 @@ module.exports = {
 				}
 			}
 			catch (error) {
-				console.log(error)
 				errorSendControls(error, interaction.client, interaction.guild, "\\ticket-system\\ticket.js");
 			}
 		});

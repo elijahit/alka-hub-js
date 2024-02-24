@@ -8,6 +8,44 @@
   "messageChannel": {
     "embed_title": "Alka Hub | Ticket System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png"
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "modalTitleDescription": "Ticket Title",
+    "modalTitlePlaceHolder": "Enter the title for the ticket",
+    "modalDescriptionDescription": "Message Description",
+    "modalDescriptionPlaceHolder": "Message to be sent in the ticket channel"
+  },
+  "selectTicketChannel": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Select the channel where you want to send the ticket initialization message, where users can open their tickets.",
+    "placeholder": "Select the ticket embed channel",
+    "description_embed_two": "You have initiated the process of creating the **Ticket System**, we have created the channel {0} for you, follow there for configuration."
+  },
+  "errorDb": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "We encountered a problem, please try again."
+  },
+  "selectCategoryTicket": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Select now the category in which the tickets will be opened.",
+    "placeholder": "Select the ticket category"
+  },
+  "selectTranscriptTicket": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Select now the channel where the ticket transcripts will be sent.",
+    "placeholder": "Select the transcript channel"
+  },
+  "endSetupTicket": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "You have successfully completed the setup of the **Ticket System**, now add your components (buttons) that will allow users to submit tickets."
   }
 }
