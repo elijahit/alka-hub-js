@@ -1,8 +1,23 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Ranks System",
+    "embed_title": "Alka Hub | Ticket System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "Non hai il permesso per usare questo comando!"
+  },
+  "messageChannel": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "modalTitleDescription": "Titolo Ticket",
+    "modalTitlePlaceHolder": "Inserisci il titolo che il ticket dovrà avere",
+    "modalDescriptionDescription": "Descrizione Messaggio",
+    "modalDescriptionPlaceHolder": "Messaggio che sarà inviato nel canale ticket"
+  },
+  "selectTicketChannel": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Ok adesso seleziona il canale in cui vuoi inviare il messaggio di inizializzazione dei ticket in cui desideri inviare il messaggio dove l'utente potrà aprire il suo ticket."
   }
 }
