@@ -59,6 +59,25 @@
     "embed_title": "Alka Hub | Ticket System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "Hai aggiunto con successo il componente nel messaggio di ticket."
+    "description_embed": "Hai aggiunto con successo il componente nel messaggio di ticket.",
+    "error_prefix": "Abbiamo riscontrato un errore, ti preghiamo di non usare lo stesso prefix di altri components nello stesso messaggio."
+  },
+  "ticketInteractionSend": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Hai aperto con successo il ticket {0}. Invia ora le informazioni della tua richiesta per permettere agli amministratori di risolvere la tua richiesta."
+  },
+  "ticketChannelSend": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Il tuo ticket è stato inviato agli amministratori, i quali risponderanno presto alla tua richiesta. Nel frattempo, ti preghiamo di esporre dettagliatamente il problema per consentire una risoluzione più rapida del ticket."
+  },
+  "ticketChannelDuplicate": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Non puoi aprire ticket duplicati che fanno parte della stessa tipologia, se questo è un errore contatta un amministratore."
   }
 }

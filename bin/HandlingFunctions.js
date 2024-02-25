@@ -116,6 +116,17 @@ async function noEnabledFunc(interaction, language) {
   return await interaction.reply({ embeds: [embedLog], ephemeral: true });
 }
 
+async function noHavePermission(interaction, language) {
+  let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
+  const embedLog = new EmbedBuilder()
+    .setAuthor({ name: `${language.noPermission.embed_title}`, iconURL: customEmoji })
+    .setDescription(language.noPermission.description_embed)
+    .setFooter({ text: `${language.noPermission.embed_footer}`, iconURL: `${language.noPermission.embed_icon_url}` })
+    .setColor(0x4287f5);
+
+  await interaction.reply({ embeds: [embedLog], ephemeral: true });
+}
+
 module.exports = {
   errorSendControls,
   getEmoji,
@@ -124,4 +135,5 @@ module.exports = {
   returnPermission,
   noInitGuilds,
   noEnabledFunc,
+  noHavePermission,
 }

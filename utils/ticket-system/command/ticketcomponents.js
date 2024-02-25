@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, Text
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
 const { readDbAllWith2Params, readDb, runDb } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl, returnPermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
+const { errorSendControls, getEmojifromUrl, returnPermission, noEnabledFunc, noHavePermission } = require('../../../bin/HandlingFunctions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -18,6 +18,7 @@ module.exports = {
 				.setName("prefix")
 				.setDescription("Provide the prefix (UNIQUE) of the ticket message")
 				.setRequired(true)
+				.setMaxLength(3)
 		)
 		.addStringOption(option =>
 			option
@@ -100,7 +101,7 @@ module.exports = {
 							} catch {
 								// Passa comunque e non settare Emoji
 							}
-
+							const embedLog = new EmbedBuilder();
 							button
 								.setCustomId(prefixChoice)
 								.setLabel(labelChoice)
@@ -116,10 +117,20 @@ module.exports = {
 							})
 
 							buttonRow.addComponents(button);
-
-							await message.edit({ components: [buttonRow] });
+							try {
+								await message.edit({ components: [buttonRow] });
+							} catch {
+								let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
+								embedLog
+									.setAuthor({ name: `${language_result.ticketComponentsAdd.embed_title}`, iconURL: customEmoji })
+									.setDescription(language_result.ticketComponentsAdd.error_prefix)
+									.setFooter({ text: `${language_result.ticketComponentsAdd.embed_footer}`, iconURL: `${language_result.ticketComponentsAdd.embed_icon_url}` })
+									.setColor(0xeb4034);
+								await interaction.reply({ embeds: [embedLog], ephemeral: true });
+								return;
+							}
 							let customEmoji = await getEmojifromUrl(interaction.client, "ticket");
-							const embedLog = new EmbedBuilder()
+							embedLog
 								.setAuthor({ name: `${language_result.ticketComponentsAdd.embed_title}`, iconURL: customEmoji })
 								.setDescription(language_result.ticketComponentsAdd.description_embed)
 								.setFooter({ text: `${language_result.ticketComponentsAdd.embed_footer}`, iconURL: `${language_result.ticketComponentsAdd.embed_icon_url}` })
@@ -142,14 +153,7 @@ module.exports = {
 
 				}
 				else {
-					let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
-					const embedLog = new EmbedBuilder()
-						.setAuthor({ name: `${language_result.noPermission.embed_title}`, iconURL: customEmoji })
-						.setDescription(language_result.noPermission.description_embed)
-						.setFooter({ text: `${language_result.noPermission.embed_footer}`, iconURL: `${language_result.noPermission.embed_icon_url}` })
-						.setColor(0x4287f5);
-
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					await noHavePermission(interaction, language_result);
 				}
 			}
 			catch (error) {

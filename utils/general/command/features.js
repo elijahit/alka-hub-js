@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
 const { readDb, runDb } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl, returnPermission, noInitGuilds } = require('../../../bin/HandlingFunctions');
+const { errorSendControls, getEmojifromUrl, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -69,13 +69,7 @@ module.exports = {
 					}
 				}
 				else {
-					let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
-					const embedLog = new EmbedBuilder()
-						.setAuthor({ name: `${language_result.noPermission.embed_title}`, iconURL: customEmoji })
-						.setDescription(language_result.noPermission.description_embed)
-						.setFooter({ text: `${language_result.noPermission.embed_footer}`, iconURL: `${language_result.noPermission.embed_icon_url}` })
-						.setColor(0x4287f5);
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					await noHavePermission(interaction, language_result);
 				}
 			}
 			catch (error) {
