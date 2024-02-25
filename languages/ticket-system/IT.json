@@ -48,5 +48,17 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "Hai completato con successo il setup del **Ticket System**, adesso aggiungi i tuoi components (button) che serviranno per consentire agli utenti di inviare i ticket."
+  },
+  "noFoundMessage": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Il messaggio non è stato trovato nel database! Assicurati di eseguire il comando nel canale in cui si trova il tuo messaggio di ticket."
+  },
+  "ticketComponentsAdd": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Hai aggiunto con successo il componente nel messaggio di ticket."
   }
 }

@@ -170,6 +170,7 @@ module.exports = {
         await interaction.channel.delete();
 
       }
+      console.log(interaction)
     }
     catch (error) {
       errorSendControls(error, interaction.guild.client, interaction.guild, "\\ticket-system\\ticketInteraction.js");
