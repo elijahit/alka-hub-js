@@ -14,6 +14,10 @@ module.exports = {
 					name: "Logs System",
 					value: "logSystem_enabled",
 				})
+				.addChoices({
+					name: "Ticket System",
+					value: "ticketSystem_enabled",
+				})
 				.setName('choices')
 				.setDescription('Name of the system you want to enable or disable')
 				.setRequired(true)

@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder, ModalBuilder, ActionRowBuilder, TextI
 const language = require('../../../languages/languages');
 const { readFileSync } = require('fs');
 const { readDbAllWith2Params, readDb, runDb } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl, returnPermission } = require('../../../bin/HandlingFunctions');
+const { errorSendControls, getEmojifromUrl, returnPermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -19,33 +19,40 @@ module.exports = {
 		await returnPermission(interaction, "ticket", async result => {
 			try {
 				if (result) {
-					const checkSql = await readDbAllWith2Params(`SELECT * from ticket_system_message WHERE initAuthorId = ? AND guildId = ?`, interaction.user.id, interaction.guild.id);
-					if(checkSql) {
-						await runDb(`DELETE from ticket_system_message WHERE initAuthorId = ? AND guildId = ?`, interaction.user.id, interaction.guild.id);
+					const checkFeaturesisEnabled = await readDb(`SELECT ticketSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
+
+					if(checkFeaturesisEnabled?.ticketSystem_enabled) {
+						const checkSql = await readDbAllWith2Params(`SELECT * from ticket_system_message WHERE initAuthorId = ? AND guildId = ?`, interaction.user.id, interaction.guild.id);
+						if(checkSql) {
+							await runDb(`DELETE from ticket_system_message WHERE initAuthorId = ? AND guildId = ?`, interaction.user.id, interaction.guild.id);
+						}
+	
+						const modal = new ModalBuilder()
+							.setCustomId("ticketModal")
+							.setTitle(language_result.messageChannel.embed_title);
+	
+						const ticketTitle = new TextInputBuilder()
+							.setCustomId('ticketModalTitle')
+							.setLabel(language_result.messageChannel.modalTitleDescription)
+							.setPlaceholder(language_result.messageChannel.modalTitlePlaceHolder)
+							.setStyle(TextInputStyle.Short);
+	
+						const ticketDescription = new TextInputBuilder()
+						.setCustomId('ticketModalDescription')
+						.setLabel(language_result.messageChannel.modalDescriptionDescription)
+						.setPlaceholder(language_result.messageChannel.modalDescriptionPlaceHolder)
+						.setStyle(TextInputStyle.Paragraph);
+	
+						const ticketTitleRow = new ActionRowBuilder().addComponents(ticketTitle);
+						const ticketDescriptionRow = new ActionRowBuilder().addComponents(ticketDescription);
+	
+						modal.addComponents(ticketTitleRow, ticketDescriptionRow);
+						
+						await interaction.showModal(modal);
+					} else {
+						await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
 					}
 
-					const modal = new ModalBuilder()
-						.setCustomId("ticketModal")
-						.setTitle(language_result.messageChannel.embed_title);
-
-					const ticketTitle = new TextInputBuilder()
-						.setCustomId('ticketModalTitle')
-						.setLabel(language_result.messageChannel.modalTitleDescription)
-						.setPlaceholder(language_result.messageChannel.modalTitlePlaceHolder)
-						.setStyle(TextInputStyle.Short);
-
-					const ticketDescription = new TextInputBuilder()
-					.setCustomId('ticketModalDescription')
-					.setLabel(language_result.messageChannel.modalDescriptionDescription)
-					.setPlaceholder(language_result.messageChannel.modalDescriptionPlaceHolder)
-					.setStyle(TextInputStyle.Paragraph);
-
-					const ticketTitleRow = new ActionRowBuilder().addComponents(ticketTitle);
-					const ticketDescriptionRow = new ActionRowBuilder().addComponents(ticketDescription);
-
-					modal.addComponents(ticketTitleRow, ticketDescriptionRow);
-					
-					await interaction.showModal(modal);
 				}
 				else {
 					let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");

@@ -106,6 +106,16 @@ async function noInitGuilds(interaction) {
   return await interaction.reply({ embeds: [embedLog], ephemeral: true });
 }
 
+async function noEnabledFunc(interaction, language) {
+  let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
+  const embedLog = new EmbedBuilder()
+    .setAuthor({ name: `Alka Hub | Features Controls`, iconURL: customEmoji })
+    .setDescription(language)
+    .setFooter({ text: `Alka Hub by alkanetwork.eu`, iconURL: `https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png` })
+    .setColor(0x4287f5);
+  return await interaction.reply({ embeds: [embedLog], ephemeral: true });
+}
+
 module.exports = {
   errorSendControls,
   getEmoji,
@@ -113,4 +123,5 @@ module.exports = {
   checkHavePermissions,
   returnPermission,
   noInitGuilds,
+  noEnabledFunc,
 }
