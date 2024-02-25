@@ -2,7 +2,7 @@ const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, Chann
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDbAllWith2Params, runDb, readDbWith3Params, readDbWith4Params } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const { errorSendControls, getEmojifromUrl, returnPermission, noHavePermission } = require('../../../bin/HandlingFunctions');
 
 
 module.exports = {
@@ -172,7 +172,7 @@ module.exports = {
       }
 
       // INTERACTION TICKET SYSTEM START
-      const checkChannelForInteraction = await readDbWith3Params(`SELECT * FROM ticket_system_message WHERE channelId = ? AND messageId = ? AND guildId = ?`, interaction.message.channelId, interaction.message.id, interaction.guild.id);
+      const checkChannelForInteraction = await readDbWith3Params(`SELECT * FROM ticket_system_message WHERE channelId = ? AND messageId = ? AND guildId = ?`, interaction.message?.channelId, interaction.message?.id, interaction.guild?.id);
       if (checkChannelForInteraction) {
         await interaction.deferReply({ ephemeral: true });
         const category = await interaction.guild.channels.fetch(checkChannelForInteraction.categoryId);
@@ -217,11 +217,11 @@ module.exports = {
         // INVIO IL MESSAGGIO DI TICKET AL CANALE
         const buttonClaim = new ButtonBuilder()
           .setCustomId('ticketClaim')
-          .setLabel('Claim')
+          .setLabel(language_result.ticketButton.claim_ticket)
           .setStyle(ButtonStyle.Success);
         const buttonCancel = new ButtonBuilder()
           .setCustomId('ticketCancel')
-          .setLabel('Cancel')
+          .setLabel(language_result.ticketButton.cancel_ticket)
           .setStyle(ButtonStyle.Danger);
         const buttonRow = new ActionRowBuilder().addComponents([buttonClaim, buttonCancel]);
         let customEmoji = await getEmojifromUrl(interaction.client, "ticket");
@@ -229,7 +229,7 @@ module.exports = {
           .setAuthor({ name: `${language_result.ticketChannelSend.embed_title}`, iconURL: customEmoji })
           .setDescription(language_result.ticketChannelSend.description_embed)
           .setFooter({ text: `${language_result.ticketChannelSend.embed_footer}`, iconURL: `${language_result.ticketChannelSend.embed_icon_url}` })
-          .setColor(0x1b9e31);
+          .setColor(0xf5bc42);
         const messageTicket = await channel.send({ embeds: [embedChannel], components: [buttonRow] })
         await runDb(`INSERT INTO ticket_system_tickets (guildId, authorId, messageId, ticketPrefix, ticketSystemMessage_Id) VALUES (?, ?, ?, ?, ?)`, interaction.guild.id, interaction.user.id, messageTicket.id, interaction.customId, checkChannelForInteraction.messageId);
 
@@ -243,17 +243,110 @@ module.exports = {
       }
       // INTERACTION TICKET SYSTEM END
       // TICKET CLAIM
-      if(interaction.customId == "ticketClaim") {
-        const checkSql = await readDbAllWith2Params(`SELECT * FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
-        console.log(checkSql)
+      if (interaction.customId == "ticketClaim") {
+        await returnPermission(interaction, "ticketClaim", async result => {
+          if (result) {
+            const checkSql = await readDbAllWith2Params(`SELECT * FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
+
+            if (checkSql) {
+              // INVIO IL MESSAGGIO DI TICKET AL CANALE
+              const buttonClose = new ButtonBuilder()
+                .setCustomId('ticketClose')
+                .setLabel(language_result.ticketButton.close_ticket)
+                .setStyle(ButtonStyle.Danger);
+              const buttonRow = new ActionRowBuilder().addComponents([buttonClose]);
+              let customEmoji = await getEmojifromUrl(interaction.client, "ticket");
+
+              const embedChannel = new EmbedBuilder()
+                .setAuthor({ name: `${language_result.ticketChannelClaim.embed_title}`, iconURL: customEmoji })
+                .setDescription(language_result.ticketChannelClaim.description_embed.replace("{0}", interaction.user))
+                .setFooter({ text: `${language_result.ticketChannelClaim.embed_footer}`, iconURL: `${language_result.ticketChannelClaim.embed_icon_url}` })
+                .setColor(0x1b9e31);
+              await interaction.message.edit({ embeds: [embedChannel], components: [buttonRow] })
+
+              const joinEmbed = new EmbedBuilder()
+                .setDescription(language_result.ticketStaffJoin.description_embed.replace("{0}", interaction.user))
+                .setColor(0x408eed);
+
+              await interaction.message.edit({ embeds: [embedChannel], components: [buttonRow] })
+
+              await interaction.reply({ embeds: [joinEmbed] })
+
+              // PROVO A INVIARE UN MESSAGGIO AL AUTORE DEL TICKET
+              try {
+                const checkUserSql = await readDbAllWith2Params(`SELECT * FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
+
+                const user = await interaction.guild.members.fetch(checkUserSql[0].authorId);
+            
+                const embedAuthor = new EmbedBuilder()
+                  .setAuthor({ name: `${language_result.ticketClaimToAuthor.embed_title}`, iconURL: customEmoji })
+                  .setDescription(language_result.ticketClaimToAuthor.description_embed.replace("{0}", interaction.channel).replace("{1}", interaction.user))
+                  .setFooter({ text: `${language_result.ticketClaimToAuthor.embed_footer}`, iconURL: `${language_result.ticketClaimToAuthor.embed_icon_url}` })
+                  .setColor(0x1b9e31);
+                user.send({embeds: [embedAuthor]});
+              } catch (error) {
+                return;
+              }
+            }
+          }
+          else {
+            await noHavePermission(interaction, language_result);
+          }
+        });
       }
       // END TICKET CLAIM
 
       // TICKET CANCEL
-      if(interaction.customId == "ticketCancel") {
-        console.log("test")
+      if (interaction.customId == "ticketCancel") {
+        await returnPermission(interaction, "ticketCancel", async result => {
+          if (result) {
+            const checkSql = await readDbAllWith2Params(`SELECT * FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
+
+            if (checkSql) {
+              // PROVO A INVIARE UN MESSAGGIO AL AUTORE DEL TICKET
+              try {
+                let customEmoji = await getEmojifromUrl(interaction.client, "ticket");
+                const checkUserSql = await readDbAllWith2Params(`SELECT * FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
+
+                const user = await interaction.guild.members.fetch(checkUserSql[0].authorId);
+            
+                const embedAuthor = new EmbedBuilder()
+                  .setAuthor({ name: `${language_result.ticketCloseToAuthor.embed_title}`, iconURL: customEmoji })
+                  .setDescription(language_result.ticketCloseToAuthor.description_embed.replace("{0}", interaction.user))
+                  .setFooter({ text: `${language_result.ticketCloseToAuthor.embed_footer}`, iconURL: `${language_result.ticketCloseToAuthor.embed_icon_url}` })
+                  .setColor(0x961e1e);
+                user.send({embeds: [embedAuthor]});
+              } catch (error) {
+                // passa avanti
+              }
+              await runDb(`DELETE FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
+              await interaction.deferReply();
+              await interaction.channel.delete();
+            }
+          }
+          else {
+            await noHavePermission(interaction, language_result);
+          }
+        });
       }
       // END TICKET CANCEL
+
+      // TICKET CLOSE
+      if (interaction.customId == "ticketClose") {
+        await returnPermission(interaction, "ticketClose", async result => {
+          if (result) {
+            const checkSql = await readDbAllWith2Params(`SELECT * FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
+
+            if (checkSql) {
+              //DA SCRIPTARE DOMANI
+            }
+          }
+          else {
+            await noHavePermission(interaction, language_result);
+          }
+        });
+      }
+      // END TICKET CLOSE
     }
     catch (error) {
       errorSendControls(error, interaction.guild.client, interaction.guild, "\\ticket-system\\ticketInteraction.js");

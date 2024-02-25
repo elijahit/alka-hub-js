@@ -79,5 +79,31 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "You cannot open duplicate tickets of the same type. If this is an error, please contact an administrator."
+  },
+  "ticketChannelClaim": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "The administrator {0} has taken charge of your ticket and will respond to your inquiries."
+  },
+  "ticketButton": {
+    "close_ticket": "Close Ticket",
+    "claim_ticket": "Claim",
+    "cancel_ticket": "Cancel"
+  },
+  "ticketStaffJoin": {
+    "description_embed": "{0} has entered the chat"
+  },
+  "ticketClaimToAuthor": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Your ticket {0} has been taken over by {1}, please check its status."
+  },
+  "ticketCloseToAuthor": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Your ticket has been deleted by {0}. If you believe the issue persists, feel free to reopen a ticket."
   }
 }
