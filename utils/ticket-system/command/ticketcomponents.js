@@ -26,12 +26,6 @@ module.exports = {
 				.setDescription("Provide the name of the component")
 				.setRequired(true)
 		)
-		.addStringOption(option =>
-			option
-				.setName("emoji")
-				.setDescription("Provide the emoji of the component")
-				.setRequired(true)
-		)
 		.addNumberOption(option =>
 			option
 				.addChoices({
@@ -53,6 +47,12 @@ module.exports = {
 				.setName("style")
 				.setDescription("Provide the style of the component")
 				.setRequired(true)
+		)
+		.addStringOption(option =>
+			option
+				.setName("emoji")
+				.setDescription("Provide the emoji of the component")
+				.setRequired(false)
 		)
 		.setDescription('Use this command to set the ticket components'),
 	async execute(interaction) {
