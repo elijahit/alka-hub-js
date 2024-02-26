@@ -143,6 +143,7 @@ module.exports = {
         }
       }
       if (interaction.customId == "ticketTranscriptSelect") {
+        await interaction.deferReply();
         let channel = interaction.values[0];
         let customEmoji = await getEmojifromUrl(interaction.client, "ticket");
         const checkSql = await readDbAllWith2Params(`SELECT * from ticket_system_message WHERE initAuthorId = ? AND guildId = ?`, interaction.user.id, interaction.guild.id);
@@ -166,9 +167,7 @@ module.exports = {
         await initChannel.send({ content: `${interaction.user}`, embeds: [embedLog], ephemeral: true });
 
         await runDb(`UPDATE ticket_system_message SET transcriptId = ?, initAuthorId = ?, messageId = ? WHERE guildId = ? AND initAuthorId = ?`, channel, null, message.id, interaction.guild.id, interaction.user.id);
-        await interaction.deferReply();
         await interaction.channel.delete();
-
       }
 
       // INTERACTION TICKET SYSTEM START
