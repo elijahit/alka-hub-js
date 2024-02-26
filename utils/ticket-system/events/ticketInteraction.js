@@ -166,7 +166,7 @@ module.exports = {
         await initChannel.send({ content: `${interaction.user}`, embeds: [embedLog], ephemeral: true });
 
         await runDb(`UPDATE ticket_system_message SET transcriptId = ?, initAuthorId = ?, messageId = ? WHERE guildId = ? AND initAuthorId = ?`, channel, null, message.id, interaction.guild.id, interaction.user.id);
-
+        await interaction.deferReply();
         await interaction.channel.delete();
 
       }
