@@ -119,6 +119,7 @@
     "user": "Utente",
     "admin": "Admin",
     "reason": "Motivazione",
+    "prefix": "Ticket Prefix",
     "ticketClose": "Il tuo ticket è stato risolto da {0}, la transcrizione ti è stata inviata.",
     "ticketCloseNoTranscription": "Il tuo ticket è stato risolto da {0}."
   }
