@@ -399,7 +399,7 @@ module.exports = {
               const transcriptChannel = await interaction.guild.channels.fetch(checkSqlToMessage[0].transcriptId)
 
               let customEmoji = await getEmojifromUrl(interaction.client, "ticket");
-              console.log(checkSql[0].ticketPrefix)
+
               const embedTranscription = new EmbedBuilder()
                 .setAuthor({ name: `${language_result.ticketTranscription.embed_title}`, iconURL: customEmoji })
                 .setFields([
