@@ -105,5 +105,22 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "Your ticket has been deleted by {0}. If you believe the issue persists, feel free to reopen a ticket."
+  },
+  "ticketCloseModal": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "modalDescriptionDescription": "REASON",
+    "modalDescriptionPlaceHolder": "Insert reason"
+  },
+  "ticketTranscription": {
+    "embed_title": "Alka Hub | Ticket System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "user": "User",
+    "admin": "Admin",
+    "reason": "Reason",
+    "prefix": "Ticket Prefix",
+    "ticketClose": "Your ticket has been resolved by {0}, the transcription has been sent to you.",
+    "ticketCloseNoTranscription": "Your ticket has been resolved by {0}."
   }
 }

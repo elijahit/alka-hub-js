@@ -1,5 +1,5 @@
-const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle } = require('discord.js');
-const { readFileSync } = require('fs');
+const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder } = require('discord.js');
+const { readFileSync, writeFileSync, unlinkSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDbAllWith2Params, runDb, readDbWith3Params, readDbWith4Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, returnPermission, noHavePermission } = require('../../../bin/HandlingFunctions');
@@ -204,7 +204,7 @@ module.exports = {
         // AGGIUNTA PERMESSI UTENTE
         permissionTicket.push({
           id: interaction.user.id,
-          allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages],
+          allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.AttachFiles, PermissionFlagsBits.ReadMessageHistory],
         })
         // CREO IL CANALE
         const channel = await interaction.guild.channels.create({
@@ -249,6 +249,18 @@ module.exports = {
             const checkSql = await readDbAllWith2Params(`SELECT * FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
 
             if (checkSql) {
+              const permissionTicket = [];
+              // AGGIORNO I PERMESSI PER L'AMMINISTRATORE E L'UTENTE
+              permissionTicket.push({
+                id: interaction.user.id,
+                allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.AttachFiles, PermissionFlagsBits.ReadMessageHistory],
+              }, {
+                id: checkSql[0].authorId,
+                allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.AttachFiles, PermissionFlagsBits.ReadMessageHistory],
+              })
+
+              await interaction.channel.edit({ permissionOverwrites: permissionTicket });
+
               // INVIO IL MESSAGGIO DI TICKET AL CANALE
               const buttonClose = new ButtonBuilder()
                 .setCustomId('ticketClose')
@@ -268,8 +280,6 @@ module.exports = {
                 .setDescription(language_result.ticketStaffJoin.description_embed.replace("{0}", interaction.user))
                 .setColor(0x408eed);
 
-              await interaction.message.edit({ embeds: [embedChannel], components: [buttonRow] })
-
               await interaction.reply({ embeds: [joinEmbed] })
 
               // PROVO A INVIARE UN MESSAGGIO AL AUTORE DEL TICKET
@@ -277,13 +287,13 @@ module.exports = {
                 const checkUserSql = await readDbAllWith2Params(`SELECT * FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
 
                 const user = await interaction.guild.members.fetch(checkUserSql[0].authorId);
-            
+
                 const embedAuthor = new EmbedBuilder()
                   .setAuthor({ name: `${language_result.ticketClaimToAuthor.embed_title}`, iconURL: customEmoji })
                   .setDescription(language_result.ticketClaimToAuthor.description_embed.replace("{0}", interaction.channel).replace("{1}", interaction.user))
                   .setFooter({ text: `${language_result.ticketClaimToAuthor.embed_footer}`, iconURL: `${language_result.ticketClaimToAuthor.embed_icon_url}` })
                   .setColor(0x1b9e31);
-                user.send({embeds: [embedAuthor]});
+                user.send({ embeds: [embedAuthor] });
               } catch (error) {
                 return;
               }
@@ -309,13 +319,13 @@ module.exports = {
                 const checkUserSql = await readDbAllWith2Params(`SELECT * FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
 
                 const user = await interaction.guild.members.fetch(checkUserSql[0].authorId);
-            
+
                 const embedAuthor = new EmbedBuilder()
                   .setAuthor({ name: `${language_result.ticketCloseToAuthor.embed_title}`, iconURL: customEmoji })
                   .setDescription(language_result.ticketCloseToAuthor.description_embed.replace("{0}", interaction.user))
                   .setFooter({ text: `${language_result.ticketCloseToAuthor.embed_footer}`, iconURL: `${language_result.ticketCloseToAuthor.embed_icon_url}` })
                   .setColor(0x961e1e);
-                user.send({embeds: [embedAuthor]});
+                await user.send({ embeds: [embedAuthor] });
               } catch (error) {
                 // passa avanti
               }
@@ -338,7 +348,22 @@ module.exports = {
             const checkSql = await readDbAllWith2Params(`SELECT * FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
 
             if (checkSql) {
-              //DA SCRIPTARE DOMANI
+              const modal = new ModalBuilder()
+                .setCustomId("ticketCloseModal")
+                .setTitle(language_result.ticketCloseModal.embed_title);
+
+              const ticketDescription = new TextInputBuilder()
+                .setCustomId('ticketCloseModalDescription')
+                .setMaxLength(1000)
+                .setLabel(language_result.ticketCloseModal.modalDescriptionDescription)
+                .setPlaceholder(language_result.ticketCloseModal.modalDescriptionPlaceHolder)
+                .setStyle(TextInputStyle.Paragraph);
+
+              const ticketDescriptionRow = new ActionRowBuilder().addComponents(ticketDescription);
+
+              modal.addComponents(ticketDescriptionRow);
+
+              await interaction.showModal(modal);
             }
           }
           else {
@@ -347,8 +372,89 @@ module.exports = {
         });
       }
       // END TICKET CLOSE
+
+      // TICKET CLOSE MODAL
+      if (interaction.customId == "ticketCloseModal") {
+        await returnPermission(interaction, "ticketClose", async result => {
+          if (result) {
+            const checkSql = await readDbAllWith2Params(`SELECT * FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
+
+            const checkSqlToMessage = await readDbAllWith2Params(`SELECT * FROM ticket_system_message WHERE guildId = ? AND messageId = ?`, interaction.guild.id, checkSql[0].ticketSystemMessage_Id);
+
+            
+            if (checkSql) {
+              const user = await interaction.guild.members.fetch(checkSql[0].authorId);
+              let description = interaction.fields.getTextInputValue('ticketCloseModalDescription');
+              const messageCache = await interaction.channel.messages.fetch();
+              let messageWrite = "";
+
+              await messageCache.sort((a, b) => a.createdTimestamp - b.createdTimestamp).each(value => {
+                if (value.author.id != interaction.client.user.id) {
+                  messageWrite += `${value.author.username}: ${value.content}\n`;
+                };
+              })
+              writeFileSync(`./utils/ticket-system/temporary_transcript/${checkSql[0].ID}.txt`, messageWrite);
+
+              // INVIO IL MESSAGGIO DI TRANSCRIZIONE
+              const transcriptChannel = await interaction.guild.channels.fetch(checkSqlToMessage[0].transcriptId)
+
+              let customEmoji = await getEmojifromUrl(interaction.client, "ticket");
+              const embedTranscription = new EmbedBuilder()
+                .setAuthor({ name: `${language_result.ticketTranscription.embed_title}`, iconURL: customEmoji })
+                .setFields([
+                  {name: language_result.ticketTranscription.prefix, value: `${checkSql[0].ticketPrefix}`},
+                  {name: language_result.ticketTranscription.user, value: `${user} (${user.id})`, inline: true},
+                  {name: language_result.ticketTranscription.admin, value: `${interaction.user} (${interaction.user.id})`, inline: true},
+                  {name: language_result.ticketTranscription.reason, value: `${description}`},
+                ])
+                .setFooter({ text: `${language_result.ticketTranscription.embed_footer}`, iconURL: `${language_result.ticketTranscription.embed_icon_url}` })
+                .setColor(0x961e1e);
+
+              
+              const transcriptFile = new AttachmentBuilder(`./utils/ticket-system/temporary_transcript/${checkSql[0].ID}.txt`, {name: `${user}.txt`});
+
+              if(messageWrite.length > 0) {
+                await transcriptChannel.send({ embeds: [embedTranscription], files: [transcriptFile] });
+              } else {
+                await transcriptChannel.send({ embeds: [embedTranscription] });
+              }
+
+              
+              await runDb(`DELETE FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
+              
+              await interaction.channel.delete();
+
+              try {
+                const embedAuthor = new EmbedBuilder()
+                  .setAuthor({ name: `${language_result.ticketTranscription.embed_title}`, iconURL: customEmoji })
+                  .addFields([{name: language_result.ticketTranscription.reason, value: `${description}` }])
+                  .setFooter({ text: `${language_result.ticketTranscription.embed_footer}`, iconURL: `${language_result.ticketTranscription.embed_icon_url}` })
+                  .setColor(0x1b9e31);
+
+                  if(messageWrite.length > 0) {
+                    embedAuthor.setDescription(language_result.ticketTranscription.ticketClose.replace("{0}", interaction.user));
+                    await user.send({ embeds: [embedAuthor], files: [transcriptFile] });
+                  } else {
+                    embedAuthor.setDescription(language_result.ticketTranscription.ticketCloseNoTranscription.replace("{0}", interaction.user));
+                    await user.send({ embeds: [embedAuthor] });
+                  }
+              } catch (error) {
+                // passa avanti
+              }
+              unlinkSync(`./utils/ticket-system/temporary_transcript//${checkSql[0].ID}.txt`);
+
+              await interaction.deferReply();
+            }
+          }
+          else {
+            await noHavePermission(interaction, language_result);
+          }
+        });
+      }
+      // END TICKET CLOSE MODAL
     }
     catch (error) {
+      console.log(error)
       errorSendControls(error, interaction.guild.client, interaction.guild, "\\ticket-system\\ticketInteraction.js");
     }
   },
