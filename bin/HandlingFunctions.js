@@ -8,11 +8,7 @@ function errorSendControls(error, client, guild_error, system) {
   readdir("./", (_, files) => {
     files.forEach(file => {
       errorResult = new Error(`${system}`, {cause: error});
-<<<<<<< HEAD
-      console.log(error)
-=======
-
->>>>>>> 95ac33b9319461fe9884c7933ced94573d3f9db9
+      
       if (file == "logs.txt") {
         const data = readFileSync('./logs.txt',
           { encoding: 'utf8', flag: 'r' });
