@@ -198,7 +198,7 @@ async function cleanerDatabase(client) {
     }
   })
 
-  // CONTROLLO SE LA GUILD DI rank_system_permissions NEL DATABASE SONO TRUE
+  // CONTROLLO SE LA GUILD DI ticket_system_message NEL DATABASE SONO TRUE
   const checkTicketMessage = await readDbAll('ticket_system_message');
   checkTicketMessage.forEach(async value => {
     try {
