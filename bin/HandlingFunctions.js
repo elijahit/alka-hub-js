@@ -158,15 +158,65 @@ async function noHavePermission(interaction, language) {
   await interaction.reply({ embeds: [embedLog], ephemeral: true });
 }
 
-async function checkGuildDatabase(client) {
-  // CONTROLLO SE I VALORI DI guilds_config NEL DATABASE SONO TRUE
+async function cleanerDatabase(client) {
+  // CONTROLLO SE LA GUILD DI guilds_config NEL DATABASE SONO TRUE
   const checkGuildsConfig = await readDbAll('guilds_config');
   checkGuildsConfig.forEach(async value => {
-    console.log("TEST INIT");
     try {
       await client.guilds.fetch(value.guildId);
-    } catch {
-      await runDb('DELETE FROM guilds_config WHERE guildId = ?', value.guildId);
+    } catch (error) {
+      const errorCheck = new Error(error);
+      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
+        await runDb('DELETE FROM guilds_config WHERE guildId = ?', value.guildId);
+      }
+    }
+  })
+
+  // CONTROLLO SE LA GUILD DI log_system_config NEL DATABASE SONO TRUE
+  const checkGuildsLogs = await readDbAll('log_system_config');
+  checkGuildsLogs.forEach(async value => {
+    try {
+      await client.guilds.fetch(value.guildId);
+    } catch (error) {
+      const errorCheck = new Error(error);
+      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
+        await runDb('DELETE FROM log_system_config WHERE guildId = ?', value.guildId);
+      }
+    }
+  })
+
+  // CONTROLLO SE LA GUILD DI rank_system_permissions NEL DATABASE SONO TRUE
+  const checkPermissionsGuilds = await readDbAll('rank_system_permissions');
+  checkPermissionsGuilds.forEach(async value => {
+    try {
+      await client.guilds.fetch(value.guildId);
+    } catch (error) {
+      const errorCheck = new Error(error);
+      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
+        await runDb('DELETE FROM rank_system_permissions WHERE guildId = ?', value.guildId);
+      }
+    }
+  })
+
+  // CONTROLLO SE LA GUILD DI rank_system_permissions NEL DATABASE SONO TRUE
+  const checkTicketMessage = await readDbAll('ticket_system_message');
+  checkTicketMessage.forEach(async value => {
+    try {
+      const guild = await client.guilds.fetch(value.guildId);
+      const channel = await guild.channels.fetch(value.channelId);
+      await channel.messages.fetch(value.messageId);
+    } catch (error) {
+      const errorCheck = new Error(error);
+      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
+        await runDb('DELETE FROM ticket_system_message WHERE guildId = ?', value.guildId);
+      }
+      else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel")
+      {
+        await runDb('DELETE FROM ticket_system_message WHERE guildId = ? AND channelId = ?', value.guildId, value.channelId);
+      } 
+      else if (errorCheck.message == "DiscordAPIError[10008]: Unknown Message") {
+        await runDb('DELETE FROM ticket_system_message WHERE guildId = ? AND channelId = ? AND messageId = ?', value.guildId, value.channelId, value.messageId);
+      }
     }
   })
 }
@@ -180,5 +230,5 @@ module.exports = {
   noInitGuilds,
   noEnabledFunc,
   noHavePermission,
-  checkGuildDatabase,
+  cleanerDatabase,
 }
