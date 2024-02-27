@@ -171,9 +171,9 @@ module.exports = {
       }
 
       // INTERACTION TICKET SYSTEM START
-      const checkFeaturesisEnabled = await readDb(`SELECT ticketSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
       const checkChannelForInteraction = await readDbWith3Params(`SELECT * FROM ticket_system_message WHERE channelId = ? AND messageId = ? AND guildId = ?`, interaction.message?.channelId, interaction.message?.id, interaction.guild?.id);
       if (checkChannelForInteraction) {
+        const checkFeaturesisEnabled = await readDb(`SELECT ticketSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
         if(!checkFeaturesisEnabled?.ticketSystem_enabled) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
         await interaction.deferReply({ ephemeral: true });
         const category = await interaction.guild.channels.fetch(checkChannelForInteraction.categoryId);
@@ -245,6 +245,7 @@ module.exports = {
       // INTERACTION TICKET SYSTEM END
       // TICKET CLAIM
       if (interaction.customId == "ticketClaim") {
+        const checkFeaturesisEnabled = await readDb(`SELECT ticketSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
         if(!checkFeaturesisEnabled?.ticketSystem_enabled) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
         await returnPermission(interaction, "ticketClaim", async result => {
           if (result) {
@@ -310,6 +311,7 @@ module.exports = {
 
       // TICKET CANCEL
       if (interaction.customId == "ticketCancel") {
+        const checkFeaturesisEnabled = await readDb(`SELECT ticketSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
         if(!checkFeaturesisEnabled?.ticketSystem_enabled) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
         await returnPermission(interaction, "ticketCancel", async result => {
           if (result) {
@@ -346,6 +348,7 @@ module.exports = {
 
       // TICKET CLOSE
       if (interaction.customId == "ticketClose") {
+        const checkFeaturesisEnabled = await readDb(`SELECT ticketSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
         if(!checkFeaturesisEnabled?.ticketSystem_enabled) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
         await returnPermission(interaction, "ticketClose", async result => {
           if (result) {
@@ -379,6 +382,7 @@ module.exports = {
 
       // TICKET CLOSE MODAL
       if (interaction.customId == "ticketCloseModal") {
+        const checkFeaturesisEnabled = await readDb(`SELECT ticketSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
         if(!checkFeaturesisEnabled?.ticketSystem_enabled) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
         await returnPermission(interaction, "ticketClose", async result => {
           if (result) {
