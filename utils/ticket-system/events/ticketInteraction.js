@@ -231,7 +231,7 @@ module.exports = {
             .setDescription(language_result.ticketChannelSend.description_embed)
             .setFooter({ text: `${language_result.ticketChannelSend.embed_footer}`, iconURL: `${language_result.ticketChannelSend.embed_icon_url}` })
             .setColor(0xf5bc42);
-          const messageTicket = await channel.send({ embeds: [embedChannel], components: [buttonRow] })
+          const messageTicket = await channel.send({ content: "@everyone", embeds: [embedChannel], components: [buttonRow] })
           await runDb(`INSERT INTO ticket_system_tickets (guildId, authorId, messageId, ticketPrefix, ticketSystemMessage_Id) VALUES (?, ?, ?, ?, ?)`, interaction.guild.id, interaction.user.id, messageTicket.id, interaction.customId, checkChannelForInteraction.messageId);
 
           // RISPONDO ALL'INTERAZIONE
