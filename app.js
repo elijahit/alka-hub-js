@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 const { token, presenceStatusName, botState } = require('./config.json');
+const { checkGuildDatabase } = require('./bin/HandlingFunctions');
 
 
 const client = new Client({ intents: [
@@ -101,5 +102,9 @@ client.once(Events.ClientReady, readyClient => {
     status: 'online'
   });
 });
+
+setInterval(async () => {
+  await checkGuildDatabase(client);
+}, 10000);
 
 client.login(token);

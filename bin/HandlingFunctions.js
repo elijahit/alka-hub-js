@@ -1,14 +1,14 @@
 const { guildMainId, guildMainChannelsControlsError, emojiGuildId_01 } = require('../config.json');
 const { EmbedBuilder } = require('discord.js');
-const { readDbWith3Params } = require("../bin/database");
+const { readDbWith3Params, readDb, readDbAll, runDb } = require("../bin/database");
 const { readFileSync, readdir, writeFile } = require("fs");
 
 function errorSendControls(error, client, guild_error, system) {
   // LEGGO E AGGIORNO IL FILE DI LOGS
   readdir("./", (_, files) => {
     files.forEach(file => {
-      errorResult = new Error(`${system}`, {cause: error});
-      
+      errorResult = new Error(`${system}`, { cause: error });
+
       if (file == "logs.txt") {
         const data = readFileSync('./logs.txt',
           { encoding: 'utf8', flag: 'r' });
@@ -23,13 +23,13 @@ ${errorResult.stack}\n\
           flag: "w",
           mode: 0o666
         },
-        (err) => {
-          if (err)
-            console.log(err);
-          else {
-            console.log("[ERRORE] visualizza logs.txt per capire di che si tratta");
-          }
-        });
+          (err) => {
+            if (err)
+              console.log(err);
+            else {
+              console.log("[ERRORE] visualizza logs.txt per capire di che si tratta");
+            }
+          });
       }
     })
   })
@@ -158,6 +158,19 @@ async function noHavePermission(interaction, language) {
   await interaction.reply({ embeds: [embedLog], ephemeral: true });
 }
 
+async function checkGuildDatabase(client) {
+  // CONTROLLO SE I VALORI DI guilds_config NEL DATABASE SONO TRUE
+  const checkGuildsConfig = await readDbAll('guilds_config');
+  checkGuildsConfig.forEach(async value => {
+    console.log("TEST INIT");
+    try {
+      await client.guilds.fetch(value.guildId);
+    } catch {
+      await runDb('DELETE FROM guilds_config WHERE guildId = ?', value.guildId);
+    }
+  })
+}
+
 module.exports = {
   errorSendControls,
   getEmoji,
@@ -167,4 +180,5 @@ module.exports = {
   noInitGuilds,
   noEnabledFunc,
   noHavePermission,
+  checkGuildDatabase,
 }
