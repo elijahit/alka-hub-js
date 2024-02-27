@@ -173,7 +173,6 @@ module.exports = {
       // INTERACTION TICKET SYSTEM START
       if(interaction.type == 3) {
         const checkChannelForInteraction = await readDbWith3Params(`SELECT * FROM ticket_system_message WHERE channelId = ? AND messageId = ? AND guildId = ?`, interaction.message?.channelId, interaction.message?.id, interaction.guild?.id);
-        console.log(interaction)
         if (checkChannelForInteraction) {
           const checkFeaturesisEnabled = await readDb(`SELECT ticketSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
           if(!checkFeaturesisEnabled?.ticketSystem_enabled) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
@@ -234,7 +233,7 @@ module.exports = {
             .setFooter({ text: `${language_result.ticketChannelSend.embed_footer}`, iconURL: `${language_result.ticketChannelSend.embed_icon_url}` })
             .setColor(0xf5bc42);
           const messageTicket = await channel.send({ content: "@everyone", embeds: [embedChannel], components: [buttonRow] })
-          await runDb(`INSERT INTO ticket_system_tickets (guildId, authorId, messageId, ticketPrefix, ticketSystemMessage_Id) VALUES (?, ?, ?, ?, ?)`, interaction.guild.id, interaction.user.id, messageTicket.id, interaction.customId, checkChannelForInteraction.messageId);
+          await runDb(`INSERT INTO ticket_system_tickets (guildId, authorId, messageId, ticketPrefix, ticketSystemMessage_Id, channelId) VALUES (?, ?, ?, ?, ?, ?)`, interaction.guild.id, interaction.user.id, messageTicket.id, interaction.customId, checkChannelForInteraction.messageId, channel.id);
 
           // RISPONDO ALL'INTERAZIONE
           const embedLog = new EmbedBuilder()
