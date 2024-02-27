@@ -1,8 +1,39 @@
 const { guildMainId, guildMainChannelsControlsError, emojiGuildId_01 } = require('../config.json');
 const { EmbedBuilder } = require('discord.js');
 const { readDbWith3Params } = require("../bin/database");
+const { readFileSync, readdir, writeFile } = require("fs");
 
 function errorSendControls(error, client, guild_error, system) {
+  // LEGGO E AGGIORNO IL FILE DI LOGS
+  readdir("./", (_, files) => {
+    files.forEach(file => {
+      errorResult = new Error(`${system}`, {cause: error});
+      console.log(error)
+      if (file == "logs.txt") {
+        const data = readFileSync('./logs.txt',
+          { encoding: 'utf8', flag: 'r' });
+
+        writeFile("./logs.txt", `${data}\n\
+---- [START LOGS] ----\n\
+[${errorResult.message}]\n\
+${errorResult.cause}\n\
+${errorResult.stack}\n\
+----- [END LOGS] -----\n`, {
+          encoding: "utf8",
+          flag: "w",
+          mode: 0o666
+        },
+        (err) => {
+          if (err)
+            console.log(err);
+          else {
+            console.log("[ERRORE] visualizza logs.txt per capire di che si tratta");
+          }
+        });
+      }
+    })
+  })
+
   // LA FUNZIONE GESTISCE GLI ERRORI E LI MANDA AL SERVER MAIN
   client.guilds.fetch(guildMainId)
     .then(guild => {
