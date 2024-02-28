@@ -1,0 +1,28 @@
+{
+  "noPermission": {
+    "embed_title": "Alka Hub | Auto Voice System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "You do not have permission to use this command!",
+    "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable."
+  },
+  "selectSetup": {
+    "embed_title": "Alka Hub | Auto Voice System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Welcome to the setup to configure the Auto Voice System, first of all let's carefully choose what type of Auto Voice we want to configure. We have two options:\n- **Interaction Create**: Creation via interaction occurs through a textual channel that will serve as a container for the message that will enable its creation through a component (button).\n- **Automatic Create**: Creation via the automatic process occurs through a voice channel that will serve as an entry point to initiate the process. Each user who accesses it will consequently have a voice channel created.\n\n*(!) No channel must be created, Alka will handle the creation.*",
+    "placeholder": "Insert your choice",
+    "label_interaction": "Interaction Create",
+    "label_automatic": "Automatic Create",
+    "description_embed_two": "You have initiated the process of creating the **Auto Voice System**, we have created the channel {0} for you, follow there for configuration."
+  },
+  "selectSetup_Creator": {
+    "embed_title": "Alka Hub | Auto Voice System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "We have selected the type of Auto Voice we want to use, now we need to select whether we want to use private or open-access channels:\n- **Private:** The private category utilizes a permission system that is recorded in the relational database. This system allows the user, through a command that requires the assignment of permission hashes (Read the documentation), to grant access to certain users in their own private voice channel.\n- **Free:** The free category does not use permission systems and allows open access to everyone. It can be useful as a lobby for rooms of various games to allow for party searching.",
+    "placeholder": "Insert your choice",
+    "label_private": "Private",
+    "label_free": "Free"
+  }
+}

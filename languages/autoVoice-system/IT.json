@@ -1,0 +1,28 @@
+{
+  "noPermission": {
+    "embed_title": "Alka Hub | Auto Voice System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Non hai il permesso per usare questo comando!",
+    "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
+  },
+  "selectSetup": {
+    "embed_title": "Alka Hub | Auto Voice System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Benvenuto nel setup per configurare l'Auto Voice System, per prima cosa scegliamo attentamente che tipo di Auto Voice vogliamo configurare. Abbiamo due possibilità:\n- **Interaction Create**: La creazione tramite interazione avviene mediante un canale testuale che servirà come contenitore del messaggio che ne permetterà la creazione tramite un components (bottone).\n- **Automatic Create**: La creazione tramite il processo automatico avviene mediante un canale vocale che servirà come entry point per avviarne il processo. Ogni utente che ne farà accesso avrà di conseguenza un canale vocale creato.\n\n*(!) Nessun canale dev'essere creato, Alka ne gestirà la creazione.*",
+    "placeholder": "Insert your choice",
+    "label_interaction": "Interaction Create",
+    "label_automatic": "Automatic Create",
+    "description_embed_two": "Hai avviato il processo di creazione del **Auto Voice System**, abbiamo creato per te il canale {0}, segui li la configurazione."
+  },
+  "selectSetup_Creator": {
+    "embed_title": "Alka Hub | Auto Voice System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Abbiamo selezionato il tipo di Auto Voice vogliamo utilizzare, adesso dobbiamo selezionare se vogliamo utilizzare dei canali privati o con accesso libero:\n- **Privato:** La categoria privata utilizza un sistema di permessi che viene registrato nel database relazionale, questo sistema consente all'utente tramite un comando che necessità l'assegnazione di hash di permesso (Leggi la documentazione) a dare accesso a determinati utenti nel proprio canale vocale privato.\n- **Libero**: La categoria libera non utilizza sistemi di permessi consente l'accesso libero a tutti e può essere utile come lobby di stanze di vari giochi per consentire la ricerca di un party.",
+    "placeholder": "Insert your choice",
+    "label_private": "Private",
+    "label_free": "Free"
+  }
+}
