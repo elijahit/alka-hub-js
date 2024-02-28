@@ -24,5 +24,15 @@
     "placeholder": "Insert your choice",
     "label_private": "Private",
     "label_free": "Free"
+  },
+  "selectSetup_TypeAccess": {
+    "embed_title": "Alka Hub | Auto Voice System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "We're almost there, now we need to choose what type of name we want our channels to have! This time we have three choices:\n- **Numeric:** By setting a name for the channel, that name will be used to automatically increment the number, for example: (Voice 1, Voice 2, Voice 3).\n- **Nickname:** We will use the user's nickname and this selection will control to prevent multiple channels being created to prevent channel cloning.\n- **Random:** We will set a random number to the channel, for example: (8456246).",
+    "placeholder": "Insert your choice",
+    "label_numeric": "Numeric",
+    "label_nickname": "Nickname",
+    "label_random": "Random"
   }
 }
