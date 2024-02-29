@@ -24,24 +24,6 @@
     "description_embed": "Abbiamo selezionato il tipo di Auto Voice vogliamo utilizzare, adesso dobbiamo selezionare se vogliamo utilizzare dei canali privati o con accesso libero:\n- **Privato:** La categoria privata utilizza un sistema di permessi che viene registrato nel database relazionale, questo sistema consente all'utente tramite un comando che necessità l'assegnazione di hash di permesso (Leggi la documentazione) a dare accesso a determinati utenti nel proprio canale vocale privato.\n- **Libero**: La categoria libera non utilizza sistemi di permessi consente l'accesso libero a tutti e può essere utile come lobby di stanze di vari giochi per consentire la ricerca di un party.",
     "placeholder": "Insert your choice",
     "label_private": "Private",
-    "label_free": "Free",
-    "placeholder_category": "Seleziona la categoria",
-    "description_embed_category": "Hai scelto di impostare un canale ad incremento, il primo canale che Alka crea per te servirà come entry point per il corretto funzionamento, il nome del canale può essere cambiato ma il numero presente deve rimanere invariato, questo numero servirà per il corretto funzionamento del sistema. **Adesso** scegli la categoria a cui vuoi assegnare l'Auto Voice System."
-  },
-  "selectSetup_TypeAccess": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "Ci siamo quasi, adesso dobbiamo scegliere che tipo di nome vogliamo che i nostri canali abbiano! Abbiamo tre scelte stavolta:\n- **Numerico:** Impostando un nome al canale, quel nome verrà utilizzato per incrementare il numero automaticamente ad esempio: (Vocale 1, Vocale 2, Vocale 3).\n- **Nickname:** Utilizzeremo il nickname dell'utente e questa selezione controllerà per impedire che canali multipli vengano creati per impedire una clonazione dei canali.\n- **Random:** Imposteremo un numero randomico al canale come ad esempio: (8456246).",
-    "placeholder": "Insert your choice",
-    "label_numeric": "Numerico",
-    "label_nickname": "Nickname",
-    "label_random": "Random"
-  },
-  "endSetup_message": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "Hai completato con successo il setup di Auto Voice, adesso i tuoi canali vocali sono impostati per funzionare come da te scelto in fase di setup."
+    "label_free": "Free"
   }
 }

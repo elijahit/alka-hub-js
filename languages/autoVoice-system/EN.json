@@ -24,24 +24,6 @@
     "description_embed": "We have selected the type of Auto Voice we want to use, now we need to select whether we want to use private or open-access channels:\n- **Private:** The private category utilizes a permission system that is recorded in the relational database. This system allows the user, through a command that requires the assignment of permission hashes (Read the documentation), to grant access to certain users in their own private voice channel.\n- **Free:** The free category does not use permission systems and allows open access to everyone. It can be useful as a lobby for rooms of various games to allow for party searching.",
     "placeholder": "Insert your choice",
     "label_private": "Private",
-    "label_free": "Free",
-    "placeholder_category": "Select the category",
-    "description_embed_category": "You have chosen to set up a channel with an incrementer. The first channel Alka creates for you will serve as the entry point for proper functionality. The channel name can be changed, but the number present must remain unchanged, as this number is necessary for the system's correct operation. **Now** select the category to which you want to assign the Auto Voice System."
-  },
-  "selectSetup_TypeAccess": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "We're almost there, now we need to choose what type of name we want our channels to have! This time we have three choices:\n- **Numeric:** By setting a name for the channel, that name will be used to automatically increment the number, for example: (Voice 1, Voice 2, Voice 3).\n- **Nickname:** We will use the user's nickname and this selection will control to prevent multiple channels being created to prevent channel cloning.\n- **Random:** We will set a random number to the channel, for example: (8456246).",
-    "placeholder": "Insert your choice",
-    "label_numeric": "Numeric",
-    "label_nickname": "Nickname",
-    "label_random": "Random"
-  },
-  "endSetup_message": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "You have successfully completed the Auto Voice setup. Your voice channels are now configured to function as you selected during the setup phase."
+    "label_free": "Free"
   }
 }
