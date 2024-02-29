@@ -195,14 +195,19 @@ module.exports = {
 
           // CREAZIONE DEL CANALE
           let channelObject = {};
-          // CANALE NUMERICO
-          if (check[0].creatorNickname == 1) {
-            channelObject = {
-              parent: category,
-              name: `changeMe 1`,
-              type: ChannelType.GuildVoice
-            };
+
+          // SE IL AUTO VOICE E' AUTOMATICO
+          if(check[0].typeVoice == 2) {
+            // CANALE NUMERICO
+            if (check[0].creatorNickname == 1) {
+              channelObject = {
+                parent: category,
+                name: `changeMe 1`,
+                type: ChannelType.GuildVoice
+              };
+            }
           }
+          
           const channel = await interaction.guild.channels.create(channelObject);
 
           // INVIO MESSAGGIO DI FINE SETUP E CANCELLO IL CANALE
