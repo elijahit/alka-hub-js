@@ -54,6 +54,8 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "placeholder": "0 = Unlimited",
-    "label": "Maximum number of people in the channel"
+    "label": "Maximum number of people in the channel",
+    "label_message": "Message to send",
+    "placeholder_message": "Message for the channel"
   }
 }

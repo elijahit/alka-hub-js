@@ -163,8 +163,22 @@ module.exports = {
           .setStyle(TextInputStyle.Short)
           .setMaxLength(2)
 
-        const row = new ActionRowBuilder().addComponents(sizeSelect);
-        modal.addComponents(row);
+        const check = await readDbAllWith2Params(`SELECT * FROM autovoice_system_creator WHERE authorId = ? AND guildId = ?`, interaction.user.id, interaction.guild.id);
+        if (check[0].typeVoice == 1) {
+          const messageSelect = new TextInputBuilder()
+            .setCustomId('messageSelectAutoVoice')
+            .setLabel(language_result.select_size.label_message)
+            .setPlaceholder(language_result.select_size.placeholder_message)
+            .setStyle(TextInputStyle.Paragraph)
+          const row = new ActionRowBuilder().addComponents(sizeSelect);
+          const row2 = new ActionRowBuilder().addComponents(messageSelect);
+          modal.addComponents(row, row2);
+        } else {
+
+          const row = new ActionRowBuilder().addComponents(sizeSelect);
+          modal.addComponents(row);
+        }
+
 
         await interaction.showModal(modal);
 
@@ -182,7 +196,7 @@ module.exports = {
           // CREAZIONE DEL CANALE
           let channelObject = {};
           // CANALE NUMERICO
-          if(check[0].creatorNickname == 1) {
+          if (check[0].creatorNickname == 1) {
             channelObject = {
               parent: category,
               name: `changeMe 1`,
