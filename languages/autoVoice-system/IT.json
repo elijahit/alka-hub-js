@@ -10,10 +10,11 @@
     "embed_title": "Alka Hub | Auto Voice System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "Benvenuto nel setup per configurare l'Auto Voice System, per prima cosa scegliamo attentamente che tipo di Auto Voice vogliamo configurare. Abbiamo due possibilità:\n- **Interaction Create**: La creazione tramite interazione avviene mediante un canale testuale che servirà come contenitore del messaggio che ne permetterà la creazione tramite un components (bottone).\n- **Automatic Create**: La creazione tramite il processo automatico avviene mediante un canale vocale che servirà come entry point per avviarne il processo. Ogni utente che ne farà accesso avrà di conseguenza un canale vocale creato.\n\n*(!) Nessun canale dev'essere creato, Alka ne gestirà la creazione.*",
+    "description_embed": "Benvenuto nel setup per configurare l'Auto Voice System, per prima cosa scegliamo attentamente che tipo di Auto Voice vogliamo configurare. Abbiamo due possibilità:\n- **Interaction Create**: La creazione tramite interazione avviene mediante un canale testuale che servirà come contenitore del messaggio che ne permetterà la creazione tramite un components (bottone).\n- **Automatic Create**: La creazione tramite il processo automatico avviene mediante un canale vocale che servirà come entry point per avviarne il processo. Ogni utente che ne farà accesso avrà di conseguenza un canale vocale creato.\n- **Incrementer Create**: La creazione tramite incremento avviene mediante un canale vocale composto da un numero identificativo, per il corretto funzionamento il numero deve sempre essere presente, sarà possibile cambiare solo il nome del canale come ad esempio: (Vocale 1), ogni accesso a quel canale crea al disotto di esso un canale vocale come ad esempio: (Vocale 2) **Eredita i permessi del canale in base a come viene impostato**\n\n*(!) Nessun canale dev'essere creato, Alka ne gestirà la creazione.*",
     "placeholder": "Insert your choice",
     "label_interaction": "Interaction Create",
     "label_automatic": "Automatic Create",
+    "label_incrementer": "Incrementer Create",
     "description_embed_two": "Hai avviato il processo di creazione del **Auto Voice System**, abbiamo creato per te il canale {0}, segui li la configurazione."
   },
   "selectSetup_Creator": {
@@ -23,7 +24,9 @@
     "description_embed": "Abbiamo selezionato il tipo di Auto Voice vogliamo utilizzare, adesso dobbiamo selezionare se vogliamo utilizzare dei canali privati o con accesso libero:\n- **Privato:** La categoria privata utilizza un sistema di permessi che viene registrato nel database relazionale, questo sistema consente all'utente tramite un comando che necessità l'assegnazione di hash di permesso (Leggi la documentazione) a dare accesso a determinati utenti nel proprio canale vocale privato.\n- **Libero**: La categoria libera non utilizza sistemi di permessi consente l'accesso libero a tutti e può essere utile come lobby di stanze di vari giochi per consentire la ricerca di un party.",
     "placeholder": "Insert your choice",
     "label_private": "Private",
-    "label_free": "Free"
+    "label_free": "Free",
+    "placeholder_category": "Seleziona la categoria",
+    "description_embed_category": "Hai scelto di impostare un canale ad incremento, il primo canale che Alka crea per te servirà come entry point per il corretto funzionamento, il nome del canale può essere cambiato ma il numero presente deve rimanere invariato, questo numero servirà per il corretto funzionamento del sistema. **Adesso** scegli la categoria a cui vuoi assegnare l'Auto Voice System, il canale può essere provvisto di canali testuali ma **non deve essere provvisto di canali vocali**. Altrimenti questi canali saranno soggetti al incremento e non potranno rispettare gli standard di Auto Voice."
   },
   "selectSetup_TypeAccess": {
     "embed_title": "Alka Hub | Auto Voice System",

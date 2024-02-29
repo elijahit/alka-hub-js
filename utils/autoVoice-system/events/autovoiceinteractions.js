@@ -16,8 +16,8 @@ module.exports = {
 
       if (interaction.customId == 'autoVoiceSelectMenu') {
         let value = interaction.values;
+        let typeVoice;
         await value.forEach(async v => {
-          let typeVoice;
           switch (v) {
             case "interactionVoice":
               typeVoice = 1;
@@ -25,38 +25,65 @@ module.exports = {
             case "automaticVoice":
               typeVoice = 2;
               break;
+            case "incrementerVoice":
+              typeVoice = 3;
+              break;
 
           }
           await runDb(`INSERT INTO autovoice_system_creator (guildId, authorId, typeVoice) VALUES (?, ?, ?)`, interaction.guild.id, interaction.user.id, typeVoice);
         });
-        // RISPONDO ALL'INTERAZIONE ELIMINO IL MESSAGGIO E NE RICREO UNO NUOVO
-        const privateEmoji = await getEmoji(interaction.client, "private");
-        const freeEmoji = await getEmoji(interaction.client, "free_voice");
-        const selectSetup_Creator = new StringSelectMenuBuilder()
-          .setCustomId('autoVoiceSelectMenu_creatorType')
-          .setPlaceholder(language_result.selectSetup_Creator.placeholder)
-          .addOptions(
-            new StringSelectMenuOptionBuilder()
-              .setLabel(language_result.selectSetup_Creator.label_private)
-              .setValue("private")
-              .setEmoji(privateEmoji.id),
-            new StringSelectMenuOptionBuilder()
-              .setLabel(language_result.selectSetup_Creator.label_free)
-              .setValue("free")
-              .setEmoji(freeEmoji.id),
-          );
+        if(typeVoice == 1 || typeVoice == 2) {
+          // RISPONDO ALL'INTERAZIONE ELIMINO IL MESSAGGIO E NE RICREO UNO NUOVO
+          // PER TYPE 1 E 2
+          const privateEmoji = await getEmoji(interaction.client, "private");
+          const freeEmoji = await getEmoji(interaction.client, "free_voice");
+          const selectSetup_Creator = new StringSelectMenuBuilder()
+            .setCustomId('autoVoiceSelectMenu_creatorType')
+            .setPlaceholder(language_result.selectSetup_Creator.placeholder)
+            .addOptions(
+              new StringSelectMenuOptionBuilder()
+                .setLabel(language_result.selectSetup_Creator.label_private)
+                .setValue("private")
+                .setEmoji(privateEmoji.id),
+              new StringSelectMenuOptionBuilder()
+                .setLabel(language_result.selectSetup_Creator.label_free)
+                .setValue("free")
+                .setEmoji(freeEmoji.id),
+            );
+  
+          const row = new ActionRowBuilder()
+            .addComponents(selectSetup_Creator);
+  
+          const customEmoji = await getEmojifromUrl(interaction.client, "utilitysettings")
+          const embedLog = new EmbedBuilder()
+            .setAuthor({ name: `${language_result.selectSetup_Creator.embed_title}`, iconURL: customEmoji })
+            .setDescription(language_result.selectSetup_Creator.description_embed)
+            .setFooter({ text: `${language_result.selectSetup_Creator.embed_footer}`, iconURL: `${language_result.selectSetup_Creator.embed_icon_url}` })
+            .setColor(0x9ba832);
+          await interaction.message.delete();
+          await interaction.reply({ embeds: [embedLog], components: [row] });
+        }
+        if(typeVoice == 3) {
+          // RISPONDO ALL'INTERAZIONE ELIMINO IL MESSAGGIO E NE RICREO UNO NUOVO
+          // PER TYPE 3
+          const selectSetup_Creator = new ChannelSelectMenuBuilder()
+            .setCustomId('autoVoiceSelectMenu_creatorCategory')
+            .setPlaceholder(language_result.selectSetup_Creator.placeholder_category)
+            .setChannelTypes(ChannelType.GuildCategory);
 
-        const row = new ActionRowBuilder()
-          .addComponents(selectSetup_Creator);
-
-        const customEmoji = await getEmojifromUrl(interaction.client, "utilitysettings")
-        const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.selectSetup_Creator.embed_title}`, iconURL: customEmoji })
-          .setDescription(language_result.selectSetup_Creator.description_embed)
-          .setFooter({ text: `${language_result.selectSetup_Creator.embed_footer}`, iconURL: `${language_result.selectSetup_Creator.embed_icon_url}` })
-          .setColor(0x9ba832);
-        await interaction.message.delete();
-        await interaction.reply({ embeds: [embedLog], components: [row] });
+  
+          const row = new ActionRowBuilder()
+            .addComponents(selectSetup_Creator);
+  
+          const customEmoji = await getEmojifromUrl(interaction.client, "utilitysettings")
+          const embedLog = new EmbedBuilder()
+            .setAuthor({ name: `${language_result.selectSetup_Creator.embed_title}`, iconURL: customEmoji })
+            .setDescription(language_result.selectSetup_Creator.description_embed_category)
+            .setFooter({ text: `${language_result.selectSetup_Creator.embed_footer}`, iconURL: `${language_result.selectSetup_Creator.embed_icon_url}` })
+            .setColor(0x9ba832);
+          await interaction.message.delete();
+          await interaction.reply({ embeds: [embedLog], components: [row] });
+        }
 
       }
 

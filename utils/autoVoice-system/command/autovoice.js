@@ -23,6 +23,7 @@ module.exports = {
 					if (checkFeaturesisEnabled?.autoVoiceSystem_enabled) {
 						const channelTextEmoji = await getEmoji(interaction.client, "channeltext");
 						const channelVoiceEmoji = await getEmoji(interaction.client, "channelvoice");
+						const incrementerVoiceEmoji = await getEmoji(interaction.client, "new");
 						const selectSetup = new StringSelectMenuBuilder()
 							.setCustomId('autoVoiceSelectMenu')
 							.setPlaceholder(language_result.selectSetup.placeholder)
@@ -35,6 +36,10 @@ module.exports = {
 									.setLabel(language_result.selectSetup.label_automatic)
 									.setValue("automaticVoice")
 									.setEmoji(channelVoiceEmoji.id),
+								new StringSelectMenuOptionBuilder()
+									.setLabel(language_result.selectSetup.label_incrementer)
+									.setValue("incrementerVoice")
+									.setEmoji(incrementerVoiceEmoji.id),
 							);
 
 						const row = new ActionRowBuilder()
