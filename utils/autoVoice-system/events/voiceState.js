@@ -29,8 +29,21 @@ module.exports = {
 
         // UN UTENTE HA EFFETTUATO L'ACCESSO IN UN NUOVO CANALE
         if (!oldState.channel?.id && newState.channel?.id) {
-          console.log(newState.channel);
-          const check = readDbAllWith2Params()
+          const check = await readDbAllWith2Params(`SELECT * FROM autovoice_system_creator WHERE guildId = ? AND categoryId = ?`, newState.guild.id, newState.channel.parentId);
+          // TIPO NUMERICO
+          if(check[0].typeVoice == 2) {
+            let channelName = newState.channel.name.split(" ");
+            let channelNameResult = "";
+            await channelName.forEach(value => {
+              let regex = /^[0-9]+$/;
+              if(regex.test(value)) {
+                channelNameResult = value;
+              }
+            })
+            newState.channel.clone({
+              name: newState.channel.name.replace(channelNameResult, `${+channelNameResult + 1}`),
+            })
+          }
 
         }
 
