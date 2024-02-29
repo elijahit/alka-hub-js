@@ -21,6 +21,10 @@ module.exports = {
 					const checkFeaturesisEnabled = await readDb(`SELECT autoVoiceSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
 
 					if (checkFeaturesisEnabled?.autoVoiceSystem_enabled) {
+						const checkSql = await readDbAllWith2Params(`SELECT * from autovoice_system_creator WHERE authorId = ? AND guildId = ?`, interaction.user.id, interaction.guild.id);
+						if(checkSql) {
+							await runDb(`DELETE from autovoice_system_creator WHERE authorId = ? AND guildId = ?`, interaction.user.id, interaction.guild.id);
+						}
 						const channelTextEmoji = await getEmoji(interaction.client, "channeltext");
 						const channelVoiceEmoji = await getEmoji(interaction.client, "channelvoice");
 						const incrementerVoiceEmoji = await getEmoji(interaction.client, "new");
@@ -76,6 +80,7 @@ module.exports = {
 
 						await interaction.reply({ embeds: [embedLogTwo], ephemeral: true });
 						await initChannel.send({ embeds: [embedLog], components: [row] });
+						await runDb(`INSERT INTO autovoice_system_creator (guildId, authorId, initChannel) VALUES (?, ?, ?)`, interaction.guild.id, interaction.user.id, interaction.channel.id);
 
 
 					} else {

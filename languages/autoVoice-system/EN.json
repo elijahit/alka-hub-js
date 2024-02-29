@@ -26,7 +26,7 @@
     "label_private": "Private",
     "label_free": "Free",
     "placeholder_category": "Select the category",
-    "description_embed_category": "You have chosen to set up a channel with an incrementer. The first channel Alka creates for you will serve as the entry point for proper functionality. The channel name can be changed, but the number present must remain unchanged, as this number is necessary for the system's correct operation. **Now** select the category to which you want to assign the Auto Voice System. The channel may contain text channels but **must not contain voice channels**. Otherwise, these channels will be subject to incrementing and will not adhere to the Auto Voice standards."
+    "description_embed_category": "You have chosen to set up a channel with an incrementer. The first channel Alka creates for you will serve as the entry point for proper functionality. The channel name can be changed, but the number present must remain unchanged, as this number is necessary for the system's correct operation. **Now** select the category to which you want to assign the Auto Voice System."
   },
   "selectSetup_TypeAccess": {
     "embed_title": "Alka Hub | Auto Voice System",
@@ -37,5 +37,11 @@
     "label_numeric": "Numeric",
     "label_nickname": "Nickname",
     "label_random": "Random"
+  },
+  "endSetup_message": {
+    "embed_title": "Alka Hub | Auto Voice System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "You have successfully completed the Auto Voice setup. Your voice channels are now configured to function as you selected during the setup phase."
   }
 }
