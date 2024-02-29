@@ -25,9 +25,6 @@ module.exports = {
             case "automaticVoice":
               typeVoice = 2;
               break;
-            case "incrementerVoice":
-              typeVoice = 3;
-              break;
 
           }
           await runDb(`UPDATE autovoice_system_creator SET typeVoice = ? WHERE guildId = ? AND authorId = ?`, typeVoice, interaction.guild.id, interaction.user.id);
@@ -76,7 +73,7 @@ module.exports = {
               break;
 
           }
-          await runDb(`UPDATE autovoice_system_creator SET creatorType = ?`, typeAccess);
+          await runDb(`UPDATE autovoice_system_creator SET creatorType = ? WHERE guildId = ? AND authorId = ?`, typeAccess, interaction.guild.id, interaction.user.id);
         });
         // RISPONDO ALL'INTERAZIONE ELIMINO IL MESSAGGIO E NE RICREO UNO NUOVO
         const voiceNumber = await getEmoji(interaction.client, "voiceNumber");
@@ -111,6 +108,37 @@ module.exports = {
           .setColor(0x9ba832);
         await interaction.message.delete();
         await interaction.reply({ embeds: [embedLog], components: [row] });
+
+      }
+
+
+
+      // DA USARE IN END
+      if(interaction.customId == "autoVoiceSelectMenu_creatorCategory") {
+        const check = await readDb(`SELECT * FROM autovoice_system_creator WHERE authorId = ?`, interaction.user.id);
+        const category = await interaction.guild.channels.fetch(interaction.values[0]);
+
+        // CREAZIONE DEL CANALE
+        const channel = await interaction.guild.channels.create({
+          parent: category,
+          name: `changeMe 1`,
+          type: ChannelType.GuildVoice
+        });
+
+        // INVIO MESSAGGIO DI FINE SETUP E CANCELLO IL CANALE
+        await interaction.deferReply();
+        await interaction.channel.delete();
+        const setupChannel = await interaction.guild.channels.fetch(check.initChannel);
+
+        const customEmoji = await getEmojifromUrl(interaction.client, "utilitysettings")
+        const embedLog = new EmbedBuilder()
+          .setAuthor({ name: `${language_result.endSetup_message.embed_title}`, iconURL: customEmoji })
+          .setDescription(language_result.endSetup_message.description_embed)
+          .setFooter({ text: `${language_result.endSetup_message.embed_footer}`, iconURL: `${language_result.endSetup_message.embed_icon_url}` })
+          .setColor(0x9ba832);
+        await setupChannel.send({ embeds: [embedLog]});
+        await runDb(`UPDATE autovoice_system_creator SET channelId = ?, authorId = ?, categoryId = ? WHERE guildId = ? AND authorId = ?`, channel.id, null, interaction.values[0], interaction.guild.id, interaction.user.id);
+        
 
       }
 
