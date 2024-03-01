@@ -40,7 +40,6 @@ async function createChannel(oldState, newState) {
         channelCount++;
       }
     })
-    console.log(channelCount)
     if (channelAvaiable == 0) {
       await newState.channel.clone({
         name: newState.channel.name.replace(channelNameResult, `${channelCount + 1}`),

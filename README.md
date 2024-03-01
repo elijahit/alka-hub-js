@@ -24,6 +24,7 @@ CREATE TABLE "guilds_config" (
 	"languages"	TEXT,
 	"logSystem_enabled"	INTEGER,
 	"ticketSystem_enabled"	INTEGER,
+	"autoVoiceSystem_enabled"	INTEGER,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 -- Tabella di configurazione Log System
