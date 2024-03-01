@@ -18,6 +18,10 @@ module.exports = {
 					name: "Ticket System",
 					value: "ticketSystem_enabled",
 				})
+				.addChoices({
+					name: "Auto Voice System",
+					value: "autoVoiceSystem_enabled",
+				})
 				.setName('choices')
 				.setDescription('Name of the system you want to enable or disable')
 				.setRequired(true)
