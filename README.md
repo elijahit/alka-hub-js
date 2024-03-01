@@ -81,4 +81,19 @@ CREATE TABLE "ticket_system_tickets" (
 	"ticketSystemMessage_Id"	TEXT,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
+-- Tabella di raccolta Auto Voice System
+CREATE TABLE "autovoice_system_creator" (
+	"ID"	INTEGER UNIQUE,
+	"guildId"	TEXT,
+	"authorId"	TEXT,
+	"categoryId"	TEXT,
+	"channelId"	INTEGER,
+	"typeVoice"	INTEGER,
+	"messageText"	TEXT,
+	"creatorType"	INTEGER,
+	"creatorNickname"	INTEGER,
+	"channelSize"	INTEGER,
+	"initChannel"	TEXT,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
 ```
