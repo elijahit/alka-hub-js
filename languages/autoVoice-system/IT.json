@@ -40,7 +40,8 @@
     "embed_title": "Alka Hub | Auto Voice System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "Hai completato con successo il setup di Auto Voice, adesso i tuoi canali vocali sono impostati per funzionare come da te scelto in fase di setup."
+    "description_embed": "Hai completato con successo il setup di Auto Voice, adesso i tuoi canali vocali sono impostati per funzionare come da te scelto in fase di setup.",
+    "description_embed_errorcategory": "Abbiamo annullato il setup di Auto Voice, non puoi impostare nuovamente una categoria che già ha un Auto Voice impostato, creane una nuova!"
   },
   "select_size": {
     "embed_title": "Alka Hub | Auto Voice System",

@@ -31,10 +31,10 @@ module.exports = {
 							.setCustomId('autoVoiceSelectMenu')
 							.setPlaceholder(language_result.selectSetup.placeholder)
 							.addOptions(
-								new StringSelectMenuOptionBuilder()
-									.setLabel(language_result.selectSetup.label_interaction)
-									.setValue("interactionVoice")
-									.setEmoji(channelTextEmoji.id),
+								// new StringSelectMenuOptionBuilder() //DA PROGRAMMARE
+								// 	.setLabel(language_result.selectSetup.label_interaction)
+								// 	.setValue("interactionVoice")
+								// 	.setEmoji(channelTextEmoji.id),
 								new StringSelectMenuOptionBuilder()
 									.setLabel(language_result.selectSetup.label_automatic)
 									.setValue("automaticVoice")

@@ -9,6 +9,46 @@ let sqlEnabledFeature = `SELECT autoVoiceSystem_enabled FROM guilds_config WHERE
 // ----------------
 // FUNCTION
 
+async function createChannel(oldState, newState) {
+  let check;
+  try {
+    check = await readDbAllWith2Params(`SELECT * FROM autovoice_system_creator WHERE guildId = ? AND categoryId = ?`, newState.guild.id, newState.channel.parentId);
+  } catch {
+    return;
+  }
+
+  // TIPO NUMERICO
+  if (check.length > 0 && check[0].typeVoice == 2) {
+    let channelName = newState.channel.name.split(" ");
+    let channelNameResult = "";
+    await channelName.forEach(value => {
+      let regex = /^[0-9]+$/;
+      if (regex.test(value)) {
+        channelNameResult = value;
+      }
+    })
+
+    let category = await oldState.guild.channels.fetch(check[0].categoryId);
+    const checkSizeChannel = await category.children.cache;
+    let channelAvaiable = 0;
+    let channelCount = 0;
+    await checkSizeChannel.each(value => {
+      if (value.type == 2 && value.parentId == newState.channel.parentId && value.members.size < 1 && value.id != newState.channel.id) {
+        channelAvaiable++;
+      }
+      if (value.type == 2 && value.parentId == newState.channel.parentId) {
+        channelCount++;
+      }
+    })
+    console.log(channelCount)
+    if (channelAvaiable == 0) {
+      await newState.channel.clone({
+        name: newState.channel.name.replace(channelNameResult, `${channelCount + 1}`),
+      })
+    }
+  }
+}
+
 async function deleteChannel(oldState) {
   let check;
   try {
@@ -93,44 +133,13 @@ module.exports = {
 
         // UN UTENTE SI E' SPOSTATO DA UN CANALE A UN ALTRO
         if (oldState.channel?.id && newState.channel?.id && oldState.channel?.id != newState.channel?.id) {
-
+          await deleteChannel(oldState);
+          await createChannel(oldState, newState);
         }
 
         // UN UTENTE HA EFFETTUATO L'ACCESSO IN UN NUOVO CANALE
         if (!oldState.channel?.id && newState.channel?.id) {
-          let check;
-          try {
-            check = await readDbAllWith2Params(`SELECT * FROM autovoice_system_creator WHERE guildId = ? AND categoryId = ?`, newState.guild.id, newState.channel.parentId);
-          } catch {
-            return;
-          }
-
-          // TIPO NUMERICO
-          if (check.length > 0 && check[0].typeVoice == 2) {
-            let channelName = newState.channel.name.split(" ");
-            let channelNameResult = "";
-            await channelName.forEach(value => {
-              let regex = /^[0-9]+$/;
-              if (regex.test(value)) {
-                channelNameResult = value;
-              }
-            })
-
-            let category = await oldState.guild.channels.fetch(check[0].categoryId);
-            const checkSizeChannel = await category.children.cache;
-            let channelAvaiable = 0;
-            await checkSizeChannel.each(value => {
-              if (value.type == 2 && value.parentId == newState.channel.parentId && value.members.size < 1 && value.id != newState.channel.id) {
-                channelAvaiable++;
-              }
-            })
-            if (channelAvaiable == 0) {
-              await newState.channel.clone({
-                name: newState.channel.name.replace(channelNameResult, `${+channelNameResult + 1}`),
-              })
-            }
-          }
-
+          await createChannel(oldState, newState);
         }
 
         // UN UTENTE SI E' DISCONNESSO DAI CANALI VOCALI

@@ -5,6 +5,52 @@ const { readDbAllWith2Params, runDb, readDbWith3Params, readDbWith4Params, readD
 const { errorSendControls, getEmojifromUrl, getEmoji, returnPermission, noHavePermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
 
 
+// FUNZIONI
+
+async function endSetup(language_result, interaction) {
+  const check = await readDbAllWith2Params(`SELECT * FROM autovoice_system_creator WHERE authorId = ? AND guildId = ?`, interaction.user.id, interaction.guild.id);
+
+  if (check[0].typeVoice != 2) {
+    const size = interaction.fields.getTextInputValue('sizeSelectAutoVoice');
+    let regex = /^[0-9]+$/;
+    if (regex.test(size)) {
+      await interaction.deferReply();
+      await runDb(`UPDATE autovoice_system_creator SET channelSize = ?, channelId = ? WHERE guildId = ? AND authorId = ?`, size, channel.id, interaction.guild.id, interaction.user.id);
+    }
+  }
+  const category = await interaction.guild.channels.fetch(check[0].categoryId);
+  // CREAZIONE DEL CANALE
+  let channelObject = {};
+
+  // SE IL AUTO VOICE E' AUTOMATICO
+  if (check[0].typeVoice == 2) {
+    // CANALE NUMERICO
+    if (check[0].creatorNickname == 1) {
+      channelObject = {
+        parent: category,
+        name: `changeMe 1`,
+        type: ChannelType.GuildVoice
+      };
+    }
+  }
+
+  const channel = await interaction.guild.channels.create(channelObject);
+  await runDb(`UPDATE autovoice_system_creator SET authorId = ?, channelId = ? WHERE guildId = ? AND authorId = ?`, null, channel.id, interaction.guild.id, interaction.user.id);
+
+  // INVIO MESSAGGIO DI FINE SETUP E CANCELLO IL CANALE
+  await interaction.channel.delete();
+  const setupChannel = await interaction.guild.channels.fetch(check[0].initChannel);
+
+  const customEmoji = await getEmojifromUrl(interaction.client, "utilitysettings")
+  const embedLog = new EmbedBuilder()
+    .setAuthor({ name: `${language_result.endSetup_message.embed_title}`, iconURL: customEmoji })
+    .setDescription(language_result.endSetup_message.description_embed)
+    .setFooter({ text: `${language_result.endSetup_message.embed_footer}`, iconURL: `${language_result.endSetup_message.embed_icon_url}` })
+    .setColor(0x9ba832);
+  await setupChannel.send({ embeds: [embedLog] });
+}
+
+
 module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
@@ -36,10 +82,10 @@ module.exports = {
           .setCustomId('autoVoiceSelectMenu_creatorType')
           .setPlaceholder(language_result.selectSetup_Creator.placeholder)
           .addOptions(
-            new StringSelectMenuOptionBuilder()
-              .setLabel(language_result.selectSetup_Creator.label_private)
-              .setValue("private")
-              .setEmoji(privateEmoji.id),
+            // new StringSelectMenuOptionBuilder() //DA PROGRAMMARE
+            //   .setLabel(language_result.selectSetup_Creator.label_private)
+            //   .setValue("private")
+            //   .setEmoji(privateEmoji.id),
             new StringSelectMenuOptionBuilder()
               .setLabel(language_result.selectSetup_Creator.label_free)
               .setValue("free")
@@ -87,14 +133,14 @@ module.exports = {
               .setLabel(language_result.selectSetup_TypeAccess.label_numeric)
               .setValue("numeric")
               .setEmoji(voiceNumber.id),
-            new StringSelectMenuOptionBuilder()
-              .setLabel(language_result.selectSetup_TypeAccess.label_nickname)
-              .setValue("nickname")
-              .setEmoji(voiceUser.id),
-            new StringSelectMenuOptionBuilder()
-              .setLabel(language_result.selectSetup_TypeAccess.label_random)
-              .setValue("random")
-              .setEmoji(voiceRandom.id),
+            // new StringSelectMenuOptionBuilder() //DA PROGRAMMARE
+            //   .setLabel(language_result.selectSetup_TypeAccess.label_nickname)
+            //   .setValue("nickname")
+            //   .setEmoji(voiceUser.id),
+            // new StringSelectMenuOptionBuilder()
+            //   .setLabel(language_result.selectSetup_TypeAccess.label_random)
+            //   .setValue("random")
+            //   .setEmoji(voiceRandom.id),
           );
 
         const row = new ActionRowBuilder()
@@ -151,6 +197,32 @@ module.exports = {
 
 
       if (interaction.customId == "autoVoiceSelectMenu_creatorCategory") {
+        const check = await readDbAllWith2Params(`SELECT * FROM autovoice_system_creator WHERE authorId = ? AND guildId = ?`, interaction.user.id, interaction.guild.id);
+
+        // CONTROLLO SE LA CATEGORIA ESISTE GIA'
+        const checkCategory = await readDbAllWith2Params(`SELECT * FROM autovoice_system_creator WHERE guildId = ? AND categoryId = ?`, interaction.guild.id, interaction.values[0]);
+        if (checkCategory.length > 0) {
+          await interaction.channel.delete();
+          const setupChannel = await interaction.guild.channels.fetch(check[0].initChannel);
+
+          const customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny")
+          const embedLog = new EmbedBuilder()
+            .setAuthor({ name: `${language_result.endSetup_message.embed_title}`, iconURL: customEmoji })
+            .setDescription(language_result.endSetup_message.description_embed_errorcategory)
+            .setFooter({ text: `${language_result.endSetup_message.embed_footer}`, iconURL: `${language_result.endSetup_message.embed_icon_url}` })
+            .setColor(0x911010);
+          await setupChannel.send({ embeds: [embedLog] });
+
+          await runDb(`DELETE FROM autovoice_system_creator WHERE guildId = ? AND authorId = ?`, interaction.guild.id, interaction.user.id);
+          return;
+        }
+
+        await runDb(`UPDATE autovoice_system_creator SET categoryId = ? WHERE guildId = ? AND authorId = ?`, interaction.values[0], interaction.guild.id, interaction.user.id);
+
+        if(check[0].typeVoice == 2) {
+          endSetup(language_result, interaction);
+          return;
+        }
 
         const modal = new ModalBuilder()
           .setCustomId("autoVoiceModalSelectSize")
@@ -163,7 +235,6 @@ module.exports = {
           .setStyle(TextInputStyle.Short)
           .setMaxLength(2)
 
-        const check = await readDbAllWith2Params(`SELECT * FROM autovoice_system_creator WHERE authorId = ? AND guildId = ?`, interaction.user.id, interaction.guild.id);
         if (check[0].typeVoice == 1) {
           const messageSelect = new TextInputBuilder()
             .setCustomId('messageSelectAutoVoice')
@@ -181,49 +252,10 @@ module.exports = {
 
 
         await interaction.showModal(modal);
-
-        await runDb(`UPDATE autovoice_system_creator SET categoryId = ? WHERE guildId = ? AND authorId = ?`, interaction.values[0], interaction.guild.id, interaction.user.id);
       }
 
       if (interaction.customId == "autoVoiceModalSelectSize") {
-        const size = interaction.fields.getTextInputValue('sizeSelectAutoVoice');
-        let regex = /^[0-9]+$/;
-        if (regex.test(size)) {
-          await interaction.deferReply();
-          const check = await readDbAllWith2Params(`SELECT * FROM autovoice_system_creator WHERE authorId = ? AND guildId = ?`, interaction.user.id, interaction.guild.id);
-          const category = await interaction.guild.channels.fetch(check[0].categoryId);
-
-          // CREAZIONE DEL CANALE
-          let channelObject = {};
-
-          // SE IL AUTO VOICE E' AUTOMATICO
-          if(check[0].typeVoice == 2) {
-            // CANALE NUMERICO
-            if (check[0].creatorNickname == 1) {
-              channelObject = {
-                parent: category,
-                name: `changeMe 1`,
-                type: ChannelType.GuildVoice
-              };
-            }
-          }
-          
-          const channel = await interaction.guild.channels.create(channelObject);
-
-          // INVIO MESSAGGIO DI FINE SETUP E CANCELLO IL CANALE
-          await interaction.channel.delete();
-          const setupChannel = await interaction.guild.channels.fetch(check[0].initChannel);
-
-          const customEmoji = await getEmojifromUrl(interaction.client, "utilitysettings")
-          const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.endSetup_message.embed_title}`, iconURL: customEmoji })
-            .setDescription(language_result.endSetup_message.description_embed)
-            .setFooter({ text: `${language_result.endSetup_message.embed_footer}`, iconURL: `${language_result.endSetup_message.embed_icon_url}` })
-            .setColor(0x9ba832);
-          await setupChannel.send({ embeds: [embedLog] });
-
-          await runDb(`UPDATE autovoice_system_creator SET channelSize = ?, authorId = ?, channelId = ? WHERE guildId = ? AND authorId = ?`, size, null, channel.id, interaction.guild.id, interaction.user.id);
-        }
+        await endSetup(language_result, interaction);
       }
 
     }
