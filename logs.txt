@@ -1,0 +1,410 @@
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: oldState.guild.channels.fetch(...).fetch is not a function
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: oldState.guild.channels.fetch(...).fetch is not a function
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'id')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of undefined (reading 'typeVoice')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of undefined (reading 'typeVoice')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of undefined (reading 'typeVoice')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of undefined (reading 'typeVoice')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of undefined (reading 'typeVoice')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\VoiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\VoiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+DiscordAPIError[10003]: Unknown Channel
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of null (reading 'parentId')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of undefined (reading 'cache')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of undefined (reading 'cache')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of undefined (reading 'cache')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
+
+---- [START LOGS] ----
+[\autoVoice-system\voiceState.js]
+TypeError: Cannot read properties of undefined (reading 'cache')
+Error: \autoVoice-system\voiceState.js
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:10:21
+    at Array.forEach (<anonymous>)
+    at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\bin\HandlingFunctions.js:9:11
+    at FSReqCallback.oncomplete (node:fs:191:23)
+----- [END LOGS] -----
