@@ -16,36 +16,38 @@ async function createChannel(oldState, newState) {
   } catch {
     return;
   }
-
-  // TIPO NUMERICO
-  if (check.length > 0 && check[0].typeVoice == 2) {
-    let channelName = newState.channel.name.split(" ");
-    let channelNameResult = "";
-    await channelName.forEach(value => {
-      let regex = /^[0-9]+$/;
-      if (regex.test(value)) {
-        channelNameResult = value;
-      }
-    })
-
-    let category = await oldState.guild.channels.fetch(check[0].categoryId);
-    const checkSizeChannel = await category.children.cache;
-    let channelAvaiable = 0;
-    let channelCount = 0;
-    await checkSizeChannel.each(value => {
-      if (value.type == 2 && value.parentId == newState.channel.parentId && value.members.size < 1 && value.id != newState.channel.id) {
-        channelAvaiable++;
-      }
-      if (value.type == 2 && value.parentId == newState.channel.parentId) {
-        channelCount++;
-      }
-    })
-    if (channelAvaiable == 0) {
-      await newState.channel.clone({
-        name: newState.channel.name.replace(channelNameResult, `${channelCount + 1}`),
+  if(check.length > 0) {
+    // TIPO NUMERICO
+    if (check.length > 0 && check[0].typeVoice == 2) {
+      let channelName = newState.channel.name.split(" ");
+      let channelNameResult = "";
+      await channelName.forEach(value => {
+        let regex = /^[0-9]+$/;
+        if (regex.test(value)) {
+          channelNameResult = value;
+        }
       })
+  
+      let category = await oldState.guild.channels.fetch(check[0].categoryId);
+      const checkSizeChannel = await category.children.cache;
+      let channelAvaiable = 0;
+      let channelCount = 0;
+      await checkSizeChannel.each(value => {
+        if (value.type == 2 && value.parentId == newState.channel.parentId && value.members.size < 1 && value.id != newState.channel.id) {
+          channelAvaiable++;
+        }
+        if (value.type == 2 && value.parentId == newState.channel.parentId) {
+          channelCount++;
+        }
+      })
+      if (channelAvaiable == 0) {
+        await newState.channel.clone({
+          name: newState.channel.name.replace(channelNameResult, `${channelCount + 1}`),
+        })
+      }
     }
   }
+
 }
 
 async function deleteChannel(oldState) {
@@ -56,7 +58,7 @@ async function deleteChannel(oldState) {
     return;
   }
 
-  if (check) {
+  if (check.length > 0) {
     if (oldState.channel.members.size < 1) {
       let category = await oldState.guild.channels.fetch(check[0].categoryId);
       const checkSizeChannel = await category.children.cache;
