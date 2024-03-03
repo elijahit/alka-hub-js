@@ -32,12 +32,12 @@ module.exports = {
 
 					if (checkFeaturesisEnabled?.autoRoleSystem_enabled) {
 						if (checkRoleAlreadySet?.length > 0) {
-							await runDb('INSERT INTO autorole_system_roles (guildId, roleId) VALUES (?, ?)', interaction.guild.id, roleId);
+							await runDb('DELETE FROM autorole_system_roles WHERE guildId = ? AND roleId = ?', interaction.guild.id, roleId);
 	
 							const customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: customEmoji })
-								.setDescription(language_result.addCommand.description_embed_error.replace("{0}", role))
+								.setDescription(language_result.addCommand.description_embed_delete.replace("{0}", role))
 								.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
 								.setColor(0x7a090c);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });

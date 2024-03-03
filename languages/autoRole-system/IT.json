@@ -11,6 +11,6 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "Hai impostato con successo il ruolo {0} nella lista di Auto Role da impostare all'ingresso di un nuovo utente.",
-    "description_embed_error": "Il ruolo {0} è già impostato come auto role, non puoi impostarlo nuovamente!"
+    "description_embed_delete": "Il ruolo {0} è stato rimosso con successo dalla lista Auto Role e non verrà più impostato all'ingresso di un nuovo utente."
   }
 }
