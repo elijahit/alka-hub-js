@@ -1,0 +1,16 @@
+{
+  "noPermission": {
+    "embed_title": "Alka Hub | Auto Voice System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "You do not have permission to use this command!",
+    "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable."
+  },
+  "addCommand": {
+    "embed_title": "Alka Hub | Auto Role System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "You have successfully set the role {0} in the Auto Role list to be assigned upon a new user's entry.",
+    "description_embed_error": "The role {0} is already set as an auto role, you cannot set it again!"
+  }
+}
