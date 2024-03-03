@@ -25,6 +25,7 @@ CREATE TABLE "guilds_config" (
 	"logSystem_enabled"	INTEGER,
 	"ticketSystem_enabled"	INTEGER,
 	"autoVoiceSystem_enabled"	INTEGER,
+	"autoRoleSystem_enabled"	INTEGER,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 -- Tabella di configurazione Log System
@@ -95,6 +96,13 @@ CREATE TABLE "autovoice_system_creator" (
 	"creatorNickname"	INTEGER,
 	"channelSize"	INTEGER,
 	"initChannel"	TEXT,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
+-- Tabella di raccolta Auto Role System
+CREATE TABLE "autorole_system_roles" (
+	"ID"	INTEGER UNIQUE,
+	"guildId"	TEXT,
+	"roleId"	TEXT,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 ```
