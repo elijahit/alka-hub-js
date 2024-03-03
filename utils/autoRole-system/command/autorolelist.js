@@ -1,22 +1,15 @@
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
-const { readDb, runDb, readDbAllWith2Params } = require('../../../bin/database');
+const { readDb, readDbAllWith1Params } = require('../../../bin/database');
 const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermission, noEnabledFunc, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('autorole')
-		.setDescription('Use this command to set roles to assign upon a user\'s join.')
-		.addRoleOption(role =>
-			role
-				.setName('role')
-				.setDescription('The role to insert into the list autorole')
-				.setRequired(true)
-		),
+		.setName('autorolelist')
+		.setDescription('Use this command to view the set auto roles.'),
 	async execute(interaction) {
-		const role = interaction.options.data[0].role;
-		const roleId = interaction.options.data[0].value;
+		let autoRoleString = "";
 
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id);
@@ -28,29 +21,27 @@ module.exports = {
 				if (result) {
 					const checkFeaturesisEnabled = await readDb(`SELECT autoRoleSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
 
-					const checkRoleAlreadySet = await readDbAllWith2Params(`SELECT * from autorole_system_roles WHERE guildId = ? AND roleId = ?`, interaction.guild.id, roleId);
+					const checkRoleAlreadySet = await readDbAllWith1Params(`SELECT * from autorole_system_roles WHERE guildId = ?`, interaction.guild.id);
 					
 					const customEmoji = await getEmojifromUrl(interaction.client, "autorole");
 					if (checkFeaturesisEnabled?.autoRoleSystem_enabled) {
+						autoRoleString += `${language_result.listCommand.description_embed.replace("{0}", interaction.user)}\n\n`;
 						if (checkRoleAlreadySet?.length > 0) {
-							await runDb('DELETE FROM autorole_system_roles WHERE guildId = ? AND roleId = ?', interaction.guild.id, roleId);
-	
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: customEmoji })
-								.setDescription(language_result.addCommand.description_embed_delete.replace("{0}", role))
-								.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
-								.setColor(0x7a090c);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
-							return;
+							await checkRoleAlreadySet.forEach(async value => {
+								const role = await interaction.guild.roles.fetch(value.roleId);
+								autoRoleString += `\n- ${role}`;
+							});
 						}
-						await runDb('INSERT INTO autorole_system_roles (guildId, roleId) VALUES (?, ?)', interaction.guild.id, roleId);
-
+						else {
+							autoRoleString += `\n**${language_result.listCommand.no_role}**`
+						}
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: customEmoji })
-							.setDescription(language_result.addCommand.description_embed.replace("{0}", role))
-							.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
-							.setColor(0x03fc28);
+							.setAuthor({ name: `${language_result.listCommand.embed_title}`, iconURL: customEmoji })
+							.setDescription(autoRoleString)
+							.setFooter({ text: `${language_result.listCommand.embed_footer}`, iconURL: `${language_result.listCommand.embed_icon_url}` })
+							.setColor(0x0d495c);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+
 					} else {
 						await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
 					}
