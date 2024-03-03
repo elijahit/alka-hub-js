@@ -39,7 +39,9 @@
     "ticket_category": "Ticket System",
     "ticket_commands": "- **/ticket** *[ticket]* - Il comando avvia la configurazione tramite un canale creato appositamente del sistema ticket segui le informazioni.\n- **/ticketcomponents** *[ticket]* - Il comando imposta i components (bottoni) nel messaggio di ticket impostato tramite /ticket",
     "autovoice_category": "Auto Voice System",
-    "autovoice_commands": "- **/autovoice** *[autovoice]* - Il comando avvia la configurazione tramite un canale creato appositamente del sistema auto voice segui le informazioni."
+    "autovoice_commands": "- **/autovoice** *[autovoice]* - Il comando avvia la configurazione tramite un canale creato appositamente del sistema auto voice segui le informazioni.",
+    "autorole_category": "Auto Role System",
+    "autorole_commands": "- **/autorole** *[autorole]* - Il comando imposta o rimuove nella lista degli auto role da settare il ruolo selezionato\n- **/autorolelist** *[autorole]* - Il comando mostra la lista degli autorole attualmente impostati nel server."
   }
   
 }

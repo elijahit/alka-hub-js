@@ -39,6 +39,8 @@
     "ticket_category": "Ticket System",
     "ticket_commands": "- **/ticket** *[ticket]* - This command initiates configuration through a specifically created channel of the ticket system, follow the instructions.\n- **/ticketcomponents** *[ticket]* - This command sets components (buttons) in the ticket message set via /ticket",
     "autovoice_category": "Auto Voice System",
-    "autovoice_commands": "- **/autovoice** *[autovoice]* - This command initiates configuration through a specifically created channel of the auto voice system, follow the instructions."
+    "autovoice_commands": "- **/autovoice** *[autovoice]* - This command initiates configuration through a specifically created channel of the auto voice system, follow the instructions.",
+    "autorole_category": "Auto Role System",
+    "autorole_commands": "- **/autorole** *[role]* - This command sets or removes the selected role in the list of auto roles to be assigned\n- **/autorolelist** - This command shows the list of auto roles currently set in the server."
   }
 }
