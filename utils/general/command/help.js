@@ -28,7 +28,7 @@ module.exports = {
 			// FOOTER
 			fields.push({name: " ", value: language_result.helpCommand.footer});
 			
-			const customEmoji = await getEmojifromUrl(interaction.client, "utilitysettings");
+			const customEmoji = await getEmojifromUrl(interaction.client, "help");
 			const embedLog = new EmbedBuilder()
 				.setAuthor({ name: `${language_result.helpCommand.embed_title}`, iconURL: customEmoji })
 				.setDescription(language_result.helpCommand.description_embed)
