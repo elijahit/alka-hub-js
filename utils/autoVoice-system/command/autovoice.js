@@ -44,7 +44,7 @@ module.exports = {
 						const row = new ActionRowBuilder()
 							.addComponents(selectSetup);
 
-						const customEmoji = await getEmojifromUrl(interaction.client, "utilitysettings")
+						const customEmoji = await getEmojifromUrl(interaction.client, "utilitysettings");
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.selectSetup.embed_title}`, iconURL: customEmoji })
 							.setDescription(language_result.selectSetup.description_embed)

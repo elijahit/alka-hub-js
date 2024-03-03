@@ -23,6 +23,23 @@
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_already_embed": "Questo server è già stato inizializzato. Non è possibile procedere con un'ulteriore inizializzazione. Utilizza **/config** per modificarne la configurazione.",
     "description_embed": "Hai inizializzato Alka Hub con successo. Ora puoi godere appieno di tutte le funzionalità di Alka Hub!"
+  },
+  "helpCommand": {
+    "embed_title": "Alka Hub | Help Commands",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Ciao! Di seguito trovi la lista dei comandi di Alka Hub: Assicurati di aver invitato Alka con i permessi necessari (Amministratore) per garantire il corretto funzionamento delle varie funzionalità. Utilizza solo i link ufficiali che trovi nei vari elenchi di Discord e nella documentazione ufficiale.",
+    "footer": "Ti raccomandiamo di leggere la **nostra documentazione** per ogni dubbio, la trovi nel nostro [Discord Ufficiale](https://discord.gg/X7KPcynxfB) -> alka-docs; per qualsiasi problema puoi aprire una segnalazione -> Technical Support.",
+    "general_category": "Generale",
+    "general_commands": "- **/help** *[NO HASH]* - Il comando mostra la lista completa dei comandi disponibili.\n- **/init** *[NO HASH]* - Il comando inizializza le configurazioni del server e lingua da utilizzare tra quelle disponibili.\n- **/features** *[features]* - Il comando abilita o disabilita le funzionalità disponibili in Alka Hub.",
+    "logs_category": "Logs System",
+    "logs_commands": "- **/logschannel** *[logschannel]* - Il comando imposta i vari canali di logs per inviare gli eventi del Logs System.",
+    "admin_category": "Admin Ranks System",
+    "admin_commands": "- **/permission** *[NO HASH]* - Il comando imposta i permessi ai ruoli per le funzionalità e i comandi, questi permessi vengono impostati tramite HASH.\n- **/permissionlist** *[permissionlist]* - Il comando visualizza i vari permessi impostati in base al ruolo.",
+    "ticket_category": "Ticket System",
+    "ticket_commands": "- **/ticket** *[ticket]* - Il comando avvia la configurazione tramite un canale creato appositamente del sistema ticket segui le informazioni.\n- **/ticketcomponents** *[ticket]* - Il comando imposta i components (bottoni) nel messaggio di ticket impostato tramite /ticket",
+    "autovoice_category": "Auto Voice System",
+    "autovoice_commands": "- **/autovoice** *[autovoice]* - Il comando avvia la configurazione tramite un canale creato appositamente del sistema auto voice segui le informazioni."
   }
   
 }

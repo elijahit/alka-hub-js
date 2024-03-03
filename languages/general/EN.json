@@ -23,5 +23,22 @@
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_already_embed": "This server has already been initialized. Further initialization is not possible. Use **/config** to modify its configuration.",
     "description_embed": "You have successfully initialized Alka Hub. Now you can fully enjoy all the features of Alka Hub!"
+  },
+  "helpCommand": {
+    "embed_title": "Alka Hub | Help Commands",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Hello! Below you'll find the list of commands for Alka Hub: Make sure you've invited Alka with the necessary permissions (Administrator) to ensure the proper functioning of various features. Only use official links found in various Discord lists and official documentation.",
+    "footer": "We recommend reading **our documentation** for any doubts, you can find it in our [Official Discord](https://discord.gg/X7KPcynxfB) -> alka-docs; for any issues, you can open a report -> Technical Support.",
+    "general_category": "General",
+    "general_commands": "- **/help** *[NO HASH]* - This command displays the complete list of available commands.\n- **/init** *[NO HASH]* - This command initializes server configurations and language to use from those available.\n- **/features** *[features]* - This command enables or disables available features in Alka Hub.",
+    "logs_category": "Logs System",
+    "logs_commands": "- **/logschannel** *[logschannel]* - This command sets various logs channels to send events from the Logs System.",
+    "admin_category": "Admin Ranks System",
+    "admin_commands": "- **/permission** *[NO HASH]* - This command sets permissions for roles for features and commands, these permissions are set via HASH.\n- **/permissionlist** *[permissionlist]* - This command displays various permissions set based on the role.",
+    "ticket_category": "Ticket System",
+    "ticket_commands": "- **/ticket** *[ticket]* - This command initiates configuration through a specifically created channel of the ticket system, follow the instructions.\n- **/ticketcomponents** *[ticket]* - This command sets components (buttons) in the ticket message set via /ticket",
+    "autovoice_category": "Auto Voice System",
+    "autovoice_commands": "- **/autovoice** *[autovoice]* - This command initiates configuration through a specifically created channel of the auto voice system, follow the instructions."
   }
 }
