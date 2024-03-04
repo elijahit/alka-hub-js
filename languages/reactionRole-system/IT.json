@@ -20,7 +20,7 @@
     "embed_title": "Alka Hub | Auto Role System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "{0} Eccoti la lista degli Auto Role attualmente impostati per assegnarli ai nuovi utenti nel server.",
-    "no_role": "Nessun ruolo ancora impostato, impostali con /autorole."
+    "description_embed": "{0} Eccoti la lista di tutti Reaction Role attualmente impostati.",
+    "no_role": "Nessun reaction role ancora impostato, impostali con /reactionrole."
   }
 }

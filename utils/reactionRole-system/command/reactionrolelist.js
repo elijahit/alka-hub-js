@@ -6,38 +6,41 @@ const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermi
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('autorolelist')
-		.setDescription('Use this command to view the set auto roles.'),
+		.setName('reactionrolelist')
+		.setDescription('Use this command to view the set reaction roles.'),
 	async execute(interaction) {
-		let autoRoleString = "";
+		let reactionRoleString = "";
 
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id);
-		const langagues_path = readFileSync(`./languages/autoRole-system/${data}.json`);
+		const langagues_path = readFileSync(`./languages/reactionRole-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		await returnPermission(interaction, "autorole", async result => {
 			try {
 				if (result) {
-					const checkFeaturesisEnabled = await readDb(`SELECT autoRoleSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
+					const checkFeaturesisEnabled = await readDb(`SELECT reactionRoleSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
 
-					const checkRoleAlreadySet = await readDbAllWith1Params(`SELECT * from autorole_system_roles WHERE guildId = ?`, interaction.guild.id);
+					const checkReactionAlreadySet = await readDbAllWith1Params(`SELECT * from reactionrole_system_reactions WHERE guildId = ?`, interaction.guild.id);
 					
-					const customEmoji = await getEmojifromUrl(interaction.client, "autorole");
-					if (checkFeaturesisEnabled?.autoRoleSystem_enabled) {
-						autoRoleString += `${language_result.listCommand.description_embed.replace("{0}", interaction.user)}\n\n`;
-						if (checkRoleAlreadySet?.length > 0) {
-							for(const value of checkRoleAlreadySet) {
+					const customEmoji = await getEmojifromUrl(interaction.client, "reactionrole");
+					if (checkFeaturesisEnabled?.reactionRoleSystem_enabled) {
+						reactionRoleString += `${language_result.listCommand.description_embed.replace("{0}", interaction.user)}\n\n`;
+						if (checkReactionAlreadySet?.length > 0) {
+							for(const value of checkReactionAlreadySet) {
 								const role = await interaction.guild.roles.fetch(value.roleId);
-								autoRoleString += `\n- ${role}`;
+								const channel = await interaction.guild.channels.fetch(value.channelId);
+								const message = await channel.messages.fetch(value.messageId);
+								reactionRoleString += `\n-(${value.ID}) ${role} | ${message.url} | ${value.emoji}`;
 							};
 						}
 						else {
-							autoRoleString += `\n**${language_result.listCommand.no_role}**`
+							reactionRoleString += `\n**${language_result.listCommand.no_role}**`
 						}
+
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.listCommand.embed_title}`, iconURL: customEmoji })
-							.setDescription(autoRoleString)
+							.setDescription(reactionRoleString)
 							.setFooter({ text: `${language_result.listCommand.embed_footer}`, iconURL: `${language_result.listCommand.embed_icon_url}` })
 							.setColor(0x0d495c);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
@@ -51,7 +54,7 @@ module.exports = {
 				}
 			}
 			catch (error) {
-				errorSendControls(error, interaction.client, interaction.guild, "\\autoRole-system\\autorole.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\reactionRole-system\\reactionrolelist.js");
 			}
 		});
 	},
