@@ -32,6 +32,16 @@ module.exports = {
 					
 					const customEmoji = await getEmojifromUrl(interaction.client, "autorole");
 					if (checkFeaturesisEnabled?.autoRoleSystem_enabled) {
+						// CONTROLLO SE IL RUOLO SI TROVA SOTTO AL RUOLO DA IMPOSTARE
+						if(interaction.guild.roles.botRoleFor(interaction.client.user).rawPosition < role.rawPosition) {
+							const embedLog = new EmbedBuilder()
+								.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: customEmoji })
+								.setDescription(language_result.addCommand.description_embed_missingpermissions.replace("{0}", `${interaction.guild.roles.botRoleFor(interaction.client.user)}`))
+								.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
+								.setColor(0x7a090c);
+							await interaction.reply({ embeds: [embedLog], ephemeral: true });
+							return;
+						}
 						if (checkRoleAlreadySet?.length > 0) {
 							await runDb('DELETE FROM autorole_system_roles WHERE guildId = ? AND roleId = ?', interaction.guild.id, roleId);
 	

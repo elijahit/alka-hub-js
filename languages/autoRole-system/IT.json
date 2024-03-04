@@ -11,7 +11,8 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "Hai impostato con successo il ruolo {0} nella lista di Auto Role da impostare all'ingresso di un nuovo utente.",
-    "description_embed_delete": "Il ruolo {0} è stato rimosso con successo dalla lista Auto Role e non verrà più impostato all'ingresso di un nuovo utente."
+    "description_embed_delete": "Il ruolo {0} è stato rimosso con successo dalla lista Auto Role e non verrà più impostato all'ingresso di un nuovo utente.",
+    "description_embed_missingpermissions": "Il ruolo che stai cercando di impostare/rimuovere si trova sopra al ruolo {0}, che è di proprietà di Alka. Per poterlo impostare/rimuovere dalla lista, sposta il ruolo di Alka al di sopra del ruolo che vuoi impostare."
   },
   "listCommand": {
     "embed_title": "Alka Hub | Auto Role System",
