@@ -61,6 +61,7 @@ function executeFolderModule(mainDir) {
 
 client.on(Events.InteractionCreate, async interaction => {
   if (!interaction.isChatInputCommand()) return;
+  if (!interaction.guild) return;
 
   const command = interaction.client.commands.get(interaction.commandName);
 

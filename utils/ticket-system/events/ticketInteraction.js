@@ -8,6 +8,7 @@ const { errorSendControls, getEmojifromUrl, returnPermission, noHavePermission, 
 module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
+    if (!interaction.guild) return;
     try {
       // CONTROLLO LINGUA
       let data = await language.databaseCheck(interaction.guild.id);
