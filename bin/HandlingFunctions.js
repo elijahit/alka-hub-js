@@ -5,8 +5,8 @@ const { readFileSync, readdir, writeFile } = require("fs");
 
 function errorSendControls(error, client, guild_error, system) {
   // LEGGO E AGGIORNO IL FILE DI LOGS
-  readdir("./", (_, files) => {
-    files.forEach(file => {
+  readdir("./", async (_, files) => {
+    await files.forEach(file => {
       errorResult = new Error(`${system}`, { cause: error });
 
       if (file == "logs.txt") {
@@ -161,7 +161,7 @@ async function noHavePermission(interaction, language) {
 async function cleanerDatabase(client) {
   // CONTROLLO SE LA GUILD DI guilds_config NEL DATABASE SONO TRUE
   const checkGuildsConfig = await readDbAll('guilds_config');
-  checkGuildsConfig.forEach(async value => {
+  await checkGuildsConfig.forEach(async value => {
     try {
       await client.guilds.fetch(value.guildId);
     } catch (error) {
@@ -174,7 +174,7 @@ async function cleanerDatabase(client) {
 
   // CONTROLLO SE LA GUILD DI log_system_config NEL DATABASE SONO TRUE
   const checkGuildsLogs = await readDbAll('log_system_config');
-  checkGuildsLogs.forEach(async value => {
+  await checkGuildsLogs.forEach(async value => {
     try {
       await client.guilds.fetch(value.guildId);
     } catch (error) {
@@ -187,7 +187,7 @@ async function cleanerDatabase(client) {
 
   // CONTROLLO SE LA GUILD DI rank_system_permissions NEL DATABASE SONO TRUE
   const checkPermissionsGuilds = await readDbAll('rank_system_permissions');
-  checkPermissionsGuilds.forEach(async value => {
+  await checkPermissionsGuilds.forEach(async value => {
     try {
       await client.guilds.fetch(value.guildId);
     } catch (error) {
@@ -200,7 +200,7 @@ async function cleanerDatabase(client) {
 
   // CONTROLLO SE LA GUILD DI ticket_system_message NEL DATABASE SONO TRUE
   const checkTicketMessage = await readDbAll('ticket_system_message');
-  checkTicketMessage.forEach(async value => {
+  await checkTicketMessage.forEach(async value => {
     try {
       const guild = await client.guilds.fetch(value.guildId);
       const channel = await guild.channels.fetch(value.channelId);
@@ -224,7 +224,7 @@ async function cleanerDatabase(client) {
 
   // CONTROLLO SE LA GUILD DI ticket_system_tickets NEL DATABASE SONO TRUE
   const checkTicketChannel = await readDbAll('ticket_system_tickets');
-  checkTicketChannel.forEach(async value => {
+  await checkTicketChannel.forEach(async value => {
     try {
       const guild = await client.guilds.fetch(value.guildId);
       const channel = await guild.channels.fetch(value.channelId);

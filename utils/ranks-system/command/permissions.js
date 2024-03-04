@@ -42,7 +42,7 @@ module.exports = {
 		const resultCheck = await readDbAllWithValue("rank_system_hash", "hashName");
 		try {
 			let checkPass = false;
-			resultCheck.forEach(value => {
+			await resultCheck.forEach(value => {
 				if (value.hashName == pex) {
 					checkPass = true;
 				}

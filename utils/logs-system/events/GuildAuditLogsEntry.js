@@ -255,18 +255,18 @@ module.exports = { // HO DISABILITATO QUESTA FUNZIONE MODIFICANDO IL NOME EVENTO
         fields.push({ name: `${language_result.guildAuditLogsEntry.target_changes_embed}`, value: `ID: (${auditLogEntry.id})` });
         if (auditLogEntry.changes.length > 0) {
           fields.push({ name: "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯", value: " " });
-          auditLogEntry.changes.forEach((values, index) => {
+          await auditLogEntry.changes.forEach(async (values, index) => {
             if (fields.length < 22) {
               fields.push({ name: `[${index}] ${language_result.guildAuditLogsEntry.target_changes_key}`, value: `${values.key}` });
               if (typeof values.old == 'object') {
-                values.old.forEach(oldValue => {
+                await values.old.forEach(oldValue => {
                   fields.push({ name: `[${index}] ${language_result.guildAuditLogsEntry.target_changes_old}`, value: `${JSON.stringify(oldValue)}` });
                 });
               } else {
                 fields.push({ name: `[${index}] ${language_result.guildAuditLogsEntry.target_changes_old}`, value: `${values.old}` });
               }
               if (typeof values.new == 'object') {
-                values.new.forEach(newValue => {
+                await values.new.forEach(newValue => {
                   fields.push({
                     name: `[${index}] ${language_result.guildAuditLogsEntry.target_changes_new}`, value: `- ${JSON.stringify(newValue)
                       .replace("{", " ")
@@ -285,7 +285,7 @@ module.exports = { // HO DISABILITATO QUESTA FUNZIONE MODIFICANDO IL NOME EVENTO
           fields.push({ name: ` `, value: `${language_result.guildAuditLogsEntry.nochanges}` });
         }
 
-        fields.forEach(field => {
+        await fields.forEach(field => {
           if (field.value == "undefined") {
             field.value = language_result.guildAuditLogsEntry.undefined;
           }

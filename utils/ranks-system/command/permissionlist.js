@@ -34,7 +34,7 @@ module.exports = {
 					const roleDb = await readDbAllWith2Params(checkSqlHash, interaction.guild.id, role.id);
 						let roleContainer = "";
 						if(roleDb) {
-							roleDb.forEach(value => {
+							await roleDb.forEach(value => {
 								roleContainer += `- ${value.hashRank}\n`
 							});
 						}
