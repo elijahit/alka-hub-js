@@ -26,12 +26,12 @@
   },
   "removeCommand": {
     "embed_title": "Alka Hub | Reaction Role System",
-    "embed_footer": "Alka Hub di alkanetwork.eu",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "Hai rimosso con successo la reaction role. Ora non è più disponibile",
-    "description_embed_notset": "La reaction role che stai cercando non esiste nei nostri database, riprova.",
-    "description_embed_missingpermissions": "Il ruolo che stai cercando di impostare/rimuovere si trova sopra al ruolo {0}, che appartiene ad Alka. Per poterlo impostare/rimuovere dalla lista, sposta il ruolo di Alka al di sopra del ruolo che vuoi impostare.",
-    "description_embed_channelnotfound": "Il messaggio non si trova nello stesso canale in cui viene eseguita l'interazione. Esegui il comando nel canale in cui si trova il messaggio a cui vuoi rimuovere i tuoi reaction role.",
-    "description_embed_emojinotfound": "L'emoji selezionata non è stata trovata nel tuo server. Inserisci un emoji valida!"
+    "description_embed": "You have successfully removed the reaction role. It is no longer available.",
+    "description_embed_notset": "The reaction role you are trying to remove does not exist in our database. Please try again.",
+    "description_embed_missingpermissions": "The role you are trying to set/remove is above the role {0}, which belongs to Alka. To set/remove it from the list, move Alka's role above the role you want to set.",
+    "description_embed_channelnotfound": "The message is not in the same channel where the interaction is taking place. Run the command in the channel where the message to which you want to remove your reaction roles is located.",
+    "description_embed_emojinotfound": "The selected emoji was not found on your server. Please insert a valid emoji!"
   }
 }
