@@ -110,7 +110,7 @@ setInterval(async () => {
 
 setTimeout(async () => {
   await reactionRoleCached(client);
-  await console.log('[REACTION ROLES] Cache caricata con successo!');
+  console.log('[REACTION ROLES] Cache caricata con successo!');
 }, 2000);
 
 client.login(token);

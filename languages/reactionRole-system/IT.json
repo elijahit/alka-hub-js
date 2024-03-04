@@ -1,13 +1,13 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Auto Voice System",
+    "embed_title": "Alka Hub | Reaction Role System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "Non hai il permesso per usare questo comando!",
     "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
   },
   "addCommand": {
-    "embed_title": "Alka Hub | Sistema di Ruolo Automatico",
+    "embed_title": "Alka Hub | Reaction Role System",
     "embed_footer": "Alka Hub di alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "Hai impostato con successo la reaction role per il ruolo {0}. Ora, quando un utente reagirà al messaggio, il ruolo verrà assegnato.",
@@ -17,7 +17,7 @@
     "description_embed_emojinotfound": "L'emoji selezionata non è stata trovata nel tuo server. Inserisci un emoji valida!"
   },
   "listCommand": {
-    "embed_title": "Alka Hub | Auto Role System",
+    "embed_title": "Alka Hub | Reaction Role System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "{0} Eccoti la lista di tutti Reaction Role attualmente impostati.",

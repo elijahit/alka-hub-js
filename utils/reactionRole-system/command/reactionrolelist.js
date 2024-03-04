@@ -31,7 +31,7 @@ module.exports = {
 								const role = await interaction.guild.roles.fetch(value.roleId);
 								const channel = await interaction.guild.channels.fetch(value.channelId);
 								const message = await channel.messages.fetch(value.messageId);
-								reactionRoleString += `\n-(${value.ID}) ${role} | ${message.url} | ${value.emoji}`;
+								reactionRoleString += `\n-${role} | ${message.url} | ${value.emoji}`;
 							};
 						}
 						else {

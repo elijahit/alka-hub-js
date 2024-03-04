@@ -35,9 +35,25 @@ module.exports = {
 						else {
 							autoRoleString += `\n**${language_result.listCommand.no_role}**`
 						}
-						const embedLog = new EmbedBuilder()
+
+						const embedLog = new EmbedBuilder();
+
+						if (autoRoleString.length > 3000) {
+							const arrayString = autoRoleString.split("\n");
+							let autoRoleStringResolve = "";
+							for (const string of arrayString) {
+								if (autoRoleStringResolve.length < 3500) {
+									autoRoleStringResolve += `\n${string}`;
+								}
+							}
+							autoRoleStringResolve += `\n${language_result.listCommand.most_lenght}`;
+							embedLog.setDescription(autoRoleStringResolve);
+						} else {
+							embedLog.setDescription(autoRoleString);
+						}
+
+						embedLog
 							.setAuthor({ name: `${language_result.listCommand.embed_title}`, iconURL: customEmoji })
-							.setDescription(autoRoleString)
 							.setFooter({ text: `${language_result.listCommand.embed_footer}`, iconURL: `${language_result.listCommand.embed_icon_url}` })
 							.setColor(0x0d495c);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
