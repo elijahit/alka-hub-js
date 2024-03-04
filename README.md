@@ -26,6 +26,7 @@ CREATE TABLE "guilds_config" (
 	"ticketSystem_enabled"	INTEGER,
 	"autoVoiceSystem_enabled"	INTEGER,
 	"autoRoleSystem_enabled"	INTEGER,
+	"reactionRoleSystem_enabled"	INTEGER,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 -- Tabella di configurazione Log System
@@ -103,6 +104,16 @@ CREATE TABLE "autorole_system_roles" (
 	"ID"	INTEGER UNIQUE,
 	"guildId"	TEXT,
 	"roleId"	TEXT,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
+-- Tabella di raccolta Reaction Role System
+CREATE TABLE "reactionrole_system_reactions" (
+	"ID"	INTEGER UNIQUE,
+	"guildId"	TEXT,
+	"roleId"	TEXT,
+	"messageId"	TEXT,
+	"channelId"	TEXT,
+	"emoji"	TEXT,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 ```
