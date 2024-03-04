@@ -10,9 +10,11 @@
     "embed_title": "Alka Hub | Auto Role System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "You have successfully set the role {0} in the Auto Role list to be assigned upon a new user's entry.",
-    "description_embed_delete": "The role {0} has been successfully removed from the Auto Role list and will no longer be set upon a new user's entry.",
-    "description_embed_missingpermissions": "The role you are trying to set/remove is above the role {0}, which belongs to Alka. To set/remove it from the list, move Alka's role above the role you want to set."
+    "description_embed": "You have successfully set the reaction role for the role {0}. Now, when a user reacts to the message, the role will be assigned.",
+    "description_embed_alreadyset": "The reaction role you are trying to set already exists. There cannot be a reaction role with the same emoji.",
+    "description_embed_missingpermissions": "The role you are trying to set/remove is above the role {0}, which belongs to Alka. To set/remove it from the list, move Alka's role above the role you want to set.",
+    "description_embed_channelnotfound": "The message is not in the same channel where the interaction is taking place. Run the command in the channel where the message to which you want to set your reaction roles is located.",
+    "description_embed_emojinotfound": "The selected emoji was not found on your server. Please insert a valid emoji!"
   },
   "listCommand": {
     "embed_title": "Alka Hub | Auto Role System",
