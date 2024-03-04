@@ -161,7 +161,7 @@ async function noHavePermission(interaction, language) {
 async function cleanerDatabase(client) {
   // CONTROLLO SE LA GUILD DI guilds_config NEL DATABASE SONO TRUE
   const checkGuildsConfig = await readDbAll('guilds_config');
-  await checkGuildsConfig.forEach(async value => {
+  for (const value of checkGuildsConfig) {
     try {
       await client.guilds.fetch(value.guildId);
     } catch (error) {
@@ -170,11 +170,11 @@ async function cleanerDatabase(client) {
         await runDb('DELETE FROM guilds_config WHERE guildId = ?', value.guildId);
       }
     }
-  })
+  }
 
   // CONTROLLO SE LA GUILD DI log_system_config NEL DATABASE SONO TRUE
   const checkGuildsLogs = await readDbAll('log_system_config');
-  await checkGuildsLogs.forEach(async value => {
+  for (const value of checkGuildsLogs) {
     try {
       await client.guilds.fetch(value.guildId);
     } catch (error) {
@@ -183,11 +183,11 @@ async function cleanerDatabase(client) {
         await runDb('DELETE FROM log_system_config WHERE guildId = ?', value.guildId);
       }
     }
-  })
+  }
 
   // CONTROLLO SE LA GUILD DI rank_system_permissions NEL DATABASE SONO TRUE
   const checkPermissionsGuilds = await readDbAll('rank_system_permissions');
-  await checkPermissionsGuilds.forEach(async value => {
+  for (const value of checkPermissionsGuilds) {
     try {
       await client.guilds.fetch(value.guildId);
     } catch (error) {
@@ -196,11 +196,11 @@ async function cleanerDatabase(client) {
         await runDb('DELETE FROM rank_system_permissions WHERE guildId = ?', value.guildId);
       }
     }
-  })
+  }
 
   // CONTROLLO SE LA GUILD DI ticket_system_message NEL DATABASE SONO TRUE
   const checkTicketMessage = await readDbAll('ticket_system_message');
-  await checkTicketMessage.forEach(async value => {
+  for (const value of checkTicketMessage) {
     try {
       const guild = await client.guilds.fetch(value.guildId);
       const channel = await guild.channels.fetch(value.channelId);
@@ -220,11 +220,11 @@ async function cleanerDatabase(client) {
         }
       }
     }
-  })
+  }
 
   // CONTROLLO SE LA GUILD DI ticket_system_tickets NEL DATABASE SONO TRUE
   const checkTicketChannel = await readDbAll('ticket_system_tickets');
-  await checkTicketChannel.forEach(async value => {
+  for (const value of checkTicketChannel) {
     try {
       const guild = await client.guilds.fetch(value.guildId);
       const channel = await guild.channels.fetch(value.channelId);
@@ -242,7 +242,20 @@ async function cleanerDatabase(client) {
         await runDb('DELETE FROM ticket_system_tickets WHERE guildId = ? AND channelId = ? AND messageId = ?', value.guildId, value.channelId, value.messageId);
       }
     }
-  })
+  }
+}
+
+async function reactionRoleCached(client) {
+  const reactionRoles = await readDbAll('reactionrole_system_reactions');
+  for (const value of reactionRoles) {
+    try {
+      const guild = await client.guilds.fetch(value.guildId);
+      const channel = await guild.channels.fetch(value.channelId);
+      await channel.messages.fetch(value.messageId);
+    } catch {
+      await runDb('DELETE FROM reactionrole_system_reactions WHERE guildId = ? AND channelId = ? AND messageId = ?', value.guildId, value.channelId, value.messageId);
+    }
+  }
 }
 
 module.exports = {
@@ -255,4 +268,5 @@ module.exports = {
   noEnabledFunc,
   noHavePermission,
   cleanerDatabase,
+  reactionRoleCached,
 }

@@ -2,7 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 const { token, presenceStatusName, botState } = require('./config.json');
-const { cleanerDatabase } = require('./bin/HandlingFunctions');
+const { cleanerDatabase, reactionRoleCached } = require('./bin/HandlingFunctions');
 
 
 const client = new Client({ intents: [
@@ -37,7 +37,6 @@ function executeFolderModule(mainDir) {
 
         if ('data' in command && 'execute' in command) {
           client.commands.set(command.data.name, command);
-          console.log(`[C] ${file} caricato`);
         }
       }
       catch {
@@ -49,7 +48,6 @@ function executeFolderModule(mainDir) {
         const filePath = path.join(eventsPathResolve, file);
         const event = require(filePath);
         client.on(event.name, (...args) => event.execute(...args));
-        console.log(`[E] ${file} caricato`);
       }
       catch {
         console.error(`[!E] ${file} non caricato`);
@@ -103,8 +101,15 @@ client.once(Events.ClientReady, readyClient => {
   });
 });
 
+// FUNZIONI DI HandlingFunction
+
 setInterval(async () => {
   await cleanerDatabase(client);
 }, 21600000);
+
+setTimeout(async () => {
+  await reactionRoleCached(client);
+  await console.log('[REACTION ROLES] Cache caricata con successo!');
+}, 2000);
 
 client.login(token);

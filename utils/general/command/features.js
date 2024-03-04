@@ -26,6 +26,10 @@ module.exports = {
 					name: "Auto Role System",
 					value: "autoRoleSystem_enabled",
 				})
+				.addChoices({
+					name: "Reaction Role System",
+					value: "reactionRoleSystem_enabled",
+				})
 				.setName('choices')
 				.setDescription('Name of the system you want to enable or disable')
 				.setRequired(true)

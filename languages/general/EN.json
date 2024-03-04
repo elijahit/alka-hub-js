@@ -41,6 +41,8 @@
     "autovoice_category": "Auto Voice System",
     "autovoice_commands": "- **/autovoice** *[autovoice]* - This command initiates configuration through a specifically created channel of the auto voice system, follow the instructions.",
     "autorole_category": "Auto Role System",
-    "autorole_commands": "- **/autorole** *[role]* - This command sets or removes the selected role in the list of auto roles to be assigned\n- **/autorolelist** - This command shows the list of auto roles currently set in the server."
+    "autorole_commands": "- **/autorole** *[role]* - This command sets or removes the selected role in the list of auto roles to be assigned\n- **/autorolelist** - This command shows the list of auto roles currently set in the server.",
+    "reactionrole_category": "Reaction Role System",
+    "reactionrole_commands": "- **/reactionrole** *[reactionrole]* - This command sets the roles to be assigned in reaction roles via messages\n- **/reactionrolelist** *[reactionrole]* - This command displays the list of reaction roles currently set in the server."
   }
 }

@@ -22,15 +22,17 @@ module.exports = {
     try {
       const roles = await readDbAllWith1Params('SELECT * FROM autorole_system_roles WHERE guildId = ?', member.guild.id);
 
-      await roles.forEach(async value => {
-        try {
-          const role = await member.guild.roles.fetch(value.roleId);
-          await member.roles.add(role);
-        }
-        catch {
-          //pass
-        }
-      })
+      if(roles?.length > 0) {
+        for (const value of roles) {
+          try {
+            const role = await member.guild.roles.fetch(value.roleId);
+            await member.roles.add(role);
+          }
+          catch {
+            //pass
+          }
+      }
+      }
     
 
     }

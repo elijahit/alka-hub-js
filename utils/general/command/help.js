@@ -23,7 +23,8 @@ module.exports = {
 				{name: language_result.helpCommand.admin_category, value: language_result.helpCommand.admin_commands},
 				{name: language_result.helpCommand.ticket_category, value: language_result.helpCommand.ticket_commands},
 				{name: language_result.helpCommand.autovoice_category, value: language_result.helpCommand.autovoice_commands},
-				{name: language_result.helpCommand.autorole_category, value: language_result.helpCommand.autorole_commands}
+				{name: language_result.helpCommand.autorole_category, value: language_result.helpCommand.autorole_commands},
+				{name: language_result.helpCommand.reactionrole_category, value: language_result.helpCommand.reactionrole_commands}
 			);
 
 			// FOOTER
