@@ -260,6 +260,23 @@ async function cleanerDatabase(client) {
       }
     }
   }
+
+  // CONTROLLO SE LA GUILD DI autovoice_system_creator NEL DATABASE SONO TRUE
+  const checkAutoVoiceCategory = await readDbAll('autovoice_system_creator');
+  for (const value of checkAutoVoiceCategory) {
+    try {
+      const guild = await client.guilds.fetch(value.guildId);
+      await guild.channels.fetch(value.categoryId);
+    } catch (error) {
+      const errorCheck = new Error(error);
+      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
+        await runDb('DELETE FROM autovoice_system_creator WHERE guildId = ?', value.guildId);
+      }
+      else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel") {
+        await runDb('DELETE FROM autovoice_system_creator WHERE guildId = ? AND categoryId = ?', value.guildId, value.categoryId);
+      }
+    }
+  }
 }
 
 async function reactionRoleCached(client) {
