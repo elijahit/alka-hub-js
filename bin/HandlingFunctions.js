@@ -6,8 +6,9 @@ const { readFileSync, readdir, writeFile } = require("fs");
 function errorSendControls(error, client, guild_error, system) {
   // LEGGO E AGGIORNO IL FILE DI LOGS
   readdir("./", async (_, files) => {
-    await files.forEach(file => {
+    for (const file of files) {
       errorResult = new Error(`${system}`, { cause: error });
+      console.log(errorResult)
 
       if (file == "logs.txt") {
         const data = readFileSync('./logs.txt',
@@ -31,7 +32,7 @@ ${errorResult.stack}\n\
             }
           });
       }
-    })
+    }
   })
 
   // LA FUNZIONE GESTISCE GLI ERRORI E LI MANDA AL SERVER MAIN

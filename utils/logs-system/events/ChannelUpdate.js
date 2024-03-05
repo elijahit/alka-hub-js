@@ -117,7 +117,7 @@ module.exports = {
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE LA DESCRIZIONE VIENE CAMBIATA
-        if (oldChannel.topic != newChannel.topic) {
+        if (oldChannel.topic != newChannel.topic && newChannel.topic?.length > 0) {
           const fields = [];
           if (oldChannel.topic) {
             fields.push({ name: `${language_result.channelUpdate.old_description}`, value: `${oldChannel.topic}`, inline: true });
