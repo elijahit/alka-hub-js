@@ -8,7 +8,6 @@ function errorSendControls(error, client, guild_error, system) {
   readdir("./", async (_, files) => {
     for (const file of files) {
       errorResult = new Error(`${system}`, { cause: error });
-      console.log(errorResult)
 
       if (file == "logs.txt") {
         const data = readFileSync('./logs.txt',
@@ -17,8 +16,7 @@ function errorSendControls(error, client, guild_error, system) {
         writeFile("./logs.txt", `${data}\n\
 ---- [START LOGS] ----\n\
 [${errorResult.message}]\n\
-${errorResult.cause}\n\
-${errorResult.stack}\n\
+${errorResult.cause.stack}\n\
 ----- [END LOGS] -----\n`, {
           encoding: "utf8",
           flag: "w",
