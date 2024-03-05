@@ -2,6 +2,7 @@ const { guildMainId, guildMainChannelsControlsError, emojiGuildId_01 } = require
 const { EmbedBuilder } = require('discord.js');
 const { readDbWith3Params, readDb, readDbAll, runDb } = require("../bin/database");
 const { readFileSync, readdir, writeFile } = require("fs");
+const { stripIndents } = require('common-tags');
 
 function errorSendControls(error, client, guild_error, system) {
   // LEGGO E AGGIORNO IL FILE DI LOGS
@@ -13,11 +14,11 @@ function errorSendControls(error, client, guild_error, system) {
         const data = readFileSync('./logs.txt',
           { encoding: 'utf8', flag: 'r' });
 
-        writeFile("./logs.txt", `${data}\n\
----- [START LOGS] ----\n\
-[${errorResult.message}]\n\
-${errorResult.cause.stack}\n\
------ [END LOGS] -----\n`, {
+        writeFile("./logs.txt", stripIndents`${data}\n\
+          ---- [START LOGS] ----\n\
+          [${errorResult.message}]\n\
+          ${errorResult.cause.stack}\n\
+          ----- [END LOGS] -----\n`, {
           encoding: "utf8",
           flag: "w",
           mode: 0o666
