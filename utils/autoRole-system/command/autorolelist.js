@@ -29,7 +29,9 @@ module.exports = {
 						if (checkRoleAlreadySet?.length > 0) {
 							for(const value of checkRoleAlreadySet) {
 								const role = await interaction.guild.roles.fetch(value.roleId);
-								autoRoleString += `\n- ${role}`;
+								if(role) {
+									autoRoleString += `\n- ${role}`;
+								}
 							};
 						}
 						else {
@@ -67,7 +69,7 @@ module.exports = {
 				}
 			}
 			catch (error) {
-				errorSendControls(error, interaction.client, interaction.guild, "\\autoRole-system\\autorole.js");
+				errorSendControls(interaction, error, interaction.client, interaction.guild, "\\autoRole-system\\autorole.js");
 			}
 		});
 	},
