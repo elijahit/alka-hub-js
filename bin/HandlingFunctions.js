@@ -5,6 +5,25 @@ const { readFileSync, readdir, writeFile } = require("fs");
 const { stripIndents } = require('common-tags');
 
 function errorSendControls(error, client, guild_error, system) {
+  if (error == "DiscordAPIError[50013]: Missing Permissions") {
+    return guild_error.channels.fetch()
+      .then(channels => {
+        let MissingMessage = false;
+        channels.each(channel => {
+          if (!MissingMessage) {
+            if (channel.type == 0) {
+              const embedLog = new EmbedBuilder()
+                .setAuthor({ name: `Alka Hub | Missing Permissions` })
+                .setDescription("You haven't invited Alka Hub correctly and you don't have permission to perform this action. We invite you to invite Alka Hub again or contact our [support discord](https://discord.gg/X7KPcynxfB).\n\n-> [Invite Again](https://discord.com/api/oauth2/authorize?client_id=843183839869665280&permissions=8&scope=bot+applications.commands)")
+                .setFooter({ text: `Alka Hub di alkanetwork.eu`, iconURL: `https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png` })
+                .setColor(0x7a090c);
+              channel.send({ embeds: [embedLog] });
+              MissingMessage = true;
+            }
+          } 
+        })
+      })
+  }
   // LEGGO E AGGIORNO IL FILE DI LOGS
   readdir("./", async (_, files) => {
     for (const file of files) {
@@ -18,7 +37,7 @@ function errorSendControls(error, client, guild_error, system) {
           ---- [START LOGS] ----\n\
           [${errorResult.message}]\n\
           ${errorResult.cause.stack}\n\
-          ----- [END LOGS] -----\n`, {
+          ----- [END LOGS] -----\n\n`, {
           encoding: "utf8",
           flag: "w",
           mode: 0o666
@@ -206,15 +225,14 @@ async function cleanerDatabase(client) {
       const channel = await guild.channels.fetch(value.channelId);
       await channel.messages.fetch(value.messageId);
     } catch (error) {
-      if(value.initAuthorId == null) {
+      if (value.initAuthorId == null) {
         const errorCheck = new Error(error);
         if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
           await runDb('DELETE FROM ticket_system_message WHERE guildId = ?', value.guildId);
         }
-        else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel")
-        {
+        else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel") {
           await runDb('DELETE FROM ticket_system_message WHERE guildId = ? AND channelId = ?', value.guildId, value.channelId);
-        } 
+        }
         else if (errorCheck.message == "DiscordAPIError[10008]: Unknown Message") {
           await runDb('DELETE FROM ticket_system_message WHERE guildId = ? AND channelId = ? AND messageId = ?', value.guildId, value.channelId, value.messageId);
         }
@@ -234,10 +252,9 @@ async function cleanerDatabase(client) {
       if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
         await runDb('DELETE FROM ticket_system_tickets WHERE guildId = ?', value.guildId);
       }
-      else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel")
-      {
+      else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel") {
         await runDb('DELETE FROM ticket_system_tickets WHERE guildId = ? AND channelId = ?', value.guildId, value.channelId);
-      } 
+      }
       else if (errorCheck.message == "DiscordAPIError[10008]: Unknown Message") {
         await runDb('DELETE FROM ticket_system_tickets WHERE guildId = ? AND channelId = ? AND messageId = ?', value.guildId, value.channelId, value.messageId);
       }
