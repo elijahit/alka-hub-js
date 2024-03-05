@@ -121,6 +121,7 @@
     "reason": "Reason",
     "prefix": "Ticket Prefix",
     "ticketClose": "Your ticket has been resolved by {0}, the transcription has been sent to you.",
-    "ticketCloseNoTranscription": "Your ticket has been resolved by {0}."
+    "ticketCloseNoTranscription": "Your ticket has been resolved by {0}.",
+    "no_user": "User not available"
   }
 }

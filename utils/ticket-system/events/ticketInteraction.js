@@ -401,7 +401,13 @@ module.exports = {
 
 
             if (checkSql) {
-              const user = await interaction.guild.members.fetch(checkSql[0].authorId);
+              let user; //Controllo se un utente esiste ancora nella guild
+              try {
+                 user = await interaction.guild.members.fetch(checkSql[0].authorId);
+              } catch {
+                user = language_result.ticketTranscription.no_user;
+              }
+
               let description = interaction.fields.getTextInputValue('ticketCloseModalDescription');
               const messageCache = await interaction.channel.messages.fetch();
               let messageWrite = "";
@@ -422,7 +428,7 @@ module.exports = {
                 .setAuthor({ name: `${language_result.ticketTranscription.embed_title}`, iconURL: customEmoji })
                 .setFields([
                   { name: language_result.ticketTranscription.prefix, value: `${checkSql[0].ticketPrefix}` },
-                  { name: language_result.ticketTranscription.user, value: `${user} (${user.id})`, inline: true },
+                  { name: language_result.ticketTranscription.user, value: `${user} (${checkSql[0].authorId})`, inline: true },
                   { name: language_result.ticketTranscription.admin, value: `${interaction.user} (${interaction.user.id})`, inline: true },
                   { name: language_result.ticketTranscription.reason, value: `${description}` },
                 ])

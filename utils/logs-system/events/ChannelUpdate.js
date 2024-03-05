@@ -175,11 +175,15 @@ module.exports = {
           let oldValuePermissions = " ", newValuePermissions = " ";
           oldChannel.permissionOverwrites.cache.each(async perms => {
             if (perms.type == 0) {
-              let value = await oldChannel.guild.roles.fetch(perms.id);
-              oldValuePermissions += `${value}\n`;
+              try {
+                let value = await oldChannel.guild.roles.fetch(perms.id);
+                oldValuePermissions += `${value}\n`;
+              } catch {}
             } else if (perms.type == 1) {
-              let value = await oldChannel.guild.members.fetch(perms.id);
-              oldValuePermissions += `${value}\n`;
+              try {
+                let value = await oldChannel.guild.members.fetch(perms.id);
+                oldValuePermissions += `${value}\n`;
+              } catch {}
             }
           });
           newChannel.permissionOverwrites.cache.each(async perms => {
