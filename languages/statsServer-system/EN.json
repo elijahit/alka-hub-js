@@ -16,19 +16,21 @@
     "embed_title": "Alka Hub | Stats System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed_title": "Nome canale",
-    "placeholder": "Inserisci il markdown {0} per il counter"
+    "description_embed_title": "Channel Name",
+    "placeholder": "Insert the markdown {0} for the counter",
+    "category_embed": "Category ID",
+    "type_embed": "Channel Type"
   },
   "channelStatsCommand": {
     "embed_title": "Alka Hub | Stats System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "Il canale {0} è stato creato nella categoria selezionata, attendi che Alka Hub completi il caricamento del tuo canale di statistica per vederne il contenuto."
+    "description_embed": "The channel {0} has been created in the selected category. Please wait for Alka Hub to finish loading your statistics channel to see its contents."
   },
   "categoryNotFound": {
     "embed_title": "Alka Hub | Stats System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "La categoria selezionata non è stata trovata nel nostro database, ti invitiamo a riprovare oppure crea la tua categoria con /statistics. Ti raccomandiamo di leggere la nostra documentazione nel nostro [discord ufficiale](https://discord.gg/X7KPcynxfB)."
+    "description_embed": "The selected category was not found in our database. Please try again or create your category with /statistics. We recommend reading our documentation on our [official Discord](https://discord.gg/X7KPcynxfB).\n\n- The issue might also be due to an incorrect value such as the **channel name** or the **channel type**."
   }
 }

@@ -11,5 +11,26 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "Hai correttamente impostato la categoria per le statistiche del server, puoi ora utilizzare il comando /channelstats per configurare i canali che registreranno le tue statistiche. Per personalizzare ulteriormente i canali, ti consigliamo di consultare la nostra documentazione nel nostro [discord ufficiale](https://discord.gg/X7KPcynxfB)."
+  },
+  "setupModal": {
+    "embed_title": "Alka Hub | Stats System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed_title": "Nome canale",
+    "placeholder": "Inserisci il markdown {0} per il counter",
+    "category_embed": "ID Categoria",
+    "type_embed": "Tipo di canale"
+  },
+  "channelStatsCommand": {
+    "embed_title": "Alka Hub | Stats System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Il canale {0} è stato creato nella categoria selezionata, attendi che Alka Hub completi il caricamento del tuo canale di statistica per vederne il contenuto."
+  },
+  "categoryNotFound": {
+    "embed_title": "Alka Hub | Stats System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "La categoria selezionata non è stata trovata nel nostro database, ti invitiamo a riprovare oppure crea la tua categoria con /statistics. Ti raccomandiamo di leggere la nostra documentazione nel nostro [discord ufficiale](https://discord.gg/X7KPcynxfB).\n\n- Il problema può dipendere anche da un valore errato come il **nome canale** o il **tipo di canale**."
   }
 }
