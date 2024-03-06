@@ -11,5 +11,24 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "You have successfully set up the category for the server statistics. Now, you can use the /channelstats command to configure the channels that will record your statistics. For further channel customizations, we recommend checking out our documentation on our [official Discord](https://discord.gg/X7KPcynxfB)."
+  },
+  "setupModal": {
+    "embed_title": "Alka Hub | Stats System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed_title": "Nome canale",
+    "placeholder": "Inserisci il markdown {0} per il counter"
+  },
+  "channelStatsCommand": {
+    "embed_title": "Alka Hub | Stats System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Il canale {0} è stato creato nella categoria selezionata, attendi che Alka Hub completi il caricamento del tuo canale di statistica per vederne il contenuto."
+  },
+  "categoryNotFound": {
+    "embed_title": "Alka Hub | Stats System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "La categoria selezionata non è stata trovata nel nostro database, ti invitiamo a riprovare oppure crea la tua categoria con /statistics. Ti raccomandiamo di leggere la nostra documentazione nel nostro [discord ufficiale](https://discord.gg/X7KPcynxfB)."
   }
 }
