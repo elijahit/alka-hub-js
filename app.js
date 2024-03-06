@@ -2,7 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 const { token, presenceStatusName, botState } = require('./config.json');
-const { cleanerDatabase, reactionRoleCached } = require('./bin/HandlingFunctions');
+const { cleanerDatabase, reactionRoleCached, statisticsUpdate } = require('./bin/HandlingFunctions');
 
 
 const client = new Client({ intents: [
@@ -113,4 +113,7 @@ setTimeout(async () => {
   console.log('[REACTION ROLES] Cache caricata con successo!');
 }, 2000);
 
+setTimeout(async () => {
+  await statisticsUpdate(client);
+}, 1000);
 client.login(token);

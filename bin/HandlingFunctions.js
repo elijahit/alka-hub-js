@@ -1,6 +1,6 @@
 const { guildMainId, guildMainChannelsControlsError, emojiGuildId_01 } = require('../config.json');
 const { EmbedBuilder } = require('discord.js');
-const { readDbWith3Params, readDb, readDbAll, runDb } = require("../bin/database");
+const { readDbWith3Params, readDb, readDbAll, runDb, readDbAllWith2Params, readDbAllWithValue } = require("../bin/database");
 const { readFileSync, readdir, writeFile } = require("fs");
 const { stripIndents } = require('common-tags');
 
@@ -279,6 +279,7 @@ async function cleanerDatabase(client) {
   }
 }
 
+// REACTION ROLE SYSTEM
 async function reactionRoleCached(client) {
   const reactionRoles = await readDbAll('reactionrole_system_reactions');
   for (const value of reactionRoles) {
@@ -289,6 +290,79 @@ async function reactionRoleCached(client) {
     } catch {
       await runDb('DELETE FROM reactionrole_system_reactions WHERE guildId = ? AND channelId = ? AND messageId = ?', value.guildId, value.channelId, value.messageId);
     }
+  }
+}
+
+// STATS SERVER SYSTEM
+async function statisticsUpdate(client) {
+  const channelsData = await readDbAll("stats_system_channel");
+  for (const data of channelsData) {
+    const guild = await client.guilds.fetch(data.guildId);
+    const channel = await guild.channels.fetch(data.channelId);
+    const config = await readDb('SELECT * FROM guilds_config WHERE guildId = ?', guild.id);
+    // DATA TYPE STATS
+    if(data.typeChannel == 1) {
+      let date;
+      if(config.timeZone.includes("+")) {
+        date =  new Date(Date.now()+(3600000 * parseInt(config.timeZone)));
+      } else {
+        date =  new Date(Date.now()-(3600000 * parseInt(config.timeZone.split("-")[1])));
+      }
+
+      // DAY STABLER
+      let day;
+      if(date.getUTCDate().toString().length == 1) {
+        day = `0${date.getUTCDate()}`
+      } else {
+        day = `${date.getUTCDate()}`
+      }
+
+      // MONTH STABLER
+      let month;
+      if((date.getUTCMonth()+1).toString().length == 1) {
+        month = `0${date.getUTCMonth()+1}`
+      } else {
+        month = `${date.getUTCMonth()+1}`
+      }
+
+      const dateFormat = `${day}/${month}/${date.getFullYear()}`
+      await channel.edit({
+        name: data.markdown.replace("{0}", dateFormat),
+      });
+    }
+    // END DATA TYPE STATS
+
+    // HOUR TYPE STATS
+    if(data.typeChannel == 2) {
+      let date;
+      if(config.timeZone.includes("+")) {
+        date =  new Date(Date.now()+(3600000 * parseInt(config.timeZone)));
+      } else {
+        date =  new Date(Date.now()-(3600000 * parseInt(config.timeZone.split("-")[1])));
+      }
+
+      // HOUR STABLER
+      let hour;
+      if(date.getUTCHours().toString().length == 1) {
+        hour = `0${date.getUTCHours()}`
+      } else {
+        hour = `${date.getUTCHours()}`
+      }
+
+      // MINUTE STABLER
+      let minute;
+      if((date.getUTCMinutes()).toString().length == 1) {
+        minute = `0${date.getUTCMinutes()}`
+      } else {
+        minute = `${date.getUTCMinutes()}`
+      }
+      const hourformat = `${hour}:${minute}`
+      await channel.edit({
+        name: data.markdown.replace("{0}", hourformat),
+      });
+    }
+    // END HOUR TYPE STATS
+
   }
 }
 
@@ -303,4 +377,5 @@ module.exports = {
   noHavePermission,
   cleanerDatabase,
   reactionRoleCached,
+  statisticsUpdate,
 }
