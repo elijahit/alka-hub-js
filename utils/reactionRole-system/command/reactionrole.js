@@ -110,7 +110,6 @@ module.exports = {
 				}
 			}
 			catch (error) {
-				console.log(error)
 				errorSendControls(error, interaction.client, interaction.guild, "\\reactionRole-system\\reactionrole.js");
 			}
 		});
