@@ -21,14 +21,23 @@ module.exports = {
 				.setName('languages')
 				.setDescription('Please specify the language you wish to use')
 				.setRequired(true)
+		)
+		.addStringOption(option =>
+			option
+				.setName("timezone")
+				.setDescription('Starting from a UTC time, use +num or -num to set your local time.')
+				.setRequired(true)
 		),
 	async execute(interaction) {
-		let choices, nameChoices;
+		let choices, nameChoices, timeChoices;
 		// RECUPERO LE OPZIONI INSERITE
 		await interaction.options._hoistedOptions.forEach(value => {
 			if (value.name == 'languages') {
 				choices = value.value;
 				nameChoices = value.name;
+			}
+			if (value.name == 'timezone') {
+				timeChoices = value.value;
 			}
 		});
 
@@ -40,29 +49,27 @@ module.exports = {
 		await returnPermission(interaction, "init", async result => {
 			try {
 				if (result) {
-					if (nameChoices == "languages") {
-						//CONTROLLO SE IL SERVER E' GIA' INIZIALIZZATO
-						const checkInitSql = `SELECT * FROM guilds_config WHERE guildId = ?`
-						const checkInit = await readDb(checkInitSql, interaction.guild.id);
-						if (!checkInit) {
-							runInitSql = `INSERT INTO guilds_config (guildId, languages) VALUES (?, ?) `
-							await runDb(runInitSql, interaction.guild.id, choices);
-							let customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: customEmoji })
-								.setDescription(language_result.initCommand.description_embed)
-								.setFooter({ text: `${language_result.initCommand.embed_footer}`, iconURL: `${language_result.initCommand.embed_icon_url}` })
-								.setColor(0x4287f5);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
-						} else {
-							let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: customEmoji })
-								.setDescription(language_result.initCommand.description_already_embed)
-								.setFooter({ text: `${language_result.initCommand.embed_footer}`, iconURL: `${language_result.initCommand.embed_icon_url}` })
-								.setColor(0x4287f5);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
-						}
+					//CONTROLLO SE IL SERVER E' GIA' INIZIALIZZATO
+					const checkInitSql = `SELECT * FROM guilds_config WHERE guildId = ?`
+					const checkInit = await readDb(checkInitSql, interaction.guild.id);
+					if (!checkInit && (timeChoices.includes("+") || timeChoices.includes("-"))) {
+						runInitSql = `INSERT INTO guilds_config (guildId, languages, timeZone) VALUES (?, ?, ?)`
+						await runDb(runInitSql, interaction.guild.id, choices, timeChoices);
+						let customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
+						const embedLog = new EmbedBuilder()
+							.setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: customEmoji })
+							.setDescription(language_result.initCommand.description_embed)
+							.setFooter({ text: `${language_result.initCommand.embed_footer}`, iconURL: `${language_result.initCommand.embed_icon_url}` })
+							.setColor(0x4287f5);
+						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					} else {
+						let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
+						const embedLog = new EmbedBuilder()
+							.setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: customEmoji })
+							.setDescription(language_result.initCommand.description_already_embed)
+							.setFooter({ text: `${language_result.initCommand.embed_footer}`, iconURL: `${language_result.initCommand.embed_icon_url}` })
+							.setColor(0x4287f5);
+						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}
 				}
 				else {
