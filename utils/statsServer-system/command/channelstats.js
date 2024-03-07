@@ -82,7 +82,7 @@ module.exports = {
 								.setCustomId('statsChannelName')
 								.setLabel(language_result.setupModal.description_embed_title)
 								.setPlaceholder(language_result.setupModal.placeholder)
-								.setMaxLength(20)
+								.setMaxLength(40)
 								.setStyle(TextInputStyle.Short);
 
 							const categoryChannelId = new TextInputBuilder()
