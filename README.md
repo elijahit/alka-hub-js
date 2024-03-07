@@ -22,11 +22,13 @@ CREATE TABLE "guilds_config" (
 	"ID"	INTEGER UNIQUE,
 	"guildId"	TEXT,
 	"languages"	TEXT,
+	"timeZone"	TEXT,
 	"logSystem_enabled"	INTEGER,
 	"ticketSystem_enabled"	INTEGER,
 	"autoVoiceSystem_enabled"	INTEGER,
 	"autoRoleSystem_enabled"	INTEGER,
 	"reactionRoleSystem_enabled"	INTEGER,
+	"statsServerSystem_enabled"	INTEGER,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 -- Tabella di configurazione Log System
@@ -114,6 +116,23 @@ CREATE TABLE "reactionrole_system_reactions" (
 	"messageId"	TEXT,
 	"channelId"	TEXT,
 	"emoji"	TEXT,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
+-- Tabella di raccolta categorie Stats System
+CREATE TABLE "stats_system_category" (
+	"ID"	INTEGER UNIQUE,
+	"guildId"	TEXT,
+	"categoryId"	TEXT,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
+-- Tabella di raccolta canali Stats System
+CREATE TABLE "stats_system_channel" (
+	"ID"	INTEGER UNIQUE,
+	"guildId"	TEXT,
+	"categoryId"	TEXT,
+	"channelId"	TEXT,
+	"typeChannel"	INTEGER,
+	"markdown"	TEXT,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 ```
