@@ -342,7 +342,6 @@ async function timeZoneManage(guild) {
 
 // STATS SERVER SYSTEM
 async function statisticsUpdate(client) {
-  console.log("start")
   const channelsData = await readDbAll("stats_system_channel");
   for (const data of channelsData) {
     const guild = await client.guilds.fetch(data.guildId);
