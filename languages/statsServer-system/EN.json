@@ -17,7 +17,7 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed_title": "Channel Name",
-    "placeholder": "Insert the markdown {0} for the counter",
+    "placeholder": "Insert the markdown check /markdownstats",
     "category_embed": "Category ID",
     "type_embed": "Channel Type"
   },
@@ -32,5 +32,11 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "The selected category was not found in our database. Please try again or create your category with /statistics. We recommend reading our documentation on our [official Discord](https://discord.gg/X7KPcynxfB).\n\n- The issue might also be due to an incorrect value such as the **channel name** or the **channel type**."
+  },
+  "markdownHelp": {
+    "embed_title": "Alka Hub | Stats System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "This guide will help you understand the markdown commands used in the channels of Alka Hub's statistics system. Follow the instructions carefully to properly configure your statistics!\nFor further clarification or doubts regarding this system, refer to our documentation on our [official Discord](https://discord.gg/X7KPcynxfB).\n\nMarkdown:\n- **Date**: Displays the date in a voice channel and updates based on the local time set during server configuration.\n> {0}: Day\n> {1}: Month\n> {2}: Year\n- **Hour**: Displays the time in a voice channel and updates based on the local time set during server configuration.\n> {0}: Hours\n> {1}: Minutes\n- **Date / Hour**: Displays the date and time in a voice channel and updates based on the local time set during server configuration.\n> {0}: Day\n> {1}: Month\n> {2}: Year\n> {3}: Hours\n> {4}: Minutes\n- **Member Count**: Shows the total number of members on the Discord server.\n> {0}: Member Count\n- **Channel Count**: Shows the total number of channels on the Discord server.\n> {0}: Channel Count\n- **Bot Count**: Shows the total number of bots on the Discord server.\n> {0}: Bot Count\n- **Role Count**: Shows the total number of members with a specific role or multiple roles. (Roles must be configured in the channel permissions with the permission denied: **Read Message History**)\n> {0}: Role Count\n- **Role Count Online**: Shows the total number of online members with a specific role or multiple roles. (Roles must be configured in the channel permissions with the permission denied: **Read Message History**)\n> {0}: Role Count\n- **Status Bar**: Shows the number of users with status: online, do not disturb, or idle.\n> {0}: Online\n> {1}: Do Not Disturb\n> {2}: Idle\n\nChannels, along with their respective markdown (optional but at least one is necessary for channel creation), can contain emojis or other special characters."
   }
 }

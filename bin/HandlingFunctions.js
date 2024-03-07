@@ -277,6 +277,40 @@ async function cleanerDatabase(client) {
       }
     }
   }
+
+  // CONTROLLO SE LA GUILD DI stats_system_category NEL DATABASE SONO TRUE
+  const checkStatsSystemCategory = await readDbAll('stats_system_category');
+  for (const value of checkStatsSystemCategory) {
+    try {
+      const guild = await client.guilds.fetch(value.guildId);
+      await guild.channels.fetch(value.categoryId);
+    } catch (error) {
+      const errorCheck = new Error(error);
+      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
+        await runDb('DELETE FROM stats_system_category WHERE guildId = ?', value.guildId);
+      }
+      else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel") {
+        await runDb('DELETE FROM stats_system_category WHERE guildId = ? AND categoryId = ?', value.guildId, value.categoryId);
+      }
+    }
+  }
+
+  // CONTROLLO SE LA GUILD DI stats_system_channel NEL DATABASE SONO TRUE
+  const checkStatsSystemChannel = await readDbAll('stats_system_channel');
+  for (const value of checkStatsSystemChannel) {
+    try {
+      const guild = await client.guilds.fetch(value.guildId);
+      await guild.channels.fetch(value.categoryId);
+    } catch (error) {
+      const errorCheck = new Error(error);
+      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
+        await runDb('DELETE FROM stats_system_channel WHERE guildId = ?', value.guildId);
+      }
+      else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel") {
+        await runDb('DELETE FROM stats_system_channel WHERE guildId = ? AND channelId = ?', value.guildId, value.channelId);
+      }
+    }
+  }
 }
 
 // REACTION ROLE SYSTEM
