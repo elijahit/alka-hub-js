@@ -24,10 +24,21 @@ module.exports = {
 
         const checkCategory = await readDbAllWith2Params('SELECT * FROM stats_system_category WHERE guildId = ? AND categoryId = ?', interaction.guild.id, categoryId)
 
-        let channelCheck = (checkCategory[0] && parseInt(type) > 0 && parseInt(type) < 9 && nameChannel.includes("{0}")); // Controllo tutti i canali tranne status bar
+        // CONTROLLI PER IL MARKDOWN DEI CANALI
+
+        let channelCheck = (checkCategory[0] && parseInt(type) > 3 && parseInt(type) < 9 && nameChannel.includes("{0}")); // Controllo tutti i canali tranne status bar, ora, data e (ora data)
+
+        let channelDateCheck = (checkCategory[0] && parseInt(type) == 1 && (nameChannel.includes("{0}") || nameChannel.includes("{1}") || nameChannel.includes("{2}"))); // Controllo i canali di data
+
+        let channelHourCheck = (checkCategory[0] && parseInt(type) == 2 && (nameChannel.includes("{0}") || nameChannel.includes("{1}"))); // Controllo i canali di ora
+
+        let channelDateHourCheck = (checkCategory[0] && parseInt(type) == 3 && (nameChannel.includes("{0}") || nameChannel.includes("{1}") || nameChannel.includes("{2}") || nameChannel.includes("{3}") || nameChannel.includes("{4}"))); // Controllo i canali di data e ora
 
         let channelStatusCheck = (checkCategory[0] && parseInt(type) == 9 && (nameChannel.includes("{0}") || nameChannel.includes("{1}") || nameChannel.includes("{2}"))); // Controllo status bar tranne gli altri canali
-       if (channelCheck || channelStatusCheck) {
+
+        //  -----------------------------------------
+
+       if (channelCheck || channelStatusCheck || channelDateCheck || channelHourCheck || channelDateHourCheck) {
           const category = await interaction.guild.channels.fetch(categoryId);
           // CREO IL CANALE NELLA CATEGORIA
           const channel = await interaction.guild.channels.create({

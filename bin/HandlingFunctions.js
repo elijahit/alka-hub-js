@@ -333,9 +333,11 @@ async function statisticsUpdate(client) {
         month = `${date.getUTCMonth() + 1}`
       }
 
-      const dateFormat = `${day}/${month}/${date.getFullYear()}`
       await channel.edit({
-        name: data.markdown.replace("{0}", dateFormat),
+        name: data.markdown
+        .replace("{0}", `${day}`)
+        .replace("{1}", `${month}`)
+        .replace("{2}", `${date.getFullYear()}`),
       });
     }
     // END DATA TYPE STATS
@@ -361,7 +363,9 @@ async function statisticsUpdate(client) {
       }
       const hourformat = `${hour}:${minute}`
       await channel.edit({
-        name: data.markdown.replace("{0}", hourformat),
+        name: data.markdown
+        .replace("{0}", `${hour}`)
+        .replace("{1}", `${minute}`),
       });
     }
     // END HOUR TYPE STATS
@@ -401,10 +405,13 @@ async function statisticsUpdate(client) {
         month = `${date.getUTCMonth() + 1}`
       }
 
-      const dateFormat = `${day}/${month}/${date.getFullYear()}`
-      const hourformat = `${hour}:${minute}`
       await channel.edit({
-        name: data.markdown.replace("{0}", `${dateFormat} | ${hourformat}`),
+        name: data.markdown
+        .replace("{0}", `${day}`)
+        .replace("{1}", `${month}`)
+        .replace("{2}", `${date.getFullYear()}`)
+        .replace("{3}", `${hour}`)
+        .replace("{4}", `${minute}`),
       });
 
     }
