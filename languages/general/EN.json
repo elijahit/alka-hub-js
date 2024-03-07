@@ -43,6 +43,8 @@
     "autorole_category": "Auto Role System",
     "autorole_commands": "- **/autorole** *[role]* - This command sets or removes the selected role in the list of auto roles to be assigned\n- **/autorolelist** - This command shows the list of auto roles currently set in the server.",
     "reactionrole_category": "Reaction Role System",
-    "reactionrole_commands": "- **/reactionrole** *[reactionrole]* - This command sets the roles to be assigned in reaction roles via messages.\n- **/reactionrolelist** *[reactionrole]* - This command displays the list of reaction roles currently set in the server.\n- **/reactionroleremove** *[reactionrole]* - This command removes the reaction roles set via messages."
+    "reactionrole_commands": "- **/reactionrole** *[reactionrole]* - This command sets the roles to be assigned in reaction roles via messages.\n- **/reactionrolelist** *[reactionrole]* - This command displays the list of reaction roles currently set in the server.\n- **/reactionroleremove** *[reactionrole]* - This command removes the reaction roles set via messages.",
+    "statistics_category": "Stats Server System",
+    "statistics_commands": "- **/statistics** *[statsServer]* - The command allows you to create the category for the statistics system.\n- **/channelstats** *[statsServer]* - The command allows the creation of channels intended for the statistics system.\n- **/markdownstats** *[statsServer]* - The command displays a brief documentation of available markdowns for different channel types."
   }
 }
