@@ -1,5 +1,5 @@
 const { guildMainId, guildMainChannelsControlsError, emojiGuildId_01 } = require('../config.json');
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const { readDbWith3Params, readDb, readDbAll, runDb, readDbAllWith2Params, readDbAllWithValue } = require("../bin/database");
 const { readFileSync, readdir, writeFile } = require("fs");
 const { stripIndents } = require('common-tags');
@@ -293,21 +293,29 @@ async function reactionRoleCached(client) {
   }
 }
 
+// DATE TIME ZONE FUNCTION
+async function timeZoneManage(guild) {
+  const config = await readDb('SELECT * FROM guilds_config WHERE guildId = ?', guild.id);
+  if(config.timeZone?.includes("+")) {
+    return  new Date(Date.now()+(3600000 * parseInt(config.timeZone)));
+  } if(config.timeZone?.includes("-")) {
+    return new Date(Date.now()-(3600000 * parseInt(config.timeZone.split("-")[1])));
+  } else {
+    return new Date(Date.now());
+  }
+
+}
+
 // STATS SERVER SYSTEM
 async function statisticsUpdate(client) {
+  console.log("start")
   const channelsData = await readDbAll("stats_system_channel");
   for (const data of channelsData) {
     const guild = await client.guilds.fetch(data.guildId);
     const channel = await guild.channels.fetch(data.channelId);
-    const config = await readDb('SELECT * FROM guilds_config WHERE guildId = ?', guild.id);
     // DATA TYPE STATS
     if(data.typeChannel == 1) {
-      let date;
-      if(config.timeZone.includes("+")) {
-        date =  new Date(Date.now()+(3600000 * parseInt(config.timeZone)));
-      } else {
-        date =  new Date(Date.now()-(3600000 * parseInt(config.timeZone.split("-")[1])));
-      }
+      let date = await timeZoneManage(guild);
 
       // DAY STABLER
       let day;
@@ -334,12 +342,7 @@ async function statisticsUpdate(client) {
 
     // HOUR TYPE STATS
     if(data.typeChannel == 2) {
-      let date;
-      if(config.timeZone.includes("+")) {
-        date =  new Date(Date.now()+(3600000 * parseInt(config.timeZone)));
-      } else {
-        date =  new Date(Date.now()-(3600000 * parseInt(config.timeZone.split("-")[1])));
-      }
+      let date = await timeZoneManage(guild);
 
       // HOUR STABLER
       let hour;
@@ -362,6 +365,139 @@ async function statisticsUpdate(client) {
       });
     }
     // END HOUR TYPE STATS
+
+    // TIME/HOUR TYPE STATS
+    if(data.typeChannel == 3) {
+      let date = await timeZoneManage(guild);
+
+      // HOUR STABLER
+      let hour;
+      if(date.getUTCHours().toString().length == 1) {
+        hour = `0${date.getUTCHours()}`
+      } else {
+        hour = `${date.getUTCHours()}`
+      }
+
+      // MINUTE STABLER
+      let minute;
+      if((date.getUTCMinutes()).toString().length == 1) {
+        minute = `0${date.getUTCMinutes()}`
+      } else {
+        minute = `${date.getUTCMinutes()}`
+      }
+      // DAY STABLER
+      let day;
+      if(date.getUTCDate().toString().length == 1) {
+        day = `0${date.getUTCDate()}`
+      } else {
+        day = `${date.getUTCDate()}`
+      }
+
+      // MONTH STABLER
+      let month;
+      if((date.getUTCMonth()+1).toString().length == 1) {
+        month = `0${date.getUTCMonth()+1}`
+      } else {
+        month = `${date.getUTCMonth()+1}`
+      }
+
+      const dateFormat = `${day}/${month}/${date.getFullYear()}`
+      const hourformat = `${hour}:${minute}`
+      await channel.edit({
+        name: data.markdown.replace("{0}", `${dateFormat} | ${hourformat}`),
+      });
+
+    }
+    // END TIME/HOUR TYPE STATS
+
+    // MEMBER COUNT
+    if(data.typeChannel == 4) {
+      await channel.edit({
+        name: data.markdown.replace("{0}", `${guild.memberCount}`),
+      });
+    }
+    // END MEMBER COUNT
+
+    // CHANNEL COUNT
+    if(data.typeChannel == 5) {
+      let channelCount = 0;
+      const member = await guild.channels.fetch();
+      await member.each(value => {
+        if(value) {
+          channelCount++;
+        }
+      })
+      await channel.edit({
+        name: data.markdown.replace("{0}", `${channelCount}`),
+      });
+    }
+    // END CHANNEL COUNT
+
+    // BOT COUNT
+    if(data.typeChannel == 6) {
+      let botCount = 0;
+      const member = await guild.members.fetch();
+      await member.each(value => {
+        if(value.user.bot) {
+          botCount++;
+        }
+      })
+      await channel.edit({
+        name: data.markdown.replace("{0}", `${botCount}`),
+      });
+    }
+    // END BOT COUNT
+
+    // ROLE COUNT
+    if(data.typeChannel == 7) {
+      let roleCount = 0;
+      let arrayMember = [];
+      const permissions = await channel.permissionOverwrites.cache;
+      for await (const value of permissions) {
+        if(value[1].id != guild.roles.everyone.id && value[1].deny == PermissionsBitField.Flags.ReadMessageHistory) {
+          const guildMembers = await guild.members.fetch();
+          for await (const member of guildMembers) {
+            for await (const role of member[1].roles.cache) {
+              const foundMember = arrayMember.find((memberId) => memberId == member[1].id);
+              if(role[1].id == value[1].id && !foundMember) {
+                arrayMember.push(member[1].id);
+                roleCount++;
+              }
+            }
+          }
+        }
+      }
+      await channel.edit({
+        name: data.markdown.replace("{0}", `${roleCount}`),
+      });
+    }
+    // END ROLE COUNT
+
+    // ROLE COUNT ONLINE
+    if(data.typeChannel == 8) {
+      let roleCount = 0;
+      let arrayMember = [];
+      const permissions = await channel.permissionOverwrites.cache;
+      for await (const value of permissions) {
+        if(value[1].id != guild.roles.everyone.id && value[1].deny == PermissionsBitField.Flags.ReadMessageHistory) {
+          const guildMembers = await guild.members.fetch();
+          for await (const member of guildMembers) {
+            for await (const role of member[1].roles.cache) {
+              const foundMember = arrayMember.find((memberId) => memberId == member[1].id);
+              if(role[1].id == value[1].id && (member[1].presence?.status == "online" || member[1].presence?.status == "idle" || member[1].presence?.status == "dnd") && !foundMember) {
+                arrayMember.push(member[1].id);
+                roleCount++;
+              }
+            }
+          }
+        }
+      }
+      await channel.edit({
+        name: data.markdown.replace("{0}", `${roleCount}`),
+      });
+    }
+    // END ROLE COUNT ONLINE
+
 
   }
 }

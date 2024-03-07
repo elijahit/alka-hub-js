@@ -49,8 +49,12 @@ module.exports = {
 					value: 7,
 				})
 				.addChoices({
-					name: "Status Bar",
+					name: "Role Count Online",
 					value: 8,
+				})
+				.addChoices({
+					name: "Status Bar",
+					value: 9,
 				})
 		),
 	async execute(interaction) {
