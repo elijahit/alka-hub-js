@@ -105,16 +105,22 @@ client.once(Events.ClientReady, readyClient => {
 
 // FUNZIONI DI HandlingFunction
 
+// FUNZIONE DI CLEANER PER IL DATABASE
 setInterval(async () => {
   await cleanerDatabase(client);
 }, 21600000);
 
+// FUNZIONE DI reactionRole-system
 setTimeout(async () => {
   await reactionRoleCached(client);
   console.log('[REACTION ROLES] Cache caricata con successo!');
 }, 2000);
 
-setTimeout(async () => {
+// FUNZIONE DI statsServer-system
+setInterval(async () => {
   await statisticsUpdate(client);
-}, 1000);
+}, 600000);
+
+//  --------- //
+
 client.login(token);

@@ -20,7 +20,7 @@ function errorSendControls(error, client, guild_error, system) {
               channel.send({ embeds: [embedLog] });
               MissingMessage = true;
             }
-          } 
+          }
         })
       })
   }
@@ -296,10 +296,10 @@ async function reactionRoleCached(client) {
 // DATE TIME ZONE FUNCTION
 async function timeZoneManage(guild) {
   const config = await readDb('SELECT * FROM guilds_config WHERE guildId = ?', guild.id);
-  if(config.timeZone?.includes("+")) {
-    return  new Date(Date.now()+(3600000 * parseInt(config.timeZone)));
-  } if(config.timeZone?.includes("-")) {
-    return new Date(Date.now()-(3600000 * parseInt(config.timeZone.split("-")[1])));
+  if (config.timeZone?.includes("+")) {
+    return new Date(Date.now() + (3600000 * parseInt(config.timeZone)));
+  } if (config.timeZone?.includes("-")) {
+    return new Date(Date.now() - (3600000 * parseInt(config.timeZone.split("-")[1])));
   } else {
     return new Date(Date.now());
   }
@@ -314,12 +314,12 @@ async function statisticsUpdate(client) {
     const guild = await client.guilds.fetch(data.guildId);
     const channel = await guild.channels.fetch(data.channelId);
     // DATA TYPE STATS
-    if(data.typeChannel == 1) {
+    if (data.typeChannel == 1) {
       let date = await timeZoneManage(guild);
 
       // DAY STABLER
       let day;
-      if(date.getUTCDate().toString().length == 1) {
+      if (date.getUTCDate().toString().length == 1) {
         day = `0${date.getUTCDate()}`
       } else {
         day = `${date.getUTCDate()}`
@@ -327,10 +327,10 @@ async function statisticsUpdate(client) {
 
       // MONTH STABLER
       let month;
-      if((date.getUTCMonth()+1).toString().length == 1) {
-        month = `0${date.getUTCMonth()+1}`
+      if ((date.getUTCMonth() + 1).toString().length == 1) {
+        month = `0${date.getUTCMonth() + 1}`
       } else {
-        month = `${date.getUTCMonth()+1}`
+        month = `${date.getUTCMonth() + 1}`
       }
 
       const dateFormat = `${day}/${month}/${date.getFullYear()}`
@@ -341,12 +341,12 @@ async function statisticsUpdate(client) {
     // END DATA TYPE STATS
 
     // HOUR TYPE STATS
-    if(data.typeChannel == 2) {
+    if (data.typeChannel == 2) {
       let date = await timeZoneManage(guild);
 
       // HOUR STABLER
       let hour;
-      if(date.getUTCHours().toString().length == 1) {
+      if (date.getUTCHours().toString().length == 1) {
         hour = `0${date.getUTCHours()}`
       } else {
         hour = `${date.getUTCHours()}`
@@ -354,7 +354,7 @@ async function statisticsUpdate(client) {
 
       // MINUTE STABLER
       let minute;
-      if((date.getUTCMinutes()).toString().length == 1) {
+      if ((date.getUTCMinutes()).toString().length == 1) {
         minute = `0${date.getUTCMinutes()}`
       } else {
         minute = `${date.getUTCMinutes()}`
@@ -367,12 +367,12 @@ async function statisticsUpdate(client) {
     // END HOUR TYPE STATS
 
     // TIME/HOUR TYPE STATS
-    if(data.typeChannel == 3) {
+    if (data.typeChannel == 3) {
       let date = await timeZoneManage(guild);
 
       // HOUR STABLER
       let hour;
-      if(date.getUTCHours().toString().length == 1) {
+      if (date.getUTCHours().toString().length == 1) {
         hour = `0${date.getUTCHours()}`
       } else {
         hour = `${date.getUTCHours()}`
@@ -380,14 +380,14 @@ async function statisticsUpdate(client) {
 
       // MINUTE STABLER
       let minute;
-      if((date.getUTCMinutes()).toString().length == 1) {
+      if ((date.getUTCMinutes()).toString().length == 1) {
         minute = `0${date.getUTCMinutes()}`
       } else {
         minute = `${date.getUTCMinutes()}`
       }
       // DAY STABLER
       let day;
-      if(date.getUTCDate().toString().length == 1) {
+      if (date.getUTCDate().toString().length == 1) {
         day = `0${date.getUTCDate()}`
       } else {
         day = `${date.getUTCDate()}`
@@ -395,10 +395,10 @@ async function statisticsUpdate(client) {
 
       // MONTH STABLER
       let month;
-      if((date.getUTCMonth()+1).toString().length == 1) {
-        month = `0${date.getUTCMonth()+1}`
+      if ((date.getUTCMonth() + 1).toString().length == 1) {
+        month = `0${date.getUTCMonth() + 1}`
       } else {
-        month = `${date.getUTCMonth()+1}`
+        month = `${date.getUTCMonth() + 1}`
       }
 
       const dateFormat = `${day}/${month}/${date.getFullYear()}`
@@ -411,7 +411,7 @@ async function statisticsUpdate(client) {
     // END TIME/HOUR TYPE STATS
 
     // MEMBER COUNT
-    if(data.typeChannel == 4) {
+    if (data.typeChannel == 4) {
       await channel.edit({
         name: data.markdown.replace("{0}", `${guild.memberCount}`),
       });
@@ -419,11 +419,11 @@ async function statisticsUpdate(client) {
     // END MEMBER COUNT
 
     // CHANNEL COUNT
-    if(data.typeChannel == 5) {
+    if (data.typeChannel == 5) {
       let channelCount = 0;
       const member = await guild.channels.fetch();
       await member.each(value => {
-        if(value) {
+        if (value) {
           channelCount++;
         }
       })
@@ -434,11 +434,11 @@ async function statisticsUpdate(client) {
     // END CHANNEL COUNT
 
     // BOT COUNT
-    if(data.typeChannel == 6) {
+    if (data.typeChannel == 6) {
       let botCount = 0;
       const member = await guild.members.fetch();
       await member.each(value => {
-        if(value.user.bot) {
+        if (value.user.bot) {
           botCount++;
         }
       })
@@ -449,17 +449,17 @@ async function statisticsUpdate(client) {
     // END BOT COUNT
 
     // ROLE COUNT
-    if(data.typeChannel == 7) {
+    if (data.typeChannel == 7) {
       let roleCount = 0;
       let arrayMember = [];
       const permissions = await channel.permissionOverwrites.cache;
       for await (const value of permissions) {
-        if(value[1].id != guild.roles.everyone.id && value[1].deny == PermissionsBitField.Flags.ReadMessageHistory) {
+        if (value[1].id != guild.roles.everyone.id && value[1].deny == PermissionsBitField.Flags.ReadMessageHistory) {
           const guildMembers = await guild.members.fetch();
           for await (const member of guildMembers) {
             for await (const role of member[1].roles.cache) {
               const foundMember = arrayMember.find((memberId) => memberId == member[1].id);
-              if(role[1].id == value[1].id && !foundMember) {
+              if (role[1].id == value[1].id && !foundMember) {
                 arrayMember.push(member[1].id);
                 roleCount++;
               }
@@ -474,17 +474,17 @@ async function statisticsUpdate(client) {
     // END ROLE COUNT
 
     // ROLE COUNT ONLINE
-    if(data.typeChannel == 8) {
+    if (data.typeChannel == 8) {
       let roleCount = 0;
       let arrayMember = [];
       const permissions = await channel.permissionOverwrites.cache;
       for await (const value of permissions) {
-        if(value[1].id != guild.roles.everyone.id && value[1].deny == PermissionsBitField.Flags.ReadMessageHistory) {
+        if (value[1].id != guild.roles.everyone.id && value[1].deny == PermissionsBitField.Flags.ReadMessageHistory) {
           const guildMembers = await guild.members.fetch();
           for await (const member of guildMembers) {
             for await (const role of member[1].roles.cache) {
               const foundMember = arrayMember.find((memberId) => memberId == member[1].id);
-              if(role[1].id == value[1].id && (member[1].presence?.status == "online" || member[1].presence?.status == "idle" || member[1].presence?.status == "dnd") && !foundMember) {
+              if (role[1].id == value[1].id && (member[1].presence?.status == "online" || member[1].presence?.status == "idle" || member[1].presence?.status == "dnd") && !foundMember) {
                 arrayMember.push(member[1].id);
                 roleCount++;
               }
@@ -497,6 +497,31 @@ async function statisticsUpdate(client) {
       });
     }
     // END ROLE COUNT ONLINE
+
+    // STATUS BAR COUNT
+    if (data.typeChannel == 9) {
+      let online = 0;
+      let idle = 0;
+      let dnd = 0;
+
+      const guildMembers = await guild.members.fetch();
+      for await (const member of guildMembers) {
+        if (member[1].presence?.status == "online") {
+          online++;
+        } else if(member[1].presence?.status == "idle") {
+          idle++;
+        } else if(member[1].presence?.status == "dnd") {
+          dnd++;
+        } 
+      }
+      await channel.edit({
+        name: data.markdown
+        .replace("{0}", `${online}`)
+        .replace("{1}", `${dnd}`)
+        .replace("{2}", `${idle}`),
+      });
+    }
+    // END STATUS BAR COUNT
 
 
   }

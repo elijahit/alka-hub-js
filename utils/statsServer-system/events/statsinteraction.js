@@ -23,7 +23,11 @@ module.exports = {
         let type = interaction.fields.getTextInputValue('statsTypeChannel');
 
         const checkCategory = await readDbAllWith2Params('SELECT * FROM stats_system_category WHERE guildId = ? AND categoryId = ?', interaction.guild.id, categoryId)
-        if (checkCategory[0] && parseInt(type) > 0 && parseInt(type) < 10 && nameChannel.includes("{0}")) {
+
+        let channelCheck = (checkCategory[0] && parseInt(type) > 0 && parseInt(type) < 9 && nameChannel.includes("{0}")); // Controllo tutti i canali tranne status bar
+
+        let channelStatusCheck = (checkCategory[0] && parseInt(type) == 9 && (nameChannel.includes("{0}") || nameChannel.includes("{1}") || nameChannel.includes("{2}"))); // Controllo status bar tranne gli altri canali
+       if (channelCheck || channelStatusCheck) {
           const category = await interaction.guild.channels.fetch(categoryId);
           // CREO IL CANALE NELLA CATEGORIA
           const channel = await interaction.guild.channels.create({
