@@ -45,7 +45,7 @@
     "reactionrole_category": "Reaction Role System",
     "reactionrole_commands": "- **/reactionrole** *[reactionrole]* - Il comando imposta i ruoli da impostare nei reaction role tramite i messaggi.\n- **/reactionrolelist** *[reactionrole]* - Il comando mostra la lista dei reaction role attualmente impostati nel server.\n- **/reactionroleremove** *[reactionrole]* - Il comando rimuove le reaction role impostate tramite i messaggi.",
     "statistics_category": "Stats Server System",
-    "statistics_commands": "- **/statistics** *[statsServer]* - Il comando permette di creare la categoria destinata al sistema di statistiche.\n- **/channelstats** *[statsServer]* - Il comando permette la creazione dei canali che sono destinati al sistema di statistiche.\n- **/markdownstats** *[statsServer]* - Il comando mostra una breve documentazione dei markdown disponibili per le varie tipologie di canali."
+    "statistics_commands": "- **/statistics** *[statsServer]* - Il comando permette di creare la categoria destinata al sistema di statistiche.\n- **/channelstats** *[statsServer]* - Il comando permette la creazione dei canali che sono destinati al sistema di statistiche.\n- **/markdownstats** *[statsServer]* - Il comando mostra una breve documentazione dei markdown disponibili per le varie tipologie di canali.\n- **/channelstatsedit** *[statsServer]* - Il comando ti permette di aggironare il nome canale per aggiungere emoji e markdown."
   }
   
 }
