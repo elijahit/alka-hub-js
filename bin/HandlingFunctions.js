@@ -346,6 +346,9 @@ async function statisticsUpdate(client) {
   for (const data of channelsData) {
     const guild = await client.guilds.fetch(data.guildId);
     const channel = await guild.channels.fetch(data.channelId);
+    const checkFeaturesisEnabled = await readDb(`SELECT statsServerSystem_enabled from guilds_config WHERE guildId = ?`, guild.id);
+    if(!checkFeaturesisEnabled) return;
+
     // DATA TYPE STATS
     if (data.typeChannel == 1) {
       let date = await timeZoneManage(guild);
