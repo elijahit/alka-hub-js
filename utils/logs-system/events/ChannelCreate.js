@@ -20,7 +20,7 @@ module.exports = {
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     const result = await readDb(sqlChannelId_log, channel.guild.id);
     try {
-      const channelStatsSystem = await readDbAllWith2Params(`SELECT stats_system_channel FROM guilds_config WHERE channelId = ? AND guildId = ?`, channel.id, channel.guild.id);
+      const channelStatsSystem = await readDbAllWith2Params(`SELECT * FROM stats_system_channel WHERE channelId = ? AND guildId = ?`, channel.id, channel.guild.id);
       if (channelStatsSystem[0].channelId) return;
       if (!result?.channelState_channel) return;
       if (result.channelState_channel?.length < 5) return;
