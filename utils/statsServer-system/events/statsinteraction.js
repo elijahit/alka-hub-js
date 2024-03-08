@@ -71,6 +71,51 @@ module.exports = {
         }
       }
 
+      if (interaction.customId == 'statsModalEdit') {
+        const customEmoji = await getEmojifromUrl(interaction.client, "stats");
+        let nameChannel = interaction.fields.getTextInputValue('statsChannelName');
+        let channelId = interaction.fields.getTextInputValue('statsChannelId');
+
+        const checkChannel = await readDbAllWith2Params('SELECT * FROM stats_system_channel WHERE guildId = ? AND channelId = ?', interaction.guild.id, channelId)
+
+        // CONTROLLI PER IL MARKDOWN DEI CANALI
+
+        let channelCheck = (checkChannel[0] && checkChannel[0].typeChannel > 3 && checkChannel[0].typeChannel < 9 && nameChannel.includes("{0}")); // Controllo tutti i canali tranne status bar, ora, data e (ora data)
+
+        let channelDateCheck = (checkChannel[0] && checkChannel[0].typeChannel == 1 && (nameChannel.includes("{0}") || nameChannel.includes("{1}") || nameChannel.includes("{2}"))); // Controllo i canali di data
+
+        let channelHourCheck = (checkChannel[0] && checkChannel[0].typeChannel == 2 && (nameChannel.includes("{0}") || nameChannel.includes("{1}"))); // Controllo i canali di ora
+
+        let channelDateHourCheck = (checkChannel[0] && checkChannel[0].typeChannel == 3 && (nameChannel.includes("{0}") || nameChannel.includes("{1}") || nameChannel.includes("{2}") || nameChannel.includes("{3}") || nameChannel.includes("{4}"))); // Controllo i canali di data e ora
+
+        let channelStatusCheck = (checkChannel[0] && checkChannel[0].typeChannel == 9 && (nameChannel.includes("{0}") || nameChannel.includes("{1}") || nameChannel.includes("{2}"))); // Controllo status bar tranne gli altri canali
+
+        //  -----------------------------------------
+
+       if (channelCheck || channelStatusCheck || channelDateCheck || channelHourCheck || channelDateHourCheck) {
+          const channel = await interaction.guild.channels.fetch(channelId);
+          // EDUTI IL CANALE NELLA CATEGORIA
+          await channel.edit({
+            name: "Update (few minutes)...",
+          });
+
+          const embedLog = new EmbedBuilder()
+            .setAuthor({ name: `${language_result.channelUpdateCommand.embed_title}`, iconURL: customEmoji })
+            .setDescription(language_result.channelUpdateCommand.description_embed.replace("{0}", `${channel}`))
+            .setFooter({ text: `${language_result.channelUpdateCommand.embed_footer}`, iconURL: `${language_result.channelUpdateCommand.embed_icon_url}` })
+            .setColor(0x32a852);
+          await interaction.reply({ embeds: [embedLog], ephemeral: true });
+          await runDb('UPDATE stats_system_channel SET markdown = ? WHERE guildId = ? AND channelId = ?', nameChannel, interaction.guild.id, channelId);
+        } else {
+          const embedLog = new EmbedBuilder()
+            .setAuthor({ name: `${language_result.channelNotFound.embed_title}`, iconURL: customEmoji })
+            .setDescription(language_result.channelNotFound.description_embed)
+            .setFooter({ text: `${language_result.channelNotFound.embed_footer}`, iconURL: `${language_result.channelNotFound.embed_icon_url}` })
+            .setColor(0xad322a);
+          await interaction.reply({ embeds: [embedLog], ephemeral: true });
+        }
+      }
+
     }
     catch (error) {
       console.log(error)

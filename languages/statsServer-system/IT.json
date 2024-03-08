@@ -38,5 +38,17 @@
     "embed_footer": "Alka Hub di alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "Questa guida ti aiuterà a comprendere i comandi markdown utilizzati nei canali del sistema di statistiche di Alka Hub. Segui attentamente le istruzioni per configurare correttamente le tue statistiche!\nPer ulteriori chiarimenti o dubbi riguardo a questo sistema, consulta la nostra documentazione sul nostro [discord ufficiale](https://discord.gg/X7KPcynxfB).\n\nMarkdown:\n- **Date**: Mostra la data in un canale vocale e si aggiorna in base all'orario locale impostato durante la configurazione del server.\n> {0}: Giorno\n> {1}: Mese\n> {2}: Anno\n- **Hour**: Mostra l'ora in un canale vocale e si aggiorna in base all'orario locale impostato durante la configurazione del server.\n> {0}: Ore\n> {1}: Minuti\n- **Date / Hour**: Mostra la data e l'ora in un canale vocale e si aggiorna in base all'orario locale impostato durante la configurazione del server.\n> {0}: Giorno\n> {1}: Mese\n> {2}: Anno\n> {3}: Ore\n> {4}: Minuti\n- **Member Count**: Mostra il numero totale di membri sul server Discord.\n> {0}: Contatore membri\n- **Channel Count**: Mostra il numero totale di canali sul server Discord.\n> {0}: Contatore canali\n- **Bot Count**: Mostra il numero totale di bot sul server Discord.\n> {0}: Contatore bot\n- **Role Count**: Mostra il numero totale di membri con un ruolo specifico o più ruoli. (I ruoli devono essere configurati nei permessi del canale con il permesso negato: **Leggere la cronologia dei messaggi**)\n> {0}: Contatore ruoli\n- **Role Count Online**: Mostra il numero totale di membri online con un ruolo specifico o più ruoli. (I ruoli devono essere configurati nei permessi del canale con il permesso negato: **Leggere la cronologia dei messaggi**)\n> {0}: Contatore ruoli\n- **Status Bar**: Mostra il numero di utenti con stato: online, non disturbare o inattivo.\n> {0}: Online\n> {1}: Non disturbare\n> {2}: Inattivo\n\nI canali, insieme ai relativi markdown (facoltativo ma necessario almeno uno per la creazione del canale), possono contenere emoji o altri caratteri speciali."
+  },
+  "channelNotFound": {
+    "embed_title": "Alka Hub | Stats System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Il canale selezionato non è stata trovato nel nostro database oppure abbiamo riscontrato un errore durante l'aggiornamento, ti invitiamo a riprovare. Ti raccomandiamo di leggere la nostra documentazione nel nostro [discord ufficiale](https://discord.gg/X7KPcynxfB)."
+  },
+  "channelUpdateCommand": {
+    "embed_title": "Alka Hub | Stats System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Il canale {0} è stato aggiornato con successo, attendi il tick che avverrà in alcuni minuti per vederne la modifica."
   }
 }
