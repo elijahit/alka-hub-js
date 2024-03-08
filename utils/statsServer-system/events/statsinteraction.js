@@ -52,7 +52,7 @@ module.exports = {
                 type: 0,
               }
             ],
-            name: "Loading...",
+            name: "Loading (few minutes)...",
           });
           const embedLog = new EmbedBuilder()
             .setAuthor({ name: `${language_result.channelStatsCommand.embed_title}`, iconURL: customEmoji })
