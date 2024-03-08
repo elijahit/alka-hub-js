@@ -1,7 +1,7 @@
 const { Events, EmbedBuilder, TextChannel } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
-const { readDb } = require('../../../bin/database');
+const { readDb, readDbAllWith2Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 
 // QUERY DEFINITION
@@ -20,6 +20,8 @@ module.exports = {
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     const result = await readDb(sqlChannelId_log, oldChannel.guild.id);
     try {
+      const channelStatsSystem = await readDbAllWith2Params(`SELECT stats_system_channel FROM guilds_config WHERE channelId = ? AND guildId = ?`, oldChannel.id, oldChannel.guild.id);
+      if (channelStatsSystem[0].channelId) return;
       if (!result?.channelState_channel) return;
       if (result.channelState_channel?.length < 5) return;
       // CONTROLLO DELLA LINGUA
