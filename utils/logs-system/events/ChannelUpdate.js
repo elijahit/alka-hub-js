@@ -21,7 +21,7 @@ module.exports = {
     const result = await readDb(sqlChannelId_log, oldChannel.guild.id);
     try {
       const channelStatsSystem = await readDbAllWith2Params(`SELECT * FROM stats_system_channel WHERE channelId = ? AND guildId = ?`, oldChannel.id, oldChannel.guild.id);
-      if (channelStatsSystem[0].channelId) return;
+      if (channelStatsSystem[0]?.channelId) return;
       if (!result?.channelState_channel) return;
       if (result.channelState_channel?.length < 5) return;
       // CONTROLLO DELLA LINGUA
