@@ -348,223 +348,227 @@ async function statisticsUpdate(client) {
     const channel = await guild.channels.fetch(data.channelId);
     const checkFeaturesisEnabled = await readDb(`SELECT statsServerSystem_enabled from guilds_config WHERE guildId = ?`, guild.id);
     if(!checkFeaturesisEnabled) return;
+    try {
+      // DATA TYPE STATS
+      if (data.typeChannel == 1) {
+        let date = await timeZoneManage(guild);
 
-    // DATA TYPE STATS
-    if (data.typeChannel == 1) {
-      let date = await timeZoneManage(guild);
-
-      // DAY STABLER
-      let day;
-      if (date.getUTCDate().toString().length == 1) {
-        day = `0${date.getUTCDate()}`
-      } else {
-        day = `${date.getUTCDate()}`
-      }
-
-      // MONTH STABLER
-      let month;
-      if ((date.getUTCMonth() + 1).toString().length == 1) {
-        month = `0${date.getUTCMonth() + 1}`
-      } else {
-        month = `${date.getUTCMonth() + 1}`
-      }
-
-      await channel.edit({
-        name: data.markdown
-        .replace("{0}", `${day}`)
-        .replace("{1}", `${month}`)
-        .replace("{2}", `${date.getFullYear()}`),
-      });
-    }
-    // END DATA TYPE STATS
-
-    // HOUR TYPE STATS
-    if (data.typeChannel == 2) {
-      let date = await timeZoneManage(guild);
-
-      // HOUR STABLER
-      let hour;
-      if (date.getUTCHours().toString().length == 1) {
-        hour = `0${date.getUTCHours()}`
-      } else {
-        hour = `${date.getUTCHours()}`
-      }
-
-      // MINUTE STABLER
-      let minute;
-      if ((date.getUTCMinutes()).toString().length == 1) {
-        minute = `0${date.getUTCMinutes()}`
-      } else {
-        minute = `${date.getUTCMinutes()}`
-      }
-      const hourformat = `${hour}:${minute}`
-      await channel.edit({
-        name: data.markdown
-        .replace("{0}", `${hour}`)
-        .replace("{1}", `${minute}`),
-      });
-    }
-    // END HOUR TYPE STATS
-
-    // TIME/HOUR TYPE STATS
-    if (data.typeChannel == 3) {
-      let date = await timeZoneManage(guild);
-
-      // HOUR STABLER
-      let hour;
-      if (date.getUTCHours().toString().length == 1) {
-        hour = `0${date.getUTCHours()}`
-      } else {
-        hour = `${date.getUTCHours()}`
-      }
-
-      // MINUTE STABLER
-      let minute;
-      if ((date.getUTCMinutes()).toString().length == 1) {
-        minute = `0${date.getUTCMinutes()}`
-      } else {
-        minute = `${date.getUTCMinutes()}`
-      }
-      // DAY STABLER
-      let day;
-      if (date.getUTCDate().toString().length == 1) {
-        day = `0${date.getUTCDate()}`
-      } else {
-        day = `${date.getUTCDate()}`
-      }
-
-      // MONTH STABLER
-      let month;
-      if ((date.getUTCMonth() + 1).toString().length == 1) {
-        month = `0${date.getUTCMonth() + 1}`
-      } else {
-        month = `${date.getUTCMonth() + 1}`
-      }
-
-      await channel.edit({
-        name: data.markdown
-        .replace("{0}", `${day}`)
-        .replace("{1}", `${month}`)
-        .replace("{2}", `${date.getFullYear()}`)
-        .replace("{3}", `${hour}`)
-        .replace("{4}", `${minute}`),
-      });
-
-    }
-    // END TIME/HOUR TYPE STATS
-
-    // MEMBER COUNT
-    if (data.typeChannel == 4) {
-      await channel.edit({
-        name: data.markdown.replace("{0}", `${guild.memberCount}`),
-      });
-    }
-    // END MEMBER COUNT
-
-    // CHANNEL COUNT
-    if (data.typeChannel == 5) {
-      let channelCount = 0;
-      const member = await guild.channels.fetch();
-      await member.each(value => {
-        if (value) {
-          channelCount++;
+        // DAY STABLER
+        let day;
+        if (date.getUTCDate().toString().length == 1) {
+          day = `0${date.getUTCDate()}`
+        } else {
+          day = `${date.getUTCDate()}`
         }
-      })
-      await channel.edit({
-        name: data.markdown.replace("{0}", `${channelCount}`),
-      });
-    }
-    // END CHANNEL COUNT
 
-    // BOT COUNT
-    if (data.typeChannel == 6) {
-      let botCount = 0;
-      const member = await guild.members.fetch();
-      await member.each(value => {
-        if (value.user.bot) {
-          botCount++;
+        // MONTH STABLER
+        let month;
+        if ((date.getUTCMonth() + 1).toString().length == 1) {
+          month = `0${date.getUTCMonth() + 1}`
+        } else {
+          month = `${date.getUTCMonth() + 1}`
         }
-      })
-      await channel.edit({
-        name: data.markdown.replace("{0}", `${botCount}`),
-      });
-    }
-    // END BOT COUNT
 
-    // ROLE COUNT
-    if (data.typeChannel == 7) {
-      let roleCount = 0;
-      let arrayMember = [];
-      const permissions = await channel.permissionOverwrites.cache;
-      for await (const value of permissions) {
-        if (value[1].id != guild.roles.everyone.id && value[1].deny == PermissionsBitField.Flags.ReadMessageHistory) {
-          const guildMembers = await guild.members.fetch();
-          for await (const member of guildMembers) {
-            for await (const role of member[1].roles.cache) {
-              const foundMember = arrayMember.find((memberId) => memberId == member[1].id);
-              if (role[1].id == value[1].id && !foundMember) {
-                arrayMember.push(member[1].id);
-                roleCount++;
+        await channel.edit({
+          name: data.markdown
+          .replace("{0}", `${day}`)
+          .replace("{1}", `${month}`)
+          .replace("{2}", `${date.getFullYear()}`),
+        });
+      }
+      // END DATA TYPE STATS
+
+      // HOUR TYPE STATS
+      if (data.typeChannel == 2) {
+        let date = await timeZoneManage(guild);
+
+        // HOUR STABLER
+        let hour;
+        if (date.getUTCHours().toString().length == 1) {
+          hour = `0${date.getUTCHours()}`
+        } else {
+          hour = `${date.getUTCHours()}`
+        }
+
+        // MINUTE STABLER
+        let minute;
+        if ((date.getUTCMinutes()).toString().length == 1) {
+          minute = `0${date.getUTCMinutes()}`
+        } else {
+          minute = `${date.getUTCMinutes()}`
+        }
+        const hourformat = `${hour}:${minute}`
+        await channel.edit({
+          name: data.markdown
+          .replace("{0}", `${hour}`)
+          .replace("{1}", `${minute}`),
+        });
+      }
+      // END HOUR TYPE STATS
+
+      // TIME/HOUR TYPE STATS
+      if (data.typeChannel == 3) {
+        let date = await timeZoneManage(guild);
+
+        // HOUR STABLER
+        let hour;
+        if (date.getUTCHours().toString().length == 1) {
+          hour = `0${date.getUTCHours()}`
+        } else {
+          hour = `${date.getUTCHours()}`
+        }
+
+        // MINUTE STABLER
+        let minute;
+        if ((date.getUTCMinutes()).toString().length == 1) {
+          minute = `0${date.getUTCMinutes()}`
+        } else {
+          minute = `${date.getUTCMinutes()}`
+        }
+        // DAY STABLER
+        let day;
+        if (date.getUTCDate().toString().length == 1) {
+          day = `0${date.getUTCDate()}`
+        } else {
+          day = `${date.getUTCDate()}`
+        }
+
+        // MONTH STABLER
+        let month;
+        if ((date.getUTCMonth() + 1).toString().length == 1) {
+          month = `0${date.getUTCMonth() + 1}`
+        } else {
+          month = `${date.getUTCMonth() + 1}`
+        }
+
+        await channel.edit({
+          name: data.markdown
+          .replace("{0}", `${day}`)
+          .replace("{1}", `${month}`)
+          .replace("{2}", `${date.getFullYear()}`)
+          .replace("{3}", `${hour}`)
+          .replace("{4}", `${minute}`),
+        });
+
+      }
+      // END TIME/HOUR TYPE STATS
+
+      // MEMBER COUNT
+      if (data.typeChannel == 4) {
+        await channel.edit({
+          name: data.markdown.replace("{0}", `${guild.memberCount}`),
+        });
+      }
+      // END MEMBER COUNT
+
+      // CHANNEL COUNT
+      if (data.typeChannel == 5) {
+        let channelCount = 0;
+        const member = await guild.channels.fetch();
+        await member.each(value => {
+          if (value) {
+            channelCount++;
+          }
+        })
+        await channel.edit({
+          name: data.markdown.replace("{0}", `${channelCount}`),
+        });
+      }
+      // END CHANNEL COUNT
+
+      // BOT COUNT
+      if (data.typeChannel == 6) {
+        let botCount = 0;
+        const member = await guild.members.fetch();
+        await member.each(value => {
+          if (value.user.bot) {
+            botCount++;
+          }
+        })
+        await channel.edit({
+          name: data.markdown.replace("{0}", `${botCount}`),
+        });
+      }
+      // END BOT COUNT
+
+      // ROLE COUNT
+      if (data.typeChannel == 7) {
+        let roleCount = 0;
+        let arrayMember = [];
+        const permissions = await channel.permissionOverwrites.cache;
+        for await (const value of permissions) {
+          if (value[1].id != guild.roles.everyone.id && value[1].deny == PermissionsBitField.Flags.ReadMessageHistory) {
+            const guildMembers = await guild.members.fetch();
+            for await (const member of guildMembers) {
+              for await (const role of member[1].roles.cache) {
+                const foundMember = arrayMember.find((memberId) => memberId == member[1].id);
+                if (role[1].id == value[1].id && !foundMember) {
+                  arrayMember.push(member[1].id);
+                  roleCount++;
+                }
               }
             }
           }
         }
+        await channel.edit({
+          name: data.markdown.replace("{0}", `${roleCount}`),
+        });
       }
-      await channel.edit({
-        name: data.markdown.replace("{0}", `${roleCount}`),
-      });
-    }
-    // END ROLE COUNT
+      // END ROLE COUNT
 
-    // ROLE COUNT ONLINE
-    if (data.typeChannel == 8) {
-      let roleCount = 0;
-      let arrayMember = [];
-      const permissions = await channel.permissionOverwrites.cache;
-      for await (const value of permissions) {
-        if (value[1].id != guild.roles.everyone.id && value[1].deny == PermissionsBitField.Flags.ReadMessageHistory) {
-          const guildMembers = await guild.members.fetch();
-          for await (const member of guildMembers) {
-            for await (const role of member[1].roles.cache) {
-              const foundMember = arrayMember.find((memberId) => memberId == member[1].id);
-              if (role[1].id == value[1].id && (member[1].presence?.status == "online" || member[1].presence?.status == "idle" || member[1].presence?.status == "dnd") && !foundMember) {
-                arrayMember.push(member[1].id);
-                roleCount++;
+      // ROLE COUNT ONLINE
+      if (data.typeChannel == 8) {
+        let roleCount = 0;
+        let arrayMember = [];
+        const permissions = await channel.permissionOverwrites.cache;
+        for await (const value of permissions) {
+          if (value[1].id != guild.roles.everyone.id && value[1].deny == PermissionsBitField.Flags.ReadMessageHistory) {
+            const guildMembers = await guild.members.fetch();
+            for await (const member of guildMembers) {
+              for await (const role of member[1].roles.cache) {
+                const foundMember = arrayMember.find((memberId) => memberId == member[1].id);
+                if (role[1].id == value[1].id && (member[1].presence?.status == "online" || member[1].presence?.status == "idle" || member[1].presence?.status == "dnd") && !foundMember) {
+                  arrayMember.push(member[1].id);
+                  roleCount++;
+                }
               }
             }
           }
         }
+        await channel.edit({
+          name: data.markdown.replace("{0}", `${roleCount}`),
+        });
       }
-      await channel.edit({
-        name: data.markdown.replace("{0}", `${roleCount}`),
-      });
-    }
-    // END ROLE COUNT ONLINE
+      // END ROLE COUNT ONLINE
 
-    // STATUS BAR COUNT
-    if (data.typeChannel == 9) {
-      let online = 0;
-      let idle = 0;
-      let dnd = 0;
+      // STATUS BAR COUNT
+      if (data.typeChannel == 9) {
+        let online = 0;
+        let idle = 0;
+        let dnd = 0;
 
-      const guildMembers = await guild.members.fetch();
-      for await (const member of guildMembers) {
-        if (member[1].presence?.status == "online") {
-          online++;
-        } else if(member[1].presence?.status == "idle") {
-          idle++;
-        } else if(member[1].presence?.status == "dnd") {
-          dnd++;
-        } 
+        const guildMembers = await guild.members.fetch();
+        for await (const member of guildMembers) {
+          if (member[1].presence?.status == "online") {
+            online++;
+          } else if(member[1].presence?.status == "idle") {
+            idle++;
+          } else if(member[1].presence?.status == "dnd") {
+            dnd++;
+          } 
+        }
+        await channel.edit({
+          name: data.markdown
+          .replace("{0}", `${online}`)
+          .replace("{1}", `${dnd}`)
+          .replace("{2}", `${idle}`),
+        });
       }
-      await channel.edit({
-        name: data.markdown
-        .replace("{0}", `${online}`)
-        .replace("{1}", `${dnd}`)
-        .replace("{2}", `${idle}`),
-      });
+      // END STATUS BAR COUNT
     }
-    // END STATUS BAR COUNT
+    catch (error){
+      errorSendControls(error, guild.client, guild, "\\statsServer-system\\HandlingFunctions.js");
+    }
 
 
   }
