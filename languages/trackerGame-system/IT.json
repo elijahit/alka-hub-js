@@ -1,4 +1,17 @@
 {
-  
-  
+  "apexTracker": {
+    "embed_title": "Alka Hub | Apex Tracker",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "username": "Nome utente",
+    "uid": "UID",
+    "level": "Livello",
+    "scoreBoard": "Uccisioni / Vittorie / Danno",
+    "bestLegends": "Le migliori legende",
+    "win": "vittorie",
+    "kill": "uccisioni",
+    "damage": "danni",
+    "rank": "Rank competitivo",
+    "noResult": "Nessun risultato è stato trovato nella ricerca, riprova."
+  }
 }
