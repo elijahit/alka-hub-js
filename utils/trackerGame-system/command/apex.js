@@ -101,9 +101,16 @@ module.exports = {
 					}
 				}
 				// CHECK MAX RESULT
-				let bestKills = [...legendsKill.entries()].reduce((a, e) => e[1] > a[1] ? e : a);
-				let bestDamage = [...legendsDamage.entries()].reduce((a, e) => e[1] > a[1] ? e : a);
-				let bestWins = [...legendsWins.entries()].reduce((a, e) => e[1] > a[1] ? e : a);
+				let bestKills = ["No Data", 0], bestDamage = ["No Data", 0], bestWins = ["No Data", 0];
+				if (legendsKill.size > 0) {
+					bestKills = [...legendsKill.entries()].reduce((a, e) => e[1] > a[1] ? e : a);
+				}
+				if (legendsDamage.size > 0) {
+					bestDamage = [...legendsDamage.entries()].reduce((a, e) => e[1] > a[1] ? e : a);
+				}
+				if(legendsWins.size > 0) {
+					bestWins = [...legendsWins.entries()].reduce((a, e) => e[1] > a[1] ? e : a);
+				}
 
 				let fields = [
 					{ name: language_result.apexTracker.username, value: `${resultApi.data.global.tag}${resultApi.data.global.name} ${currentState}`, inline: true },
@@ -124,7 +131,7 @@ module.exports = {
 			}
 		}
 		catch (error) {
-			if(error == "AxiosError: Request failed with status code 404") {
+			if (error == "AxiosError: Request failed with status code 404") {
 				const embedLog = new EmbedBuilder()
 					.setAuthor({ name: `${language_result.apexTracker.embed_title}`, iconURL: customEmoji })
 					.setDescription(language_result.apexTracker.noResult)
