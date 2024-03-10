@@ -1,9 +1,9 @@
-const { Api, Eve, Chat, ChatEvents, Events } = require("twitch-js");
+const { Api } = require("twitch-js");
 const { readDb, runDb, readDbAllWith2Params, readDbWith4Params, readDbWith3Params, readDbAll } = require('../../bin/database');
 const { readFileSync, read } = require('fs')
 const language = require('../../languages/languages');
-const { client } = require("../../app");
-const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits, PermissionsBitField } = require('discord.js');
+const { client } = require('../../bin/client');
+const { EmbedBuilder } = require('discord.js');
 const { getEmojifromUrl, errorSendControls } = require("../../bin/HandlingFunctions");
 
 

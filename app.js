@@ -1,22 +1,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
+const { Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 const { token, presenceStatusName, botState } = require('./config.json');
 const { cleanerDatabase, reactionRoleCached, statisticsUpdate } = require('./bin/HandlingFunctions');
-
-
-const client = new Client({ intents: [
-  GatewayIntentBits.Guilds, 
-  GatewayIntentBits.GuildVoiceStates, 
-  GatewayIntentBits.GuildModeration, 
-  GatewayIntentBits.GuildEmojisAndStickers, 
-  GatewayIntentBits.GuildMembers, 
-  GatewayIntentBits.GuildInvites,
-  GatewayIntentBits.GuildMessages,
-  GatewayIntentBits.MessageContent,
-  GatewayIntentBits.GuildMessageReactions,
-  GatewayIntentBits.GuildPresences,
-]});
+const { client } = require('./bin/client');
 
 client.commands = new Collection();
 
@@ -124,8 +111,6 @@ setInterval(async () => {
 //  --------- //
 
 client.login(token);
-
-module.exports = {client};
 
 // FUNCTION OTHER SYSTEM
 require('./utils/twitch-system/twitch'); //Twitch System
