@@ -56,7 +56,7 @@ module.exports = {
 						if (role?.id) {
 							await runDb("INSERT INTO twitch_notify_system (guildId, channelId, streamerName, roleMention, streamerId) VALUES (?, ?, ?, ?, ?)", interaction.guild.id, channel.id, username, role.id, checkUser.data[0].id);
 						} else {
-							await runDb("INSERT INTO twitch_notify_system (guildId, channelId, streamerName, stramerId) VALUES (?, ?, ?, ?)", interaction.guild.id, channel.id, username, checkUser.data[0].id);
+							await runDb("INSERT INTO twitch_notify_system (guildId, channelId, streamerName, streamerId) VALUES (?, ?, ?, ?)", interaction.guild.id, channel.id, username, checkUser.data[0].id);
 						}
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.twitchAddSuccess.embed_title}`, iconURL: customEmoji })
