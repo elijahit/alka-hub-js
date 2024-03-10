@@ -29,6 +29,7 @@ CREATE TABLE "guilds_config" (
 	"autoRoleSystem_enabled"	INTEGER,
 	"reactionRoleSystem_enabled"	INTEGER,
 	"statsServerSystem_enabled"	INTEGER,
+	"twitchNotifySystem_enabled"	INTEGER,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 -- Tabella di configurazione Log System
@@ -133,6 +134,17 @@ CREATE TABLE "stats_system_channel" (
 	"channelId"	TEXT,
 	"typeChannel"	INTEGER,
 	"markdown"	TEXT,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
+--- Tabella di raccolta utenti Twitch Notify
+CREATE TABLE "twitch_notify_system" (
+	"ID"	INTEGER UNIQUE,
+	"guildId"	TEXT,
+	"channelId"	TEXT,
+	"streamerId"	TEXT,
+	"streamerName"	TEXT,
+	"sendMessage"	INTEGER,
+	"roleMention"	TEXT,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 ```

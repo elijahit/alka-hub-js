@@ -1,30 +1,30 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync } = require('fs');
-const { readDbWith3Params, readDbAllWithValue, runDb } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl, returnPermission } = require('../../../bin/HandlingFunctions');
+const { readDbWith3Params, readDbAllWithValue, runDb, readDb } = require('../../../bin/database');
+const { errorSendControls, getEmojifromUrl, returnPermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
 const { api } = require("../twitch");
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('twitchnotify')
-		.setDescription('CHANGE!')
+		.setDescription('Use this command to insert live twitch notifications!')
 		.addChannelOption(option =>
 			option
 				.setName('channel')
-				.setDescription('CHANGE')
+				.setDescription('Channel where you want to send notifications')
 				.setRequired(true)
 		)
 		.addStringOption(option =>
 			option
 				.setName('username')
-				.setDescription('CHANGE')
+				.setDescription('Twitch username')
 				.setRequired(true)
 		)
 		.addRoleOption(option =>
 			option
 				.setName('role-mention')
-				.setDescription('CHANGE')
+				.setDescription('Role to be mentioned when the channel is live')
 				.setRequired(false)
 		),
 	async execute(interaction) {
@@ -35,11 +35,16 @@ module.exports = {
 			if (value.name == 'username') username = value.value;
 			if (value.name == 'role-mention') role = value.role;
 		});
+		const checkFeaturesisEnabled = await readDb(`SELECT twitchNotifySystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
 
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id);
 		const langagues_path = readFileSync(`./languages/twitch-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
+		if (!checkFeaturesisEnabled?.twitchNotifySystem_enabled) {
+			await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
+      return;
+    }
 		await returnPermission(interaction, "twitchNotify", async result => {
 			try {
 				const check = await readDbWith3Params("SELECT * FROM twitch_notify_system WHERE guildId = ? AND channelId = ? AND streamerName = ?", interaction.guild.id, channel.id, username);

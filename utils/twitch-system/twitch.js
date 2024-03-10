@@ -13,6 +13,17 @@ const api = new Api({ token: token, clientId: clientid, })
 const run = async () => {
   const databaseTwitch = await readDbAll("twitch_notify_system");
   for await (const value of databaseTwitch) {
+    let guild;
+    try {
+      guild = await client.guilds.fetch(value.guildId);
+    } catch {
+      await runDb("DELETE FROM twitch_notify_system WHERE guildId = ?", value.guildId);
+    }
+    const checkFeaturesisEnabled = await readDb(`SELECT twitchNotifySystem_enabled from guilds_config WHERE guildId = ?`, guild.id);
+
+    if (!checkFeaturesisEnabled?.twitchNotifySystem_enabled) {
+      return;
+    }
     try {
       const checkStream = await api.get('streams', { search: { user_id: `${value.streamerId}` } })
 
@@ -20,7 +31,6 @@ const run = async () => {
         if (value.sendMessage == null) {
           const streams = checkStream.data[0];
           await runDb("UPDATE twitch_notify_system SET sendMessage = ? WHERE ID = ?", 1, value.ID);
-          const guild = await client.guilds.fetch(value.guildId);
           const channel = await guild.channels.fetch(value.channelId);
 
           let data = await language.databaseCheck(guild.id);
@@ -55,13 +65,7 @@ const run = async () => {
       }
     }
     catch {
-      try {
-        const guild = await client.guilds.fetch(value.guildId);
-        errorSendControls(error, client, guild, "\\twitch-system\\twitch.js");
-      }
-      catch {
-        await runDb("DELETE FROM twitch_notify_system WHERE guildId = ?", value.guildId);
-      }
+      errorSendControls(error, client, guild, "\\twitch-system\\twitch.js");
     }
   }
 };

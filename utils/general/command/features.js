@@ -34,6 +34,10 @@ module.exports = {
 					name: "Stats Server System",
 					value: "statsServerSystem_enabled",
 				})
+				.addChoices({
+					name: "Twitch Notify System",
+					value: "twitchNotifySystem_enabled",
+				})
 				.setName('choices')
 				.setDescription('Name of the system you want to enable or disable')
 				.setRequired(true)
