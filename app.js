@@ -124,3 +124,8 @@ setInterval(async () => {
 //  --------- //
 
 client.login(token);
+
+module.exports = {client};
+
+// FUNCTION OTHER SYSTEM
+require('./utils/twitch-system/twitch'); //Twitch System
