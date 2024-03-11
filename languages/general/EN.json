@@ -45,6 +45,8 @@
     "reactionrole_category": "Reaction Role System",
     "reactionrole_commands": "- **/reactionrole** *[reactionrole]* - This command sets the roles to be assigned in reaction roles via messages.\n- **/reactionrolelist** *[reactionrole]* - This command displays the list of reaction roles currently set in the server.\n- **/reactionroleremove** *[reactionrole]* - This command removes the reaction roles set via messages.",
     "statistics_category": "Stats Server System",
-    "statistics_commands": "- **/statistics** *[statsServer]* - The command allows you to create the category for the statistics system.\n- **/channelstats** *[statsServer]* - The command allows the creation of channels intended for the statistics system.\n- **/markdownstats** *[statsServer]* - The command displays a brief documentation of available markdowns for different channel types.\n- **/channelstatsedit** *[statsServer]* - The command allows you to update the channel name to add emoji and markdown."
+    "statistics_commands": "- **/statistics** *[statsServer]* - The command allows you to create the category for the statistics system.\n- **/channelstats** *[statsServer]* - The command allows the creation of channels intended for the statistics system.\n- **/markdownstats** *[statsServer]* - The command displays a brief documentation of available markdowns for different channel types.\n- **/channelstatsedit** *[statsServer]* - The command allows you to update the channel name to add emoji and markdown.",
+    "twitch_category": "Twitch Notify System",
+    "twitch_commands": "- **/twitchnotify** *[twitchNotify]* - The command allows you to add a channel where notifications are sent when a streamer goes live.\n- **/twitchlist** *[twitchNotify]* - The command allows the list of channels where streamer notifications are heard to be displayed."
   }
 }

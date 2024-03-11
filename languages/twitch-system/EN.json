@@ -32,5 +32,13 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description": "The selected user does not exist, please try again!"
+  },
+  "notifyList": {
+    "embed_title": "Alka Hub | Twitch Notify",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "permissions_embed": "Below is the list of twitch channel notifications on your discord server",
+    "permissionsfield_embed": "Channel list",
+    "permissions_empty": "No channel found"
   }
 }
