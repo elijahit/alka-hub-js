@@ -17,8 +17,11 @@ const listener = new EventSubWsListener({ apiClient });
 listener.start();
 
 async function addListener(streamers) {
+  console.log(streamers);
   listener.onStreamOnline(streamers.streamerId, async e => {
+    console.log(streamers.streamerId, "è in live")
     const notifyTwitch = await readDbAllWith1Params("SELECT * FROM twitch_notify_system WHERE streamerId = ?", streamers.streamerId);
+    console.log(notifyTwitch)
     let counterListner = 0;
     for await (const value of notifyTwitch) {
       counterListner++;
@@ -51,8 +54,8 @@ async function addListener(streamers) {
           .setThumbnail((await streams.getUser()).profilePictureUrl)
           .setImage(streams.thumbnailUrl.replace("{width}", "400").replace("{height}", "225"))
           .setColor(0x6e0b8c);
+        const channel = await guild.channels.fetch(value.channelId);
         if (value.roleMention) {
-          const channel = await guild.channels.fetch(value.channelId);
           const role = await guild.roles.fetch(value.roleMention);
           await channel.send({ content: `${role}`, embeds: [embedLog] });
         } else {
