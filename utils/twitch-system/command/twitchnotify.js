@@ -1,9 +1,9 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync } = require('fs');
-const { readDbWith3Params, readDbAllWithValue, runDb, readDb } = require('../../../bin/database');
+const { readDbWith3Params, readDbAllWithValue, runDb, readDb, readDbAllWith1Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, returnPermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
-const { api } = require("../twitch");
+const { addListener, apiClient } = require("../twitch");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -48,21 +48,26 @@ module.exports = {
 		await returnPermission(interaction, "twitchNotify", async result => {
 			try {
 				const check = await readDbWith3Params("SELECT * FROM twitch_notify_system WHERE guildId = ? AND channelId = ? AND streamerName = ?", interaction.guild.id, channel.id, username);
-				const checkUser = await api.get('users', { search: { login: `${username}` } });
+				const checkUser = await apiClient.users.getUserByName(username)
 				let customEmoji = await getEmojifromUrl(interaction.client, "twitch");
-				if (checkUser.data.length > 0) {
+				if (checkUser) {
 					if (!check) {
 						// SE NON ESISTE
+						const checkListner = await readDbAllWith1Params("SELECT * FROM twitch_streamers_system WHERE streamerId = ?", checkUser.id);
+						if(checkListner.length < 1) {
+							await runDb("INSERT INTO twitch_streamers_system (streamerId) VALUES (?)", checkUser.id);
+							await addListener({streamerId: `${checkUser.id}`});
+						}
 						if (role?.id) {
-							await runDb("INSERT INTO twitch_notify_system (guildId, channelId, streamerName, roleMention, streamerId) VALUES (?, ?, ?, ?, ?)", interaction.guild.id, channel.id, username, role.id, checkUser.data[0].id);
+							await runDb("INSERT INTO twitch_notify_system (guildId, channelId, streamerName, roleMention, streamerId) VALUES (?, ?, ?, ?, ?)", interaction.guild.id, channel.id, username, role.id, checkUser.id);
 						} else {
-							await runDb("INSERT INTO twitch_notify_system (guildId, channelId, streamerName, streamerId) VALUES (?, ?, ?, ?)", interaction.guild.id, channel.id, username, checkUser.data[0].id);
+							await runDb("INSERT INTO twitch_notify_system (guildId, channelId, streamerName, streamerId) VALUES (?, ?, ?, ?)", interaction.guild.id, channel.id, username, checkUser.id);
 						}
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.twitchAddSuccess.embed_title}`, iconURL: customEmoji })
 							.setDescription(language_result.twitchAddSuccess.description.replace("{0}", `[${username}](https://twitch.tv/${username})`).replace("{1}", `${channel}`))
 							.setFooter({ text: `${language_result.twitchAddSuccess.embed_footer}`, iconURL: `${language_result.twitchAddSuccess.embed_icon_url}` })
-							.setThumbnail(`${checkUser.data[0].profileImageUrl}`)
+							.setThumbnail(`${checkUser.profilePictureUrl}`)
 							.setColor(0x6e0b8c);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					} else {
@@ -72,7 +77,7 @@ module.exports = {
 							.setAuthor({ name: `${language_result.twitchRemove.embed_title}`, iconURL: customEmoji })
 							.setDescription(language_result.twitchRemove.description.replace("{0}", `[${username}](https://twitch.tv/${username})`).replace("{1}", `${channel}`))
 							.setFooter({ text: `${language_result.twitchRemove.embed_footer}`, iconURL: `${language_result.twitchRemove.embed_icon_url}` })
-							.setThumbnail(`${checkUser.data[0].profileImageUrl}`)
+							.setThumbnail(`${checkUser.profilePictureUrl}`)
 							.setColor(0x63041f);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}
