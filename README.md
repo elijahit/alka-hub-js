@@ -136,7 +136,7 @@ CREATE TABLE "stats_system_channel" (
 	"markdown"	TEXT,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
---- Tabella di raccolta utenti Twitch Notify
+--- Tabella di raccolta canali Twitch Notify
 CREATE TABLE "twitch_notify_system" (
 	"ID"	INTEGER UNIQUE,
 	"guildId"	TEXT,
@@ -145,6 +145,12 @@ CREATE TABLE "twitch_notify_system" (
 	"streamerName"	TEXT,
 	"sendMessage"	INTEGER,
 	"roleMention"	TEXT,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
+--- Tabella di raccolta listner Twitch
+CREATE TABLE "twitch_streamers_system" (
+	"ID"	INTEGER UNIQUE,
+	"streamerId"	INTEGER,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 ```
