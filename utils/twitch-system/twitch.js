@@ -17,7 +17,6 @@ const listener = new EventSubWsListener({ apiClient });
 listener.start();
 
 async function addListener(streamers) {
-  console.log(streamers);
   listener.onStreamOnline(streamers.streamerId, async e => {
     const notifyTwitch = await readDbAllWith1Params("SELECT * FROM twitch_notify_system WHERE streamerId = ?", streamers.streamerId);
     let counterListner = 0;
