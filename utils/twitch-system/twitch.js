@@ -1,77 +1,87 @@
-const { Api } = require("twitch-js");
-const { readDb, runDb, readDbAllWith2Params, readDbWith4Params, readDbWith3Params, readDbAll } = require('../../bin/database');
+const { token: accessToken, clientId } = require('./token') //Rigenera e recupera il token
+const { StaticAuthProvider } = require('@twurple/auth');
+const { ApiClient } = require('@twurple/api');
+const { EventSubWsListener } = require('@twurple/eventsub-ws');
 const { readFileSync, read } = require('fs')
+const { readDb, runDb, readDbAllWith2Params, readDbWith4Params, readDbWith3Params, readDbAll, readDbAllWith1Params } = require('../../bin/database');
+const { getEmojifromUrl } = require('../../bin/HandlingFunctions');
+const { EmbedBuilder } = require('discord.js');
 const language = require('../../languages/languages');
 const { client } = require('../../bin/client');
-const { EmbedBuilder } = require('discord.js');
-const { getEmojifromUrl, errorSendControls } = require("../../bin/HandlingFunctions");
 
 
-const clientid = "gp762nuuoqcoxypju8c569th9wz7q5";
-const token = "ujex4t80g4ywoimzp5eg7u9kmq3oo4";
-const api = new Api({ token: token, clientId: clientid, })
-const run = async () => {
-  const databaseTwitch = await readDbAll("twitch_notify_system");
-  for await (const value of databaseTwitch) {
-    let guild;
-    try {
-      guild = await client.guilds.fetch(value.guildId);
-    } catch {
-      await runDb("DELETE FROM twitch_notify_system WHERE guildId = ?", value.guildId);
-    }
-    const checkFeaturesisEnabled = await readDb(`SELECT twitchNotifySystem_enabled from guilds_config WHERE guildId = ?`, guild.id);
+const authProvider = new StaticAuthProvider(clientId, accessToken);
+const apiClient = new ApiClient({ authProvider });
 
-    if (!checkFeaturesisEnabled?.twitchNotifySystem_enabled) {
-      return;
-    }
-    try {
-      const checkStream = await api.get('streams', { search: { user_id: `${value.streamerId}` } })
+const listener = new EventSubWsListener({ apiClient });
+listener.start();
 
-      if (checkStream.data.length > 0) {
-        if (value.sendMessage == null) {
-          const streams = checkStream.data[0];
-          await runDb("UPDATE twitch_notify_system SET sendMessage = ? WHERE ID = ?", 1, value.ID);
-          const channel = await guild.channels.fetch(value.channelId);
-
-          let data = await language.databaseCheck(guild.id);
-          const langagues_path = readFileSync(`./languages/twitch-system/${data}.json`);
-          const language_result = JSON.parse(langagues_path);
-          let streamsTags = streams.tags.toString().replaceAll(",", ", ");
-
-          let fields = [
-            { name: " ", value: `**[${streams.title}](https://twitch.tv/${streams.userLogin})**` },
-            { name: language_result.twitchEmbed.tags, value: `${streamsTags}` },
-            { name: language_result.twitchEmbed.game, value: `${streams.gameName}`, inline: true },
-            { name: language_result.twitchEmbed.viewers, value: `${streams.viewerCount}`, inline: true },
-
-          ];
-          let customEmoji = await getEmojifromUrl(client, "twitch");
-          const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.twitchEmbed.embed_title}`, iconURL: customEmoji })
-            .setDescription(language_result.twitchEmbed.description.replace("{0}", streams.userName))
-            .setFooter({ text: `${language_result.twitchEmbed.embed_footer}`, iconURL: `${language_result.twitchEmbed.embed_icon_url}` })
-            .setFields(fields)
-            .setImage(streams.thumbnailUrl.replace("{width}", "400").replace("{height}", "225"))
-            .setColor(0x6e0b8c);
-          if (value.roleMention) {
-            const role = await guild.roles.fetch(value.roleMention);
-            await channel.send({ content: `${role}`, embeds: [embedLog] });
+async function addListener(streamers) {
+  listener.onStreamOnline(streamers.streamerId, async e => {
+    const notifyTwitch = await readDbAllWith1Params("SELECT * FROM twitch_notify_system WHERE streamerId = ?", streamers.streamerId);
+    let counterListner = 0;
+    for await (const value of notifyTwitch) {
+      counterListner++;
+      try {
+        const guild = await client.guilds.fetch(value.guildId);
+        let data = await language.databaseCheck(guild.id);
+        const langagues_path = readFileSync(`./languages/twitch-system/${data}.json`);
+        const language_result = JSON.parse(langagues_path);
+        const streams = await e.getStream();
+    
+        async function getData(data) {
+          if(data || typeof data == "number") {
+            return data;
           } else {
-            await channel.send({ embeds: [embedLog] });
+            return "No data";
           }
         }
-      } else {
-        await runDb("UPDATE twitch_notify_system SET sendMessage = ? WHERE ID = ?", null, value.ID);
+        let fields = [
+          { name: " ", value: `**[${await getData(streams.title)}](https://twitch.tv/${await getData(streams.userName)})**` },
+          { name: language_result.twitchEmbed.game, value: `${await getData(streams.gameName)}`, inline: true },
+          { name: language_result.twitchEmbed.viewers, value: `${await getData(streams.viewers)}`, inline: true },
+    
+        ];
+        let customEmoji = await getEmojifromUrl(client, "twitch");
+        const embedLog = new EmbedBuilder()
+          .setAuthor({ name: `${language_result.twitchEmbed.embed_title}`, iconURL: customEmoji })
+          .setDescription(language_result.twitchEmbed.description.replace("{0}", await getData(streams.userName)))
+          .setFooter({ text: `${language_result.twitchEmbed.embed_footer}`, iconURL: `${language_result.twitchEmbed.embed_icon_url}` })
+          .setFields(fields)
+          .setThumbnail((await streams.getUser()).profilePictureUrl)
+          .setImage(streams.thumbnailUrl.replace("{width}", "400").replace("{height}", "225"))
+          .setColor(0x6e0b8c);
+        if (value.roleMention) {
+          const channel = await guild.channels.fetch(value.channelId);
+          const role = await guild.roles.fetch(value.roleMention);
+          await channel.send({ content: `${role}`, embeds: [embedLog] });
+        } else {
+          await channel.send({ embeds: [embedLog] });
+        }
+      }
+      catch (error) {
+        const errorCheck = new Error(error);
+        if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
+          await runDb('DELETE FROM twitch_notify_system WHERE guildId = ?', value.guildId);
+        }
+        else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel") {
+          await runDb('DELETE FROM twitch_notify_system WHERE guildId = ? AND channelId = ?', value.guildId, value.channelId);
+        }
       }
     }
-    catch {
-      errorSendControls(error, client, guild, "\\twitch-system\\twitch.js");
+    if(!counterListner) {
+      await runDb('DELETE FROM twitch_streamers_system WHERE streamerId = ?', streamers.streamerId);
     }
+  });
+}
+
+async function run() {
+  const databaseTwitch = await readDbAll("twitch_streamers_system");
+  for await (const value of databaseTwitch) {
+    await addListener(value);
   }
-};
+}
 
-setInterval(async () => {
-  await run();
-}, 120000);
+run();
 
-module.exports = { api };
+module.exports = {addListener, apiClient};
