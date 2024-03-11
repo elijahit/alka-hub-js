@@ -150,7 +150,7 @@ CREATE TABLE "twitch_notify_system" (
 --- Tabella di raccolta listner Twitch
 CREATE TABLE "twitch_streamers_system" (
 	"ID"	INTEGER UNIQUE,
-	"streamerId"	INTEGER,
+	"streamerId"	TEXT,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 ```
