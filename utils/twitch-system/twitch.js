@@ -19,9 +19,7 @@ listener.start();
 async function addListener(streamers) {
   console.log(streamers);
   listener.onStreamOnline(streamers.streamerId, async e => {
-    console.log(streamers.streamerId, "è in live")
     const notifyTwitch = await readDbAllWith1Params("SELECT * FROM twitch_notify_system WHERE streamerId = ?", streamers.streamerId);
-    console.log(notifyTwitch)
     let counterListner = 0;
     for await (const value of notifyTwitch) {
       counterListner++;
