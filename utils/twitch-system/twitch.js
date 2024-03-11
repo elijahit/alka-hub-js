@@ -24,13 +24,15 @@ async function addListener(streamers) {
       counterListner++;
       try {
         const guild = await client.guilds.fetch(value.guildId);
+        const checkFeaturesisEnabled = await readDb(`SELECT twitchNotifySystem_enabled from guilds_config WHERE guildId = ?`, guild.id);
+        if (!checkFeaturesisEnabled?.twitchNotifySystem_enabled) return;
         let data = await language.databaseCheck(guild.id);
         const langagues_path = readFileSync(`./languages/twitch-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
         const streams = await e.getStream();
-    
+
         async function getData(data) {
-          if(data || typeof data == "number") {
+          if (data || typeof data == "number") {
             return data;
           } else {
             return "No data";
@@ -40,7 +42,7 @@ async function addListener(streamers) {
           { name: " ", value: `**[${await getData(streams.title)}](https://twitch.tv/${await getData(streams.userName)})**` },
           { name: language_result.twitchEmbed.game, value: `${await getData(streams.gameName)}`, inline: true },
           { name: language_result.twitchEmbed.viewers, value: `${await getData(streams.viewers)}`, inline: true },
-    
+
         ];
         let customEmoji = await getEmojifromUrl(client, "twitch");
         const embedLog = new EmbedBuilder()
@@ -69,7 +71,7 @@ async function addListener(streamers) {
         }
       }
     }
-    if(!counterListner) {
+    if (!counterListner) {
       await runDb('DELETE FROM twitch_streamers_system WHERE streamerId = ?', streamers.streamerId);
     }
   });
@@ -84,4 +86,4 @@ async function run() {
 
 run();
 
-module.exports = {addListener, apiClient};
+module.exports = { addListener, apiClient };
