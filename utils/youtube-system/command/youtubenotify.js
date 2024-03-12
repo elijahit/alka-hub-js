@@ -28,6 +28,9 @@ module.exports = {
 				.setRequired(false)
 		),
 	async execute(interaction) {
+		if(true) {
+			return; ///BLOCCO MOMENTANEO
+		}
 		let channel, username, role;
 		// RECUPERO LE OPZIONI INSERITE
 		await interaction.options._hoistedOptions.forEach(value => {
