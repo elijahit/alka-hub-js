@@ -118,7 +118,7 @@ async function postResponse (videoId = "string") {
 async function youtubeListener(channelId = "string") {
   youtubeServer.listen({ port: 8080 }, () => {
     const params = new URLSearchParams()
-    params.append('hub.callback', 'https://e96f-37-102-33-75.ngrok-free.app/youtubeListener')
+    params.append('hub.callback', 'https://multiversus.eu')
     params.append('hub.mode', 'subscribe')
     params.append('hub.topic', `https://www.youtube.com/xml/feeds/videos.xml?channel_id=${channelId}`)
     params.append('hub.lease_seconds', '')
