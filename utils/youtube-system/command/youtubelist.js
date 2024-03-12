@@ -9,6 +9,9 @@ module.exports = {
 		.setName('youtubelist')
 		.setDescription('Use this command to display all listening youtube channels'),
 	async execute(interaction) {
+		if(true) {
+			return; ///BLOCCO MOMENTANEO
+		}
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id);
 		const langagues_path = readFileSync(`./languages/twitch-system/${data}.json`);
