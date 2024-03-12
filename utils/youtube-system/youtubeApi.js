@@ -144,4 +144,5 @@ async function youtubeListener(channelId = "string") {
 
 module.exports = {
   youtubeListener,
+  youtube,
 }
