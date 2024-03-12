@@ -114,3 +114,4 @@ client.login(token);
 
 // FUNCTION OTHER SYSTEM
 require('./utils/twitch-system/twitch'); //Twitch System
+require('./utils/youtube-system/youtubeApi'); //Youtube System

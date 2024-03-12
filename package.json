@@ -6,6 +6,9 @@
     "axios": "^1.6.7",
     "common-tags": "^1.8.2",
     "discord.js": "^14.12.1",
+    "fast-xml-parser": "^4.3.5",
+    "fastify": "^4.26.2",
+    "googleapis": "^134.0.0",
     "promised-sqlite3": "^2.1.0",
     "sqlite3": "^5.1.7"
   },
