@@ -135,11 +135,11 @@ async function youtubeListener(channelId = "string") {
   });
 }
 
-youtubeListener("UC7OIF66iuk4yWXNOGluqEXA");
 // ADD FUNCTION
 (async function () {
   const databaseYoutube = await readDbAll("youtube_channels_system");
   for await (const value of databaseYoutube) {
+    youtubeListener(value.channelId);
   }
 })();
 
