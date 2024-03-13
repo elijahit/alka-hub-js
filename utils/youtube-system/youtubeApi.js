@@ -16,6 +16,11 @@ const localtunnel = require('localtunnel');
 let tunnel;
 (async () => {
   tunnel = await localtunnel({ port: 8080 });
+
+  tunnel.on('error', err => {
+    console.error(`[TUNNE YOUTUBE] ${err}`);
+  })
+
 })();
 const youtube = google.youtube({
   version: "v3",
