@@ -13,18 +13,10 @@ const { readFileSync } = require('fs');
 const localtunnel = require('localtunnel');
 
 // START TUNNEL FOR CALLBACK URL
+let tunnel;
 (async () => {
-  const tunnel = await localtunnel({ port: 8080, host:"https://api.alkanetwork.eu" });
-
-  setTimeout(() => {
-    console.log(tunnel.url)
-  }, 3000);
-
-  tunnel.on('close', () => {
-    // tunnels are closed
-  });
+  tunnel = await localtunnel({ port: 8080 });
 })();
-
 const youtube = google.youtube({
   version: "v3",
   auth: "AIzaSyDM3xqqqkCuBJH6Czxlt_dfl9ttJM-IlhI"
@@ -133,7 +125,7 @@ async function postResponse (videoId = "string") {
 async function youtubeListener(channelId = "string") {
   youtubeServer.listen({ port: 8080 }, () => {
     const params = new URLSearchParams()
-    params.append('hub.callback', 'https://api.alkanetwork.eu/youtubeListener')
+    params.append('hub.callback', `${tunnel.url}/youtubeListener`)
     params.append('hub.mode', 'subscribe')
     params.append('hub.topic', `https://www.youtube.com/xml/feeds/videos.xml?channel_id=${channelId}`)
     params.append('hub.lease_seconds', '')
@@ -150,12 +142,14 @@ async function youtubeListener(channelId = "string") {
 }
 
 // ADD FUNCTION
-(async function () {
+setTimeout(async () => {
   const databaseYoutube = await readDbAll("youtube_channels_system");
   for await (const value of databaseYoutube) {
     youtubeListener(value.channelId);
   }
-})();
+  console.log("[YOUTUBE] WEBHOOK CANALI CARICATO");
+  console.log("[TUNNEL YOUTUBE]", tunnel.url)
+}, 5000);
 
 module.exports = {
   youtubeListener,
