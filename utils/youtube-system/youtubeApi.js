@@ -30,12 +30,12 @@ youtubeServer.addContentTypeParser('application/atom+xml', { parseAs: 'string' }
 })
 
 
-youtubeServer.get('https://api.alkanetwork.eu/youtubeListener', (request, reply) => {
+youtubeServer.get('/youtubeListener', (request, reply) => {
   reply.send(request.query['hub.challenge'])
 })
 
 
-youtubeServer.post('https://api.alkanetwork.eu/youtubeListener', async (request, reply) => {
+youtubeServer.post('/youtubeListener', async (request, reply) => {
   if (request.body?.feed?.title) {
 
     const videoId = request.body.feed.entry['yt:videoId'];
