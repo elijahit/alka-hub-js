@@ -30,14 +30,12 @@ youtubeServer.addContentTypeParser('application/atom+xml', { parseAs: 'string' }
 })
 
 
-youtubeServer.get('/youtubeListener', (request, reply) => {
-  console.log("test")
+youtubeServer.get('https://api.alkanetwork.eu/youtubeListener', (request, reply) => {
   reply.send(request.query['hub.challenge'])
-  console.log(reply)
 })
 
 
-youtubeServer.post('/youtubeListener', async (request, reply) => {
+youtubeServer.post('https://api.alkanetwork.eu/youtubeListener', async (request, reply) => {
   if (request.body?.feed?.title) {
 
     const videoId = request.body.feed.entry['yt:videoId'];
@@ -140,7 +138,7 @@ async function youtubeListener(channelId = "string") {
 (async function () {
   const databaseYoutube = await readDbAll("youtube_channels_system");
   for await (const value of databaseYoutube) {
-    youtubeListener(value.channelId);
+    youtubeListener("UCz4K8gYkILzteNuyrREMQZQ");
   }
 })();
 
