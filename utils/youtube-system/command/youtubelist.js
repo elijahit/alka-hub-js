@@ -9,26 +9,23 @@ module.exports = {
 		.setName('youtubelist')
 		.setDescription('Use this command to display all listening youtube channels'),
 	async execute(interaction) {
-		if(true) {
-			return; ///BLOCCO MOMENTANEO
-		}
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id);
-		const langagues_path = readFileSync(`./languages/twitch-system/${data}.json`);
+		const langagues_path = readFileSync(`./languages/youtube-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLO SE IL VALORE ESISTE
-		let checkSqlHash = `SELECT * FROM twitch_notify_system WHERE guildId = ?`;
+		let checkSqlHash = `SELECT * FROM youtube_notify_system WHERE guildId = ?`;
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
-		await returnPermission(interaction, "twitchNotify", async result => {
+		await returnPermission(interaction, "youtubeNotify", async result => {
 			try {
 				if (result) {
-					const twtichNotify = await readDbAllWith1Params(checkSqlHash, interaction.guild.id);
+					const youtubeNotify = await readDbAllWith1Params(checkSqlHash, interaction.guild.id);
 					let notifyContainer = "";
-					if (twtichNotify) {
-						for await (const value of twtichNotify) {
+					if (youtubeNotify) {
+						for await (const value of youtubeNotify) {
 							try {
 								const channel = await interaction.guild.channels.fetch(value.channelId);
-								notifyContainer += `- ${value.streamerName} | ${channel}\n`
+								notifyContainer += `- ${value.youtuberName} | ${channel}\n`
 
 							}
 							catch {
@@ -48,7 +45,7 @@ module.exports = {
 						fields.push({ name: `${language_result.notifyList.permissionsfield_embed}`, value: `${language_result.notifyList.permissions_empty}` });
 					}
 
-					let customEmoji = await getEmojifromUrl(interaction.client, "twitch");
+					let customEmoji = await getEmojifromUrl(interaction.client, "youtube");
 					const embedLog = new EmbedBuilder()
 						.setAuthor({ name: `${language_result.notifyList.embed_title}`, iconURL: customEmoji })
 						.setDescription(language_result.notifyList.permissions_embed)
@@ -62,7 +59,7 @@ module.exports = {
 				}
 			}
 			catch (error) {
-				errorSendControls(error, interaction.client, interaction.guild, "\\twitch-system\twitchlist.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\youtube-system\youtubelist.js");
 			}
 		});
 	},

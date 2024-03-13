@@ -17,8 +17,8 @@ module.exports = {
 		)
 		.addStringOption(option =>
 			option
-				.setName('username')
-				.setDescription('Youtube username')
+				.setName('id')
+				.setDescription('Youtube Channel Id')
 				.setRequired(true)
 		)
 		.addRoleOption(option =>
@@ -28,11 +28,11 @@ module.exports = {
 				.setRequired(false)
 		),
 	async execute(interaction) {
-		let channel, username, role;
+		let channel, idChannel, role;
 		// RECUPERO LE OPZIONI INSERITE
 		await interaction.options._hoistedOptions.forEach(value => {
 			if (value.name == 'channel') channel = value.channel;
-			if (value.name == 'username') username = value.value;
+			if (value.name == 'id') idChannel = value.value;
 			if (value.name == 'role-mention') role = value.role;
 		});
 		const checkFeaturesisEnabled = await readDb(`SELECT youtubeNotifySystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
@@ -47,14 +47,13 @@ module.exports = {
     }
 		await returnPermission(interaction, "youtubeNotify", async result => {
 			try {
-				const check = await readDbWith3Params("SELECT * FROM youtube_notify_system WHERE guildId = ? AND channelId = ? AND youtuberName = ?", interaction.guild.id, channel.id, username);
+				const check = await readDbWith3Params("SELECT * FROM youtube_notify_system WHERE guildId = ? AND channelId = ? AND youtuberId = ?", interaction.guild.id, channel.id, idChannel);
 				const checkUser = await youtube.channels.list({
 					part: "snippet",
-					forUsername: username,
+					id: idChannel,
 					maxResults: 1
 				});
 				let customEmoji = await getEmojifromUrl(interaction.client, "youtube");
-				console.log(checkUser.data.items[0])
 				if (checkUser.data.pageInfo.totalResults == 1) {
 					if (!check) {
 						// SE NON ESISTE
@@ -64,23 +63,23 @@ module.exports = {
 							await youtubeListener(checkUser.data.items[0].id);
 						}
 						if (role?.id) {
-							await runDb("INSERT INTO youtube_notify_system (guildId, channelId, youtuberName, roleMention, youtuberId) VALUES (?, ?, ?, ?, ?)", interaction.guild.id, channel.id, username, role.id, checkUser.data.items[0].id);
+							await runDb("INSERT INTO youtube_notify_system (guildId, channelId, youtuberName, roleMention, youtuberId) VALUES (?, ?, ?, ?, ?)", interaction.guild.id, channel.id, checkUser.data.items[0].snippet.title, role.id, checkUser.data.items[0].id);
 						} else {
-							await runDb("INSERT INTO youtube_notify_system (guildId, channelId, youtuberName, youtuberId) VALUES (?, ?, ?, ?)", interaction.guild.id, channel.id, username, checkUser.data.items[0].id);
+							await runDb("INSERT INTO youtube_notify_system (guildId, channelId, youtuberName, youtuberId) VALUES (?, ?, ?, ?)", interaction.guild.id, channel.id, checkUser.data.items[0].snippet.title, checkUser.data.items[0].id);
 						}
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.twitchAddSuccess.embed_title}`, iconURL: customEmoji })
-							.setDescription(language_result.twitchAddSuccess.description.replace("{0}", `[${username}](https://twitch.tv/${username})`).replace("{1}", `${channel}`))
+							.setDescription(language_result.twitchAddSuccess.description.replace("{0}", `[${checkUser.data.items[0].snippet.title}](https://www.youtube.com/channel/${idChannel})`).replace("{1}", `${channel}`))
 							.setFooter({ text: `${language_result.twitchAddSuccess.embed_footer}`, iconURL: `${language_result.twitchAddSuccess.embed_icon_url}` })
 							.setThumbnail(`${checkUser.data.items[0].snippet.thumbnails.default.url}`)
 							.setColor(0x7d1a13);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					} else {
 						//SE ESISTE
-						await runDb("DELETE FROM youtube_notify_system WHERE guildId = ? AND channelId = ? AND youtuberName = ?", interaction.guild.id, channel.id, username);
+						await runDb("DELETE FROM youtube_notify_system WHERE guildId = ? AND channelId = ? AND youtuberName = ?", interaction.guild.id, channel.id, checkUser.data.items[0].snippet.title);
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.twitchRemove.embed_title}`, iconURL: customEmoji })
-							.setDescription(language_result.twitchRemove.description.replace("{0}", `[${username}](https://twitch.tv/${username})`).replace("{1}", `${channel}`))
+							.setDescription(language_result.twitchRemove.description.replace("{0}", `[${checkUser.data.items[0].snippet.title}](https://www.youtube.com/channel/${idChannel})`).replace("{1}", `${channel}`))
 							.setFooter({ text: `${language_result.twitchRemove.embed_footer}`, iconURL: `${language_result.twitchRemove.embed_icon_url}` })
 							.setThumbnail(`${checkUser.data.items[0].snippet.thumbnails.default.url}`)
 							.setColor(0x63041f);
