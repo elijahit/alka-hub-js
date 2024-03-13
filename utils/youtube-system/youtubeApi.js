@@ -31,8 +31,9 @@ youtubeServer.addContentTypeParser('application/atom+xml', { parseAs: 'string' }
 
 
 youtubeServer.get('/youtubeListener', (request, reply) => {
-  console.log(request.query['hub.challenge'])
+  console.log("test")
   reply.send(request.query['hub.challenge'])
+  console.log(reply)
 })
 
 
