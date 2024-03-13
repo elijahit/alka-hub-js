@@ -10,6 +10,21 @@ const { EmbedBuilder } = require('discord.js');
 const language = require('../../languages/languages');
 const { readFileSync } = require('fs');
 
+const localtunnel = require('localtunnel');
+
+// START TUNNEL FOR CALLBACK URL
+(async () => {
+  const tunnel = await localtunnel({ port: 8080, host:"https://api.alkanetwork.eu" });
+
+  setTimeout(() => {
+    console.log(tunnel.url)
+  }, 3000);
+
+  tunnel.on('close', () => {
+    // tunnels are closed
+  });
+})();
+
 const youtube = google.youtube({
   version: "v3",
   auth: "AIzaSyDM3xqqqkCuBJH6Czxlt_dfl9ttJM-IlhI"
@@ -138,7 +153,7 @@ async function youtubeListener(channelId = "string") {
 (async function () {
   const databaseYoutube = await readDbAll("youtube_channels_system");
   for await (const value of databaseYoutube) {
-    youtubeListener("UCz4K8gYkILzteNuyrREMQZQ");
+    youtubeListener(value.channelId);
   }
 })();
 
