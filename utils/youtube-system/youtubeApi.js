@@ -10,16 +10,12 @@ const { EmbedBuilder } = require('discord.js');
 const language = require('../../languages/languages');
 const { readFileSync } = require('fs');
 
-const localtunnel = require('localtunnel');
+const ngrok = require('ngrok');
 
 // START TUNNEL FOR CALLBACK URL
 let tunnel;
 (async () => {
-  tunnel = await localtunnel({ port: 8080 });
-
-  tunnel.on('error', err => {
-    console.error(`[TUNNE YOUTUBE] ${err}`);
-  })
+  tunnel = await ngrok.connect({authtoken: "2de8k4zrwNlMR2RSSXSNsN7TbKe_654GsvZKE7tbbStYkpBpn", addr: 8080});
 
 })();
 const youtube = google.youtube({
@@ -130,7 +126,7 @@ async function postResponse (videoId = "string") {
 async function youtubeListener(channelId = "string") {
   youtubeServer.listen({ port: 8080 }, () => {
     const params = new URLSearchParams()
-    params.append('hub.callback', `${tunnel.url}/youtubeListener`)
+    params.append('hub.callback', `${tunnel}/youtubeListener`)
     params.append('hub.mode', 'subscribe')
     params.append('hub.topic', `https://www.youtube.com/xml/feeds/videos.xml?channel_id=${channelId}`)
     params.append('hub.lease_seconds', '')
@@ -139,7 +135,7 @@ async function youtubeListener(channelId = "string") {
     params.append('hub.verify_token', '')
 
     return fetch('https://pubsubhubbub.appspot.com/subscribe', {
-      headers: { 'content-type': 'application/x-www-form-urlencoded', "bypass-tunnel-reminder": true, },
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
       body: params,
       method: 'POST'
     })
@@ -153,7 +149,7 @@ setTimeout(async () => {
     youtubeListener(value.channelId);
   }
   console.log("[YOUTUBE] WEBHOOK CANALI CARICATO");
-  console.log("[TUNNEL YOUTUBE]", tunnel.url)
+  console.log("[TUNNEL YOUTUBE]", tunnel)
 }, 5000);
 
 module.exports = {
