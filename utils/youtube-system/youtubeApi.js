@@ -119,7 +119,7 @@ async function postResponse (videoId = "string") {
 async function youtubeListener(channelId = "string") {
   youtubeServer.listen({ port: 8080 }, () => {
     const params = new URLSearchParams()
-    params.append('hub.callback', 'https://alkanetwork.eu/youtubeListener')
+    params.append('hub.callback', 'https://api.alkanetwork.eu/youtubeListener')
     params.append('hub.mode', 'subscribe')
     params.append('hub.topic', `https://www.youtube.com/xml/feeds/videos.xml?channel_id=${channelId}`)
     params.append('hub.lease_seconds', '')
