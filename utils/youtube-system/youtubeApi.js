@@ -31,6 +31,7 @@ youtubeServer.addContentTypeParser('application/atom+xml', { parseAs: 'string' }
 
 
 youtubeServer.get('/youtubeListener', (request, reply) => {
+  console.log(request.query['hub.challenge'])
   reply.send(request.query['hub.challenge'])
 })
 
@@ -118,7 +119,7 @@ async function postResponse (videoId = "string") {
 async function youtubeListener(channelId = "string") {
   youtubeServer.listen({ port: 8080 }, () => {
     const params = new URLSearchParams()
-    params.append('hub.callback', 'https://dynamic-snail-helped.ngrok-free.app')
+    params.append('hub.callback', 'https://alkanetwork.eu/youtubeListener')
     params.append('hub.mode', 'subscribe')
     params.append('hub.topic', `https://www.youtube.com/xml/feeds/videos.xml?channel_id=${channelId}`)
     params.append('hub.lease_seconds', '')
@@ -134,11 +135,11 @@ async function youtubeListener(channelId = "string") {
   });
 }
 
+youtubeListener("UC7OIF66iuk4yWXNOGluqEXA");
 // ADD FUNCTION
 (async function () {
   const databaseYoutube = await readDbAll("youtube_channels_system");
   for await (const value of databaseYoutube) {
-    await youtubeListener(value.channelId);
   }
 })();
 
