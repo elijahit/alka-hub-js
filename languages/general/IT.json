@@ -47,7 +47,9 @@
     "statistics_category": "Stats Server System",
     "statistics_commands": "- **/statistics** *[statsServer]* - Il comando permette di creare la categoria destinata al sistema di statistiche.\n- **/channelstats** *[statsServer]* - Il comando permette la creazione dei canali che sono destinati al sistema di statistiche.\n- **/markdownstats** *[statsServer]* - Il comando mostra una breve documentazione dei markdown disponibili per le varie tipologie di canali.\n- **/channelstatsedit** *[statsServer]* - Il comando ti permette di aggironare il nome canale per aggiungere emoji e markdown.",
     "twitch_category": "Twitch Notify System",
-    "twitch_commands": "- **/twitchnotify** *[twitchNotify]* - Il comando permette di aggiungere o rimuovere un canale in cui vengono inviate le notifiche quando uno streamer va in live.\n- **/twitchlist** *[twitchNotify]* - Il comando permette di visualizzare la lista dei canali in cui si ascoltano le notifiche degli streamer."
+    "twitch_commands": "- **/twitchnotify** *[twitchNotify]* - Il comando permette di aggiungere o rimuovere un canale in cui vengono inviate le notifiche quando uno streamer va in live.\n- **/twitchlist** *[twitchNotify]* - Il comando permette di visualizzare la lista dei canali in cui si ascoltano le notifiche degli streamer.",
+    "youtube_category": "Youtube Notify System",
+    "youtube_commands": "- **/youtubenotify** *[youtubeNotify]* - Il comando permette di aggiungere o rimuovere un canale in cui vengono inviate le notifiche quando un video viene pubblico o va in live.\n- **/youtubelist** *[youtubeNotify]* - Il comando permette di visualizzare la lista dei canali in cui si ascoltano le notifiche degli youtuber."
   }
   
 }

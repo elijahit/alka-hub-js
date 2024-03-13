@@ -26,7 +26,8 @@ module.exports = {
 				{name: language_result.helpCommand.autorole_category, value: language_result.helpCommand.autorole_commands},
 				{name: language_result.helpCommand.reactionrole_category, value: language_result.helpCommand.reactionrole_commands},
 				{name: language_result.helpCommand.statistics_category, value: language_result.helpCommand.statistics_commands},
-				{name: language_result.helpCommand.twitch_category, value: language_result.helpCommand.twitch_commands}
+				{name: language_result.helpCommand.twitch_category, value: language_result.helpCommand.twitch_commands},
+				{name: language_result.helpCommand.youtube_category, value: language_result.helpCommand.youtube_commands}
 			);
 
 			// FOOTER
