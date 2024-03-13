@@ -139,7 +139,7 @@ async function youtubeListener(channelId = "string") {
     params.append('hub.verify_token', '')
 
     return fetch('https://pubsubhubbub.appspot.com/subscribe', {
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      headers: { 'content-type': 'application/x-www-form-urlencoded', 'bypass-tunnel-reminder': "bypass Youtube TUnnel" },
       body: params,
       method: 'POST'
     })
