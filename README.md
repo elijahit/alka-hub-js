@@ -24,12 +24,14 @@ CREATE TABLE "guilds_config" (
 	"languages"	TEXT,
 	"timeZone"	TEXT,
 	"logSystem_enabled"	INTEGER,
+	"rankSystem_enabled"	INTEGER,
 	"ticketSystem_enabled"	INTEGER,
 	"autoVoiceSystem_enabled"	INTEGER,
 	"autoRoleSystem_enabled"	INTEGER,
 	"reactionRoleSystem_enabled"	INTEGER,
 	"statsServerSystem_enabled"	INTEGER,
 	"twitchNotifySystem_enabled"	INTEGER,
+	"youtubeNotifySystem_enabled"	INTEGER,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 -- Tabella di configurazione Log System
@@ -151,6 +153,23 @@ CREATE TABLE "twitch_notify_system" (
 CREATE TABLE "twitch_streamers_system" (
 	"ID"	INTEGER UNIQUE,
 	"streamerId"	TEXT,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
+--- Tabella di raccolta canali Youtube Notify
+CREATE TABLE "youtube_channels_system" (
+	"ID"	INTEGER UNIQUE,
+	"channelId"	TEXT,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
+--- Tabella di raccolta listner youtube
+CREATE TABLE "youtube_notify_system" (
+	"ID"	INTEGER UNIQUE,
+	"guildId"	TEXT,
+	"channelId"	TEXT,
+	"youtuberId"	TEXT,
+	"youtuberName"	TEXT,
+	"sendMessage"	INTEGER,
+	"roleMention"	TEXT,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 ```
