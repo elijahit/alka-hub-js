@@ -1,13 +1,13 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Youtube Notify",
+    "embed_title": "Alka Hub | YouTube Notify",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "Non hai il permesso per usare questo comando!",
     "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
   },
   "youtubeEmbed": {
-    "embed_title": "Alka Hub | Youtube Notify",
+    "embed_title": "Alka Hub | YouTube Notify",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "embed_description": "Descrizione",
@@ -15,25 +15,25 @@
     "description": "{0} ha pubblicato un nuovo video!"
   },
   "twitchAddSuccess": {
-    "embed_title": "Alka Hub | Youtube Notify",
+    "embed_title": "Alka Hub | YouTube Notify",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description": "{0} è stato aggiunto con successo e le notifiche quando pubblicherà un video o andrà in live saranno inviate nel canale {1}"
   },
   "twitchRemove": {
-    "embed_title": "Alka Hub | Youtube Notify",
+    "embed_title": "Alka Hub | YouTube Notify",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description": "{0} è rimosso e le notifiche non saranno più inviate nel canale {1}"
   },
   "twitchNotFound": {
-    "embed_title": "Alka Hub | Youtube Notify",
+    "embed_title": "Alka Hub | YouTube Notify",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description": "L'utente scelto non esiste, riprova!"
   },
   "notifyList": {
-    "embed_title": "Alka Hub | Youtube Notify",
+    "embed_title": "Alka Hub | YouTube Notify",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "permissions_embed": "Di seguito trovi la lista delle notifiche dei canali youtube sul tuo server discord",
