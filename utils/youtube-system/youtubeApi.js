@@ -3,7 +3,7 @@ const { XMLParser } = require('fast-xml-parser');
 const { URLSearchParams } = require('url');
 const fetch = require('node-fetch');
 const { google } = require('googleapis');
-const { readDbAll, readDbAllWith1Params } = require('../../bin/database');
+const { readDbAll, readDbAllWith1Params, runDb } = require('../../bin/database');
 const { getEmojifromUrl } = require('../../bin/HandlingFunctions');
 const { client } = require('../../bin/client');
 const { EmbedBuilder } = require('discord.js');
@@ -20,7 +20,7 @@ let tunnel;
 })();
 const youtube = google.youtube({
   version: "v3",
-  auth: "AIzaSyDM3xqqqkCuBJH6Czxlt_dfl9ttJM-IlhI"
+  auth: "AIzaSyA5z90To5qPCA959wU17UJ7Z1INTeKsFWM"
 });
 
 
@@ -46,10 +46,15 @@ youtubeServer.get('/youtubeListener', (request, reply) => {
 youtubeServer.post('/youtubeListener', async (request, reply) => {
   reply.code(204)
   reply.send('ok')
-  if (request.body?.feed?.title) {
 
-    const videoId = request.body.feed.entry['yt:videoId'];
-    await postResponse(videoId);
+  const videoId = request.body.feed.entry['yt:videoId'];
+  const checkVideo = await readDbAllWith1Params("SELECT * FROM youtube_video_system WHERE videoId = ?", videoId);
+
+  if (request.body?.feed?.title && checkVideo.length == 0) {
+    await runDb("INSERT INTO youtube_video_system (videoId) VALUES (?)", videoId);
+    setTimeout(async () => {
+      await postResponse(videoId);
+    }, 60000);
     
   }
 
@@ -58,6 +63,7 @@ youtubeServer.post('/youtubeListener', async (request, reply) => {
 async function postResponse (videoId = "string") {
   try {
     const apiVideoResult = await youtube.videos.list({
+      
       part: "snippet",
       id: videoId
     });
@@ -76,13 +82,11 @@ async function postResponse (videoId = "string") {
       part: "snippet",
       id: videoResult.channelId
     });
-  
     const channelResult = Object.freeze({
       thumbnail: apiChannelResult.data.items[0].snippet.thumbnails.default.url,
     })
   
     const youtubeNotify = await readDbAllWith1Params("SELECT * FROM youtube_notify_system WHERE youtuberId = ?", videoResult.channelId);
-  
   
     for await (const value of youtubeNotify) {
       // VERIFICO LA LINGUA
@@ -123,7 +127,8 @@ async function postResponse (videoId = "string") {
       }
     }
   }
-  catch {
+  catch (error) {
+    console.log(error)
     await postResponse(videoId);
   }
 }
