@@ -14,7 +14,6 @@ const authProvider = new StaticAuthProvider(clientId, accessToken);
 const apiClient = new ApiClient({ authProvider });
 
 const listener = new EventSubWsListener({ apiClient });
-listener.start();
 
 async function addListener(streamers) {
   listener.onStreamOnline(streamers.streamerId, async e => {
@@ -69,6 +68,7 @@ async function addListener(streamers) {
         else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel") {
           await runDb('DELETE FROM twitch_notify_system WHERE guildId = ? AND channelId = ?', value.guildId, value.channelId);
         }
+        console.log(error)
       }
     }
     if (!counterListner) {
@@ -77,13 +77,17 @@ async function addListener(streamers) {
   });
 }
 
+listener.start();
 async function run() {
   const databaseTwitch = await readDbAll("twitch_streamers_system");
   for await (const value of databaseTwitch) {
-    await addListener(value);
+    try {
+      await addListener(value);
+    } catch (error) {
+      console.log(error)
+    }
   }
-}
-
+};
 run();
 
 module.exports = { addListener, apiClient };

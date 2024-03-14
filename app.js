@@ -101,16 +101,6 @@ client.once(Events.ClientReady, readyClient => {
     await reactionRoleCached(client);
     console.log('[REACTION ROLES] Cache caricata con successo!');
   }, 3000);
-
-  // FUNZIONE DI temporanea per leggere le guild
-  setTimeout(async () => {
-    await reactionRoleCached(client);
-    console.log('[TEMPORARY FUNCS] Lista guilds caricata!');
-    const guilds = await client.guilds.fetch();
-    for await (let value of guilds) {
-      console.log(value[1].name, value[1].id)
-    }
-  }, 10000);
   
   // FUNZIONE DI statsServer-system
   setInterval(async () => {

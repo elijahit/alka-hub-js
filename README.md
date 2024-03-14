@@ -172,4 +172,10 @@ CREATE TABLE "youtube_notify_system" (
 	"roleMention"	TEXT,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
+-- Tabella di raccolta video notificati
+CREATE TABLE "youtube_video_system" (
+	"ID"	INTEGER UNIQUE,
+	"videoId"	TEXT,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
 ```
