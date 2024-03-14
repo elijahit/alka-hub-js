@@ -88,30 +88,41 @@ client.once(Events.ClientReady, readyClient => {
     activities: [{ name: presenceStatusName, state: botState, type: ActivityType.Custom }],
     status: 'online'
   });
+
+  // FUNZIONI DI HandlingFunction
+  
+  // FUNZIONE DI CLEANER PER IL DATABASE
+  setInterval(async () => {
+    await cleanerDatabase(client);
+  }, 21600000);
+  
+  // FUNZIONE DI reactionRole-system
+  setTimeout(async () => {
+    await reactionRoleCached(client);
+    console.log('[REACTION ROLES] Cache caricata con successo!');
+  }, 3000);
+
+  // FUNZIONE DI temporanea per leggere le guild
+  setTimeout(async () => {
+    await reactionRoleCached(client);
+    console.log('[TEMPORARY FUNCS] Lista guilds caricata!');
+    const guilds = await client.guilds.fetch();
+    for await (let value of guilds) {
+      console.log(value[1].name, value[1].id)
+    }
+  }, 10000);
+  
+  // FUNZIONE DI statsServer-system
+  setInterval(async () => {
+    await statisticsUpdate(client);
+  }, 600000);
+
+  // FUNCTION OTHER SYSTEM
+  require('./utils/twitch-system/twitch'); //Twitch System
+  require('./utils/youtube-system/youtubeApi'); //Youtube System
 });
 
-// FUNZIONI DI HandlingFunction
-
-// FUNZIONE DI CLEANER PER IL DATABASE
-setInterval(async () => {
-  await cleanerDatabase(client);
-}, 21600000);
-
-// FUNZIONE DI reactionRole-system
-setTimeout(async () => {
-  await reactionRoleCached(client);
-  console.log('[REACTION ROLES] Cache caricata con successo!');
-}, 2000);
-
-// FUNZIONE DI statsServer-system
-setInterval(async () => {
-  await statisticsUpdate(client);
-}, 600000);
 
 //  --------- //
 
 client.login(token);
-
-// FUNCTION OTHER SYSTEM
-require('./utils/twitch-system/twitch'); //Twitch System
-require('./utils/youtube-system/youtubeApi'); //Youtube System
