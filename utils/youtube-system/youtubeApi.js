@@ -129,7 +129,6 @@ async function postResponse (videoId = "string") {
   }
   catch (error) {
     console.log(error)
-    await postResponse(videoId);
   }
 }
 
