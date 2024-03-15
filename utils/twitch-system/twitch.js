@@ -12,7 +12,7 @@ const { client } = require('../../bin/client');
 
 const apiClient = new ApiClient({ authProvider });
 
-const secretPayload = 'O9Q3KKbMPcTgLiZXWPR5LwylJcazv6Ao';
+const secret = 'O9Q3KKbMPcTgLiZXWPR5LwylJcazv6Ao';
 const listener = new EventSubHttpListener({
   apiClient,
   adapter: new NgrokAdapter({
@@ -21,7 +21,7 @@ const listener = new EventSubHttpListener({
       authtoken: '2de8k4zrwNlMR2RSSXSNsN7TbKe_654GsvZKE7tbbStYkpBpn'
     }
   }),
-  secretPayload
+  secret
 });
 
 listener.start();
