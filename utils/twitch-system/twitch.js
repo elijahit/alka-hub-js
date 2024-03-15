@@ -45,7 +45,7 @@ listener.start();
 
 async function addListener(streamers) {
   listener.onStreamOnline(streamers.streamerId, async e => {
-    setInterval(async () => {      
+    setTimeout(async () => {      
       const notifyTwitch = await readDbAllWith1Params("SELECT * FROM twitch_notify_system WHERE streamerId = ?", streamers.streamerId);
       let counterListner = 0;
       for await (const value of notifyTwitch) {
@@ -66,7 +66,6 @@ async function addListener(streamers) {
               return "No data";
             }
           }
-          console.log(e)
           let fields = [
             { name: " ", value: `**[${await getData(streams?.title)}](https://twitch.tv/${await getData(streams?.userName)})**` },
             { name: language_result.twitchEmbed.game, value: `${await getData(streams?.gameName)}`, inline: true },
@@ -76,7 +75,7 @@ async function addListener(streamers) {
           let customEmoji = await getEmojifromUrl(client, "twitch");
           const embedLog = new EmbedBuilder()
             .setAuthor({ name: `${language_result.twitchEmbed.embed_title}`, iconURL: customEmoji })
-            .setDescription(language_result.twitchEmbed.description.replace("{0}", await getData(streams.userName)))
+            .setDescription(language_result.twitchEmbed.description.replace("{0}", await getData(streams?.userName)))
             .setFooter({ text: `${language_result.twitchEmbed.embed_footer}`, iconURL: `${language_result.twitchEmbed.embed_icon_url}` })
             .setFields(fields)
             .setThumbnail((await streams.getUser()).profilePictureUrl)
