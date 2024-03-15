@@ -66,10 +66,11 @@ async function addListener(streamers) {
               return "No data";
             }
           }
+          console.log(e)
           let fields = [
-            { name: " ", value: `**[${await getData(streams.title)}](https://twitch.tv/${await getData(streams.userName)})**` },
-            { name: language_result.twitchEmbed.game, value: `${await getData(streams.gameName)}`, inline: true },
-            { name: language_result.twitchEmbed.viewers, value: `${await getData(streams.viewers)}`, inline: true },
+            { name: " ", value: `**[${await getData(streams?.title)}](https://twitch.tv/${await getData(streams?.userName)})**` },
+            { name: language_result.twitchEmbed.game, value: `${await getData(streams?.gameName)}`, inline: true },
+            { name: language_result.twitchEmbed.viewers, value: `${await getData(streams?.viewers)}`, inline: true },
   
           ];
           let customEmoji = await getEmojifromUrl(client, "twitch");
