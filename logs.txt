@@ -1,0 +1,86 @@
+---- [START LOGS] ----
+[\music-system\play.js]
+TypeError: options.adapterCreator is not a function
+at new VoiceConnection (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:1699:29)
+at createVoiceConnection (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:2118:27)
+at joinVoiceChannel (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:2139:10)
+at Object.execute (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\utils\music-system\command\play.js:21:26)
+at async Client.<anonymous> (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\app.js:62:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\music-system\play.js]
+TypeError: options.adapterCreator is not a function
+at new VoiceConnection (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:1699:29)
+at createVoiceConnection (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:2118:27)
+at joinVoiceChannel (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:2139:10)
+at Object.execute (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\utils\music-system\command\play.js:21:5)
+at async Client.<anonymous> (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\app.js:62:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\music-system\play.js]
+TypeError: options.adapterCreator is not a function
+at new VoiceConnection (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:1699:29)
+at createVoiceConnection (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:2118:27)
+at joinVoiceChannel (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:2139:10)
+at Object.execute (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\utils\music-system\command\play.js:21:5)
+at async Client.<anonymous> (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\app.js:62:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\music-system\play.js]
+TypeError: options.adapterCreator is not a function
+at new VoiceConnection (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:1699:29)
+at createVoiceConnection (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:2118:27)
+at joinVoiceChannel (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:2139:10)
+at Object.execute (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\utils\music-system\command\play.js:22:5)
+at async Client.<anonymous> (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\app.js:62:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\music-system\play.js]
+Error: FFmpeg/avconv not found!
+at FFmpeg.getInfo (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\prism-media\src\core\FFmpeg.js:143:11)
+at FFmpeg.create (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\prism-media\src\core\FFmpeg.js:156:38)
+at new FFmpeg (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\prism-media\src\core\FFmpeg.js:45:27)
+at Object.transformer (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:2248:29)
+at C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:2457:58
+at Array.map (<anonymous>)
+at createAudioResource (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:2457:39)
+at Object.execute (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\utils\music-system\command\play.js:28:27)
+at async Client.<anonymous> (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\app.js:62:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\music-system\play.js]
+TypeError: Cannot read properties of undefined (reading 'length')
+at new AudioResource (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\node_modules\@discordjs\voice\dist\index.js:2362:31)
+at Object.execute (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\utils\music-system\command\play.js:30:19)
+at async Client.<anonymous> (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\app.js:62:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\music-system\play.js]
+TypeError: Cannot read properties of undefined (reading 'play')
+at Object.execute (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\utils\music-system\command\play.js:31:31)
+at async Client.<anonymous> (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\app.js:62:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\music-system\play.js]
+TypeError: stream.validateURL is not a function
+at Object.execute (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\utils\music-system\command\play.js:29:14)
+at async Client.<anonymous> (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\app.js:62:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\music-system\play.js]
+ReferenceError: client is not defined
+at Object.execute (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\utils\music-system\command\play.js:29:17)
+at async Client.<anonymous> (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\app.js:62:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\music-system\play.js]
+TypeError: Cannot read properties of undefined (reading 'voice')
+at Object.execute (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\utils\music-system\command\play.js:29:43)
+at async Client.<anonymous> (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\app.js:62:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\music-system\play.js]
+TypeError: Cannot read properties of undefined (reading 'voice')
+at Object.execute (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\utils\music-system\command\play.js:31:43)
+at async Client.<anonymous> (C:\Users\gabri\Desktop\Workstation\repos\bot-discord-repos\alka-hub-js\app.js:62:5)
+----- [END LOGS] -----

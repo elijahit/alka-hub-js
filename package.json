@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@discordjs/voice": "^0.16.1",
     "@twurple/api": "^7.0.10",
     "@twurple/auth": "^7.0.10",
     "@twurple/eventsub-http": "^7.0.10",
@@ -10,10 +11,13 @@
     "discord.js": "^14.12.1",
     "fast-xml-parser": "^4.3.5",
     "fastify": "^4.26.2",
+    "ffmpeg-static": "^5.2.0",
     "googleapis": "^134.0.0",
     "ngrok": "^5.0.0-beta.2",
     "promised-sqlite3": "^2.1.0",
-    "sqlite3": "^5.1.7"
+    "sodium-native": "^4.0.10",
+    "sqlite3": "^5.1.7",
+    "ytdl-core": "^4.11.5"
   },
   "name": "alka-hub",
   "version": "1.0.0",
