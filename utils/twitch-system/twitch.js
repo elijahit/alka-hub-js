@@ -66,7 +66,7 @@ async function addListener(streamers) {
           }
         }
         let fields = [
-          { name: " ", value: `**[${await getData(streams.title)}](https://twitch.tv/${await getData(streams.userName)})**` },
+          { name: " ", value: `**[${await getData(streams?.title)}](https://twitch.tv/${await getData(streams.userName)})**` },
           { name: language_result.twitchEmbed.game, value: `${await getData(streams.gameName)}`, inline: true },
           { name: language_result.twitchEmbed.viewers, value: `${await getData(streams.viewers)}`, inline: true },
 
