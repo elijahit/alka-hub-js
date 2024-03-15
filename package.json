@@ -2,6 +2,8 @@
   "dependencies": {
     "@twurple/api": "^7.0.10",
     "@twurple/auth": "^7.0.10",
+    "@twurple/eventsub-http": "^7.0.10",
+    "@twurple/eventsub-ngrok": "^7.0.10",
     "@twurple/eventsub-ws": "^7.0.10",
     "axios": "^1.6.7",
     "common-tags": "^1.8.2",

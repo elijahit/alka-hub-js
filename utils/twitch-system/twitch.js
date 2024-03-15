@@ -1,7 +1,8 @@
-const { token: accessToken, clientId } = require('./token') //Rigenera e recupera il token
-const { StaticAuthProvider } = require('@twurple/auth');
+const { authProvider } = require('./token') //Rigenera e recupera il token
+const { AppTokenAuthProvider  } = require('@twurple/auth');
 const { ApiClient } = require('@twurple/api');
-const { EventSubWsListener } = require('@twurple/eventsub-ws');
+const { DirectConnectionAdapter, EventSubHttpListener } = require('@twurple/eventsub-http');
+const { NgrokAdapter } = require('@twurple/eventsub-ngrok');
 const { readFileSync, read } = require('fs')
 const { readDb, runDb, readDbAllWith2Params, readDbWith4Params, readDbWith3Params, readDbAll, readDbAllWith1Params } = require('../../bin/database');
 const { getEmojifromUrl } = require('../../bin/HandlingFunctions');
@@ -9,11 +10,38 @@ const { EmbedBuilder } = require('discord.js');
 const language = require('../../languages/languages');
 const { client } = require('../../bin/client');
 
-
-const authProvider = new StaticAuthProvider(clientId, accessToken);
 const apiClient = new ApiClient({ authProvider });
 
-const listener = new EventSubWsListener({ apiClient });
+const secretPayload = 'O9Q3KKbMPcTgLiZXWPR5LwylJcazv6Ao';
+const listener = new EventSubHttpListener({
+  apiClient,
+  adapter: new NgrokAdapter({
+    ngrokConfig: {
+      port:8081,
+      authtoken: '2de8k4zrwNlMR2RSSXSNsN7TbKe_654GsvZKE7tbbStYkpBpn'
+    }
+  }),
+  secretPayload
+});
+
+listener.start();
+
+(async () => {
+  await apiClient.eventSub.deleteAllSubscriptions();
+
+  async function run() {
+    const databaseTwitch = await readDbAll("twitch_streamers_system");
+    for await (const value of databaseTwitch) {
+      try {
+        await addListener(value);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  };
+  run();
+
+})();
 
 async function addListener(streamers) {
   listener.onStreamOnline(streamers.streamerId, async e => {
@@ -76,18 +104,5 @@ async function addListener(streamers) {
     }
   });
 }
-
-listener.start();
-async function run() {
-  const databaseTwitch = await readDbAll("twitch_streamers_system");
-  for await (const value of databaseTwitch) {
-    try {
-      await addListener(value);
-    } catch (error) {
-      console.log(error)
-    }
-  }
-};
-run();
 
 module.exports = { addListener, apiClient };

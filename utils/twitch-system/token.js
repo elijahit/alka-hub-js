@@ -27,4 +27,4 @@ setInterval(async () => {
 
 const token = tokenData.accessToken;
 
-module.exports = {token, clientId}
+module.exports = {token, clientId, clientSecret, authProvider}
