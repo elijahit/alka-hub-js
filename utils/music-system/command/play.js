@@ -7,7 +7,7 @@ const { errorSendControls, getEmojifromUrl, returnPermission, noEnabledFunc, noH
 const ytdl = require('ytdl-core');
 
 // FUNZIONI DA GESTORE
-async function playSong(interaction, query) {
+async function playSong(interaction, query, customEmoji, language_result) {
 	const voiceChannel = await interaction.guild.channels.fetch(interaction.member.voice.channelId);
 	// SE NON CI SONO DATI IN RIPRODUZIONE VIENE INSTANZIATA UNA CONNESSIONE E AVVIATA LA RIPRODUZIONE DI UN URL
 	const player = createAudioPlayer();
@@ -22,6 +22,13 @@ async function playSong(interaction, query) {
 
 	player.play(createAudioResource(stream))
 	await runDb("INSERT INTO music_queue_system (guildId, voiceChannelId, url) VALUES (?, ?, ?)", interaction.guild.id, voiceChannel.id, query);
+
+	const embedLog = new EmbedBuilder()
+		.setAuthor({ name: `${language_result.ready.embed_title}`, iconURL: customEmoji })
+		.setDescription(language_result.ready.description)
+		.setFooter({ text: `${language_result.ready.embed_footer}`, iconURL: `${language_result.ready.embed_icon_url}` })
+		.setColor(0x6e0b8c);
+	await interaction.reply({ embeds: [embedLog] });
 }
 async function playMessage(query, customEmoji, language_result, channel) {
 	const videoInfo = await ytdl.getInfo(query);
@@ -57,14 +64,14 @@ async function eventPlayer(player = "AudioPlayer", channel = "TextChannel", quer
 	const language_result = JSON.parse(langagues_path);
 
 	player.on('stateChange', async (oldState, newState) => {
-		if(newState.status == "playing") {
-		await playMessage(query, customEmoji, language_result, channel);
+		if (newState.status == "playing") {
+			await playMessage(query, customEmoji, language_result, channel);
 
 		}
-		if(newState.status == "idle") {
+		if (newState.status == "idle") {
 			// CONTROLLO IL DATABASE E LI SORTEGGIO TRAMITE ID
 			let checkDatabase = await readDbAllWith1Params('SELECT * FROM music_queue_system WHERE guildId = ? ORDER BY ID', guild);
-			if(checkDatabase.length > 1) {
+			if (checkDatabase.length > 1) {
 				query = checkDatabase[1].url;
 				const stream = ytdl(query, { filter: 'audioonly' });
 				await runDb('DELETE FROM music_queue_system WHERE ID = ?', checkDatabase[0].ID);
@@ -101,34 +108,43 @@ module.exports = {
 		const language_result = JSON.parse(langagues_path);
 
 		try {
+			let customEmoji = await getEmojifromUrl(interaction.client, "twitch");
 			// CONTROLLO SE IL LINK è VALIDO SU YOUTUBE
 			if (ytdl.validateURL(query)) {
 				// CONTROLLO SE IL COMANDO VIENE ESEGUITO DENTRO UN CANALE VOCALE
 				if (interaction.member.voice.channelId) {
 					// CONTROLLO IL DATABASE PER VISUALIZZARNE I DATI
-					let checkDatabase = await readDbAllWith2Params("SELECT * FROM music_queue_system WHERE voiceChannelId = ? AND guildId = ?", interaction.member.voice.channelId, interaction.guild.id);
+					let checkDatabase = await readDbAllWith1Params("SELECT * FROM music_queue_system WHERE guildId = ?", interaction.guild.id);
 
 					// CONTROLLO SE IL DATABASE HA GIA' DEI DATI IN RIPRODUZIONE
 					if (checkDatabase.length != 0) {
 						if (checkDatabase[0].voiceChannelId == interaction.member.voice.channelId) {
-							if(getVoiceConnection(interaction.guild.id)?.state.status == "ready") {
+							if (getVoiceConnection(interaction.guild.id)?.state.status == "ready") {
 								await runDb("INSERT INTO music_queue_system (guildId, voiceChannelId, url) VALUES (?, ?, ?)", interaction.guild.id, interaction.member.voice.channelId, query);
 							} else {
 								await runDb('DELETE FROM music_queue_system WHERE guildId = ?', interaction.guild.id);
-								await playSong(interaction, query);
+								await playSong(interaction, query, customEmoji, language_result);
 							}
 						}
 						else {
-							//SE IL BOT è GIA CONNESSO IN UN CANALE VOCALE E IL COMANDO VIENE ESEGUITO IN UN ALTRO CANALE VOCALE.
+							const embedLog = new EmbedBuilder()
+								.setAuthor({ name: `${language_result.alreadyConnect.embed_title}`, iconURL: customEmoji })
+								.setDescription(language_result.alreadyConnect.description)
+								.setFooter({ text: `${language_result.alreadyConnect.embed_footer}`, iconURL: `${language_result.alreadyConnect.embed_icon_url}` })
+								.setColor(0x6e0b8c);
+							await interaction.reply({ embeds: [embedLog] });
 						}
 					} else {
-						await playSong(interaction, query);
+						await playSong(interaction, query, customEmoji, language_result);
 					}
-
-
 				}
 			} else {
-				// SE UN VIDEO NON E' VALIDO
+				const embedLog = new EmbedBuilder()
+					.setAuthor({ name: `${language_result.notFound.embed_title}`, iconURL: customEmoji })
+					.setDescription(language_result.notFound.description)
+					.setFooter({ text: `${language_result.notFound.embed_footer}`, iconURL: `${language_result.notFound.embed_icon_url}` })
+					.setColor(0x6e0b8c);
+				await interaction.reply({ embeds: [embedLog] });
 			}
 		}
 		catch (error) {
