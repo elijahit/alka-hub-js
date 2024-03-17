@@ -4,7 +4,7 @@ const language = require('../../../languages/languages');
 const { readFileSync } = require('fs');
 const { readDbAllWith2Params, readDb, runDb, readDbAllWith1Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, returnPermission, noEnabledFunc, noHavePermission } = require('../../../bin/HandlingFunctions');
-const ytdl = require('ytdl-core');
+const play = require('play-dl');
 const {youtube} = require('../../youtube-system/youtubeApi');
 
 // FUNZIONI DA GESTORE
@@ -19,9 +19,9 @@ async function playSong(interaction, query, customEmoji, language_result) {
 		adapterCreator: voiceChannel.guild.voiceAdapterCreator
 	}).subscribe(player);
 
-	const stream = ytdl(query, { filter: 'audioonly' });
+	const stream = await play.stream(query);
 
-	player.play(createAudioResource(stream))
+	player.play(createAudioResource(stream.stream, {inputType: stream.type}))
 	if(query.includes("list")) {
 		const playlistId = query.split("list=")[1].split("&")[0];
 		const playlist = await youtube.playlistItems.list({
@@ -45,7 +45,7 @@ async function playSong(interaction, query, customEmoji, language_result) {
 	await interaction.reply({ embeds: [embedLog] });
 }
 async function playMessage(query, customEmoji, language_result, channel) {
-	const videoInfo = await ytdl.getInfo(query);
+	const videoInfo = await play.video_info(query);
 
 	let checkDatabase = await readDbAllWith1Params("SELECT * FROM music_queue_system WHERE guildId = ?", channel.guild.id);
 
@@ -54,7 +54,7 @@ async function playMessage(query, customEmoji, language_result, channel) {
 		.setDescription(language_result.playing.description)
 		.setFooter({ text: `${language_result.playing.embed_footer}`, iconURL: `${language_result.playing.embed_icon_url}` })
 		.setFields([
-			{ name: language_result.playing.songTitle, value: `${videoInfo.player_response.videoDetails.title}` },
+			{ name: language_result.playing.songTitle, value: `${videoInfo.video_details.title}` },
 			{ name: `${language_result.playing.queueSlot} (${checkDatabase.length})`, value: ` ` }
 		])
 		.setColor(0x09475c);
@@ -62,7 +62,7 @@ async function playMessage(query, customEmoji, language_result, channel) {
 }
 
 async function queueEnd(query, customEmoji, language_result, channel) {
-	const videoInfo = await ytdl.getInfo(query);
+	const videoInfo = await play.video_info(query);
 
 	const embedLog = new EmbedBuilder()
 		.setAuthor({ name: `${language_result.queueEnd.embed_title}`, iconURL: customEmoji })
@@ -93,10 +93,10 @@ async function eventPlayer(player = "AudioPlayer", channel = "TextChannel", quer
 			let checkDatabase = await readDbAllWith1Params('SELECT * FROM music_queue_system WHERE guildId = ? ORDER BY ID', guild);
 			if (checkDatabase.length > 1) {
 				query = checkDatabase[1].url;
-				const stream = ytdl(query, { filter: 'audioonly', highWaterMark: 50000, dlChunkSize: 0 });
-				await runDb('DELETE FROM music_queue_system WHERE ID = ?', checkDatabase[0].ID);
+				const stream = await play.stream(query);
 
-				player.play(createAudioResource(stream));
+				player.play(createAudioResource(stream.stream, {inputType: stream.type}))
+				await runDb('DELETE FROM music_queue_system WHERE ID = ?', checkDatabase[0].ID);
 			} else {
 				getVoiceConnection(guild).disconnect();
 				await queueEnd(query, customEmoji, language_result, channel);
@@ -130,7 +130,7 @@ module.exports = {
 		try {
 			let customEmoji = await getEmojifromUrl(interaction.client, "musicBot");
 			// CONTROLLO SE IL LINK è VALIDO SU YOUTUBE
-			if (ytdl.validateURL(query)) {
+			if (play.yt_validate(query)) {
 				// CONTROLLO SE IL COMANDO VIENE ESEGUITO DENTRO UN CANALE VOCALE
 				if (interaction.member.voice.channelId) {
 					// CONTROLLO IL DATABASE PER VISUALIZZARNE I DATI
