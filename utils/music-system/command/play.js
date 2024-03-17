@@ -93,7 +93,7 @@ async function eventPlayer(player = "AudioPlayer", channel = "TextChannel", quer
 			let checkDatabase = await readDbAllWith1Params('SELECT * FROM music_queue_system WHERE guildId = ? ORDER BY ID', guild);
 			if (checkDatabase.length > 1) {
 				query = checkDatabase[1].url;
-				const stream = ytdl(query, { filter: 'audioonly', highWaterMark: 50000 });
+				const stream = ytdl(query, { filter: 'audioonly', highWaterMark: 50000, dlChunkSize: 0 });
 				await runDb('DELETE FROM music_queue_system WHERE ID = ?', checkDatabase[0].ID);
 
 				player.play(createAudioResource(stream));
