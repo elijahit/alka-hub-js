@@ -52,7 +52,31 @@ async function playSong(interaction, query, customEmoji, language_result) {
 				isPlaylist++;
 				await runDb("INSERT INTO music_queue_system (guildId, voiceChannelId, name) VALUES (?, ?, ?)", interaction.guild.id, interaction.member.voice.channelId, value[valueOfTitle]);
 			}
-		} else if ((await play.validate(query)).includes("video") || (await play.validate(query)).includes("track")) {
+		} else if ((await play.validate(query)).includes("album")) {
+			let playlistArray, valueOfTitle;
+			// SE E' UNA PLAYLIST
+			switch (await play.validate(query)) {
+				case "sp_album":
+					const spotifyPlaylist = await play.spotify(query);
+					playlistArray = spotifyPlaylist.fetched_tracks.get('1');
+					valueOfTitle = ["name"];
+					break;
+				case "dz_album":
+					const deezerPlaylist = await play.deezer(query);
+					playlistArray = deezerPlaylist.tracks;
+					valueOfTitle = ["title"];
+					break;
+			}
+
+			for await (const value of playlistArray) {
+				if (isPlaylist == 0) {
+					searchValue = value[valueOfTitle];
+				}
+				isPlaylist++;
+				await runDb("INSERT INTO music_queue_system (guildId, voiceChannelId, name) VALUES (?, ?, ?)", interaction.guild.id, interaction.member.voice.channelId, value[valueOfTitle]);
+			}
+		}
+		 else if ((await play.validate(query)).includes("video") || (await play.validate(query)).includes("track")) {
 
 			let videoName;
 			// SE E' UNA CANZONE
