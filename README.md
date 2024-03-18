@@ -178,4 +178,12 @@ CREATE TABLE "youtube_video_system" (
 	"videoId"	TEXT,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
+-- Tabella di raccolta music bot
+CREATE TABLE "music_queue_system" (
+	"ID"	INTEGER UNIQUE,
+	"guildId"	TEXT,
+	"voiceChannelId"	TEXT,
+	"name"	TEXT,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
 ```

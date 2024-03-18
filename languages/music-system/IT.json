@@ -20,6 +20,18 @@
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description": "La queue è terminata e nessuna riproduzione è in corso, quindi Alka Hub si è disconnesso dal canale."
   },
+  "addQueue": {
+    "embed_title": "Alka Hub | Music Bot",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description": "Il brano è stato aggiunto alla coda.\n**Brano**: {0}"
+  },
+  "addQueuePlaylist": {
+    "embed_title": "Alka Hub | Music Bot",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description": "La playlist è stata aggiunta alla coda.\n**Brani aggiunti in coda**: {0}"
+  },
   "alreadyConnect": {
     "embed_title": "Alka Hub | Music Bot",
     "embed_footer": "Alka Hub by alkanetwork.eu",
@@ -30,7 +42,7 @@
     "embed_title": "Alka Hub | Music Bot",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description": "L'url inserito non è stato trovato durante la ricerca, ti invitiamo a riprovare."
+    "description": "La QUERY inserita non è stata trovato durante la ricerca, ti invitiamo a riprovare."
   },
   "ready": {
     "embed_title": "Alka Hub | Music Bot",
