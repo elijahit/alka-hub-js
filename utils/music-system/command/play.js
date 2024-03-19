@@ -192,6 +192,16 @@ async function queueEnd(query, customEmoji, language_result, channel) {
 	await channel.send({ embeds: [embedLog] });
 }
 
+async function noUserOnline(query, customEmoji, language_result, channel) {
+
+	const embedLog = new EmbedBuilder()
+		.setAuthor({ name: `${language_result.noUserOnline.embed_title}`, iconURL: customEmoji })
+		.setDescription(language_result.noUserOnline.description)
+		.setFooter({ text: `${language_result.noUserOnline.embed_footer}`, iconURL: `${language_result.noUserOnline.embed_icon_url}` })
+		.setColor(0x09185e);
+	await channel.send({ embeds: [embedLog] });
+}
+
 
 async function eventPlayer(player = "AudioPlayer", channel = "TextChannel", query = "Song", guild = "Guild Id") {
 	let customEmoji = await getEmojifromUrl(channel.client, "musicBot");
@@ -205,6 +215,20 @@ async function eventPlayer(player = "AudioPlayer", channel = "TextChannel", quer
 
 	player.on('stateChange', async (oldState, newState) => {
 		if (newState.status == "playing") {
+			let guildResolve = await channel.client.guilds.fetch(guild);
+			let channelResolve = await guildResolve.channels.fetch(getVoiceConnection(guild).joinConfig.channelId);
+			let userCount = 0;
+			for await (const value of channelResolve.members) {
+			 if(!value[1].user.bot) {
+				userCount++;
+			 }
+			}
+			if (!userCount) {
+				getVoiceConnection(guild).disconnect();
+				await runDb('DELETE FROM music_queue_system WHERE guildId = ?', guild);
+				await noUserOnline(query, customEmoji, language_result, channel);
+				return;
+			}
 			await playMessage(query, customEmoji, language_result, channel);
 
 		}
