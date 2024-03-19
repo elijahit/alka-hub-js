@@ -186,4 +186,12 @@ CREATE TABLE "music_queue_system" (
 	"name"	TEXT,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
+-- Tabella di raccolta voti
+CREATE TABLE "music_vote_system" (
+	"ID"	INTEGER UNIQUE,
+	"guildId"	TEXT,
+	"actions"	TEXT,
+	"userId"	TEXT,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
 ```
