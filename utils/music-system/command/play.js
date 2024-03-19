@@ -307,7 +307,7 @@ module.exports = {
 					let checkDatabase = await readDbAllWith1Params("SELECT * FROM music_queue_system WHERE guildId = ?", interaction.guild.id);
 
 					// CONTROLLO SE IL DATABASE HA GIA' DEI DATI IN RIPRODUZIONE
-					if (checkDatabase.length > 0) {
+					if (checkDatabase.length > 0 && getVoiceConnection(interaction.guild.id)) {
 						if (checkDatabase[0].voiceChannelId == interaction.member.voice.channelId) {
 							await playSong(interaction, query, customEmoji, language_result);
 						}
