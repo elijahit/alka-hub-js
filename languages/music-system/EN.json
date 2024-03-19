@@ -61,5 +61,35 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description": "No user was connected to the voice channel, consequently the queue has been cleared and Alka Hub has been disconnected."
+  },
+  "stopVoteClose": {
+    "embed_title": "Alka Hub | Music Bot",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description": "The player {0} has been stopped successfully. If you want to listen to music again, use **/play**."
+  },
+  "stopVoteMessage": {
+    "embed_title": "Alka Hub | Music Bot",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description": "A vote has been requested to stop the player {0}\n**Votes**: {1} out of {2} required."
+  },
+  "alreadyVoteStop": {
+    "embed_title": "Alka Hub | Music Bot",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description": "You have already voted, please wait for the vote to finish."
+  },
+  "noConnectStopVote": {
+    "embed_title": "Alka Hub | Music Bot",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description": "You are not connected to the voice channel where Alka Hub's player is located."
+  },
+  "noBotConnectStopVote": {
+    "embed_title": "Alka Hub | Music Bot",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description": "No Alka Hub player is connected to the voice channel."
   }
 }

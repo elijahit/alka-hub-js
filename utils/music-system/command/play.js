@@ -14,6 +14,7 @@ async function playSong(interaction, query, customEmoji, language_result) {
 	//RESETTO I DATI
 	if (!getVoiceConnection(interaction.guild.id) || getVoiceConnection(interaction.guild.id)?._state.status == "disconnected") {
 		await runDb('DELETE FROM music_queue_system WHERE guildId = ?', interaction.guild.id);
+		await runDb('DELETE FROM music_vote_system WHERE guildId = ?', interaction.guild.id);
 	}
 
 	let searchValue, isPlaylist = 0;
@@ -317,7 +318,7 @@ module.exports = {
 								.setDescription(language_result.alreadyConnect.description)
 								.setFooter({ text: `${language_result.alreadyConnect.embed_footer}`, iconURL: `${language_result.alreadyConnect.embed_icon_url}` })
 								.setColor(0x78070d);
-							await interaction.reply({ embeds: [embedLog] });
+							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}
 					} else {
 						await playSong(interaction, query, customEmoji, language_result);
@@ -328,7 +329,7 @@ module.exports = {
 						.setDescription(language_result.noVoice.description)
 						.setFooter({ text: `${language_result.noVoice.embed_footer}`, iconURL: `${language_result.noVoice.embed_icon_url}` })
 						.setColor(0x78070d);
-					await interaction.reply({ embeds: [embedLog] });
+					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 				}
 			} else {
 				const embedLog = new EmbedBuilder()
@@ -336,7 +337,7 @@ module.exports = {
 					.setDescription(language_result.notFound.description)
 					.setFooter({ text: `${language_result.notFound.embed_footer}`, iconURL: `${language_result.notFound.embed_icon_url}` })
 					.setColor(0x78070d);
-				await interaction.reply({ embeds: [embedLog] });
+				await interaction.reply({ embeds: [embedLog], ephemeral: true });
 			}
 		}
 		catch (error) {

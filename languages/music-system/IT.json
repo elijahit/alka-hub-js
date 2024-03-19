@@ -61,5 +61,35 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description": "Nessun utente era connesso al canale vocale, di conseguenza la coda è stata rimossa e Alka Hub è stato scollegato."
+  },
+  "stopVoteClose": {
+    "embed_title": "Alka Hub | Music Bot",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description": "Il player {0} è stato stoppato correttamente, se vuoi sentire ancora musica usa **/play**"
+  },
+  "stopVoteMessage": {
+    "embed_title": "Alka Hub | Music Bot",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description": "E' stata richiesta una votazione per stoppare il player {0}\n**Voti**: {1} su {2} necessari"
+  },
+  "alreadyVoteStop": {
+    "embed_title": "Alka Hub | Music Bot",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description": "Hai già votato, attendi che la votazione finisca."
+  },
+  "noConnectStopVote": {
+    "embed_title": "Alka Hub | Music Bot",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description": "Non sei connesso nel canale vocale in cui si trova il player di Alka Hub."
+  },
+  "noBotConnectStopVote": {
+    "embed_title": "Alka Hub | Music Bot",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description": "Nessun player di Alka Hub è connesso nel canale vocale."
   }
 }
