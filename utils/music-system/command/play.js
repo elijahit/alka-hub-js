@@ -115,7 +115,7 @@ async function searchSong(query, interaction) {
 		});
 		await runDb("INSERT INTO music_queue_system (guildId, voiceChannelId, name) VALUES (?, ?, ?)", interaction.guild.id, interaction.member.voice.channelId, searched[0].title);
 	}
-	return searchValue;
+	return {searchValue, isPlaylist};
 }
 
 async function playSong(interaction, query, customEmoji, language_result) {
@@ -127,7 +127,8 @@ async function playSong(interaction, query, customEmoji, language_result) {
 		await runDb('DELETE FROM music_vote_system WHERE guildId = ?', interaction.guild.id);
 	}
 
-	let searchValue = await searchSong(query, interaction);
+	let searchValue = (await searchSong(query, interaction)).searchValue;
+	let isPlaylist = (await searchSong(query, interaction)).isPlaylist;
 	try {
 		if (!getVoiceConnection(interaction.guild.id) || getVoiceConnection(interaction.guild.id)?._state.status == "disconnected") {
 			const voiceChannel = await interaction.guild.channels.fetch(interaction.member.voice.channelId);
