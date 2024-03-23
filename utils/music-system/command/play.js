@@ -8,6 +8,116 @@ const play = require('play-dl');
 
 
 // FUNZIONI DA GESTORE
+async function searchSong(query, interaction) {
+	let searchValue, isPlaylist = 0, typePlaylist;
+	if ((await play.validate(query)).includes("playlist")) {
+		let playlistArray, valueOfTitle;
+		// SE E' UNA PLAYLIST
+		switch (await play.validate(query)) {
+			case "yt_playlist":
+				const youtubePlaylist = await play.playlist_info(query);
+				playlistArray = youtubePlaylist.videos;
+				valueOfTitle = ["title"];
+				break;
+			case "so_playlist":
+				const soundCloudPlaylist = await play.playlist_info(query);
+				playlistArray = soundCloudPlaylist.tracks;
+				valueOfTitle = ["name"];
+				break;
+			case "sp_playlist":
+				const spotifyPlaylist = await play.spotify(query);
+				playlistArray = spotifyPlaylist.fetched_tracks.get('1');
+				valueOfTitle = ["name"];
+				typePlaylist = "spotify"
+				break;
+			case "dz_playlist":
+				const deezerPlaylist = await play.deezer(query);
+				playlistArray = deezerPlaylist.tracks;
+				valueOfTitle = ["title"];
+				typePlaylist = "deezer"
+				break;
+		}
+
+		for await (const value of playlistArray) {	
+			let valueSaveDb;
+			if(typePlaylist == "spotify") {
+				valueSaveDb = `${value[valueOfTitle]} ${value?.artists[0]?.name}`
+				if (isPlaylist == 0) {
+					searchValue = `${value[valueOfTitle]} ${value?.artists[0]?.name}`;
+				}
+			}
+			else if (typePlaylist == "deezer") {
+				valueSaveDb = `${value[valueOfTitle]} ${value?.artist?.name}`
+				if (isPlaylist == 0) {
+					searchValue = `${value[valueOfTitle]} ${value?.artist?.name}`;
+				}
+			} else {
+				valueSaveDb = `${value[valueOfTitle]}`
+				if (isPlaylist == 0) {
+					searchValue = `${value[valueOfTitle]}`;
+				}
+			}
+			isPlaylist++;
+			await runDb("INSERT INTO music_queue_system (guildId, voiceChannelId, name) VALUES (?, ?, ?)", interaction.guild.id, interaction.member.voice.channelId, valueSaveDb);
+		}
+	} else if ((await play.validate(query)).includes("album")) {
+		let playlistArray, valueOfTitle;
+		// SE E' UN ALBUM
+		switch (await play.validate(query)) {
+			case "sp_album":
+				const spotifyPlaylist = await play.spotify(query);
+				playlistArray = spotifyPlaylist.fetched_tracks.get('1');
+				valueOfTitle = ["name"];
+				break;
+			case "dz_album":
+				const deezerPlaylist = await play.deezer(query);
+				playlistArray = deezerPlaylist.tracks;
+				valueOfTitle = ["title"];
+				break;
+		}
+
+		for await (const value of playlistArray) {
+			if (isPlaylist == 0) {
+				searchValue = value[valueOfTitle];
+			}
+			isPlaylist++;
+			await runDb("INSERT INTO music_queue_system (guildId, voiceChannelId, name) VALUES (?, ?, ?)", interaction.guild.id, interaction.member.voice.channelId, value[valueOfTitle]);
+		}
+	}
+	else if ((await play.validate(query)).includes("video") || (await play.validate(query)).includes("track")) {
+
+		let videoName;
+		// SE E' UNA CANZONE
+		switch (await play.validate(query)) {
+			case "yt_video":
+				const youtubeVideo = await play.video_info(query);
+				videoName = youtubeVideo.video_details.title;
+				break;
+			case "so_track":
+				const soundCloudVideo = await play.soundcloud(query);
+				videoName = soundCloudVideo.name;
+				break;
+			case "sp_track":
+				const spotifyTrack = await play.spotify(query);
+				videoName = spotifyTrack.name;
+				break;
+			case "dz_track":
+				const deezerTrack = await play.deezer(query);
+				videoName = deezerTrack.title;
+				break;
+		}
+		await runDb("INSERT INTO music_queue_system (guildId, voiceChannelId, name) VALUES (?, ?, ?)", interaction.guild.id, interaction.member.voice.channelId, videoName);
+		searchValue = videoName;
+	} else {
+		searchValue = query;
+		const searched = await play.search(searchValue, {
+			limit: 1
+		});
+		await runDb("INSERT INTO music_queue_system (guildId, voiceChannelId, name) VALUES (?, ?, ?)", interaction.guild.id, interaction.member.voice.channelId, searched[0].title);
+	}
+	return searchValue;
+}
+
 async function playSong(interaction, query, customEmoji, language_result) {
 	await interaction.deferReply();
 
@@ -17,97 +127,8 @@ async function playSong(interaction, query, customEmoji, language_result) {
 		await runDb('DELETE FROM music_vote_system WHERE guildId = ?', interaction.guild.id);
 	}
 
-	let searchValue, isPlaylist = 0;
+	let searchValue = await searchSong(query, interaction);
 	try {
-
-		if ((await play.validate(query)).includes("playlist")) {
-			let playlistArray, valueOfTitle;
-			// SE E' UNA PLAYLIST
-			switch (await play.validate(query)) {
-				case "yt_playlist":
-					const youtubePlaylist = await play.playlist_info(query);
-					playlistArray = youtubePlaylist.videos;
-					valueOfTitle = ["title"];
-					break;
-				case "so_playlist":
-					const soundCloudPlaylist = await play.playlist_info(query);
-					playlistArray = soundCloudPlaylist.tracks;
-					valueOfTitle = ["name"];
-					break;
-				case "sp_playlist":
-					const spotifyPlaylist = await play.spotify(query);
-					playlistArray = spotifyPlaylist.fetched_tracks.get('1');
-					valueOfTitle = ["name"];
-					break;
-				case "dz_playlist":
-					const deezerPlaylist = await play.deezer(query);
-					playlistArray = deezerPlaylist.tracks;
-					valueOfTitle = ["title"];
-					break;
-			}
-
-			for await (const value of playlistArray) {
-				if (isPlaylist == 0) {
-					searchValue = value[valueOfTitle];
-				}
-				isPlaylist++;
-				await runDb("INSERT INTO music_queue_system (guildId, voiceChannelId, name) VALUES (?, ?, ?)", interaction.guild.id, interaction.member.voice.channelId, value[valueOfTitle]);
-			}
-		} else if ((await play.validate(query)).includes("album")) {
-			let playlistArray, valueOfTitle;
-			// SE E' UNA PLAYLIST
-			switch (await play.validate(query)) {
-				case "sp_album":
-					const spotifyPlaylist = await play.spotify(query);
-					playlistArray = spotifyPlaylist.fetched_tracks.get('1');
-					valueOfTitle = ["name"];
-					break;
-				case "dz_album":
-					const deezerPlaylist = await play.deezer(query);
-					playlistArray = deezerPlaylist.tracks;
-					valueOfTitle = ["title"];
-					break;
-			}
-
-			for await (const value of playlistArray) {
-				if (isPlaylist == 0) {
-					searchValue = value[valueOfTitle];
-				}
-				isPlaylist++;
-				await runDb("INSERT INTO music_queue_system (guildId, voiceChannelId, name) VALUES (?, ?, ?)", interaction.guild.id, interaction.member.voice.channelId, value[valueOfTitle]);
-			}
-		}
-		 else if ((await play.validate(query)).includes("video") || (await play.validate(query)).includes("track")) {
-
-			let videoName;
-			// SE E' UNA CANZONE
-			switch (await play.validate(query)) {
-				case "yt_video":
-					const youtubeVideo = await play.video_info(query);
-					videoName = youtubeVideo.video_details.title;
-					break;
-				case "so_track":
-					const soundCloudVideo = await play.soundcloud(query);
-					videoName = soundCloudVideo.name;
-					break;
-				case "sp_track":
-					const spotifyTrack = await play.spotify(query);
-					videoName = spotifyTrack.name;
-					break;
-				case "dz_track":
-					const deezerTrack = await play.deezer(query);
-					videoName = deezerTrack.title;
-					break;
-			}
-			await runDb("INSERT INTO music_queue_system (guildId, voiceChannelId, name) VALUES (?, ?, ?)", interaction.guild.id, interaction.member.voice.channelId, videoName);
-			searchValue = videoName;
-		} else {
-			searchValue = query;
-			const searched = await play.search(searchValue, {
-				limit: 1
-			});
-			await runDb("INSERT INTO music_queue_system (guildId, voiceChannelId, name) VALUES (?, ?, ?)", interaction.guild.id, interaction.member.voice.channelId, searched[0].title);
-		}
 		if (!getVoiceConnection(interaction.guild.id) || getVoiceConnection(interaction.guild.id)?._state.status == "disconnected") {
 			const voiceChannel = await interaction.guild.channels.fetch(interaction.member.voice.channelId);
 			// SE NON CI SONO DATI IN RIPRODUZIONE VIENE INSTANZIATA UNA CONNESSIONE E AVVIATA LA RIPRODUZIONE DI UN URL
@@ -183,7 +204,7 @@ async function playMessage(query, customEmoji, language_result, channel) {
 	await channel.send({ embeds: [embedLog] });
 }
 
-async function queueEnd(query, customEmoji, language_result, channel) {
+async function queueEnd(customEmoji, language_result, channel) {
 
 	const embedLog = new EmbedBuilder()
 		.setAuthor({ name: `${language_result.queueEnd.embed_title}`, iconURL: customEmoji })
@@ -193,7 +214,7 @@ async function queueEnd(query, customEmoji, language_result, channel) {
 	await channel.send({ embeds: [embedLog] });
 }
 
-async function noUserOnline(query, customEmoji, language_result, channel) {
+async function noUserOnline(customEmoji, language_result, channel) {
 
 	const embedLog = new EmbedBuilder()
 		.setAuthor({ name: `${language_result.noUserOnline.embed_title}`, iconURL: customEmoji })
@@ -220,9 +241,9 @@ async function eventPlayer(player = "AudioPlayer", channel = "TextChannel", quer
 			let channelResolve = await guildResolve.channels.fetch(getVoiceConnection(guild).joinConfig.channelId);
 			let userCount = 0;
 			for await (const value of channelResolve.members) {
-			 if(!value[1].user.bot) {
-				userCount++;
-			 }
+				if (!value[1].user.bot) {
+					userCount++;
+				}
 			}
 			if (!userCount) {
 				getVoiceConnection(guild).disconnect();
