@@ -5,5 +5,14 @@
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "Non hai il permesso per usare questo comando!",
     "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
+  },
+  "giveawayStart": {
+    "embed_title": "Alka Hub | Sistema di Giveaway",
+    "embed_footer": "Alka Hub di alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Giveaway iniziato, partecipa cliccando il pulsante qui sotto!\n\n**Premio**: {0}\n**Data di Scadenza**: {1}\n**Slot Disponibili**: {2}\n**Partecipanti**: 0",
+    "slotsInfinity": "Illimitato",
+    "button": "Partecipa ora!",
+    "interactionResponse": "Hai creato con successo il tuo giveaway, goditelo! Gioca responsabilmente 😎"
   }
 }

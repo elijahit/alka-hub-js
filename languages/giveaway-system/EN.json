@@ -18,7 +18,22 @@
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "Giveaway started, join by clicking the button below!\n\n**Prize**: {0}\n**End Date**: {1}\n**Slots Available**: {2}\n**Participants**: 0",
     "slotsInfinity": "Unlimited",
-    "button": "Partecipa ora!",
-    "interactionResponse": "Hai creato con successo il tuo giveaway, buon divertimento! Gioca responsabilmente 😎"
+    "button": "Participate now!",
+    "interactionResponse": "You have successfully created your giveaway, enjoy! Play responsibly 😎"
+  },
+  "giveawayNotFound": {
+    "embed_title": "Alka Hub | Sistema di Giveaway",
+    "embed_footer": "Alka Hub di alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Abbiamo riscontrato un errore durante la ricerca del giveaway, non è presente nei nostri sistemi. Contatta un amministratore per maggiori informazioni."
+  },
+  "giveawayPartecipants": {
+    "embed_title": "Alka Hub | Giveaway System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Giveaway started, join by clicking the button below!\n\n**Prize**: {0}\n**End Date**: {1}\n**Slots Available**: {2}\n**Participants**: {3}",
+    "slotsInfinity": "Unlimited",
+    "interactionResponse": "Ti sei iscritto con successo al giveaway, attendi l'estrazione e buona fortuna! 🥳",
+    "alreadyPartecipants": "Stai già partecipando a questo giveaway, aspettane l'estrazione."
   }
 }

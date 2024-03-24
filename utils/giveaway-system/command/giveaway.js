@@ -34,11 +34,19 @@ module.exports = {
 				.setName('slots')
 				.setDescription('The maximum number of participants')
 				.setRequired(true)
+		)
+		.addNumberOption(value =>
+			value
+				.setName('winners')
+				.setDescription('The maximum number of winners')
+				.setRequired(true)
+				.setMinValue(1)
 		),
 	async execute(interaction) {
 		const prizes = interaction.options.data[0].value; //string
 		const endDate = interaction.options.data[1].value; //string
-		const slots = interaction.options.data[2].value; //slots
+		const slots = interaction.options.data[2].value; //number
+		const winners = interaction.options.data[3].value; //number
 
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id);
@@ -84,7 +92,7 @@ module.exports = {
 								.setColor(0xa83297);
 							let message = await interaction.channel.send({ embeds: [embedLog], components: [buttonRow] });
 							
-							await runDb("INSERT INTO giveaway_system_container (guildId, channelId, messageId, prizes, slots, endDate) VALUES (?, ?, ?, ?, ?, ?)", interaction.guild.id, interaction.channel.id, message.id, prizes, slots, endDate);
+							await runDb("INSERT INTO giveaway_system_container (guildId, channelId, messageId, prizes, slots, endDate, winners) VALUES (?, ?, ?, ?, ?, ?, ?)", interaction.guild.id, interaction.channel.id, message.id, prizes, slots, endDate, winners);
 						} else {
 							//IL FORMATO NON E' VALIDO DI DATA
 							const embedLog = new EmbedBuilder()
