@@ -37,17 +37,6 @@ module.exports = {
             // CONTROLLO SE LA LUNGHEZZA DEI PARTECIPANTI
             let checkDataPartecipants = await readDbAllWith3Params('SELECT * FROM giveaway_system_partecipants WHERE guildId = ? AND messageId = ? AND channelId = ?', guild.id, message.id, channel.id);
 
-            // MODIFICO IL MESSAGGIO DEL GIVEAWAY
-            const embedInteraction = new EmbedBuilder()
-              .setAuthor({ name: `${language_result.giveawayPartecipants.embed_title}`, iconURL: customEmoji })
-              .setDescription(language_result.giveawayPartecipants.description_embed
-                .replace("{0}", checkGiveaway.prizes)
-                .replace("{1}", checkGiveaway.endDate)
-                .replace("{2}", checkGiveaway.slots > 0 ? `${checkGiveaway.slots}` : language_result.giveawayPartecipants.slotsInfinity)
-                .replace("{3}", `${checkDataPartecipants.length}`))
-              .setFooter({ text: `${language_result.giveawayPartecipants.embed_footer}`, iconURL: `${language_result.giveawayPartecipants.embed_icon_url}` })
-              .setColor(0xa22297);
-            await message.edit({ embeds: [embedInteraction] });
 
             // RISPONDO ALL'INTERAZIONE
             const embedLog = new EmbedBuilder()

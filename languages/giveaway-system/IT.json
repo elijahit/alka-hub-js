@@ -1,18 +1,37 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | YouTube Notify",
+    "embed_title": "Alka Hub | Giveaway System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "Non hai il permesso per usare questo comando!",
     "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
   },
-  "giveawayStart": {
-    "embed_title": "Alka Hub | Sistema di Giveaway",
-    "embed_footer": "Alka Hub di alkanetwork.eu",
+  "invalidDate": {
+    "embed_title": "Alka Hub | Giveaway System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "Giveaway iniziato, partecipa cliccando il pulsante qui sotto!\n\n**Premio**: {0}\n**Data di Scadenza**: {1}\n**Slot Disponibili**: {2}\n**Partecipanti**: 0",
+    "description_embed": "Il formato data inserito non è valido, per favore utilizza il formato corretto ```DD/MM/YYYY 00:00``` controlla la nostra [documentazione](https://docs.alkanetwork.eu/giveaway) se hai dei dubbi."
+  },
+  "giveawayStart": {
+    "embed_title": "Alka Hub | Giveaway System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Il giveaway è iniziato, partecipa cliccando il pulsante qui sotto!\n\n**Premio**: {0}\n**Data di Scadenza**: {1}\n**Slot Disponibili**: {2}\n**Vincitori**: {3}",
     "slotsInfinity": "Illimitato",
-    "button": "Partecipa ora!",
-    "interactionResponse": "Hai creato con successo il tuo giveaway, goditelo! Gioca responsabilmente 😎"
+    "button": "Partecipa adesso!",
+    "interactionResponse": "Hai creato con successo il tuo giveaway, goditi il gioco! Gioca responsabilmente 😎"
+  },
+  "giveawayNotFound": {
+    "embed_title": "Alka Hub | Giveaway System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Abbiamo riscontrato un errore durante la ricerca del giveaway, non è presente nei nostri sistemi. Contatta un amministratore per maggiori informazioni."
+  },
+  "giveawayParticipants": {
+    "embed_title": "Alka Hub | Giveaway System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "interactionResponse": "Ti sei iscritto con successo al giveaway, attendi l'estrazione e in bocca al lupo! 🥳",
+    "alreadyParticipants": "Stai già partecipando a questo giveaway, aspetta l'estrazione."
   }
 }

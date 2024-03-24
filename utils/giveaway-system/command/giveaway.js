@@ -9,7 +9,17 @@ async function endDateCheck(endDate) {
 	// La data contiene errori
 	let regex = /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/202[3-9] [0-2][0-9]:[0-5][0-9]$/;
 	if(!regex.test(endDate)) return false;
-	if(regex.test(endDate)) return true;
+	if(regex.test(endDate)) {
+		let dateHourResolve = endDate.split(" ");
+		let dateResolve = dateHourResolve[0].split("/");
+		let date = Date.parse(`${dateResolve[1]}/${dateResolve[0]}/${dateResolve[2]} ${dateHourResolve[1]}`);
+		let dateNow = Date.now();
+		if(date < dateNow) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }
 
 
@@ -87,7 +97,8 @@ module.exports = {
 								.setDescription(language_result.giveawayStart.description_embed
 									.replace("{0}", prizes)
 									.replace("{1}", endDate)
-									.replace("{2}", slots > 0 ? `${slots}` : language_result.giveawayStart.slotsInfinity))
+									.replace("{2}", slots > 0 ? `${slots}` : language_result.giveawayStart.slotsInfinity)
+									.replace("{3}", `${winners}`))
 								.setFooter({ text: `${language_result.giveawayStart.embed_footer}`, iconURL: `${language_result.giveawayStart.embed_icon_url}` })
 								.setColor(0xa83297);
 							let message = await interaction.channel.send({ embeds: [embedLog], components: [buttonRow] });
