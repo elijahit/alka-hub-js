@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
 const { readDb, runDb, readDbAllWith2Params, readDbWith4Params, readDbWith3Params } = require('../../../bin/database');
@@ -6,15 +6,10 @@ const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermi
 
 // FUNCTION
 async function endDateCheck(endDate) {
-	let errorCount = 0;
 	// La data contiene errori
-	if (endDate.length != 16 ||
-		!endDate.includes('/') ||
-		!endDate.includes(':')) errorCount++;
-	let allDateArray = endDate.split(" ");
-	let dateArray = allDateArray[0].split("/"); //[00,00,0000]
-	let hourArray = allDateArray[1].split(":"); //[00,00]
-	// DA CONTINUARE CONTROLLo
+	let regex = /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/202[3-9] [0-2][0-9]:[0-5][0-9]$/;
+	if(!regex.test(endDate)) return false;
+	if(regex.test(endDate)) return true;
 }
 
 
@@ -55,10 +50,50 @@ module.exports = {
 				if (result) {
 					const checkFeaturesisEnabled = await readDb(`SELECT giveawaySystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
 
-					const customEmoji = await getEmojifromUrl(interaction.client, "reactionrole");
+					const customEmoji = await getEmojifromUrl(interaction.client, "giveaway");
 					if (checkFeaturesisEnabled?.giveawaySystem_enabled) {
-						await endDateCheck(endDate)
+						// CONTROLLO LA DATA
+						if(await endDateCheck(endDate)) {
+							//LA DATA E' VALIDA
+							
+							// CREO IL BOTTONE PER L'INTERAZIONE
+							let button = new ButtonBuilder({
+								custom_id: "giveawaybutton",
+								label: language_result.giveawayStart.button,
+								style: ButtonStyle.Primary,
+								type: ComponentType.Button
+							});
+							let buttonRow = new ActionRowBuilder().addComponents(button);
 
+							// RISPONDO ALL'INTERAZIONE
+							const embedInteraction = new EmbedBuilder()
+								.setAuthor({ name: `${language_result.giveawayStart.embed_title}`, iconURL: customEmoji })
+								.setDescription(language_result.giveawayStart.interactionResponse)
+								.setFooter({ text: `${language_result.giveawayStart.embed_footer}`, iconURL: `${language_result.giveawayStart.embed_icon_url}` })
+								.setColor(0xa22297);
+							await interaction.reply({ embeds: [embedInteraction], ephemeral: true });
+
+							// INVIO IL MESSAGGIO AL CANALE
+							const embedLog = new EmbedBuilder()
+								.setAuthor({ name: `${language_result.giveawayStart.embed_title}`, iconURL: customEmoji })
+								.setDescription(language_result.giveawayStart.description_embed
+									.replace("{0}", prizes)
+									.replace("{1}", endDate)
+									.replace("{2}", slots > 0 ? `${slots}` : language_result.giveawayStart.slotsInfinity))
+								.setFooter({ text: `${language_result.giveawayStart.embed_footer}`, iconURL: `${language_result.giveawayStart.embed_icon_url}` })
+								.setColor(0xa83297);
+							let message = await interaction.channel.send({ embeds: [embedLog], components: [buttonRow] });
+							
+							await runDb("INSERT INTO giveaway_system_container (guildId, channelId, messageId, prizes, slots, endDate) VALUES (?, ?, ?, ?, ?, ?)", interaction.guild.id, interaction.channel.id, message.id, prizes, slots, endDate);
+						} else {
+							//IL FORMATO NON E' VALIDO DI DATA
+							const embedLog = new EmbedBuilder()
+								.setAuthor({ name: `${language_result.invalidDate.embed_title}`, iconURL: customEmoji })
+								.setDescription(language_result.invalidDate.description_embed)
+								.setFooter({ text: `${language_result.invalidDate.embed_footer}`, iconURL: `${language_result.invalidDate.embed_icon_url}` })
+								.setColor(0x7a090c);
+							await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						}
 					}
 				}
 				else {

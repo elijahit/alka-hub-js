@@ -1,9 +1,24 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | YouTube Notify",
+    "embed_title": "Alka Hub | Giveaway System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "You do not have permission to use this command!",
     "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable."
+  },
+  "invalidDate": {
+    "embed_title": "Alka Hub | Giveaway System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Il formato data inserito non è valido, utilizza il formato corretto ```DD/MM/YYYY 00:00``` controlla la nostra [documentazione](https://docs.alkanetwork.eu/giveaway) se dovresti avere dubbi al riguardo."
+  },
+  "giveawayStart": {
+    "embed_title": "Alka Hub | Giveaway System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Giveaway started, join by clicking the button below!\n\n**Prize**: {0}\n**End Date**: {1}\n**Slots Available**: {2}\n**Participants**: 0",
+    "slotsInfinity": "Unlimited",
+    "button": "Partecipa ora!",
+    "interactionResponse": "Hai creato con successo il tuo giveaway, buon divertimento! Gioca responsabilmente 😎"
   }
 }
