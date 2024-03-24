@@ -3,24 +3,7 @@ const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
 const { readDb, runDb, readDbAllWith2Params, readDbWith4Params, readDbWith3Params } = require('../../../bin/database');
 const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermission, noEnabledFunc, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
-
-// FUNCTION
-async function endDateCheck(endDate) {
-	// La data contiene errori
-	let regex = /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/202[3-9] [0-2][0-9]:[0-5][0-9]$/;
-	if(!regex.test(endDate)) return false;
-	if(regex.test(endDate)) {
-		let dateHourResolve = endDate.split(" ");
-		let dateResolve = dateHourResolve[0].split("/");
-		let date = Date.parse(`${dateResolve[1]}/${dateResolve[0]}/${dateResolve[2]} ${dateHourResolve[1]}`);
-		let dateNow = Date.now();
-		if(date < dateNow) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-}
+const { endDateCheck } = require('../giveawayTiming');
 
 
 module.exports = {

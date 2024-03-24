@@ -4,6 +4,7 @@ const { Collection, Events, GatewayIntentBits, ActivityType } = require('discord
 const { token, presenceStatusName, botState } = require('./config.json');
 const { cleanerDatabase, reactionRoleCached, statisticsUpdate } = require('./bin/HandlingFunctions');
 const { client } = require('./bin/client');
+const { checkGiveawayTiming } = require('./utils/giveaway-system/giveawayTiming');
 
 client.commands = new Collection();
 
@@ -111,6 +112,11 @@ client.once(Events.ClientReady, readyClient => {
   setInterval(async () => {
     await statisticsUpdate(client);
   }, 600000);
+
+  // FUNZIONE DI giveaway-system
+  setInterval(async () => {
+    await checkGiveawayTiming();
+  }, 10000);
 
   // FUNCTION OTHER SYSTEM // NON LI RICARICO IN FASE DI TEST
   // require('./utils/twitch-system/twitch'); //Twitch System

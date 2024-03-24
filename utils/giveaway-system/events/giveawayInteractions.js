@@ -70,7 +70,7 @@ module.exports = {
     }
     catch (error) {
       console.log(error)
-      errorSendControls(error, interaction.guild.client, interaction.guild, "\\ticket-system\\ticketInteraction.js");
+      errorSendControls(error, interaction.guild.client, interaction.guild, "\\giveaway-system\\giveawayInteractions.js");
     }
   },
 };
