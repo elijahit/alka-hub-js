@@ -101,7 +101,7 @@ module.exports = {
 				}
 			}
 			catch (error) {
-				errorSendControls(error, interaction.client, interaction.guild, "\\reactionRole-system\\reactionrole.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\giveaway-system\\giveaway.js");
 			}
 		});
 	},
