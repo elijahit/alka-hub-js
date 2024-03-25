@@ -5,23 +5,31 @@ const { client } = require('../../bin/client');
 const { getEmojifromUrl } = require('../../bin/HandlingFunctions');
 const { EmbedBuilder } = require('discord.js');
 
-async function endDateCheck(endDate) {
+async function endDateCheck(endDate, guild) {
+  const config = await readDb('SELECT * FROM guilds_config WHERE guildId = ?', guild);
+  let localTimeNowResolve;
+  if (config?.timeZone?.includes("+")) {
+    localTimeNowResolve = new Date(Date.now() + (3600000 * parseInt(config.timeZone)));
+  } else if (config?.timeZone?.includes("-")) {
+    localTimeNowResolve = new Date(Date.now() - (3600000 * parseInt(config.timeZone.split("-")[1])));
+  } else {
+    localTimeNowResolve = new Date(Date.now());
+  }
+
   // La data contiene errori
   let regex = /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/202[3-9] [0-2][0-9]:[0-5][0-9]$/;
   if (!regex.test(endDate)) return false;
   if (regex.test(endDate)) {
     let dateHourResolve = endDate.split(" ");
     let dateResolve = dateHourResolve[0].split("/");
-    let date = Date.parse(`${dateResolve[1]}/${dateResolve[0]}/${dateResolve[2]} ${dateHourResolve[1]}`);
-    let dateNow = Date.now();
-    if (date < dateNow) {
+    let date = Date.parse(`${dateResolve[2]}-${dateResolve[1]}-${dateResolve[0]}T${dateHourResolve[1]}:00.000Z`);
+    if (date < localTimeNowResolve.getTime()) {
       return false;
     } else {
       return true;
     }
   }
 }
-
 async function theWinnersCheker(winnersCount, checkPartecipants) {
   let theWinners = [];
   let counter = winnersCount > checkPartecipants.length ? checkPartecipants.length : winnersCount;
@@ -46,7 +54,7 @@ async function theWinnersCheker(winnersCount, checkPartecipants) {
 async function checkGiveawayTiming() {
   checkDatabase = await readDbAll('giveaway_system_container');
   for (const value of checkDatabase) {
-    if (!(await endDateCheck(value.endDate))) {
+    if (!(await endDateCheck(value.endDate, value.guildId))) {
       // RECUPERO LA LINGUA
       let data = await language.databaseCheck(value.guildId);
       const langagues_path = readFileSync(`./languages/giveaway-system/${data}.json`);

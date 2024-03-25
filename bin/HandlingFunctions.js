@@ -332,7 +332,7 @@ async function timeZoneManage(guild) {
   const config = await readDb('SELECT * FROM guilds_config WHERE guildId = ?', guild.id);
   if (config.timeZone?.includes("+")) {
     return new Date(Date.now() + (3600000 * parseInt(config.timeZone)));
-  } if (config.timeZone?.includes("-")) {
+  } else if (config.timeZone?.includes("-")) {
     return new Date(Date.now() - (3600000 * parseInt(config.timeZone.split("-")[1])));
   } else {
     return new Date(Date.now());

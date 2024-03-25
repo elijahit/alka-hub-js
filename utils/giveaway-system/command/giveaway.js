@@ -54,7 +54,7 @@ module.exports = {
 					const customEmoji = await getEmojifromUrl(interaction.client, "giveaway");
 					if (checkFeaturesisEnabled?.giveawaySystem_enabled) {
 						// CONTROLLO LA DATA
-						if(await endDateCheck(endDate)) {
+						if(await endDateCheck(endDate, interaction.guild.id)) {
 							//LA DATA E' VALIDA
 							
 							// CREO IL BOTTONE PER L'INTERAZIONE
