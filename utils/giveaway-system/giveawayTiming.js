@@ -103,7 +103,7 @@ async function checkGiveawayTiming() {
               .replace("{1}", value.endDate)
               .replace("{2}", value.slots > 0 ? `${value.slots}` : language_result.giveawayStart.slotsInfinity)
               .replace("{3}", `${value.winners}`))
-            .setFooter({ text: `${language_result.giveawayStart.embed_footer}`, iconURL: `${language_result.giveawayStart.embed_icon_url}` })
+            .setFooter({ text: `${language_result.giveawayStart.embed_footer} | ID: ${value.ID}`, iconURL: `${language_result.giveawayStart.embed_icon_url}` })
             .addFields([{ name: language_result.giveawayStart.embed_winners, value: (theWinners != null ? theWinnersString : language_result.giveawayStart.noWinners) }])
             .setColor(0xa22297);
           await message.edit({ embeds: [embedLog], components: [] });

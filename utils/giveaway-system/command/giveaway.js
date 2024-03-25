@@ -87,6 +87,19 @@ module.exports = {
 							let message = await interaction.channel.send({ embeds: [embedLog], components: [buttonRow] });
 							
 							await runDb("INSERT INTO giveaway_system_container (guildId, channelId, messageId, prizes, slots, endDate, winners) VALUES (?, ?, ?, ?, ?, ?, ?)", interaction.guild.id, interaction.channel.id, message.id, prizes, slots, endDate, winners);
+
+							let checkId = await readDbWith3Params("SELECT * FROM giveaway_system_container WHERE guildId = ? AND messageId = ? AND channelId = ?", interaction.guild.id, message.id, interaction.channel.id);
+							// MODIFICO IL MESSAGGIO E ASSEGNO L'ID
+							const embedLogs = new EmbedBuilder()
+								.setAuthor({ name: `${language_result.giveawayStart.embed_title}`, iconURL: customEmoji })
+								.setDescription(language_result.giveawayStart.description_embed
+									.replace("{0}", prizes)
+									.replace("{1}", endDate)
+									.replace("{2}", slots > 0 ? `${slots}` : language_result.giveawayStart.slotsInfinity)
+									.replace("{3}", `${winners}`))
+								.setFooter({ text: `${language_result.giveawayStart.embed_footer} | ID: ${checkId.ID}`, iconURL: `${language_result.giveawayStart.embed_icon_url}` })
+								.setColor(0xa83297);
+							await message.edit({ embeds: [embedLogs], components: [buttonRow] });
 						} else {
 							//IL FORMATO NON E' VALIDO DI DATA
 							const embedLog = new EmbedBuilder()
