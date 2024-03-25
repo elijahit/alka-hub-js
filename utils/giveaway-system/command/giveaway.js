@@ -96,6 +96,8 @@ module.exports = {
 								.setColor(0x7a090c);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}
+					} else {
+						await noEnabledFunc(interaction, language_result);
 					}
 				}
 				else {
