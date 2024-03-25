@@ -32,20 +32,32 @@ module.exports = {
           // CONTROLLO SE L'UTENTE E' GIA' ISCRITTO AL GIVEAWAY
           let checkUserAlreadyPartecipans = await readDbWith3Params('SELECT * FROM giveaway_system_partecipants WHERE guildId = ? AND messageId = ? AND userId = ?', guild.id, message.id, user.id);
           if (!checkUserAlreadyPartecipans) {
+            let checkSlotsPartecipants = await readDbAllWith2Params('SELECT * FROM giveaway_system_partecipants WHERE guildId = ? AND messageId = ?', guild.id, message.id);
             //SE L'UTENTE NON PARTECIPA
-            await runDb("INSERT INTO giveaway_system_partecipants (guildId, channelId, messageId, userId) VALUES (?, ?, ?, ?)", interaction.guild.id, interaction.channel.id, message.id, user.id);
-            // CONTROLLO SE LA LUNGHEZZA DEI PARTECIPANTI
-            let checkDataPartecipants = await readDbAllWith3Params('SELECT * FROM giveaway_system_partecipants WHERE guildId = ? AND messageId = ? AND channelId = ?', guild.id, message.id, channel.id);
+            if (checkSlotsPartecipants.length < checkGiveaway.slots) {
+              // SE GLI SLOTS SONO ANCORA DISPONIBILI
+              await runDb("INSERT INTO giveaway_system_partecipants (guildId, channelId, messageId, userId) VALUES (?, ?, ?, ?)", interaction.guild.id, interaction.channel.id, message.id, user.id);
+              // CONTROLLO SE LA LUNGHEZZA DEI PARTECIPANTI
+              let checkDataPartecipants = await readDbAllWith3Params('SELECT * FROM giveaway_system_partecipants WHERE guildId = ? AND messageId = ? AND channelId = ?', guild.id, message.id, channel.id);
 
 
-            // RISPONDO ALL'INTERAZIONE
-            const embedLog = new EmbedBuilder()
-              .setAuthor({ name: `${language_result.giveawayPartecipants.embed_title}`, iconURL: customEmoji })
-              .setDescription(language_result.giveawayPartecipants.interactionResponse)
-              .setFooter({ text: `${language_result.giveawayPartecipants.embed_footer}`, iconURL: `${language_result.giveawayPartecipants.embed_icon_url}` })
-              .setColor(0xa22297);
-            await interaction.reply({ embeds: [embedLog], ephemeral: true });
+              // RISPONDO ALL'INTERAZIONE
+              const embedLog = new EmbedBuilder()
+                .setAuthor({ name: `${language_result.giveawayPartecipants.embed_title}`, iconURL: customEmoji })
+                .setDescription(language_result.giveawayPartecipants.interactionResponse)
+                .setFooter({ text: `${language_result.giveawayPartecipants.embed_footer}`, iconURL: `${language_result.giveawayPartecipants.embed_icon_url}` })
+                .setColor(0xa22297);
+              await interaction.reply({ embeds: [embedLog], ephemeral: true });
 
+            } else {
+              //SE NON CI SONO SLOTS DISPONIBILI
+              const embedLog = new EmbedBuilder()
+                .setAuthor({ name: `${language_result.giveawayPartecipants.embed_title}`, iconURL: customEmoji })
+                .setDescription(language_result.giveawayPartecipants.noSlots)
+                .setFooter({ text: `${language_result.giveawayPartecipants.embed_footer}`, iconURL: `${language_result.giveawayPartecipants.embed_icon_url}` })
+                .setColor(0xa22297);
+              await interaction.reply({ embeds: [embedLog], ephemeral: true });
+            }
           } else {
             //SE L'UTENTE GIA' PARTECIPA
             const embedLog = new EmbedBuilder()

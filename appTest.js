@@ -116,7 +116,7 @@ client.once(Events.ClientReady, readyClient => {
   // FUNZIONE DI giveaway-system
   setInterval(async () => {
     await checkGiveawayTiming();
-  }, 10000);
+  }, 60000);
 
   // FUNCTION OTHER SYSTEM // NON LI RICARICO IN FASE DI TEST
   // require('./utils/twitch-system/twitch'); //Twitch System

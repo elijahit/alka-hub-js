@@ -19,7 +19,9 @@
     "description_embed": "Giveaway started, join by clicking the button below!\n\n**Prize**: {0}\n**End Date**: {1}\n**Slots Available**: {2}\n**Winners**: {3}",
     "slotsInfinity": "Unlimited",
     "button": "Participate now!",
-    "interactionResponse": "You have successfully created your giveaway, enjoy! Play responsibly 😎"
+    "interactionResponse": "You have successfully created your giveaway, enjoy! Play responsibly 😎",
+    "embed_winners": "🥇 The winners of this giveaway are:",
+    "noWinners": "No winners"
   },
   "giveawayNotFound": {
     "embed_title": "Alka Hub | Giveaway System",
@@ -27,11 +29,18 @@
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "We encountered an error while searching for the giveaway, it's not present in our systems. Please contact an administrator for more information."
   },
-  "giveawayParticipants": {
+  "giveawayPartecipants": {
     "embed_title": "Alka Hub | Giveaway System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "interactionResponse": "You have successfully joined the giveaway, wait for the draw and good luck! 🥳",
-    "alreadyParticipants": "You are already participating in this giveaway, wait for the draw."
+    "alreadyPartecipants": "You are already participating in this giveaway, wait for the draw.",
+    "noSlots": "I'm sorry, but the available slots are not sufficient to accept your entry! Please try again at the next giveaway 🎈"
+  },
+  "giveawayUserContact": {
+    "embed_title": "Alka Hub | Giveaway System",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "description_embed": "Congratulations 🥳, you have won the prize for the giveaway {0}. Follow the instructions provided during participation to redeem your prize!"
   }
 }
