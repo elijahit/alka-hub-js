@@ -194,4 +194,25 @@ CREATE TABLE "music_vote_system" (
 	"userId"	TEXT,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
+-- Tabella di raccolta giveaway
+CREATE TABLE "giveaway_system_container" (
+	"ID"	INTEGER UNIQUE,
+	"guildId"	TEXT,
+	"channelId"	TEXT,
+	"messageId"	TEXT,
+	"prizes"	TEXT,
+	"slots"	INTEGER,
+	"endDate"	TEXT,
+	"winners"	INTEGER,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
+-- Tabella di raccolta partecipanti giveaway
+CREATE TABLE "giveaway_system_partecipants" (
+    "ID"    INTEGER UNIQUE,
+    "guildId"    TEXT,
+    "channelId"    TEXT,
+    "messageId"    TEXT,
+    "userId"    TEXT,
+    PRIMARY KEY("ID" AUTOINCREMENT)
+)
 ```
