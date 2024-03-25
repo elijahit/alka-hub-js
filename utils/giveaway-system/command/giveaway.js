@@ -19,7 +19,7 @@ module.exports = {
 		.addStringOption(value =>
 			value
 				.setName('date')
-				.setDescription('The giveaway end date and time (DD/MM/AAAA HH:MM)')
+				.setDescription('The giveaway end date and time (DD/MM/YYYY HH:MM)')
 				.setRequired(true),
 		)
 		.addNumberOption(value =>
