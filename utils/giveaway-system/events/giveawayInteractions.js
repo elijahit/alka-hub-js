@@ -34,7 +34,7 @@ module.exports = {
           if (!checkUserAlreadyPartecipans) {
             let checkSlotsPartecipants = await readDbAllWith2Params('SELECT * FROM giveaway_system_partecipants WHERE guildId = ? AND messageId = ?', guild.id, message.id);
             //SE L'UTENTE NON PARTECIPA
-            if (checkSlotsPartecipants.length < checkGiveaway.slots) {
+            if (checkSlotsPartecipants.length < checkGiveaway.slots || checkGiveaway.slots == 0) {
               // SE GLI SLOTS SONO ANCORA DISPONIBILI
               await runDb("INSERT INTO giveaway_system_partecipants (guildId, channelId, messageId, userId) VALUES (?, ?, ?, ?)", interaction.guild.id, interaction.channel.id, message.id, user.id);
               // CONTROLLO SE LA LUNGHEZZA DEI PARTECIPANTI
