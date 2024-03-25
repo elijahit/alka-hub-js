@@ -97,7 +97,7 @@ module.exports = {
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}
 					} else {
-						await noEnabledFunc(interaction, language_result);
+						await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
 					}
 				}
 				else {
