@@ -38,6 +38,10 @@ module.exports = {
 					name: "Twitch Notify System",
 					value: "twitchNotifySystem_enabled",
 				})
+				.addChoices({
+					name: "Giveaway System",
+					value: "giveawaySystem_enabled",
+				})
 				.setName('choices')
 				.setDescription('Name of the system you want to enable or disable')
 				.setRequired(true)

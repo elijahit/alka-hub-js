@@ -32,6 +32,7 @@ CREATE TABLE "guilds_config" (
 	"statsServerSystem_enabled"	INTEGER,
 	"twitchNotifySystem_enabled"	INTEGER,
 	"youtubeNotifySystem_enabled"	INTEGER,
+	"giveawaySystem_enabled"	INTEGER,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 -- Tabella di configurazione Log System
