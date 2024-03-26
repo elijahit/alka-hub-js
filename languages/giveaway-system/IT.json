@@ -47,7 +47,7 @@
     "embed_title": "Alka Hub | Giveaway System",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "Ecco la lista dei partecipanti del giveaway ID: {0}\n\n{1}",
+    "description_embed": "Ecco la lista dei partecipanti del giveaway ID: {0}\n**Partecipanti Totali:** {1}\n\n{1}",
     "noParticipants": "Nessun partecipante",
     "noGiveawayExist": "Nessun giveaway con questo ID è stato trovato, riprova o contatta un amministratore."
   }
