@@ -51,7 +51,7 @@ module.exports = {
 								.setAuthor({ name: `${language_result.giveawayParticipantsCheck.embed_title}`, iconURL: customEmoji })
 								.setDescription(language_result.giveawayParticipantsCheck.description_embed
 									.replace("{0}", `${giveawayId}`)
-									.replace("{1}", `${participants.length}`)
+									.replace("{1}", `${checkParticipants.length}`)
 									.replace("{2}", (participants.length > 0 ? participants : language_result.giveawayParticipantsCheck.noParticipants)))
 								.setFooter({ text: `${language_result.giveawayParticipantsCheck.embed_footer}`, iconURL: `${language_result.giveawayParticipantsCheck.embed_icon_url}` })
 								.setColor(0xa22297);
