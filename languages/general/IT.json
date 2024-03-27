@@ -28,14 +28,17 @@
     "embed_title": "Alka Hub | Help Commands",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "Ciao! Di seguito trovi la lista dei comandi di Alka Hub: Assicurati di aver invitato Alka con i permessi necessari (Amministratore) per garantire il corretto funzionamento delle varie funzionalità. Utilizza solo i link ufficiali che trovi nei vari elenchi di Discord e nella documentazione ufficiale.",
+    "documentationRefer":"**->** Approfondisci nella nostra [documentazione](https://docs.alkanetwork.eu/it/{0})",
+    "noModuleSelectTitle": "Sei pronto?",
+    "noModuleSelectEmbed": "[->] Non sai come utilizzare Alka Hub?\n[->] Visita la nostra documentazione al link https://docs.alkanetwork.eu/\n[->] Se hai bisogno di aiuto contatta il supporto nel nostro discord ufficiale https://discord.gg/X7KPcynxfB\nSeleziona un modulo dai parametri del comando /help per approfondirne il contenuto.",
+    "description_embed": "Ecco una spiegazione del modulo richiesto!\n\n[!] Gli HASH sono delle variabili che possono essere utilizzate nel modulo **Admin Ranks**.",
     "footer": "Ti raccomandiamo di leggere la **nostra documentazione** per ogni dubbio, la trovi nel nostro [Discord Ufficiale](https://discord.gg/X7KPcynxfB) -> alka-docs; per qualsiasi problema puoi aprire una segnalazione -> Technical Support.",
     "general_category": "Generale",
     "general_commands": "- **/help** *[NO HASH]* - Il comando mostra la lista completa dei comandi disponibili.\n- **/init** *[NO HASH]* - Il comando inizializza le configurazioni del server e lingua da utilizzare tra quelle disponibili.\n- **/features** *[features]* - Il comando abilita o disabilita le funzionalità disponibili in Alka Hub.",
     "logs_category": "Logs System",
     "logs_commands": "- **/logschannel** *[logschannel]* - Il comando imposta i vari canali di logs per inviare gli eventi del Logs System.",
-    "admin_category": "Admin Ranks System",
-    "admin_commands": "- **/permission** *[NO HASH]* - Il comando imposta i permessi ai ruoli per le funzionalità e i comandi, questi permessi vengono impostati tramite HASH.\n- **/permissionlist** *[permissionlist]* - Il comando visualizza i vari permessi impostati in base al ruolo.",
+    "permissions_category": "Admin Ranks System",
+    "permissions_commands": "- **/permission** *[NO HASH]* - Il comando imposta i permessi ai ruoli per le funzionalità e i comandi, questi permessi vengono impostati tramite HASH.\n- **/permissionlist** *[permissionlist]* - Il comando visualizza i vari permessi impostati in base al ruolo.",
     "ticket_category": "Ticket System",
     "ticket_commands": "- **/ticket** *[ticket]* - Il comando avvia la configurazione tramite un canale creato appositamente del sistema ticket segui le informazioni.\n- **/ticketcomponents** *[ticket]* - Il comando imposta i components (bottoni) nel messaggio di ticket impostato tramite /ticket.",
     "autovoice_category": "Auto Voice System",
@@ -49,7 +52,11 @@
     "twitch_category": "Twitch Notify System",
     "twitch_commands": "- **/twitchnotify** *[twitchNotify]* - Il comando permette di aggiungere o rimuovere un canale in cui vengono inviate le notifiche quando uno streamer va in live.\n- **/twitchlist** *[twitchNotify]* - Il comando permette di visualizzare la lista dei canali in cui si ascoltano le notifiche degli streamer.",
     "youtube_category": "Youtube Notify System",
-    "youtube_commands": "- **/youtubenotify** *[youtubeNotify]* - Il comando permette di aggiungere o rimuovere un canale in cui vengono inviate le notifiche quando un video viene pubblico o va in live.\n- **/youtubelist** *[youtubeNotify]* - Il comando permette di visualizzare la lista dei canali in cui si ascoltano le notifiche degli youtuber."
+    "youtube_commands": "- **/youtubenotify** *[youtubeNotify]* - Il comando permette di aggiungere o rimuovere un canale in cui vengono inviate le notifiche quando un video viene pubblico o va in live.\n- **/youtubelist** *[youtubeNotify]* - Il comando permette di visualizzare la lista dei canali in cui si ascoltano le notifiche degli youtuber.",
+    "musicbot_category": "Music Bot System",
+    "musicbot_commands": "- **/play** *[NO HASH]* - Il comando permettere di aggiungere una canzone/playlist alla queue e riprodurla nel canale vocale.\n- **/next** *[musicNextSkip]* - Il comando permette di avviare una votazione per skippare alla canzone successiva alla queue.\n- **/stop** *[musicStopSkip]* - Il comando permette di avviare una votazione per stoppare la queue e disconnettere il Music Bot.",
+    "giveaway_category": "Giveaway System",
+    "giveaway_commands": "- **/giveawy** *[giveaway]* - Il comando permettere di avviare un giveaway sul canale in cui viene digitato il comando.\n- **/giveawayparticipants** *[giveaway]* - Il comando permette di vedere la lista dei partecipanti attuali al giveaway tramite l'id del giveaway.\n- **/giveawayend** *[giveaway]* - Il comando permette di concludere immediatamente il giveaway senza attendere la data di scadenza, sorteggiando un vincitore."
   }
   
 }
