@@ -20,7 +20,7 @@ let tunnel;
 })();
 const youtube = google.youtube({
   version: "v3",
-  auth: "AIzaSyA5z90To5qPCA959wU17UJ7Z1INTeKsFWM"
+  auth: "AIzaSyDM3xqqqkCuBJH6Czxlt_dfl9ttJM-IlhI"
 });
 
 
