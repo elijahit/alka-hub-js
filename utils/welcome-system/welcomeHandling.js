@@ -2,7 +2,7 @@
 const Jimp = require("jimp");
 
 
-async function makeWelcomeImage(avatar, user, serverName, language_result, color, backgroundUrl) {
+async function makeWelcomeImage(user, serverName, language_result, color, backgroundUrl) {
   let baseImage;
   try {
     // CERCA DI RECUPERARE L'IMMAGINE TRAMITE L'URL SE ESISTE O PASSA 
@@ -13,7 +13,8 @@ async function makeWelcomeImage(avatar, user, serverName, language_result, color
     baseImage = await Jimp.read("./utils/welcome-system/welcomeDefault.jpg");
   }
   const baseCircleMask = await Jimp.read("./utils/welcome-system/defaultCircleMask.jpg");
-  const avatarImage = await Jimp.read(avatar.replace('webp', "jpg"));
+  let avatarResolve = user.avatarURL() ? user.avatarURL().replace('webp', "jpg") : user.defaultAvatarURL;
+  const avatarImage = await Jimp.read(avatarResolve);
 
   const fontRoboto42 = color == 0 ?
     await Jimp.loadFont("./utils/welcome-system/font/ROBOTOWHITE64/ROBOTOWHITE64.fnt") :
