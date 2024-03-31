@@ -23,13 +23,13 @@ async function makeWelcomeImage(user, serverName, language_result, color, backgr
   baseImage.resize(1280, 720);
 
   // SCRIVO IL MESSAGGIO DI BENVENUTO NEL IMMAGINE
-  baseImage.print(fontRoboto42, 640 - (Jimp.measureText(fontRoboto42, language_result.welcomeMessage.description_embed) / 2), 400, language_result.welcomeMessage.description_embed);
+  baseImage.print(fontRoboto42, 640 - (Jimp.measureText(fontRoboto42, language_result.welcomeMessage.description_embed) / 2), 470, language_result.welcomeMessage.description_embed);
   // SCRIVO IL NOME DEL SERVER NEL IMMAGINE
-  baseImage.print(fontRoboto42, 640 - (Jimp.measureText(fontRoboto42, serverName) / 2), 480, serverName);
+  baseImage.print(fontRoboto42, 640 - (Jimp.measureText(fontRoboto42, serverName) / 2), 550, serverName);
   // SCRIVO IL NOME UTENTE NEL IMMAGINE
-  baseImage.print(fontRoboto42, 640 - (Jimp.measureText(fontRoboto42, user.username) / 2), 290, user.username);
+  baseImage.print(fontRoboto42, 640 - (Jimp.measureText(fontRoboto42, user.username) / 2), 360, user.username);
   // METTO UN HORIZONTAL RULE
-  baseImage.print(fontRoboto42, 640 - (Jimp.measureText(fontRoboto42, "-") / 2), 345, "-");
+  baseImage.print(fontRoboto42, 640 - (Jimp.measureText(fontRoboto42, "-") / 2), 415, "-");
 
   // RIDIMENSIONO L'IMMAGINE UTENTE
   avatarImage
@@ -48,8 +48,8 @@ async function makeWelcomeImage(user, serverName, language_result, color, backgr
     ]);
 
   // APPLICO LE IMMAGINI SULLA BASE
-  baseImage.blit(baseCircleMask, 525, 60);
-  baseImage.blit(avatarImage, 530, 65);
+  baseImage.blit(baseCircleMask, 525, 100);
+  baseImage.blit(avatarImage, 530, 105);
 
   return baseImage.getBufferAsync("image/jpeg");
 }
