@@ -60,6 +60,7 @@ module.exports = {
 							const descriptionDefine = new TextInputBuilder()
 								.setCustomId('descriptionWelcome')
 								.setLabel(language_result.welcomeModal.descriptionWelcome)
+								.setRequired(false)
 								.setStyle(TextInputStyle.Paragraph)
 								.setValue(checkText)
 							const descriptionRow = new ActionRowBuilder().addComponents(descriptionDefine);
