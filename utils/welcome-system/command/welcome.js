@@ -13,9 +13,31 @@ module.exports = {
 			.setName('channel')
 			.setDescription('Channel in which to see the message')
 			.addChannelTypes(ChannelType.GuildText)
-			.setRequired(true)),
+			.setRequired(true)
+		)
+		.addNumberOption(value =>
+			value
+				.setName('color')
+				.setRequired(true)
+				.setDescription('Color of your font')
+				.addChoices({
+					name: "White",
+					value: 0
+				})
+				.addChoices({
+					name: "Black",
+					value: 1
+				})		
+		)
+		.addStringOption(value =>
+			value
+				.setName("background")
+				.setDescription('Link .jpg or .png image to use as background')		
+		),
 	async execute(interaction) {
 		const channel = interaction.options.getChannel('channel');
+		const color = interaction.options.getNumber('color');
+		const background = interaction.options.getString('background');
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id);
 		const langagues_path = readFileSync(`./languages/welcome-system/${data}.json`);
@@ -27,24 +49,53 @@ module.exports = {
 					const checkFeaturesisEnabled = await readDb(`SELECT welcomeMessage_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
 
 					if (checkFeaturesisEnabled?.welcomeMessage_enabled) {
+						//ESISTE GIA
 						const checkAlreadyExist = await readDbAllWith1Params('SELECT * FROM welcome_message_container WHERE guildId = ?', interaction.guild.id);
 						const modal = new ModalBuilder()
 							.setTitle('Welcome Message | Settings')
 							.setCustomId('welcomeMessageSetting');
 						if (checkAlreadyExist.length > 0) {
+							// DEFINISCO LA DESCRIZIONE
+							let checkText = checkAlreadyExist[0].text ? checkAlreadyExist[0].text : "";
 							const descriptionDefine = new TextInputBuilder()
 								.setCustomId('descriptionWelcome')
 								.setLabel(language_result.welcomeModal.descriptionWelcome)
 								.setStyle(TextInputStyle.Paragraph)
-								.setValue(checkAlreadyExist[0].text)
+								.setValue(checkText)
 							const descriptionRow = new ActionRowBuilder().addComponents(descriptionDefine);
+							// END DESCRIZIONE
+
 
 							modal.addComponents(descriptionRow);
 
+							// AGGIORNO IL CANALE NEL DATABASE
+							await runDb('UPDATE welcome_message_container SET channelId = ?, color = ? WHERE guildId = ?', channel.id, color, interaction.guild.id);
+
+							if(background) {
+								await runDb('UPDATE welcome_message_container SET backgroundUrl = ? WHERE guildId = ?',background, interaction.guild.id);
+							}
+
 							await interaction.showModal(modal);
-							//ESISTE GIA
 						} else {
-							// NON ESISTE
+							// DEFINISCO LA DESCRIZIONE
+							const descriptionDefine = new TextInputBuilder()
+								.setCustomId('descriptionWelcome')
+								.setLabel(language_result.welcomeModal.descriptionWelcome)
+								.setStyle(TextInputStyle.Paragraph)
+							const descriptionRow = new ActionRowBuilder().addComponents(descriptionDefine);
+							// END DESCRIZIONE
+
+
+							modal.addComponents(descriptionRow);
+
+							// INSERISCO IL CANALE NEL DATABASE
+							await runDb('INSERT INTO welcome_message_container (guildId, channelId, color) VALUES(?,?,?)', interaction.guild.id, channel.id, color);
+
+							if(background) {
+								await runDb('UPDATE welcome_message_container SET backgroundUrl = ? WHERE guildId = ?',background, interaction.guild.id);
+							}
+
+							await interaction.showModal(modal);
 						}
 
 					} else {
