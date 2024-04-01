@@ -42,6 +42,10 @@ module.exports = {
 					name: "Giveaway System",
 					value: "giveawaySystem_enabled",
 				})
+				.addChoices({
+					name: "Welcome Message System",
+					value: "welcomeMessage_enabled",
+				})
 				.setName('choices')
 				.setDescription('Name of the system you want to enable or disable')
 				.setRequired(true)

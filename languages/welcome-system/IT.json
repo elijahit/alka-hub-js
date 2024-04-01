@@ -3,12 +3,20 @@
     "embed_title": "Alka Hub | Welcome",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "Non hai il permesso per usare questo comando!"
+    "description_embed": "Non hai il permesso per usare questo comando!",
+    "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
   },
   "welcomeMessage": {
     "embed_title": "Alka Hub | Welcome",
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed": "BENVENUTO SU"
+  },
+  "welcomeModal": {
+    "embed_title": "Alka Hub | Welcome",
+    "embed_footer": "Alka Hub by alkanetwork.eu",
+    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "descriptionWelcome": "DESCRIZIONE",
+    "description": "Hai configurato con successo il messaggio di benvenuto, adesso quando i nuovi utenti faranno accesso al server sarà inviato il messaggio nel canale selezionato."
   }
 }

@@ -33,6 +33,7 @@ CREATE TABLE "guilds_config" (
 	"twitchNotifySystem_enabled"	INTEGER,
 	"youtubeNotifySystem_enabled"	INTEGER,
 	"giveawaySystem_enabled"	INTEGER,
+	"welcomeMessage_enabled"	INTEGER,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 -- Tabella di configurazione Log System
@@ -215,5 +216,15 @@ CREATE TABLE "giveaway_system_partecipants" (
     "messageId"    TEXT,
     "userId"    TEXT,
     PRIMARY KEY("ID" AUTOINCREMENT)
+)
+-- Tabella di raccolta welcome message
+CREATE TABLE "welcome_message_container" (
+	"ID"	INTEGER UNIQUE,
+	"guildId"	TEXT,
+	"channelId"	TEXT,
+	"color"	INTEGER,
+	"backgroundUrl"	TEXT,
+	"text"	TEXT,
+	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 ```
