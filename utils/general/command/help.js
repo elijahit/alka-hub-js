@@ -60,6 +60,10 @@ module.exports = {
 					name: "Giveaway System",
 					value: "giveaway",
 				})
+				.addChoices({
+					name: "Welcome Message",
+					value: "welcome",
+				})
 		),
 	async execute(interaction) {
 		let moduleSelect = await interaction.options.get("module")?.value;

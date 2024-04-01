@@ -56,7 +56,9 @@
     "musicbot_category": "Music Bot System",
     "musicbot_commands": "- **/play** *[NO HASH]* - Il comando permettere di aggiungere una canzone/playlist alla queue e riprodurla nel canale vocale.\n- **/next** *[musicNextSkip]* - Il comando permette di avviare una votazione per skippare alla canzone successiva alla queue.\n- **/stop** *[musicStopSkip]* - Il comando permette di avviare una votazione per stoppare la queue e disconnettere il Music Bot.",
     "giveaway_category": "Giveaway System",
-    "giveaway_commands": "- **/giveawy** *[giveaway]* - Il comando permettere di avviare un giveaway sul canale in cui viene digitato il comando.\n- **/giveawayparticipants** *[giveaway]* - Il comando permette di vedere la lista dei partecipanti attuali al giveaway tramite l'id del giveaway.\n- **/giveawayend** *[giveaway]* - Il comando permette di concludere immediatamente il giveaway senza attendere la data di scadenza, sorteggiando un vincitore."
+    "giveaway_commands": "- **/giveawy** *[giveaway]* - Il comando permettere di avviare un giveaway sul canale in cui viene digitato il comando.\n- **/giveawayparticipants** *[giveaway]* - Il comando permette di vedere la lista dei partecipanti attuali al giveaway tramite l'id del giveaway.\n- **/giveawayend** *[giveaway]* - Il comando permette di concludere immediatamente il giveaway senza attendere la data di scadenza, sorteggiando un vincitore.",
+    "welcome_category": "Welcome Message",
+    "welcome_commands": "- **/welcome** *[welcome]* - Il comando permette di configurare il Welcome Message."
   }
   
 }
