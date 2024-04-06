@@ -14,7 +14,7 @@ function errorSendControls(error, client, guild_error, system) {
             if (channel.type == 0) {
               const embedLog = new EmbedBuilder()
                 .setAuthor({ name: `Alka Hub | Missing Permissions` })
-                .setDescription("You haven't invited Alka Hub correctly and you don't have permission to perform this action. We invite you to invite Alka Hub again or contact our [support discord](https://discord.gg/X7KPcynxfB).\n\n-> [Invite Again](https://discord.com/api/oauth2/authorize?client_id=843183839869665280&permissions=8&scope=bot+applications.commands)")
+                .setDescription("You haven't invited Alka Hub correctly and you don't have permission to perform this action. We invite you to invite Alka Hub again or contact our [support discord](https://discord.gg/DqRcKB75N5).\n\n-> [Invite Again](https://discord.com/api/oauth2/authorize?client_id=843183839869665280&permissions=8&scope=bot+applications.commands)")
                 .setFooter({ text: `Alka Hub di alkanetwork.eu`, iconURL: `https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png` })
                 .setColor(0x7a090c);
               channel.send({ embeds: [embedLog] });
