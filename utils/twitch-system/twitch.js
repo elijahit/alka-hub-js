@@ -13,12 +13,13 @@ const { client } = require('../../bin/client');
 const apiClient = new ApiClient({ authProvider });
 
 const secret = 'O9Q3KKbMPcTgLiZXWPR5LwylJcazv6Ao';
+// ACCOUNT: github (gabriele.tosto@outlook.com)
 const listener = new EventSubHttpListener({
   apiClient,
   adapter: new NgrokAdapter({
     ngrokConfig: {
       port:8081,
-      authtoken: '2de8k4zrwNlMR2RSSXSNsN7TbKe_654GsvZKE7tbbStYkpBpn'
+      authtoken: '2ek3srvYEcTaiJny1o5o8afxUJn_yCrZDmKRkwciR3zt3JRg'
     }
   }),
   secret
