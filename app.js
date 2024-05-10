@@ -71,6 +71,11 @@ client.on(Events.InteractionCreate, async interaction => {
   }
 });
 
+// ERROR LISTENER
+client.on(Events.ShardError, error => {
+  console.log(error);
+})
+
 // EVENT LISTNER PER AVVIO DEL BOT
 
 client.once(Events.ClientReady, readyClient => {
