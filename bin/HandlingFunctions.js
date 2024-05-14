@@ -332,7 +332,8 @@ async function reactionRoleCached(client) {
 //return new Date
 async function timeZoneManage(guild) {
   config = await readDb('SELECT * FROM guilds_config WHERE guildId = ?', guild.id);
-  return new Date(moment().tz(config.timeZone).unix());
+  let date = moment(Date.now());
+  return new date.tz(config?.timeZone);
 
 }
 
@@ -352,24 +353,24 @@ async function statisticsUpdate(client) {
         // DAY STABLER
         let day;
         if (date.getDate().toString().length == 1) {
-          day = `0${date.getDate()}`
+          day = `0${date.day()}`
         } else {
-          day = `${date.getDate()}`
+          day = `${date.day()}`
         }
 
         // MONTH STABLER
         let month;
         if ((date.getMonth() + 1).toString().length == 1) {
-          month = `0${date.getMonth() + 1}`
+          month = `0${date.month() + 1}`
         } else {
-          month = `${date.getMonth() + 1}`
+          month = `${date.month() + 1}`
         }
 
         await channel.edit({
           name: data.markdown
           .replace("{0}", `${day}`)
           .replace("{1}", `${month}`)
-          .replace("{2}", `${date.getFullYear()}`),
+          .replace("{2}", `${date.year()}`),
         });
       }
       // END DATA TYPE STATS
@@ -381,17 +382,17 @@ async function statisticsUpdate(client) {
         // HOUR STABLER
         let hour;
         if (date.getHours().toString().length == 1) {
-          hour = `0${date.getHours()}`
+          hour = `0${date.hour()}`
         } else {
-          hour = `${date.getHours()}`
+          hour = `${date.hour()}`
         }
 
         // MINUTE STABLER
         let minute;
         if ((date.getMinutes()).toString().length == 1) {
-          minute = `0${date.getMinutes()}`
+          minute = `0${date.minute()}`
         } else {
-          minute = `${date.getMinutes()}`
+          minute = `${date.minute()}`
         }
         const hourformat = `${hour}:${minute}`
         await channel.edit({
@@ -409,39 +410,39 @@ async function statisticsUpdate(client) {
         // HOUR STABLER
         let hour;
         if (date.getHours().toString().length == 1) {
-          hour = `0${date.getHours()}`
+          hour = `0${date.hour()}`
         } else {
-          hour = `${date.getHours()}`
+          hour = `${date.hour()}`
         }
 
         // MINUTE STABLER
         let minute;
-        if ((date.getMinutes()).toString().length == 1) {
-          minute = `0${date.getMinutes()}`
+        if ((date.minute()).toString().length == 1) {
+          minute = `0${date.minute()}`
         } else {
-          minute = `${date.getMinutes()}`
+          minute = `${date.minute()}`
         }
         // DAY STABLER
         let day;
         if (date.getDate().toString().length == 1) {
-          day = `0${date.getDate()}`
+          day = `0${date.day()}`
         } else {
-          day = `${date.getDate()}`
+          day = `${date.day()}`
         }
 
         // MONTH STABLER
         let month;
         if ((date.getMonth() + 1).toString().length == 1) {
-          month = `0${date.getMonth() + 1}`
+          month = `0${date.month() + 1}`
         } else {
-          month = `${date.getMonth() + 1}`
+          month = `${date.month() + 1}`
         }
 
         await channel.edit({
           name: data.markdown
           .replace("{0}", `${day}`)
           .replace("{1}", `${month}`)
-          .replace("{2}", `${date.getFullYear()}`)
+          .replace("{2}", `${date.year()}`)
           .replace("{3}", `${hour}`)
           .replace("{4}", `${minute}`),
         });
