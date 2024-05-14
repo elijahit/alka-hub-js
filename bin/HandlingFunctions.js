@@ -3,6 +3,7 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const { readDbWith3Params, readDb, readDbAll, runDb, readDbAllWith2Params, readDbAllWithValue } = require("../bin/database");
 const { readFileSync, readdir, writeFile } = require("fs");
 const { stripIndents } = require('common-tags');
+const moment = require('moment-timezone');
 
 function errorSendControls(error, client, guild_error, system) {
   if (error == "DiscordAPIError[50013]: Missing Permissions") {
@@ -328,15 +329,10 @@ async function reactionRoleCached(client) {
 }
 
 // DATE TIME ZONE FUNCTION
+//return new Date
 async function timeZoneManage(guild) {
-  const config = await readDb('SELECT * FROM guilds_config WHERE guildId = ?', guild.id);
-  if (config.timeZone?.includes("+")) {
-    return new Date(Date.now() + (3600000 * parseInt(config.timeZone)));
-  } else if (config.timeZone?.includes("-")) {
-    return new Date(Date.now() - (3600000 * parseInt(config.timeZone.split("-")[1])));
-  } else {
-    return new Date(Date.now());
-  }
+  config = await readDb('SELECT * FROM guilds_config WHERE guildId = ?', guild.id);
+  return new Date(moment().tz(config.timeZone).format());
 
 }
 
@@ -355,18 +351,18 @@ async function statisticsUpdate(client) {
 
         // DAY STABLER
         let day;
-        if (date.getUTCDate().toString().length == 1) {
-          day = `0${date.getUTCDate()}`
+        if (date.getDate().toString().length == 1) {
+          day = `0${date.getDate()}`
         } else {
-          day = `${date.getUTCDate()}`
+          day = `${date.getDate()}`
         }
 
         // MONTH STABLER
         let month;
-        if ((date.getUTCMonth() + 1).toString().length == 1) {
-          month = `0${date.getUTCMonth() + 1}`
+        if ((date.getMonth() + 1).toString().length == 1) {
+          month = `0${date.getMonth() + 1}`
         } else {
-          month = `${date.getUTCMonth() + 1}`
+          month = `${date.getMonth() + 1}`
         }
 
         await channel.edit({
@@ -384,18 +380,18 @@ async function statisticsUpdate(client) {
 
         // HOUR STABLER
         let hour;
-        if (date.getUTCHours().toString().length == 1) {
-          hour = `0${date.getUTCHours()}`
+        if (date.getHours().toString().length == 1) {
+          hour = `0${date.getHours()}`
         } else {
-          hour = `${date.getUTCHours()}`
+          hour = `${date.getHours()}`
         }
 
         // MINUTE STABLER
         let minute;
-        if ((date.getUTCMinutes()).toString().length == 1) {
-          minute = `0${date.getUTCMinutes()}`
+        if ((date.getMinutes()).toString().length == 1) {
+          minute = `0${date.getMinutes()}`
         } else {
-          minute = `${date.getUTCMinutes()}`
+          minute = `${date.getMinutes()}`
         }
         const hourformat = `${hour}:${minute}`
         await channel.edit({
@@ -412,33 +408,33 @@ async function statisticsUpdate(client) {
 
         // HOUR STABLER
         let hour;
-        if (date.getUTCHours().toString().length == 1) {
-          hour = `0${date.getUTCHours()}`
+        if (date.getHours().toString().length == 1) {
+          hour = `0${date.getHours()}`
         } else {
-          hour = `${date.getUTCHours()}`
+          hour = `${date.getHours()}`
         }
 
         // MINUTE STABLER
         let minute;
-        if ((date.getUTCMinutes()).toString().length == 1) {
-          minute = `0${date.getUTCMinutes()}`
+        if ((date.getMinutes()).toString().length == 1) {
+          minute = `0${date.getMinutes()}`
         } else {
-          minute = `${date.getUTCMinutes()}`
+          minute = `${date.getMinutes()}`
         }
         // DAY STABLER
         let day;
-        if (date.getUTCDate().toString().length == 1) {
-          day = `0${date.getUTCDate()}`
+        if (date.getDate().toString().length == 1) {
+          day = `0${date.getDate()}`
         } else {
-          day = `${date.getUTCDate()}`
+          day = `${date.getDate()}`
         }
 
         // MONTH STABLER
         let month;
-        if ((date.getUTCMonth() + 1).toString().length == 1) {
-          month = `0${date.getUTCMonth() + 1}`
+        if ((date.getMonth() + 1).toString().length == 1) {
+          month = `0${date.getMonth() + 1}`
         } else {
-          month = `${date.getUTCMonth() + 1}`
+          month = `${date.getMonth() + 1}`
         }
 
         await channel.edit({
