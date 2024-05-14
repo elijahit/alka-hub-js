@@ -22,6 +22,7 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_already_embed": "Questo server è già stato inizializzato. Non è possibile procedere con un'ulteriore inizializzazione. Utilizza **/config** per modificarne la configurazione. \n\n- L'errore può presentarsi anche in caso di TimeZone non impostata correttamente: utilizza il simbolo + o - partendo da un orario UTC per definire la tua TimeZone come ad esempio: +1",
+    "error_timezone": "La timezone inserita non risulta riconosciuta, consulta la documentazione per avere maggiori dettagli https://docs.alkanetwork.eu/",
     "description_embed": "Hai inizializzato Alka Hub con successo. Ora puoi godere appieno di tutte le funzionalità di Alka Hub!"
   },
   "helpCommand": {

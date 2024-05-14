@@ -317,7 +317,13 @@ module.exports = {
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}
 						else {
-							console.log("ERRORE")
+							let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
+						const embedLog = new EmbedBuilder()
+							.setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: customEmoji })
+							.setDescription(language_result.initCommand.error_timezone)
+							.setFooter({ text: `${language_result.initCommand.embed_footer}`, iconURL: `${language_result.initCommand.embed_icon_url}` })
+							.setColor(0x4287f5);
+						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}
 
 					} else {
