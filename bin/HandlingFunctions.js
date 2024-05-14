@@ -352,10 +352,10 @@ async function statisticsUpdate(client) {
 
         // DAY STABLER
         let day;
-        if (date.day().toString().length == 1) {
-          day = `0${date.day()}`
+        if (date.date().toString().length == 1) {
+          day = `0${date.date()}`
         } else {
-          day = `${date.day()}`
+          day = `${date.date()}`
         }
 
         // MONTH STABLER
@@ -424,10 +424,10 @@ async function statisticsUpdate(client) {
         }
         // DAY STABLER
         let day;
-        if (date.day().toString().length == 1) {
-          day = `0${date.day()}`
+        if (date.date().toString().length == 1) {
+          day = `0${date.date()}`
         } else {
-          day = `${date.day()}`
+          day = `${date.date()}`
         }
 
         // MONTH STABLER
