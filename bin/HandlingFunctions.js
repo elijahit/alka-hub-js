@@ -352,7 +352,7 @@ async function statisticsUpdate(client) {
 
         // DAY STABLER
         let day;
-        if (date.getDate().toString().length == 1) {
+        if (date.day().toString().length == 1) {
           day = `0${date.day()}`
         } else {
           day = `${date.day()}`
@@ -360,7 +360,7 @@ async function statisticsUpdate(client) {
 
         // MONTH STABLER
         let month;
-        if ((date.getMonth() + 1).toString().length == 1) {
+        if ((date.month() + 1).toString().length == 1) {
           month = `0${date.month() + 1}`
         } else {
           month = `${date.month() + 1}`
@@ -381,7 +381,7 @@ async function statisticsUpdate(client) {
 
         // HOUR STABLER
         let hour;
-        if (date.getHours().toString().length == 1) {
+        if (date.hour().toString().length == 1) {
           hour = `0${date.hour()}`
         } else {
           hour = `${date.hour()}`
@@ -389,7 +389,7 @@ async function statisticsUpdate(client) {
 
         // MINUTE STABLER
         let minute;
-        if ((date.getMinutes()).toString().length == 1) {
+        if ((date.minute()).toString().length == 1) {
           minute = `0${date.minute()}`
         } else {
           minute = `${date.minute()}`
@@ -409,7 +409,7 @@ async function statisticsUpdate(client) {
 
         // HOUR STABLER
         let hour;
-        if (date.getHours().toString().length == 1) {
+        if (date.hour().toString().length == 1) {
           hour = `0${date.hour()}`
         } else {
           hour = `${date.hour()}`
@@ -424,7 +424,7 @@ async function statisticsUpdate(client) {
         }
         // DAY STABLER
         let day;
-        if (date.getDate().toString().length == 1) {
+        if (date.day().toString().length == 1) {
           day = `0${date.day()}`
         } else {
           day = `${date.day()}`
@@ -432,7 +432,7 @@ async function statisticsUpdate(client) {
 
         // MONTH STABLER
         let month;
-        if ((date.getMonth() + 1).toString().length == 1) {
+        if ((date.month() + 1).toString().length == 1) {
           month = `0${date.month() + 1}`
         } else {
           month = `${date.month() + 1}`
