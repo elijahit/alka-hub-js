@@ -25,7 +25,7 @@ module.exports = {
 		.addStringOption(option =>
 			option
 				.setName("timezone")
-				.setDescription('Enter the timezone of your country, check the documentation.')
+				.setDescription('Enter the timezone of your country example: "GB" or "IT')
 				.setRequired(true)
 		),
 	async execute(interaction) {

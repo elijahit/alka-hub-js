@@ -22,7 +22,7 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_already_embed": "This server has already been initialized. Further initialization is not possible. Use **/config** to modify its configuration. \n\n- The error can also occur if the TimeZone is not set correctly: use the symbol + or - starting from a UTC time to define your TimeZone, for example: +1.",
-    "error_timezone": "The entered timezone is not recognised, please consult the documentation for more details https://docs.alkanetwork.eu/",
+    "error_timezone": "The time zone entered is not recognised, use for example \"GB\" for the English time zone, if you think this is an error contact support in the official discord at https://docs.alkanetwork.eu/",
     "description_embed": "You have successfully initialized Alka Hub. Now you can fully enjoy all the features of Alka Hub!"
   },
   "helpCommand": {
