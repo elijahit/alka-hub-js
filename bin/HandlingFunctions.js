@@ -333,7 +333,7 @@ async function reactionRoleCached(client) {
 async function timeZoneManage(guild) {
   config = await readDb('SELECT * FROM guilds_config WHERE guildId = ?', guild.id);
   let date = moment(Date.now());
-  return new date.tz(config?.timeZone);
+  return date.tz(config?.timeZone);
 
 }
 
