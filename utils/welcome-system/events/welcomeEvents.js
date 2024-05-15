@@ -1,7 +1,7 @@
 const { Events, EmbedBuilder, TextChannel, AttachmentBuilder } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
-const { readDb, readDbAllWith1Params } = require('../../../bin/database');
+const { readDb, readDbAllWith1Params, runDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 const { makeWelcomeImage } = require('../welcomeHandling');
 
@@ -21,8 +21,13 @@ module.exports = {
     try {
       let check = await readDbAllWith1Params('SELECT * FROM welcome_message_container WHERE guildId = ?', member.guild.id);
       if (check.length > 0) {
+        let channel;
         try {
-          let channel = await member.guild.channels.fetch(check[0].channelId);
+          channel = await member.guild.channels.fetch(check[0].channelId);
+        } catch {
+          await runDb('DELETE FROM welcomeMessage_enabled WHERE guildId = ?', member.guild.id);
+        }
+        try {
 
           // GENERO IL MESSAGGIO
           // RECUPERO LA LINGUA
@@ -49,7 +54,6 @@ module.exports = {
           await channel.send({ content: `${member}`, files: [file], embeds: [embedLog] })
         } catch (error) {
           console.log(error);
-          await runDb('DELETE FROM welcomeMessage_enabled WHERE guildId = ?', member.guild.id);
         }
 
       }

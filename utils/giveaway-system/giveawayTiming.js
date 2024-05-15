@@ -4,16 +4,24 @@ const { readFileSync, read } = require('fs');
 const { client } = require('../../bin/client');
 const { getEmojifromUrl } = require('../../bin/HandlingFunctions');
 const { EmbedBuilder } = require('discord.js');
+const moment = require('moment-timezone');
 
 async function endDateCheck(endDate, guild) {
   const config = await readDb('SELECT * FROM guilds_config WHERE guildId = ?', guild);
   let localTimeNowResolve;
-  if (config?.timeZone?.includes("+")) {
-    localTimeNowResolve = new Date(Date.now() + (3600000 * parseInt(config.timeZone)));
-  } else if (config?.timeZone?.includes("-")) {
-    localTimeNowResolve = new Date(Date.now() - (3600000 * parseInt(config.timeZone.split("-")[1])));
+  if (config?.timeZone) {
+    let momentResolve = moment.tz(config.timeZone);
+    let month = `${momentResolve.month()+1}`;
+    let day = `${momentResolve.date()}`;
+
+    localTimeNowResolve = Date.parse(`${momentResolve.year()}-${month.length > 1 ? month : `0${month}`}-${day > 1 ? day : `0${day}`}T${momentResolve.hour().toString().length > 1 ? momentResolve.hour().toString() : `0${momentResolve.hour().toString()}`}:${momentResolve.minute().toString().length > 1 ? momentResolve.minute().toString() : `0${momentResolve.minute().toString()}`}:00.000Z`);
   } else {
-    localTimeNowResolve = new Date(Date.now());
+    let momentResolve = moment.tz("Europe/London");
+    let month = `${momentResolve.month()+1}`;
+    let day = `${momentResolve.date()}`;
+
+    localTimeNowResolve = Date.parse(`${momentResolve.year()}-${month.length > 1 ? month : `0${month}`}-${day > 1 ? day : `0${day}`}T${momentResolve.hour().toString().length > 1 ? momentResolve.hour().toString() : `0${momentResolve.hour().toString()}`}:${momentResolve.minute().toString().length > 1 ? momentResolve.minute().toString() : `0${momentResolve.minute().toString()}`}:00.000Z`);
+
   }
 
   // La data contiene errori
@@ -23,7 +31,7 @@ async function endDateCheck(endDate, guild) {
     let dateHourResolve = endDate.split(" ");
     let dateResolve = dateHourResolve[0].split("/");
     let date = Date.parse(`${dateResolve[2]}-${dateResolve[1]}-${dateResolve[0]}T${dateHourResolve[1]}:00.000Z`);
-    if (date < localTimeNowResolve.getTime()) {
+    if (date < localTimeNowResolve) {
       return false;
     } else {
       return true;
