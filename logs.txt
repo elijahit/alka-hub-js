@@ -1,0 +1,110 @@
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: mom.zone is not a function
+at moment.updateOffset (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:659:9)
+at new fn.tz (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:671:12)
+at timeZoneManage (/root/alka-hub-js/bin/HandlingFunctions.js:336:10)
+at async statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:351:20)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: mom.zone is not a function
+at moment.updateOffset (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:659:9)
+at new fn.tz (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:671:12)
+at timeZoneManage (/root/alka-hub-js/bin/HandlingFunctions.js:336:10)
+at async statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:380:20)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: mom.zone is not a function
+at moment.updateOffset (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:659:9)
+at new fn.tz (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:671:12)
+at timeZoneManage (/root/alka-hub-js/bin/HandlingFunctions.js:336:10)
+at async statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:351:20)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: mom.zone is not a function
+at moment.updateOffset (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:659:9)
+at new fn.tz (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:671:12)
+at timeZoneManage (/root/alka-hub-js/bin/HandlingFunctions.js:336:10)
+at async statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:351:20)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: mom.zone is not a function
+at moment.updateOffset (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:659:9)
+at new fn.tz (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:671:12)
+at timeZoneManage (/root/alka-hub-js/bin/HandlingFunctions.js:336:10)
+at async statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:351:20)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: mom.zone is not a function
+at moment.updateOffset (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:659:9)
+at new fn.tz (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:671:12)
+at timeZoneManage (/root/alka-hub-js/bin/HandlingFunctions.js:336:10)
+at async statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:351:20)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: mom.zone is not a function
+at moment.updateOffset (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:659:9)
+at new fn.tz (/root/alka-hub-js/node_modules/moment-timezone/moment-timezone.js:671:12)
+at timeZoneManage (/root/alka-hub-js/bin/HandlingFunctions.js:336:10)
+at async statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:380:20)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: date.getDate is not a function
+at statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:355:18)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: date.getHours is not a function
+at statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:384:18)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: date.getDate is not a function
+at statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:355:18)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: date.getDate is not a function
+at statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:355:18)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: date.getDate is not a function
+at statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:355:18)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: date.getDate is not a function
+at statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:355:18)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\statsServer-system\HandlingFunctions.js]
+TypeError: date.getHours is not a function
+at statisticsUpdate (/root/alka-hub-js/bin/HandlingFunctions.js:384:18)
+at async Timeout._onTimeout (/root/alka-hub-js/app.js:113:5)
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\welcome-system\welcomeEvents.js]
+ReferenceError: runDb is not defined
+at Object.execute (/root/alka-hub-js/utils/welcome-system/events/welcomeEvents.js:52:11)
+----- [END LOGS] -----
