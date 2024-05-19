@@ -127,7 +127,22 @@ async function playSong(interaction, query, customEmoji, language_result) {
 		await runDb('DELETE FROM music_vote_system WHERE guildId = ?', interaction.guild.id);
 	}
 
-	let songResult = (await searchSong(query, interaction));
+	let songResult = await searchSong(query, interaction);
+
+	// ALGORITMO DI CONTROLLO PER RICERCHE CONTENENTI EMOJI
+	// NE RIMUOVE LE EMOJI E LA RIASSEGNA SENZA
+	const validCharsRegex = /^[a-zA-Z0-9\s.,!?'"-]+$/;
+	if(!validCharsRegex.test(songResult.searchValue)) {
+		let songResultTest = songResult.searchValue;
+		let searchValueResolve = "";
+		for (str of songResultTest.split(" ")) {
+			if(validCharsRegex.test(str)){
+				searchValueResolve += `${str} `;
+			}
+		}
+		songResult.searchValue = searchValueResolve;
+	}
+
 	try {
 		if (!getVoiceConnection(interaction.guild.id) || getVoiceConnection(interaction.guild.id)?._state.status == "disconnected") {
 			const voiceChannel = await interaction.guild.channels.fetch(interaction.member.voice.channelId);
@@ -174,7 +189,7 @@ async function playSong(interaction, query, customEmoji, language_result) {
 			}
 		}
 	}
-	catch {
+	catch (error) {
 		const embedLog = new EmbedBuilder()
 			.setAuthor({ name: `${language_result.notFound.embed_title}`, iconURL: customEmoji })
 			.setDescription(language_result.notFound.description)
