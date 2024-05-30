@@ -44,7 +44,8 @@ async function createChannel(oldState, newState) {
         let newChannel = await newState.channel.clone({
           name: newState.channel.name.replace(channelNameResult, `${channelCount + 1}`),
         });
-        newChannel.setPosition(channelCount+1); // Imposto la posizione del nuovo canale
+        newChannel.setPosition(channelCount+2); // Imposto la posizione del nuovo canale
+        console.log(newChannel.position)
       }
     }
   }
