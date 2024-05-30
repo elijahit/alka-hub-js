@@ -43,7 +43,7 @@ async function createChannel(oldState, newState) {
       if (channelAvaiable == 0) {
         await newState.channel.clone({
           name: newState.channel.name.replace(channelNameResult, `${channelCount + 1}`),
-          position: channelCount +1,
+          setPosition: channelCount +1,
         })
       }
     }
