@@ -206,6 +206,7 @@ CREATE TABLE "giveaway_system_container" (
 	"slots"	INTEGER,
 	"endDate"	TEXT,
 	"winners"	INTEGER,
+	"is_Ended"	INTEGER,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 -- Tabella di raccolta partecipanti giveaway
