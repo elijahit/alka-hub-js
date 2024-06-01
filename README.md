@@ -203,7 +203,7 @@ CREATE TABLE "giveaway_system_container" (
 	"channelId"	TEXT,
 	"messageId"	TEXT,
 	"prizes"	TEXT,
-	"slots"	REAL,
+	"slots"	INTEGER,
 	"endDate"	TEXT,
 	"winners"	INTEGER,
 	"is_Ended"	INTEGER DEFAULT 0,
