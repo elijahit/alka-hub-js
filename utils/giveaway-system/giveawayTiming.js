@@ -1,5 +1,5 @@
 const language = require('../../languages/languages');
-const { readDbAllWith2Params, runDb, readDbWith3Params, readDbWith4Params, readDb, readDbAllWith3Params, readDbAllWithValue, readDbAll } = require('../../bin/database');
+const { readDbAllWith2Params, runDb, readDbWith3Params, readDbWith4Params, readDb, readDbAllWith3Params, readDbAllWithValue, readDbAll, readDbAllWith1Params } = require('../../bin/database');
 const { readFileSync, read } = require('fs');
 const { client } = require('../../bin/client');
 const { getEmojifromUrl } = require('../../bin/HandlingFunctions');
@@ -64,11 +64,11 @@ async function endGiveaway(value, language_result) {
   let winnersCount = value.winners;
 
   let theWinners = await theWinnersCheker(winnersCount, checkPartecipants);
-  let guild;
-
+  await runDb("UPDATE giveaway_system_container SET is_Ended = ? WHERE messageId = ? ", 1, value.messageId);
+  
   // CONTROLLO SE LA GUILDS ESISTE ALTRIMENTI ELIMINO I VALORI
-  guild = await client.guilds.fetch(value.guildId);
   try {
+    let guild = await client.guilds.fetch(value.guildId);
     let theWinnersString = "";
     let channel = await guild.channels.fetch(value.channelId);
     let message = await channel.messages.fetch(value.messageId);
@@ -87,7 +87,6 @@ async function endGiveaway(value, language_result) {
           await user.send({ embeds: [embedLog] });
         }
         catch (error) {
-          console.log(error)
           //Passa
         }
       }
@@ -105,17 +104,14 @@ async function endGiveaway(value, language_result) {
       .addFields([{ name: language_result.giveawayStart.embed_winners, value: (theWinners != null ? theWinnersString : language_result.giveawayStart.noWinners) }])
       .setColor(0xa22297);
     await message.edit({ embeds: [embedLog], components: [] });
-
-    await runDb("DELETE FROM giveaway_system_container WHERE guildId = ? AND messageId = ?", value.guildId, value.messageId);
-    await runDb("DELETE FROM giveaway_system_partecipants WHERE guildId = ? AND messageId = ?", value.guildId, value.messageId);
+    
   } catch (error) {
-
-    await runDb("DELETE FROM giveaway_system_partecipants WHERE guildId = ? AND messageId = ?", value.guildId, value.messageId);
+    //Passa
   }
 }
 
 async function checkGiveawayTiming() {
-  checkDatabase = await readDbAll('giveaway_system_container');
+  checkDatabase = await readDbAllWith1Params('SELECT * FROM giveaway_system_container WHERE is_Ended = ?', 0);
   for (const value of checkDatabase) {
     if (!(await endDateCheck(value.endDate, value.guildId))) {
       // RECUPERO LA LINGUA
@@ -126,9 +122,7 @@ async function checkGiveawayTiming() {
       await endGiveaway(value, language_result);
 
     } catch (error) {
-
-      await runDb("DELETE FROM giveaway_system_container WHERE guildId = ? AND messageId = ?", value.guildId, value.messageId);
-      await runDb("DELETE FROM giveaway_system_partecipants WHERE guildId = ? AND messageId = ?", value.guildId, value.messageId);
+      console.error(error);
     }
   }
 }
