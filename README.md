@@ -203,10 +203,10 @@ CREATE TABLE "giveaway_system_container" (
 	"channelId"	TEXT,
 	"messageId"	TEXT,
 	"prizes"	TEXT,
-	"slots"	INTEGER,
+	"slots"	REAL,
 	"endDate"	TEXT,
 	"winners"	INTEGER,
-	"is_Ended"	INTEGER,
+	"is_Ended"	INTEGER DEFAULT 0,
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 -- Tabella di raccolta partecipanti giveaway
