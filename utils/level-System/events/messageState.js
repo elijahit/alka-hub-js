@@ -35,8 +35,12 @@ module.exports = {
                 let checkRoles = await readDbAllWith1Params("SELECT * FROM levels_server_roles WHERE guild_id = ?", message.guild.id);
                 checkRoles.map(async value => {
                   if((checkUser[0].level+1) >= value.level) {
-                    let roleResolve = await message.guild.roles.fetch(value.role_id)
-                    await message.member.roles.add(roleResolve)
+                    try {
+                      let roleResolve = await message.guild.roles.fetch(value.role_id)
+                      await message.member.roles.add(roleResolve)
+                    } catch (error){
+                      console.log(error)
+                    }
                   }
                 })
 

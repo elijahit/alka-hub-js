@@ -14,7 +14,7 @@
     "description_embed": "The Levels System has been configured and the channel {0} has been set, it will now receive level advancement notifications for various users.",
     "newLevel_embed": "Congratulations {0}, you have leveled up now you are level {1}.",
     "newLevel_footer": "Minutes in voice: {0} | Messages: {1}",
-    "description_embed_delrole": "Hai rimosso con successo il ruolo {0} e adesso non sarà più impostato",
-    "description_embed_addrole": "Hai aggiunto con successo il ruolo {0} e sarà impostato ai membri con livello {1}"
+    "description_embed_delrole": "You have successfully removed role {0} and it will now no longer be set",
+    "description_embed_addrole": "You have successfully added role {0} and it will now be set to members with level {1}"
   }
 }
