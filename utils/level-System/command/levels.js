@@ -28,7 +28,7 @@ module.exports = {
 				if (result) {
 					const checkFeaturesisEnabled = await readDb(`SELECT levelsSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
 
-					const checkLevelsIsPresent = await readDbAllWith1Params(`SELECT * from autorole_system_roles WHERE guildId = ?`, interaction.guild.id);
+					const checkLevelsIsPresent = await readDbAllWith1Params(`SELECT * from levels_server_system WHERE guild_id = ?`, interaction.guild.id);
 
 					const customEmoji = await getEmojifromUrl(interaction.client, "levels");
 					if (checkFeaturesisEnabled?.levelsSystem_enabled) {
@@ -37,13 +37,13 @@ module.exports = {
 
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-								.setDescription(language_result.levelsCommand.description_embed_delete.replace("{0}", channel))
+								.setDescription(language_result.levelsCommand.description_embed_delete.replace("{0}", await interaction.guild.channels.fetch(channel.value)))
 								.setFooter({ text: `${language_result.levelsCommand.embed_footer}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
 								.setColor(0x7a090c);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							return;
 						}
-						await runDb('INSERT INTO levels_server_system (guild_id) VALUES (?)', interaction.guild.id);
+						await runDb('INSERT INTO levels_server_system (guild_id, channel_id) VALUES (?, ?)', interaction.guild.id, channel.id);
 
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
