@@ -16,7 +16,7 @@ module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
     try {
-      if(!message.member.user.bot) { 
+      if(!message?.member?.user?.bot) { 
         const checkFuncs = await readDbAllWith1Params(`SELECT * from levels_server_system WHERE guild_id = ?`, message.guild.id);
         if (checkFuncs.length > 0) {
             let checkUser = await readDbAllWith2Params("SELECT * FROM levels_server_users WHERE guild_id = ? AND user_id = ?", message.guild.id, message.member.id);
