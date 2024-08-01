@@ -46,6 +46,10 @@ module.exports = {
 					name: "Welcome Message System",
 					value: "welcomeMessage_enabled",
 				})
+				.addChoices({
+					name: "Levels System",
+					value: "levelsSystem_enabled",
+				})
 				.setName('choices')
 				.setDescription('Name of the system you want to enable or disable')
 				.setRequired(true)

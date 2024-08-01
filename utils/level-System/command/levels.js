@@ -12,6 +12,7 @@ module.exports = {
 			channel
 				.setName('channel')
 				.setDescription('The channel in which level notifications are sent')
+				.addChannelTypes(ChannelType.GuildText)
 				.setRequired(true)
 		),
 	async execute(interaction) {
@@ -32,8 +33,8 @@ module.exports = {
 					const customEmoji = await getEmojifromUrl(interaction.client, "levels");
 					if (checkFeaturesisEnabled?.levelsSystem_enabled) {
 						if (checkLevelsIsPresent?.length > 0) {
-							await runDb('DELETE FROM levels_server_system WHERE guildId = ?', interaction.guild.id);
-	
+							await runDb('DELETE FROM levels_server_system WHERE guild_id = ?', interaction.guild.id);
+
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
 								.setDescription(language_result.levelsCommand.description_embed_delete.replace("{0}", channel))
@@ -42,8 +43,8 @@ module.exports = {
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							return;
 						}
-						await runDb('INSERT INTO levels_server_system (guildId) VALUES (?)', interaction.guild.id);
-	
+						await runDb('INSERT INTO levels_server_system (guild_id) VALUES (?)', interaction.guild.id);
+
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
 							.setDescription(language_result.levelsCommand.description_embed.replace("{0}", role))
@@ -51,11 +52,16 @@ module.exports = {
 							.setColor(0x03fc28);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}
-				} else {
-					await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
+					else {
+						await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
+					}
+				}
+				else {
+					await noHavePermission(interaction, language_result);
 				}
 			}
 			catch (error) {
+				console.log(error)
 				errorSendControls(error, interaction.client, interaction.guild, "\\levels-system\\levels.js");
 			}
 		});
