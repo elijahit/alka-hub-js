@@ -57,7 +57,7 @@ module.exports = {
     }
     catch (error) {
       console.log(error)
-      errorSendControls(error, newState.guild.client, newState.guild, "\\levels-system\\voiceState.js");
+      errorSendControls(error, message.guild.client, message.guild, "\\levels-system\\voiceState.js");
     }
   },
 };
