@@ -37,7 +37,7 @@ module.exports = {
 
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-								.setDescription(language_result.levelsCommand.description_embed_delete.replace("{0}", await interaction.guild.channels.fetch(channel.value)))
+								.setDescription(language_result.levelsCommand.description_embed_delete.replace("{0}", channel))
 								.setFooter({ text: `${language_result.levelsCommand.embed_footer}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
 								.setColor(0x7a090c);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
@@ -47,7 +47,7 @@ module.exports = {
 
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-							.setDescription(language_result.levelsCommand.description_embed.replace("{0}", role))
+							.setDescription(language_result.levelsCommand.description_embed.replace("{0}", channel))
 							.setFooter({ text: `${language_result.levelsCommand.embed_footer}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
 							.setColor(0x03fc28);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });

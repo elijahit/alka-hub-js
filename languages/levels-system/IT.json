@@ -11,7 +11,9 @@
     "embed_footer": "Alka Hub by alkanetwork.eu",
     "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "description_embed_delete": "La configurazione del Level System è stata rimossa, il canale {0} è stato rimosso e non riceverà più notifiche.",
-    "description_embed": "Il Levels System è stato configurato e il canale {0} è stato impostato, riceverà ora le notifiche di avanzamento di livello dei vari utenti."
+    "description_embed": "Il Levels System è stato configurato e il canale {0} è stato impostato, riceverà ora le notifiche di avanzamento di livello dei vari utenti.",
+    "newLevel_embed": "Congratulazioni {0}, sei salito di livello adesso sei livello {1}.",
+    "newLevel_footer": "Minuti in vocale: {0} | Messaggi: {1}"
   }
   
 }
