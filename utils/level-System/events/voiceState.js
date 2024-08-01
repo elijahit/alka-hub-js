@@ -18,8 +18,7 @@ module.exports = {
     try {
       if (!newState.member.user.bot) {
         if (newState.channel != null) {
-          if (newState.guild.afkChannel.id != newState.channel.id) {
-
+          if (newState.guild.afkChannel?.id != newState.channel?.id) {
             const checkFuncs = await readDbAllWith1Params(`SELECT * from levels_server_system WHERE guild_id = ?`, newState.guild.id);
             if (checkFuncs.length > 0) {
               const interval = setInterval(async () => {
