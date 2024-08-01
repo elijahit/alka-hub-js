@@ -16,7 +16,7 @@ module.exports = {
   name: Events.VoiceStateUpdate,
   async execute(oldState, newState) {
     try {
-      if(!message.member.user.bot) {
+      if(!newState.member.user.bot) {
 
         const checkFuncs = await readDbAllWith1Params(`SELECT * from levels_server_system WHERE guild_id = ?`, newState.guild.id);
         if (checkFuncs.length > 0) {
