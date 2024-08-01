@@ -49,11 +49,11 @@ module.exports = {
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							return;
 						}
-						await runDb('INSERT INTO levels_server_roles (guild_id, role_id, level) VALUES (?, ?, ?)', interaction.guild.id, role.id, level.value);
+						await runDb('INSERT INTO levels_server_roles (guild_id, role_id, level) VALUES (?, ?, ?)', interaction.guild.id, role.id, level);
 
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-							.setDescription(language_result.levelsCommand.description_embed_addrole.replace("{0}", role).replace("{1}", level.value))
+							.setDescription(language_result.levelsCommand.description_embed_addrole.replace("{0}", role).replace("{1}", level))
 							.setFooter({ text: `${language_result.levelsCommand.embed_footer}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
 							.setColor(0x03fc28);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
