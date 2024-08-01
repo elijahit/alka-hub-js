@@ -31,7 +31,15 @@ module.exports = {
                 const language_result = JSON.parse(langagues_path);
   
                 const customEmoji = await getEmojifromUrl(message.guild.client, "levels");
-  
+
+                let checkRoles = await readDbAllWith1Params("SELECT * FROM levels_server_roles WHERE guild_id = ?", message.guild.id);
+                checkRoles.map(async value => {
+                  if((checkUser[0].level+1) >= value.level) {
+                    let roleResolve = await message.guild.roles.fetch(value.role_id)
+                    await message.member.roles.add(roleResolve)
+                  }
+                })
+
                 const embedLog = new EmbedBuilder()
                   .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
                   .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", message.member).replace("{1}", checkUser[0].level + 1))
