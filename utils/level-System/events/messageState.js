@@ -21,8 +21,8 @@ module.exports = {
         if (checkFuncs.length > 0) {
             let checkUser = await readDbAllWith2Params("SELECT * FROM levels_server_users WHERE guild_id = ? AND user_id = ?", message.guild.id, message.member.id);
             if (checkUser.length > 0) {
-              if (checkUser[0].exp >= 100) {
-                await runDb("UPDATE levels_server_users SET exp = ?, level = ?, message_count = ? WHERE guild_id = ? AND user_id = ?", checkUser[0].exp - 100 + getRandomInt(5, 10), checkUser[0].level + 1, checkUser[0].message_count + 1, message.guild.id, message.member.id);
+              if (checkUser[0].exp >= 75 + (25 * checkUser[0].level)) {
+                await runDb("UPDATE levels_server_users SET exp = ?, level = ?, message_count = ? WHERE guild_id = ? AND user_id = ?", checkUser[0].exp - (75 + (25 * checkUser[0].level)) + getRandomInt(5, 10), checkUser[0].level + 1, checkUser[0].message_count + 1, message.guild.id, message.member.id);
   
                 const channel = await message.guild.channels.fetch(checkFuncs[0].channel_id);
   
