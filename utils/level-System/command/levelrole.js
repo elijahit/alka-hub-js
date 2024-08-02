@@ -14,7 +14,7 @@ module.exports = {
 				.setDescription('The role to set when reaching a certain level')
 				.setRequired(true)
 		)
-		.addIntegerOption(level =>
+		.addNumberOption(level =>
 			level
 				.setName('level')
 				.setDescription('The level to reach to have the set role')
@@ -22,7 +22,7 @@ module.exports = {
 		),
 	async execute(interaction) {
 		const role = interaction.options.data[0].role;
-		const level = interaction.options.data[0].level;
+		const level = interaction.options.data[1].value;
 
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id);
