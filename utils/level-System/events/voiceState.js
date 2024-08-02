@@ -28,12 +28,52 @@ function getMinutesBetweenTimestamps(startTimestamp) {
   return differenceMinutes;
 }
 
+async function checkExp(newState, checkUser) {
+  if (checkUser[0].exp >= 75 + (25 * checkUser[0].level)) {
+    const checkFuncs = await readDbAllWith1Params(`SELECT * from levels_server_system WHERE guild_id = ?`, newState.guild.id);
+    
+    await runDb("UPDATE levels_server_users SET exp = ?, level = ? WHERE guild_id = ? AND user_id = ?", checkUser[0].exp - (75 + (25 * checkUser[0].level)), checkUser[0].level + 1, newState.guild.id, newState.member.id);
+
+    const channel = await newState.guild.channels.fetch(checkFuncs[0].channel_id);
+
+    let data = await language.databaseCheck(newState.guild.id);
+    const langagues_path = readFileSync(`./languages/levels-system/${data}.json`);
+    const language_result = JSON.parse(langagues_path);
+
+    const customEmoji = await getEmojifromUrl(newState.guild.client, "levels");
+
+    let checkRoles = await readDbAllWith1Params("SELECT * FROM levels_server_roles WHERE guild_id = ?", newState.guild.id);
+    checkRoles.map(async value => {
+      if ((checkUser[0].level + 1) >= value.level) {
+        try {
+          let roleResolve = await newState.guild.roles.fetch(value.role_id)
+          await newState.member.roles.add(roleResolve)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    })
+
+    const embedLog = new EmbedBuilder()
+      .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
+      .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", newState.member).replace("{1}", checkUser[0].level + 1))
+      .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser[0].minute_vocal == null ? 0 : checkUser[0].minute_vocal).replace("{1}", checkUser[0].message_count == null ? 0 : checkUser[0].message_count)}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
+      .setColor(0x7a090c);
+    await channel.send({ content: `${newState.member}`, embeds: [embedLog] });
+
+    checkUser = await readDbAllWith2Params("SELECT * FROM levels_server_users WHERE guild_id = ? AND user_id = ?", newState.guild.id, newState.member.id);
+    if(checkUser[0].exp >= 75 + (25 * checkUser[0].level)) {
+      await checkExp(newState, checkUser);
+    }
+  }
+}
+
 module.exports = {
   name: Events.VoiceStateUpdate,
   async execute(oldState, newState) {
     try {
       if (!newState.member.user.bot) {
-        if (oldState.channel == null && newState.channel != null) {
+        if ((oldState.channel == null || oldState.guild.afkChannel?.id == oldState.channel?.id) && newState.channel != null) {
           if (newState.guild.afkChannel?.id != newState.channel?.id) {
             const checkFuncs = await readDbAllWith1Params(`SELECT * from levels_server_system WHERE guild_id = ?`, newState.guild.id);
             if (checkFuncs.length > 0) {
@@ -46,7 +86,7 @@ module.exports = {
             }
           }
 
-        } else if (!newState.channel) {
+        } else if (!newState.channel || newState.guild.afkChannel?.id == newState.channel?.id) {
           let checkUser = await readDbAllWith2Params("SELECT * FROM levels_server_users WHERE guild_id = ? AND user_id = ?", newState.guild.id, newState.member.id);
           if (checkUser.length > 0) {
             
@@ -54,38 +94,7 @@ module.exports = {
 
             checkUser = await readDbAllWith2Params("SELECT * FROM levels_server_users WHERE guild_id = ? AND user_id = ?", newState.guild.id, newState.member.id);
 
-            if (checkUser[0].exp >= 75 + (25 * checkUser[0].level)) {
-              const checkFuncs = await readDbAllWith1Params(`SELECT * from levels_server_system WHERE guild_id = ?`, newState.guild.id);
-              
-              await runDb("UPDATE levels_server_users SET exp = ?, level = ? WHERE guild_id = ? AND user_id = ?", checkUser[0].exp - (75 + (25 * checkUser[0].level)), checkUser[0].level + 1, newState.guild.id, newState.member.id);
-
-              const channel = await newState.guild.channels.fetch(checkFuncs[0].channel_id);
-
-              let data = await language.databaseCheck(newState.guild.id);
-              const langagues_path = readFileSync(`./languages/levels-system/${data}.json`);
-              const language_result = JSON.parse(langagues_path);
-
-              const customEmoji = await getEmojifromUrl(newState.guild.client, "levels");
-
-              let checkRoles = await readDbAllWith1Params("SELECT * FROM levels_server_roles WHERE guild_id = ?", newState.guild.id);
-              checkRoles.map(async value => {
-                if ((checkUser[0].level + 1) >= value.level) {
-                  try {
-                    let roleResolve = await newState.guild.roles.fetch(value.role_id)
-                    await newState.member.roles.add(roleResolve)
-                  } catch (error) {
-                    console.log(error)
-                  }
-                }
-              })
-
-              const embedLog = new EmbedBuilder()
-                .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-                .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", newState.member).replace("{1}", checkUser[0].level + 1))
-                .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser[0].minute_vocal == null ? 0 : checkUser[0].minute_vocal).replace("{1}", checkUser[0].message_count == null ? 0 : checkUser[0].message_count)}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
-                .setColor(0x7a090c);
-              await channel.send({ content: `${newState.member}`, embeds: [embedLog] });
-            }
+            await checkExp(newState, checkUser);
           }
         }
 

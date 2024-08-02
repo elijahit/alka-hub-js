@@ -1,0 +1,6 @@
+---- [START LOGS] ----
+[\levels-system\voiceState.js]
+ReferenceError: newState is not defined
+at checkExp (E:\Workstation\Alka\alka-hub-js\utils\level-System\events\voiceState.js:33:108)
+at Object.execute (E:\Workstation\Alka\alka-hub-js\utils\level-System\events\voiceState.js:97:19)
+----- [END LOGS] -----
