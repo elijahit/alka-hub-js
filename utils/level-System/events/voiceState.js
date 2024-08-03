@@ -53,18 +53,19 @@ async function checkExp(newState, checkUser) {
         }
       }
     })
+    
+    checkUser = await readDbAllWith2Params("SELECT * FROM levels_server_users WHERE guild_id = ? AND user_id = ?", newState.guild.id, newState.member.id);
+    if(checkUser[0].exp >= 75 + (25 * checkUser[0].level)) {
+      return await checkExp(newState, checkUser);
+    }
 
     const embedLog = new EmbedBuilder()
       .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-      .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", newState.member).replace("{1}", checkUser[0].level + 1))
+      .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", newState.member).replace("{1}", checkUser[0].level))
       .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser[0].minute_vocal == null ? 0 : checkUser[0].minute_vocal).replace("{1}", checkUser[0].message_count == null ? 0 : checkUser[0].message_count)}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
       .setColor(0x7a090c);
     await channel.send({ content: `${newState.member}`, embeds: [embedLog] });
 
-    checkUser = await readDbAllWith2Params("SELECT * FROM levels_server_users WHERE guild_id = ? AND user_id = ?", newState.guild.id, newState.member.id);
-    if(checkUser[0].exp >= 75 + (25 * checkUser[0].level)) {
-      await checkExp(newState, checkUser);
-    }
   }
 }
 
@@ -90,7 +91,7 @@ module.exports = {
           let checkUser = await readDbAllWith2Params("SELECT * FROM levels_server_users WHERE guild_id = ? AND user_id = ?", newState.guild.id, newState.member.id);
           if (checkUser.length > 0) {
             
-            await runDb('UPDATE levels_server_users SET exp = ?, minute_vocal = ? WHERE guild_id = ? AND user_id = ?', checkUser[0].exp + (getMinutesBetweenTimestamps(+checkUser[0].join_timestamp)*3),checkUser[0].minute_vocal + (getMinutesBetweenTimestamps(+checkUser[0].join_timestamp)), newState.guild.id, newState.member.id);
+            await runDb('UPDATE levels_server_users SET exp = ?, minute_vocal = ?, join_timestamp = ? WHERE guild_id = ? AND user_id = ?', checkUser[0].exp + (getMinutesBetweenTimestamps(+checkUser[0].join_timestamp)*3),checkUser[0].minute_vocal + (getMinutesBetweenTimestamps(+checkUser[0].join_timestamp)), null, newState.guild.id, newState.member.id);
 
             checkUser = await readDbAllWith2Params("SELECT * FROM levels_server_users WHERE guild_id = ? AND user_id = ?", newState.guild.id, newState.member.id);
 

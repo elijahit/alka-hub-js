@@ -1,6 +1,16 @@
 ---- [START LOGS] ----
 [\levels-system\voiceState.js]
-ReferenceError: newState is not defined
-at checkExp (E:\Workstation\Alka\alka-hub-js\utils\level-System\events\voiceState.js:33:108)
-at Object.execute (E:\Workstation\Alka\alka-hub-js\utils\level-System\events\voiceState.js:97:19)
+Error: SQLITE_BUSY: database is locked
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\levels-system\voiceState.js]
+Error: SQLITE_BUSY: database is locked
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\levels-system\voiceState.js]
+Error: SQLITE_BUSY: database is locked
+----- [END LOGS] -----
+---- [START LOGS] ----
+[\levels-system\voiceState.js]
+Error: SQLITE_BUSY: database is locked
 ----- [END LOGS] -----

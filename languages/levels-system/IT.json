@@ -15,7 +15,8 @@
     "newLevel_embed": "Congratulazioni {0}, sei salito di livello adesso sei livello {1}.",
     "newLevel_footer": "Minuti in vocale: {0} | Messaggi: {1}",
     "description_embed_delrole": "Hai rimosso con successo il ruolo {0} e adesso non sarà più impostato",
-    "description_embed_addrole": "Hai aggiunto con successo il ruolo {0} e sarà impostato ai membri con livello {1}"
+    "description_embed_addrole": "Hai aggiunto con successo il ruolo {0} e sarà impostato ai membri con livello {1}",
+    "description_embed_stats": "L'utente {0} è livello **{1}**\n**Esperienza**: {2}/{3}",
+    "description_embed_statsNotFound": "L'utente non ha ancora statistiche disponibili, riprova più tardi."
   }
-  
 }
