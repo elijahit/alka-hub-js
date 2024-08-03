@@ -10,7 +10,7 @@ module.exports = {
 		.setDescription('Use this command to show statistics.')
 		.addUserOption(user =>
 			user
-				.setName('channel')
+				.setName('user')
 				.setDescription('Add a user to see someone else\'s statistics')
 				.setRequired(true)
 		),
