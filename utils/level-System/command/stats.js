@@ -36,7 +36,7 @@ module.exports = {
 						.setDescription(language_result.levelsCommand.description_embed_stats.replace("{0}", user).replace("{1}", checkUserIsPresent[0].level).replace("{2}", checkUserIsPresent[0].exp).replace("{3}", 75 + (25 * checkUserIsPresent[0].level)))
 						.setFooter({ text: language_result.levelsCommand.newLevel_footer.replace("{0}", checkUserIsPresent[0].minute_vocal).replace("{1}", checkUserIsPresent[0].message_count), iconURL: `${language_result.levelsCommand.embed_icon_url}` })
 						.setColor(0x7a090c);
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					await interaction.reply({ embeds: [embedLog] });
 					return;
 				}
 
