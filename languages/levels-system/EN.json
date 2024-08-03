@@ -16,7 +16,7 @@
     "newLevel_footer": "Minutes in voice: {0} | Messages: {1}",
     "description_embed_delrole": "You have successfully removed role {0} and it will now no longer be set",
     "description_embed_addrole": "You have successfully added the role {0} and it will now be set to members with level {1}",
-    "description_embed_stats": "Member {0} is level **{1}**{n**Experience**: {2}/{3}",
+    "description_embed_stats": "Member {0} is level **{1}**\n**Experience**: {2}/{3}",
     "description_embed_statsNotFound": "The user has no statistics available yet, please try again later"
   }
 }
