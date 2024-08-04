@@ -16,7 +16,7 @@ function getMinutesBetweenTimestamps(startTimestamp) {
   // Convert timestamps to milliseconds
   
   // Create Date objects from the timestamps
-  const startDate = new Date('2024-08-03T23:59:00');
+  const startDate = new Date(startTimestamp);
   const endDate = Date.now();
   
   // Calculate the difference in milliseconds
