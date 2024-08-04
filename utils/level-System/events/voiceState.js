@@ -89,7 +89,7 @@ module.exports = {
 
         } else if (!newState.channel || newState.guild.afkChannel?.id == newState.channel?.id) {
           let checkUser = await readDbAllWith2Params("SELECT * FROM levels_server_users WHERE guild_id = ? AND user_id = ?", newState.guild.id, newState.member.id);
-          if (checkUser.length > 0) {
+          if (checkUser.length > 0 && (checkUser[0].join_timestamp != null && checkUser[0].join_timestamp > 0)) {
             
             await runDb('UPDATE levels_server_users SET exp = ?, minute_vocal = ?, join_timestamp = ? WHERE guild_id = ? AND user_id = ?', checkUser[0].exp + (getMinutesBetweenTimestamps(+checkUser[0].join_timestamp)*3),checkUser[0].minute_vocal + (getMinutesBetweenTimestamps(+checkUser[0].join_timestamp)), null, newState.guild.id, newState.member.id);
 
