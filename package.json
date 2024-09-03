@@ -6,6 +6,7 @@
     "@twurple/eventsub-http": "^7.1.0",
     "@twurple/eventsub-ngrok": "^7.1.0",
     "@twurple/eventsub-ws": "^7.1.0",
+    "alka-hub": "file:",
     "axios": "^1.6.8",
     "common-tags": "^1.8.2",
     "discord.js": "^14.15.2",
@@ -27,7 +28,8 @@
   "description": "A bot javascript",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV=production node app.js",
+    "dev": "NODE_ENV=development node app.js"
   },
   "repository": {
     "type": "git",

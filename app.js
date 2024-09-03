@@ -1,10 +1,10 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
-const { token, presenceStatusName, botState } = require('./config.json');
+const { token, token_dev, presenceStatusName, botState } = require('./config.json');
 const { cleanerDatabase, reactionRoleCached, statisticsUpdate } = require('./bin/HandlingFunctions');
 const { client } = require('./bin/client');
-const { checkGiveawayTiming } = require('./utils/giveaway-system/giveawayTiming');
+// const { checkGiveawayTiming } = require('./utils/giveaway-system/giveawayTiming'); DA VERIFICARE CON GIVEAWAY
 
 client.commands = new Collection();
 
@@ -95,35 +95,35 @@ client.once(Events.ClientReady, readyClient => {
     status: 'online'
   });
 
-  // FUNZIONI DI HandlingFunction
+  // // FUNZIONI DI HandlingFunction DA GESTIRE IN FUTURO
   
-  // FUNZIONE DI CLEANER PER IL DATABASE
-  setInterval(async () => {
-    await cleanerDatabase(client);
-  }, 21600000);
+  // // FUNZIONE DI CLEANER PER IL DATABASE
+  // setInterval(async () => {
+  //   await cleanerDatabase(client);
+  // }, 21600000);
   
-  // FUNZIONE DI reactionRole-system
-  setTimeout(async () => {
-    await reactionRoleCached(client);
-    console.log('[REACTION ROLES] Cache caricata con successo!');
-  }, 3000);
+  // // FUNZIONE DI reactionRole-system
+  // setTimeout(async () => {
+  //   await reactionRoleCached(client);
+  //   console.log('[REACTION ROLES] Cache caricata con successo!');
+  // }, 3000);
   
-  // FUNZIONE DI statsServer-system
-  setInterval(async () => {
-    await statisticsUpdate(client);
-  }, 600000);
+  // // FUNZIONE DI statsServer-system
+  // setInterval(async () => {
+  //   await statisticsUpdate(client);
+  // }, 600000);
 
-  // FUNZIONE DI giveaway-system
-  setInterval(async () => {
-    await checkGiveawayTiming();
-  }, 60000);
+  // // FUNZIONE DI giveaway-system
+  // setInterval(async () => {
+  //   await checkGiveawayTiming();
+  // }, 60000);
 
-  // FUNCTION OTHER SYSTEM
-  require('./utils/twitch-system/twitch'); //Twitch System
-  require('./utils/youtube-system/youtubeApi'); //Youtube System
+  // // FUNCTION OTHER SYSTEM
+  // require('./utils/twitch-system/twitch'); //Twitch System
+  // require('./utils/youtube-system/youtubeApi'); //Youtube System
 });
 
 
 //  --------- //
-
-client.login(token);
+const filterToken = process.env.NODE_ENV === 'production' ? token : process.env.NODE_ENV === 'development' ? token_dev : "";
+client.login(filterToken);
