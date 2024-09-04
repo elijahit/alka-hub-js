@@ -5,8 +5,7 @@ const { readDb, readDbAllWith2Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT channelState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
@@ -14,23 +13,22 @@ module.exports = {
   async execute(oldChannel, newChannel) {
     let customEmoji = await getEmojifromUrl(oldChannel.client, "update");
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, oldChannel.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    const resultDb = await readDb(sql, oldChannel.guild.id);
+    if (!resultDb) return;
+    if (resultDb["is_enabled"] != 1) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, oldChannel.guild.id);
     try {
-      const channelStatsSystem = await readDbAllWith2Params(`SELECT * FROM stats_system_channel WHERE channelId = ? AND guildId = ?`, oldChannel.id, oldChannel.guild.id);
-      if (channelStatsSystem[0]?.channelId) return;
-      if (!result?.channelState_channel) return;
-      if (result.channelState_channel?.length < 5) return;
+      // TODO DA AGGIORNARE CON STATS SYSTEM
+      // const channelStatsSystem = await readDbAllWith2Params(`SELECT * FROM stats_system_channel WHERE channelId = ? AND guildId = ?`, oldChannel.id, oldChannel.guild.id);
+      // if (channelStatsSystem[0]?.channelId) return;
+      if (!resultDb["channel_state_channel"]) return;
       // CONTROLLO DELLA LINGUA
       if (oldChannel.guild?.id) {
         let data = await language.databaseCheck(oldChannel.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await oldChannel.guild.channels.fetch(result.channelState_channel);
+        let channel_logs = await oldChannel.guild.channels.fetch(resultDb["channel_state_channel"]);
         // SE IL NOME DI UN CANALE VIENE CAMBIATO
         if (oldChannel.name != newChannel.name) {
           const fields = [{ name: `${language_result.channelUpdate.old_name}`, value: `${oldChannel.name}`, inline: true },
