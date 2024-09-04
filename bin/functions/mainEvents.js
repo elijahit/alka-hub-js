@@ -39,9 +39,11 @@ const mainEvents = (client) => {
     console.log('-------------------------------------');
     console.log('ALKA HUB BOT v2.0.0 REWORK / BETA');
     console.log('Author: Elijah (Gabriele Mario Tosto)');
+    console.log('Contributors: Nico995 (Nicola Occelli)');
     console.log('Since: 2024');
     console.log(`Runtime: ${runtimeConsole}`);
-    console.log('Technology: JavaScript - NodeJs');
+    console.log('Technology: JavaScript - Node - Discord.js');
+    console.log('Web: https://alkanetwork.eu');
     console.log('-------------------------------------');
     // FUNZIONI
     executeFolderModule(client, 'utils');
