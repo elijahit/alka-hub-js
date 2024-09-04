@@ -3,32 +3,31 @@ const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT guildState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
   name: Events.GuildUpdate,
   async execute(oldGuild, newGuild) {
-    let customEmoji = await getEmojifromUrl(oldGuild.client, "guildupdate");
+    let customEmoji = emoji.logsSystem.guildUpdateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, oldGuild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    const resultDb = await readDb(sql, oldGuild.id);
+    if (!resultDb) return;
+    if (resultDb["is_enabled"] != 1) return;
+    if (!resultDb["guild_state_channel"]) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, oldGuild.id);
     try {
-      if (!result?.guildState_channel) return;
-      if (result.guildState_channel?.length < 5) return;
       // CONTROLLO DELLA LINGUA
       if (oldGuild?.id) {
         let data = await language.databaseCheck(oldGuild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await oldGuild.channels.fetch(result.guildState_channel);
+        let channel_logs = await oldGuild.channels.fetch(resultDb["guild_state_channel"]);
         const fields = [];
         const embedLog = new EmbedBuilder();
         let changeCheck = false;
@@ -131,7 +130,7 @@ module.exports = {
           .setAuthor({ name: `${language_result.guildUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setFooter({ text: `${language_result.guildUpdate.embed_footer}`, iconURL: `${language_result.guildUpdate.embed_icon_url}` })
-          .setColor(0x3464eb);
+          .setColor(colors.general.blue);
         channel_logs.send({ embeds: [embedLog] });
       }
     }
