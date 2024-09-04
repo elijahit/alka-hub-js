@@ -3,6 +3,8 @@ const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
 const { readDb, runDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, returnPermission, noInitGuilds } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -12,43 +14,43 @@ module.exports = {
 			option
 				.addChoices({
 					name: "Add Member State",
-					value: "addMember_channel",
+					value: "join_member_channel",
 				})
 				.addChoices({
 					name: "Remove Member State",
-					value: "removeMember_channel",
+					value: "exit_member_channel",
 				})
 				.addChoices({
 					name: "Emoji State",
-					value: "emojiState_channel",
+					value: "emoji_state_channel",
 				})
 				.addChoices({
 					name: "Ban State",
-					value: "guildBanState_channel",
+					value: "ban_state_channel",
 				})
 				.addChoices({
 					name: "Voice State",
-					value: "voiceStateJoin_channel",
+					value: "voice_state_channel",
 				})
 				.addChoices({
 					name: "Member State",
-					value: "guildMemberState_channel",
+					value: "member_state_channel",
 				})
 				.addChoices({
 					name: "Guild State",
-					value: "guildState_channel",
+					value: "guild_state_channel",
 				})
 				.addChoices({
 					name: "Invite State",
-					value: "inviteState_channel",
+					value: "invite_state_channel",
 				})
 				.addChoices({
 					name: "Message State",
-					value: "messageState_channel",
+					value: "message_state_channel",
 				})
 				.addChoices({
 					name: "Channel State",
-					value: "channelState_channel",
+					value: "channel_state_channel",
 				})
 				.setName('state_event')
 				.setDescription('Select an event to set the channel for')
@@ -81,31 +83,31 @@ module.exports = {
 		await returnPermission(interaction, "logschannel", async result => {
 			try {
 				if (result) {
-					const checkQuery = `SELECT ${choices} FROM log_system_config WHERE guildId = ?`
+					const checkQuery = `SELECT * FROM logs_system WHERE guilds_id = ?`
 					const checkFeature = await readDb(checkQuery, interaction.guild.id);
 					const embedLog = new EmbedBuilder();
 					//CONTROLLO SE LA ROW E' GIA' PRESENTE NEL DB
 					if (checkFeature) {
-						checkChannelSql = await readDb(`SELECT ${choices} FROM log_system_config WHERE guildId = ?`, interaction.guild.id);
+						checkChannelSql = await readDb(`SELECT * FROM logs_system WHERE guilds_id = ?`, interaction.guild.id);
 						if (checkChannelSql[choices]) {
-							customEmoji = await getEmojifromUrl(interaction.client, "pexremoved");
-							runDb(`UPDATE log_system_config SET ${choices} = ? WHERE guildId = ?`, null, interaction.guild.id);
+							customEmoji = emoji.general.falseMaker;
+							runDb(`UPDATE logs_system SET ${choices} = ? WHERE guilds_id = ?`, null, interaction.guild.id);
 							embedLog.setDescription(language_result.commandLogsChannel.description_embed_removed.replace("{0}", choices.split("_")[0]))
-								.setColor(0xeb4034);
+								.setColor(colors.general.error);
 						} else {
-							customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
-							runDb(`UPDATE log_system_config SET ${choices} = ? WHERE guildId = ?`, channel, interaction.guild.id);
+							customEmoji = emoji.general.trueMaker
+							runDb(`UPDATE logs_system SET ${choices} = ? WHERE guilds_id = ?`, channel, interaction.guild.id);
 							embedLog
 								.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
-								.setColor(0x119c05);
+								.setColor(colors.general.success);
 						}
 
 					} else {
-						customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
-						runDb(`INSERT INTO log_system_config (guildId, ${choices}) VALUES(?, ?)`, interaction.guild.id, channel);
+						customEmoji = emoji.general.trueMaker
+						runDb(`INSERT INTO logs_system (guilds_id, ${choices}) VALUES(?, ?)`, interaction.guild.id, channel);
 						embedLog
 							.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
-							.setColor(0x119c05);
+							.setColor(colors.general.success);
 					}
 					embedLog
 						.setAuthor({ name: `${language_result.commandLogsChannel.embed_title}`, iconURL: customEmoji })
@@ -113,13 +115,7 @@ module.exports = {
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 				}
 				else {
-					let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
-					const embedLog = new EmbedBuilder()
-						.setAuthor({ name: `${language_result.noPermission.embed_title}`, iconURL: customEmoji })
-						.setDescription(language_result.noPermission.description_embed)
-						.setFooter({ text: `${language_result.noPermission.embed_footer}`, iconURL: `${language_result.noPermission.embed_icon_url}` })
-						.setColor(0x4287f5);
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					await noHavePermission(interaction, language_result);
 				}
 			}
 			catch (error) {
