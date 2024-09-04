@@ -5,8 +5,7 @@ const { readDb, readDbAllWith2Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT channelState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
@@ -14,23 +13,22 @@ module.exports = {
   async execute(channel) {
     let customEmoji = await getEmojifromUrl(channel.client, "delete");
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, channel.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    const resultDb = await readDb(sql, channel.guild.id);
+    if (!resultDb) return;
+    if (resultDb["is_enabled"] != 1) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, channel.guild.id);
     try {
-      const channelStatsSystem = await readDbAllWith2Params(`SELECT * FROM stats_system_channel WHERE channelId = ? AND guildId = ?`, channel.id, channel.guild.id);
-      if (channelStatsSystem[0]?.channelId) return;
-      if (!result?.channelState_channel) return;
-      if (result.channelState_channel?.length < 5) return;
+      // DA GESTIRE CON STATS SYSTEM
+      // const channelStatsSystem = await readDbAllWith2Params(`SELECT * FROM stats_system_channel WHERE channelId = ? AND guildId = ?`, channel.id, channel.guild.id);
+      // if (channelStatsSystem[0]?.channelId) return;
+      if (!resultDb["channel_state_channel"]) return;
       // CONTROLLO DELLA LINGUA
       if (channel.guild?.id) {
         let data = await language.databaseCheck(channel.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await channel.guild.channels.fetch(result.channelState_channel);
+        let channel_logs = await channel.guild.channels.fetch(resultDb["channel_state_channel"]);
         // SE VIENE CANCELLATO UN CANALE TESTUALE
         if (channel.type == 0) {
           const fields = [{ name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
