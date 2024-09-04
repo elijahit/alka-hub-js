@@ -3,6 +3,8 @@ const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb, readDbAllWith2Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
 
 // QUERY DEFINITION
 let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
@@ -11,7 +13,7 @@ let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 module.exports = {
   name: Events.ChannelCreate,
   async execute(channel) {
-    let customEmoji = await getEmojifromUrl(channel.client, "new");
+    let customEmoji = emoji.general.newMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     const resultDb = await readDb(sql, channel.guild.id);
     if (!resultDb) return;
@@ -45,7 +47,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_channel)
             .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
-            .setColor(0x318f22);
+            .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CREATO UN CANALE VOCALE
@@ -64,7 +66,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_channel_voice)
             .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
-            .setColor(0x318f22);
+            .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CREATA UNA CATEGORIA
@@ -77,7 +79,7 @@ module.exports = {
               { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}` })
             .setDescription(language_result.channelCreate.created_category)
             .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
-            .setColor(0x318f22);
+            .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CREATO UN FORUM
@@ -96,7 +98,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_forum)
             .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
-            .setColor(0x318f22);
+            .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CREATO UN CANALE MEDIA
@@ -115,7 +117,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_media)
             .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
-            .setColor(0x318f22);
+            .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CREATO UN CANALE THREAD PRIVATO
@@ -134,7 +136,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_private_thread)
             .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
-            .setColor(0x318f22);
+            .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CREATO UN CANALE THREAD PUBBLICO
@@ -153,7 +155,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_public_thread)
             .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
-            .setColor(0x318f22);
+            .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CREATO UN CANALE STAGE
@@ -172,7 +174,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_stage)
             .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
-            .setColor(0x318f22);
+            .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CREATO UN CANALE DI ANNUNCI
@@ -191,7 +193,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_announce)
             .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
-            .setColor(0x318f22);
+            .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
       }

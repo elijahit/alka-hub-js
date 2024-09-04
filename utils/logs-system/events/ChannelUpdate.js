@@ -3,6 +3,8 @@ const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb, readDbAllWith2Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
 
 // QUERY DEFINITION
 let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
@@ -11,7 +13,7 @@ let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 module.exports = {
   name: Events.ChannelUpdate,
   async execute(oldChannel, newChannel) {
-    let customEmoji = await getEmojifromUrl(oldChannel.client, "update");
+    let customEmoji = emoji.general.updateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     const resultDb = await readDb(sql, oldChannel.guild.id);
     if (!resultDb) return;
@@ -46,7 +48,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelUpdate.name_change_embed)
             .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE LA CATEGORIA DI UN CANALE VIENE CAMBIATA
@@ -73,7 +75,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelUpdate.category_change_embed)
             .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE IL BITRATE VIENE CAMBIATO
@@ -93,7 +95,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelUpdate.bitrate_change_embed)
             .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE IL LIMITE DEGLI UTENTI VIENE CAMBIATO
@@ -113,7 +115,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelUpdate.userlimit_change_embed)
             .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE LA DESCRIZIONE VIENE CAMBIATA
@@ -138,7 +140,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelUpdate.description_change_embed)
             .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE LO SLOWMODE VIENE CAMBIATO
@@ -167,7 +169,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelUpdate.ratelimit_change_embed)
             .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE I PERMESSI VENGONO AGGIORNATI
@@ -209,7 +211,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelUpdate.permissions_change_embed)
             .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
       }

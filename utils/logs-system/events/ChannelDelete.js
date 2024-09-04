@@ -3,6 +3,8 @@ const { readFileSync, read } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb, readDbAllWith2Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
 
 // QUERY DEFINITION
 let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
@@ -11,7 +13,7 @@ let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 module.exports = {
   name: Events.ChannelDelete,
   async execute(channel) {
-    let customEmoji = await getEmojifromUrl(channel.client, "delete");
+    let customEmoji = emoji.general.deleteMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     const resultDb = await readDb(sql, channel.guild.id);
     if (!resultDb) return;
@@ -44,7 +46,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_channel)
             .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
         // SE VIENE CANCELLATO UN CANALE VOCALE
@@ -62,7 +64,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_channel_voice)
             .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
         // SE VIENE CREATA UNA CATEGORIA
@@ -74,7 +76,7 @@ module.exports = {
               { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true })
             .setDescription(language_result.channelDelete.deleted_category)
             .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CANCELLATO UN FORUM
@@ -92,7 +94,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_forum)
             .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
         // SE VIENE CANCELLATO UN CANALE MEDIA
@@ -110,7 +112,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_media)
             .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CANCELLATO UN CANALE THREAD PRIVATO
@@ -128,7 +130,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_private_thread)
             .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CANCELLATO UN CANALE THREAD PUBBLICO
@@ -146,7 +148,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_public_thread)
             .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CANCELLATO UN CANALE STAGE
@@ -164,7 +166,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_stage)
             .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CANCELLATO UN CANALE DI ANNUNCI
@@ -182,7 +184,7 @@ module.exports = {
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_announce)
             .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
       }
