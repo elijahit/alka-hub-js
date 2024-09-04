@@ -13,7 +13,7 @@ let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 module.exports = {
   name: Events.GuildBanRemove,
   async execute(ban) {
-    let customEmoji = emoji.banSystem.unBanMarker;
+    let customEmoji = emoji.logsSystem.unBanMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     const resultDb = await readDb(sql, ban.guild.id);
     if (!resultDb) return;

@@ -3,32 +3,31 @@ const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT addMember_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member) {
-    let customEmoji = await getEmojifromUrl(member.client, "memberadd");
+    let customEmoji = emoji.logsSystem.mewMemberMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, member.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    const resultDb = await readDb(sql, member.guild.id);
+    if (!resultDb) return;
+    if (resultDb["is_enabled"] != 1) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, member.guild.id);
     try {
-      if (!result?.addMember_channel) return;
-      if (result.addMember_channel?.length < 5) return;
+      if (!resultDb["join_member_channel"]) return;
       // CONTROLLO DELLA LINGUA
       if (member.guild?.id) {
         let data = await language.databaseCheck(member.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await member.guild.channels.fetch(result.addMember_channel);
+        let channel_logs = await member.guild.channels.fetch(resultDb["join_member_channel"]);
         const fields = [];
 
         fields.push(
@@ -47,7 +46,7 @@ module.exports = {
           .addFields(fields)
           .setFooter({ text: `${language_result.guildMemberAdd.embed_footer}`, iconURL: `${language_result.guildMemberAdd.embed_icon_url}` })
           .setDescription(language_result.guildMemberAdd.embed_description)
-          .setColor(0x368c29);
+          .setColor(colors.general.success);
         if (member.user.avatar) {
           embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${member.id}/${member.user.avatar}.png`);
         }

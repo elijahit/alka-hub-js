@@ -7,9 +7,10 @@ const emoji = {
     deleteMarker: "https://cdn.discordapp.com/emojis/1280837135351414784.webp?size=32&quality=lossless",
     updateMarker: "https://cdn.discordapp.com/emojis/1280837807665057845.webp?size=32&quality=lossless"
   },
-  banSystem: {
+  logsSystem: {
     banMarker: "https://cdn.discordapp.com/emojis/1280844103000653897.webp?size=32&quality=lossless",
-    unBanMarker: "https://cdn.discordapp.com/emojis/1280845875773702195.webp?size=32&quality=lossless"
+    unBanMarker: "https://cdn.discordapp.com/emojis/1280845875773702195.webp?size=32&quality=lossless",
+    mewMemberMarker: "https://cdn.discordapp.com/emojis/1280847505269063720.webp?size=32&quality=lossless"
   }
 }
 
