@@ -3,26 +3,24 @@ const { readFileSync, read } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const emoji = require('../../../bin/data/emoji');
+const colors = require('../../../bin/data/colors');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT messageState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
   name: Events.MessageUpdate,
   async execute(oldMessage, newMessage) {
-    let customEmoji = await getEmojifromUrl(oldMessage.client, "update");
+    let customEmoji = emoji.general.updateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, oldMessage.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    const resultDb = await readDb(sql, oldMessage.guild.id);
+    if (!resultDb) return;
+    if (resultDb["is_enabled"] != 1) return;
+    if (!resultDb["message_state_channel"]) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, oldMessage.guild.id);
     try {
-
-      if (!result?.messageState_channel) return;
-      if (result.messageState_channel?.length < 5) return;
       if(oldMessage.author.id == oldMessage.client.user.id) return;
       // CONTROLLO DELLA LINGUA
       if (oldMessage.guild?.id) {
@@ -30,7 +28,7 @@ module.exports = {
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await oldMessage.guild.channels.fetch(result.messageState_channel);
+        let channel_logs = await oldMessage.guild.channels.fetch(resultDb["message_state_channel"]);
         const fields = [];
 
         fields.push(
