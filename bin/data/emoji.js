@@ -8,7 +8,8 @@ const emoji = {
     updateMarker: "https://cdn.discordapp.com/emojis/1280837807665057845.webp?size=32&quality=lossless"
   },
   banSystem: {
-    banMarker: "https://cdn.discordapp.com/emojis/1280844103000653897.webp?size=32&quality=lossless"
+    banMarker: "https://cdn.discordapp.com/emojis/1280844103000653897.webp?size=32&quality=lossless",
+    unBanMarker: "https://cdn.discordapp.com/emojis/1280845875773702195.webp?size=32&quality=lossless"
   }
 }
 
