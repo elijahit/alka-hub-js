@@ -6,6 +6,9 @@ const emoji = {
     newMarker: "https://cdn.discordapp.com/emojis/1280836450849525796.webp?size=32&quality=lossless",
     deleteMarker: "https://cdn.discordapp.com/emojis/1280837135351414784.webp?size=32&quality=lossless",
     updateMarker: "https://cdn.discordapp.com/emojis/1280837807665057845.webp?size=32&quality=lossless"
+  },
+  banSystem: {
+    banMarker: "https://cdn.discordapp.com/emojis/1280844103000653897.webp?size=32&quality=lossless"
   }
 }
 

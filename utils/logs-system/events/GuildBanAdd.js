@@ -3,10 +3,11 @@ const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const {readDb} = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT guildBanState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
@@ -14,22 +15,20 @@ module.exports = {
   async execute(ban) {
     let customEmoji = await getEmojifromUrl(ban.guild.client, "ban");
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, ban.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    const resultDb = await readDb(sql, ban.guild.id);
+    if (!resultDb) return;
+    if (resultDb["is_enabled"] != 1) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, ban.guild.id);
     try {
 
-      if (!result?.guildBanState_channel) return;
-      if (result.guildBanState_channel?.length < 5) return;
+      if (!resultDb["ban_state_channel"]) return;
       // CONTROLLO DELLA LINGUA
       if (ban.guild?.id) {
         let data = await language.databaseCheck(ban.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await ban.guild.channels.fetch(result.guildBanState_channel);
+        let channel_logs = await ban.guild.channels.fetch(resultDb["ban_state_channel"]);
         const fields = [];
         fields.push(
           { name: `${language_result.guildBanAdd.ban_user}`, value: `${ban.user}`, inline: true },
@@ -54,7 +53,7 @@ module.exports = {
           .addFields(fields)
           .setFooter({ text: `${language_result.guildBanAdd.ban_footer}`, iconURL: `${language_result.guildBanAdd.ban_icon_url}` })
           .setDescription(language_result.guildBanAdd.ban_create)
-          .setColor(0x9e1313);
+          .setColor(colors.general.error);
         if (ban.user.avatar) {
           embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${ban.user.id}/${ban.user.avatar}.png`);
         }

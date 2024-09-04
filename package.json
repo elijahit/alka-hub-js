@@ -29,7 +29,7 @@
   "main": "app.js",
   "scripts": {
     "start": "NODE_ENV=production node app.js",
-    "dev": "NODE_ENV=development node app.js",
+    "dev": "NODE_ENV=development nodemon app.js",
     "commands": "NODE_ENV=development node ./deploy-commands/all.js"
   },
   "repository": {
@@ -41,5 +41,8 @@
   "bugs": {
     "url": "https://github.com/elijahit/alka-hub-js/issues"
   },
-  "homepage": "https://github.com/elijahit/alka-hub-js#readme"
+  "homepage": "https://github.com/elijahit/alka-hub-js#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
 }
