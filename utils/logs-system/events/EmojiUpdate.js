@@ -3,33 +3,31 @@ const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT emojiState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 // ------------ //
-
 module.exports = {
   name: Events.GuildEmojiUpdate,
   async execute(oldEmoji, newEmoji) {
-    let customEmoji = await getEmojifromUrl(oldEmoji.client, "update");
+    let customEmoji = emoji.general.updateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, oldEmoji.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    const resultDb = await readDb(sql, oldEmoji.guild.id);
+    if (!resultDb) return;
+    if (resultDb["is_enabled"] != 1) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, oldEmoji.guild.id);
     try {
 
-      if (!result?.emojiState_channel) return;
-      if (result.emojiState_channel?.length < 5) return;
+      if (!resultDb["emoji_state_channel"]) return;
       // CONTROLLO DELLA LINGUA
       if (oldEmoji.guild?.id) {
         let data = await language.databaseCheck(oldEmoji.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await oldEmoji.guild.channels.fetch(result.emojiState_channel);
+        let channel_logs = await oldEmoji.guild.channels.fetch(resultDb["emoji_state_channel"]);
         const fields = [];
 
         // CONTROLLO EMOJI ANIMATA O NO
@@ -68,7 +66,7 @@ module.exports = {
           .addFields(fields)
           .setFooter({ text: `${language_result.emojiUpdate.embed_footer}`, iconURL: `${language_result.emojiUpdate.embed_icon_url}` })
           .setDescription(language_result.emojiUpdate.emoji_update)
-          .setColor(0x1c7872);
+          .setColor(colors.general.aquamarine);
         channel_logs.send({ embeds: [embedLog] });
       }
     }
