@@ -19,6 +19,7 @@ module.exports = {
       const resultDb = await readDb(sql, member.guild.id);
       if (!resultDb) return;
       if (resultDb["is_enabled"] != 1) return;
+      if(!resultDb["exit_member_channel"]) return;
       // CONTROLLO DELLA LINGUA
       if (member.guild?.id) {
         let data = await language.databaseCheck(member.guild.id);

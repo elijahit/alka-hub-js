@@ -18,9 +18,9 @@ module.exports = {
     const resultDb = await readDb(sql, ban.guild.id);
     if (!resultDb) return;
     if (resultDb["is_enabled"] != 1) return;
+    if (!resultDb["ban_state_channel"]) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
-      if (!resultDb["ban_state_channel"]) return;
       // CONTROLLO DELLA LINGUA
       if (ban.guild?.id) {
         let data = await language.databaseCheck(ban.guild.id);

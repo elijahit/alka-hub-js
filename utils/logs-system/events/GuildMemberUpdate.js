@@ -3,32 +3,30 @@ const { readFileSync, read } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT guildMemberState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
   name: Events.GuildMemberUpdate,
   async execute(oldMember, newMember) {
-    let customEmoji = await getEmojifromUrl(oldMember.client, "memberupdate");
+    let customEmoji = emoji.logsSystem.updateMemberMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, oldMember.guild.id);
     try {
-      if (!result_Db) return;
-      if (result_Db.logSystem_enabled != 1) return;
-      // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-      const result = await readDb(sqlChannelId_log, oldMember.guild.id);
-      if (!result?.guildMemberState_channel) return;
-      if (result.guildMemberState_channel?.length < 5) return;
+      const resultDb = await readDb(sql, oldMember.guild.id);
+      if (!resultDb) return;
+      if (resultDb["is_enabled"] != 1) return;
+      if(!resultDb["member_state_channel"]) return;
       // CONTROLLO DELLA LINGUA
       if (oldMember.guild?.id) {
         let data = await language.databaseCheck(oldMember.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await oldMember.guild.channels.fetch(result.guildMemberState_channel);
+        let channelLogs = await oldMember.guild.channels.fetch(resultDb["member_state_channel"]);
         const fields = [];
         let changeCheck = false;
 
@@ -95,12 +93,12 @@ module.exports = {
           .addFields(fields)
           .setFooter({ text: `${language_result.guildMemberUpdate.embed_footer}`, iconURL: `${language_result.guildMemberUpdate.embed_icon_url}` })
           .setDescription(language_result.guildMemberUpdate.embed_description)
-          .setColor(0x4287f5);
+          .setColor(colors.general.blue);
         if (oldMember.user.avatar) {
           embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${oldMember.id}/${oldMember.user.avatar}.png`);
         }
         try {
-          channel_logs.send({ embeds: [embedLog] });;
+          channelLogs.send({ embeds: [embedLog] });;
         }
         catch {
           return;

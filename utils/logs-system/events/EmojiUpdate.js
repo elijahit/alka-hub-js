@@ -17,10 +17,9 @@ module.exports = {
     const resultDb = await readDb(sql, oldEmoji.guild.id);
     if (!resultDb) return;
     if (resultDb["is_enabled"] != 1) return;
+    if (!resultDb["emoji_state_channel"]) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
-
-      if (!resultDb["emoji_state_channel"]) return;
       // CONTROLLO DELLA LINGUA
       if (oldEmoji.guild?.id) {
         let data = await language.databaseCheck(oldEmoji.guild.id);

@@ -18,12 +18,12 @@ module.exports = {
     const resultDb = await readDb(sql, channel.guild.id);
     if (!resultDb) return;
     if (resultDb["is_enabled"] != 1) return;
+    if (!resultDb["channel_state_channel"]) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // TODO DA GESTIRE PER STATS SYSTEM
       // const channelStatsSystem = await readDbAllWith2Params(`SELECT * FROM stats_system_channel WHERE channelId = ? AND guildId = ?`, channel.id, channel.guild.id);
       // if (channelStatsSystem[0]?.channelId) return;
-      if (!resultDb["channel_state_channel"]) return;
       // CONTROLLO DELLA LINGUA
       if (channel.guild?.id) {
         let data = await language.databaseCheck(channel.guild.id);

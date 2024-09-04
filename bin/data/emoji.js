@@ -12,6 +12,7 @@ const emoji = {
     unBanMarker: "https://cdn.discordapp.com/emojis/1280845875773702195.webp?size=32&quality=lossless",
     newMemberMarker: "https://cdn.discordapp.com/emojis/1280847505269063720.webp?size=32&quality=lossless",
     exitMemberMarker: "https://cdn.discordapp.com/emojis/1280854817517867099.webp?size=32&quality=lossless",
+    updateMemberMarker: "https://cdn.discordapp.com/emojis/1280856253849141299.webp?size=32&quality=lossless"
   }
 }
 
