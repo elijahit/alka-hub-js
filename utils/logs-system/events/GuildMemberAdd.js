@@ -13,7 +13,7 @@ let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member) {
-    let customEmoji = emoji.logsSystem.mewMemberMarker;
+    let customEmoji = emoji.logsSystem.newMemberMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     const resultDb = await readDb(sql, member.guild.id);
     if (!resultDb) return;

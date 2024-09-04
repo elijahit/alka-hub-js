@@ -3,32 +3,29 @@ const { readFileSync, read } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT removeMember_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
   name: Events.GuildMemberRemove,
   async execute(member) {
-    let customEmoji = await getEmojifromUrl(member.client, "memberremove");
+    let customEmoji = emoji.logsSystem.exitMemberMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, member.guild.id);
     try {
-      if (!result_Db) return;
-      if (result_Db.logSystem_enabled != 1) return;
-      // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-      const result = await readDb(sqlChannelId_log, member.guild.id);
-      if (!result?.removeMember_channel) return;
-      if (result.removeMember_channel?.length < 5) return;
+      const resultDb = await readDb(sql, member.guild.id);
+      if (!resultDb) return;
+      if (resultDb["is_enabled"] != 1) return;
       // CONTROLLO DELLA LINGUA
       if (member.guild?.id) {
         let data = await language.databaseCheck(member.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await member.guild.channels.fetch(result.removeMember_channel);
+        let channel_logs = await member.guild.channels.fetch(resultDb["exit_member_channel"]);
         const fields = [];
 
         fields.push(
@@ -47,7 +44,7 @@ module.exports = {
           .addFields(fields)
           .setFooter({ text: `${language_result.guildMemberRemove.embed_footer}`, iconURL: `${language_result.guildMemberRemove.embed_icon_url}` })
           .setDescription(language_result.guildMemberRemove.embed_description)
-          .setColor(0x8c2929);
+          .setColor(colors.general.error);
         if (member.user.avatar) {
           embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${member.id}/${member.user.avatar}.png`);
         }
