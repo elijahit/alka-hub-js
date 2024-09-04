@@ -65,7 +65,7 @@ module.exports = {
           .setAuthor({ name: `${language_result.messageUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setFooter({ text: `${language_result.messageUpdate.embed_footer}`, iconURL: `${language_result.messageUpdate.embed_icon_url}` })
-          .setColor(0xfcba03);
+          .setColor(colors.general.danger);
         channel_logs.send({ embeds: [embedLog] });
       }
     }

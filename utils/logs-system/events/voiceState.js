@@ -3,26 +3,24 @@ const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const emoji = require('../../../bin/data/emoji');
+const colors = require('../../../bin/data/colors');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT voiceStateJoin_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
-// ----------------
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
+// ------------ //
 
 module.exports = {
   name: Events.VoiceStateUpdate,
   async execute(oldState, newState) {
-    let customEmoji = await getEmojifromUrl(oldState.client, "voicestate");
+    let customEmoji = emoji.general.voiceMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, newState.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    const resultDb = await readDb(sql, oldState.guild.id);
+    if (!resultDb) return;
+    if (resultDb["is_enabled"] != 1) return;
+    if (!resultDb["voice_state_channel"]) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, newState.guild.id);
     try {
-
-      if (!result?.voiceStateJoin_channel) return;
-      if (result.voiceStateJoin_channel?.length < 5) return;
       // CONTROLLO DELLA LINGUA
       if (oldState.guild?.id) {
         let data = await language.databaseCheck(oldState.guild.id);
@@ -31,7 +29,7 @@ module.exports = {
 
         // UN UTENTE SI E' SPOSTATO DA UN CANALE A UN ALTRO
         if (oldState.channel?.id && newState.channel?.id && oldState.channel?.id != newState.channel?.id) {
-          let channel = await newState.guild.channels.fetch(result.voiceStateJoin_channel);
+          let channel = await newState.guild.channels.fetch(resultDb["voice_state_channel"]);
           // CREO IL MESSAGGIO EMBED DA MANDARE
           const embedLog = new EmbedBuilder()
             .setAuthor({ name: `${language_result.voiceState.embed_title}`, iconURL: customEmoji })
@@ -40,13 +38,13 @@ module.exports = {
               { name: `${language_result.voiceState.new_channel}`, value: `${newState.channel}`, inline: true })
             .setDescription(language_result.voiceState.move_to.replace("{1}", oldState.member.user))
             .setFooter({ text: `${language_result.voiceState.embed_footer}`, iconURL: `${language_result.voiceState.embed_icon_url}` })
-            .setColor(0x2a647d);
+            .setColor(colors.general.aquamarine);
           channel.send({ embeds: [embedLog] });
 
         }
         // UN UTENTE HA EFFETTUATO L'ACCESSO IN UN NUOVO CANALE
         if (!oldState.channel?.id && newState.channel?.id) {
-          let channel = await newState.guild.channels.fetch(result.voiceStateJoin_channel)
+          let channel = await newState.guild.channels.fetch(resultDb["voice_state_channel"])
           // CREO IL MESSAGGIO EMBED DA MANDARE
           const embedLog = new EmbedBuilder()
             .setAuthor({ name: `${language_result.voiceState.embed_title}`, iconURL: customEmoji })
@@ -54,13 +52,13 @@ module.exports = {
               .replace("{1}", newState.member.user)
               .replace("{2}", newState.channel))
             .setFooter({ text: `${language_result.voiceState.embed_footer}`, iconURL: `${language_result.voiceState.embed_icon_url}` })
-            .setColor(0x358f38);
+            .setColor(colors.general.success);
           channel.send({ embeds: [embedLog] });
 
         }
         // UN UTENTE SI E' DISCONNESSO DAI CANALI VOCALI
         if (oldState.channel?.id && !newState.channel?.id) {
-          let channel = await newState.guild.channels.fetch(result.voiceStateJoin_channel)
+          let channel = await newState.guild.channels.fetch(resultDb["voice_state_channel"])
           // CREO IL MESSAGGIO EMBED DA MANDARE
           const embedLog = new EmbedBuilder()
             .setAuthor({ name: `${language_result.voiceState.embed_title}`, iconURL: customEmoji })
@@ -68,7 +66,7 @@ module.exports = {
               .replace("{1}", oldState.member.user)
               .replace("{2}", oldState.channel))
             .setFooter({ text: `${language_result.voiceState.embed_footer}`, iconURL: `${language_result.voiceState.embed_icon_url}` })
-            .setColor(0x7a3131);
+            .setColor(colors.general.error);
           channel.send({ embeds: [embedLog] });
         }
       }
