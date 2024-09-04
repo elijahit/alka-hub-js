@@ -3,6 +3,8 @@ const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
 const { readDb, runDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
+const emoji = require("../../../bin/data/emoji")
+const colors = require("../../../bin/data/colors")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -75,23 +77,25 @@ module.exports = {
 
 			let fields = [];
 			const embedLog = new EmbedBuilder();
-			if(moduleSelect) {
+			if (moduleSelect) {
 				fields = [
-					{name: language_result.helpCommand[`${moduleSelect}_category`], value: language_result.helpCommand[`${moduleSelect}_commands`]},
-					{name: " ", value: language_result.helpCommand.documentationRefer
-				.replace('{0}', moduleSelect)}
+					{ name: language_result.helpCommand[`${moduleSelect}_category`], value: language_result.helpCommand[`${moduleSelect}_commands`] },
+					{
+						name: " ", value: language_result.helpCommand.documentationRefer
+							.replace('{0}', moduleSelect)
+					}
 				];
 				embedLog.setDescription(language_result.helpCommand.description_embed);
 			} else {
-				fields = [{name: language_result.helpCommand.noModuleSelectTitle, value: language_result.helpCommand.noModuleSelectEmbed}]
+				fields = [{ name: language_result.helpCommand.noModuleSelectTitle, value: language_result.helpCommand.noModuleSelectEmbed }]
 			}
-			const customEmoji = await getEmojifromUrl(interaction.client, "help");
+			const customEmoji = emoji.general.helpMaker;
 			embedLog
 				.setAuthor({ name: `${language_result.helpCommand.embed_title}`, iconURL: customEmoji })
 				.addFields(fields)
 				.setFooter({ text: `${language_result.helpCommand.embed_footer}`, iconURL: `${language_result.helpCommand.embed_icon_url}` })
-				.setColor(0x3262a8);
-			await interaction.reply({embeds: [embedLog], ephemeral: true});
+				.setColor(colors.general.blue);
+			await interaction.reply({ embeds: [embedLog], ephemeral: true });
 		}
 		catch (error) {
 			errorSendControls(error, interaction.client, interaction.guild, "\\general\\help.js");
