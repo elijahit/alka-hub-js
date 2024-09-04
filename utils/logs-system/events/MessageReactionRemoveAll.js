@@ -3,34 +3,31 @@ const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const emoji = require('../../../bin/data/emoji');
+const colors = require('../../../bin/data/colors');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT messageState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
   name: Events.MessageReactionRemoveAll,
   async execute(message, reactions) {
-    let customEmoji = await getEmojifromUrl(message.client, "reactionremoveall");
+    let customEmoji = emoji.general.deleteMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, message.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    const resultDb = await readDb(sql, message.guild.id);
+    if (!resultDb) return;
+    if (resultDb["is_enabled"] != 1) return;
+    if (!resultDb["message_state_channel"]) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, message.guild.id);
     try {
-
-      if (!result?.messageState_channel) return;
-      if (result.messageState_channel?.length < 5) return;
-      if (message.author == message.client.user) return;
       // CONTROLLO DELLA LINGUA
       if (message.guild?.id) {
         let data = await language.databaseCheck(message.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await message.guild.channels.fetch(result.messageState_channel);
+        let channel_logs = await message.guild.channels.fetch(resultDb["message_state_channel"]);
         const fields = [];
 
         fields.push(
@@ -53,7 +50,7 @@ module.exports = {
           .addFields(fields)
           .setDescription(language_result.messageReactionRemoveAll.embed_description)
           .setFooter({ text: `${language_result.messageReactionRemoveAll.embed_footer}`, iconURL: `${language_result.messageReactionRemoveAll.embed_icon_url}` })
-          .setColor(0x34ebeb);
+          .setColor(colors.general.error);
         channel_logs.send({ embeds: [embedLog] });
       }
     }
