@@ -3,33 +3,32 @@ const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT inviteState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
   name: Events.InviteCreate,
   async execute(invite) {
-    let customEmoji = await getEmojifromUrl(invite.client, "new_invite");
+    let customEmoji = emoji.logsSystem.newInviteMarker;
 
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, invite.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    const resultDb = await readDb(sql, invite.guild.id);
+    if (!resultDb) return;
+    if (resultDb["is_enabled"] != 1) return;
+    if (!resultDb["invite_state_channel"]) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, invite.guild.id);
     try {
-      if (!result?.inviteState_channel) return;
-      if (result.inviteState_channel?.length < 5) return;
       // CONTROLLO DELLA LINGUA
       if (invite.guild?.id) {
         let data = await language.databaseCheck(invite.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await invite.guild.channels.fetch(result.inviteState_channel);
+        let channel_logs = await invite.guild.channels.fetch(resultDb["invite_state_channel"]);
         const fields = [];
         const embedLog = new EmbedBuilder();
 
@@ -71,7 +70,7 @@ module.exports = {
           .addFields(fields)
           .setFooter({ text: `${language_result.inviteCreate.embed_footer}`, iconURL: `${language_result.inviteCreate.embed_icon_url}` })
           .setDescription(language_result.inviteCreate.embed_description)
-          .setColor(0x32a852);
+          .setColor(colors.general.success);
         channel_logs.send({ embeds: [embedLog] })
       }
     }

@@ -1,29 +1,27 @@
-const { Events, EmbedBuilder, TextChannel } = require('discord.js');
+const { Events, EmbedBuilder, TextChannel, Colors } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmoji, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const emoji = require('../../../bin/data/emoji');
+const colors = require('../../../bin/data/colors');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT inviteState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
   name: Events.InviteDelete,
   async execute(invite) {
-    let customEmoji = await getEmojifromUrl(invite.client, "delete");
+    let customEmoji = emoji.general.deleteMarker;
 
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, invite.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    const resultDb = await readDb(sql, invite.guild.id);
+    if (!resultDb) return;
+    if (resultDb["is_enabled"] != 1) return;
+    if (!resultDb["invite_state_channel"]) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, invite.guild.id);
     try {
-
-      if (!result?.inviteState_channel) return;
-      if (result.inviteState_channel?.length < 5) return;
       // CONTROLLO DELLA LINGUA
       if (invite.guild?.id) {
         const data = await language.databaseCheck(invite.guild.id);
@@ -31,7 +29,7 @@ module.exports = {
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        const channel_logs = await invite.guild.channels.fetch(result.inviteState_channel);
+        const channel_logs = await invite.guild.channels.fetch(resultDb["invite_state_channel"]);
 
         const fields = [];
         const embedLog = new EmbedBuilder();
@@ -49,7 +47,7 @@ module.exports = {
           .addFields(fields)
           .setFooter({ text: `${language_result.inviteDelete.embed_footer}`, iconURL: `${language_result.inviteDelete.embed_icon_url}` })
           .setDescription(language_result.inviteDelete.embed_description)
-          .setColor(0x630505);
+          .setColor(colors.general.error);
         channel_logs.send({ embeds: [embedLog] })
       }
     }
