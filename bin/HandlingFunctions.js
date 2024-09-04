@@ -4,6 +4,8 @@ const { readDbWith3Params, readDb, readDbAll, runDb, readDbAllWith2Params, readD
 const { readFileSync, readdir, writeFile } = require("fs");
 const { stripIndents } = require('common-tags');
 const moment = require('moment-timezone');
+const colors = require('./data/colors');
+const emoji = require('./data/emoji');
 
 function errorSendControls(error, client, guild_error, system) {
   if (error == "DiscordAPIError[50013]: Missing Permissions") {
@@ -16,8 +18,8 @@ function errorSendControls(error, client, guild_error, system) {
               const embedLog = new EmbedBuilder()
                 .setAuthor({ name: `Alka Hub | Missing Permissions` })
                 .setDescription("You haven't invited Alka Hub correctly and you don't have permission to perform this action. We invite you to invite Alka Hub again or contact our [support discord](https://discord.gg/DqRcKB75N5).\n\n-> [Invite Again](https://discord.com/api/oauth2/authorize?client_id=843183839869665280&permissions=8&scope=bot+applications.commands)")
-                .setFooter({ text: `Alka Hub di alkanetwork.eu`, iconURL: `https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png` })
-                .setColor(0x7a090c);
+                .setFooter({ text: `Alka Hub di alkanetwork.eu`, iconURL: emoji.general.appIcon })
+                .setColor(colors.general.error);
               channel.send({ embeds: [embedLog] });
               MissingMessage = true;
             }
@@ -66,50 +68,11 @@ function errorSendControls(error, client, guild_error, system) {
               { name: `Owner Guilds | Members`, value: `*Owner ID*\n${guild_error.ownerId}\n*Membri totali*\n${guild_error.memberCount}`, inline: true },
               { name: "Errore riscontrato", value: `${error.message}` })
             .setDescription(`Abbiamo riscontrato un errore in ${system}`)
-            .setColor(0x7a3131)
+            .setColor(colors.general.error)
             .setImage(`https://cdn.discordapp.com/icons/${guild_error.id}/${guild_error.icon}.png`);
           channel.send({ embeds: [embedLog] });
         })
     })
-}
-
-function getEmojiIdbyName(client, name) {
-  // LA FUNZIONE RITORNA L'ID DEL EMOJI TRAMITE IL NOME NEL SERVER EMOJI
-  return client.guilds.fetch(emojiGuildId_01).then(guild => {
-    return guild.emojis.fetch().then(emojis => {
-      let emojiResult;
-      emojis.each(emoji => {
-        if (emoji.name == name) {
-          emojiResult = emoji.id
-        }
-      });
-      return emojiResult;
-    });
-  });
-}
-
-async function getEmoji(client, name) {
-  // LA FUNZIONE RITORNA L'EMOIJ TRAMITE IL NOME NEL SERVER EMOJI
-  let emojiId;
-  await getEmojiIdbyName(client, name).then(value => {
-    emojiId = value;
-  })
-  return client.guilds.fetch(emojiGuildId_01)
-    .then(guild => {
-      return guild.emojis.fetch(emojiId)
-        .then(emoji => {
-          return emoji;
-        })
-    })
-    .catch(() => {
-      console.error("[ERROR] Non sono riuscito a trovare la tua emoji");
-    });
-}
-
-async function getEmojifromUrl(client, name) {
-  // LA FUNZIONE RITORNA L'URL DELL'EMOJI
-  emoji = await getEmojiIdbyName(client, name);
-  return `https://cdn.discordapp.com/emojis/${emoji}.webp?size=44&quality=lossless`;
 }
 
 async function checkHavePermissions(interaction, pex) {
@@ -574,8 +537,6 @@ async function statisticsUpdate(client) {
 
 module.exports = {
   errorSendControls,
-  getEmoji,
-  getEmojifromUrl,
   checkHavePermissions,
   returnPermission,
   noInitGuilds,

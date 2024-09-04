@@ -1,5 +1,6 @@
 const emoji = {
   general: {
+    appIcon: "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     trueMaker: "https://cdn.discordapp.com/emojis/1280799186962350091.webp?size=32&quality=lossless",
     falseMaker: "https://cdn.discordapp.com/emojis/1280799212732153866.webp?size=32&quality=lossless",
     errorMarker: "https://cdn.discordapp.com/emojis/1280804031513624616.webp?size=32&quality=lossless",
