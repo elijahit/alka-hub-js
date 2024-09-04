@@ -1,8 +1,10 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
-const { readFile, read } = require('fs');
+const { read, readFileSync } = require('fs');
 const { readDb, runDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
+const emoji = require("../../../bin/data/emoji");
+const colors = require("../../../bin/data/colors");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -43,7 +45,7 @@ module.exports = {
 
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id);
-		const langagues_path = readFile(`./languages/general/${data}.json`);
+		const langagues_path = readFileSync(`./languages/general/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		await returnPermission(interaction, "init", async result => {
@@ -60,31 +62,28 @@ module.exports = {
 						if(resolveData.length > 0) {
 							runInitSql = `INSERT INTO guilds (guilds_id, language, time_zone) VALUES (?, ?, ?)`
 							await runDb(runInitSql, interaction.guild.id, choices, resolveData[0][1]);
-							let customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
 							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: customEmoji })
+								.setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: emoji.general.trueMaker })
 								.setDescription(language_result.initCommand.description_embed)
 								.setFooter({ text: `${language_result.initCommand.embed_footer}`, iconURL: `${language_result.initCommand.embed_icon_url}` })
-								.setColor(0x4287f5);
+								.setColor(colors.general.success);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}
 						else {
-							let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: customEmoji })
+							.setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: emoji.general.errorMarker })
 							.setDescription(language_result.initCommand.error_timezone)
 							.setFooter({ text: `${language_result.initCommand.embed_footer}`, iconURL: `${language_result.initCommand.embed_icon_url}` })
-							.setColor(0x4287f5);
+							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}
 
 					} else {
-						let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: customEmoji })
+							.setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: emoji.general.errorMarker })
 							.setDescription(language_result.initCommand.description_already_embed)
 							.setFooter({ text: `${language_result.initCommand.embed_footer}`, iconURL: `${language_result.initCommand.embed_icon_url}` })
-							.setColor(0x4287f5);
+							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}
 				}

@@ -3,6 +3,8 @@ const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
 const { readDb, runDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -12,7 +14,7 @@ module.exports = {
 			option
 				.addChoices({
 					name: "Logs System",
-					value: "logSystem_enabled",
+					value: "logs_system",
 				})
 				.addChoices({
 					name: "Ticket System",
@@ -55,13 +57,12 @@ module.exports = {
 				.setRequired(true)
 		),
 	async execute(interaction) {
-		let choices, nameChoices;
+		let nameChoices;
 		// RECUPERO LE OPZIONI INSERITE
 		await interaction.options._hoistedOptions.forEach(value => {
 			if (value.name == 'choices') {
-				choices = value.value;
-				nameChoices = value.value.split("_")[0];
-			} 
+				nameChoices = value.value;
+			}
 		});
 
 		// RECUPERO LA LINGUA
@@ -72,32 +73,37 @@ module.exports = {
 		await returnPermission(interaction, "features", async result => {
 			try {
 				if (result) {
-					const checkQuery = `SELECT ${choices} FROM guilds_config WHERE guildId = ?`
+					const checkQuery = `SELECT * FROM ${nameChoices} WHERE guilds_id = ?`
 					const checkFeature = await readDb(checkQuery, interaction.guild.id);
 
-					if (checkFeature != undefined) {
-						let updateSql = `UPDATE guilds_config SET ${choices} = ? WHERE guildId = ?`
-						if (checkFeature[choices] == 1) {
-							let customEmoji = await getEmojifromUrl(interaction.client, "pexremoved");
-							await runDb(updateSql, null, interaction.guild.id);
+					if (checkFeature) {
+						let updateSql = `UPDATE ${nameChoices} SET is_enabled = ? WHERE guilds_id = ?`
+						if (checkFeature["is_enabled"] == 1) {
+							await runDb(updateSql, 0, interaction.guild.id);
 							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: customEmoji })
+								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
 								.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", nameChoices))
 								.setFooter({ text: `${language_result.disabledFeatures.embed_footer}`, iconURL: `${language_result.disabledFeatures.embed_icon_url}` })
-								.setColor(0xab2c09);
+								.setColor(colors.general.error);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						} else {
-							let customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
 							await runDb(updateSql, 1, interaction.guild.id);
 							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: customEmoji })
+								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
 								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", nameChoices))
 								.setFooter({ text: `${language_result.enabledFeatures.embed_footer}`, iconURL: `${language_result.enabledFeatures.embed_icon_url}` })
-								.setColor(0x119c05);
+								.setColor(colors.general.success);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}
 					} else {
-						await noInitGuilds(interaction);
+						let updateSql = `INSERT INTO ${nameChoices} (guilds_id, is_enabled) VALUES(?, ?)`
+						await runDb(updateSql, interaction.guild.id, 1);
+						const embedLog = new EmbedBuilder()
+							.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
+							.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", nameChoices))
+							.setFooter({ text: `${language_result.enabledFeatures.embed_footer}`, iconURL: `${language_result.enabledFeatures.embed_icon_url}` })
+							.setColor(colors.general.success);
+						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}
 				}
 				else {
