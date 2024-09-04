@@ -114,12 +114,13 @@ async function getEmojifromUrl(client, name) {
 
 async function checkHavePermissions(interaction, pex) {
   const member = interaction.member;
-  // LA FUNZIONE CONTROLLA NEL DATABASE SE ALMENO UNO DEI RUOLI
-  // E' PRESENTE NEL HASH DI PERMESSO
-  let checkSqlRole = `SELECT * FROM rank_system_permissions WHERE guildId = ? AND roleId = ? AND hashRank = ?`;
+  // TODO DA SISTEMARE CON IL SISTEMA DI PERMESSI
+  // let checkSqlRole = `SELECT * FROM rank_system_permissions WHERE guildId = ? AND roleId = ? AND hashRank = ?`;
   let check = false, admin = false;
   for (role of member.roles.cache) {
-    const result = await readDbWith3Params(checkSqlRole, member.guild.id, role[1].id, pex);
+    // TODO DA SISTEMARE CON IL SISTEMA DI PERMESSI
+    // const result = await readDbWith3Params(checkSqlRole, member.guild.id, role[1].id, pex);
+    const result = null;
     // la funzione .has tende a dare errore se non sei admin, quindi crasha
     // l'ho inserito in un try per non farlo crashare e gestire i valori
     try {
