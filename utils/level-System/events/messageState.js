@@ -51,7 +51,7 @@ module.exports = {
                   .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
                   .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", message.member).replace("{1}", checkUser.level + 1))
                   .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser.minute_vocal == null ? 0 : checkUser.minute_vocal).replace("{1}", checkUser.message_count == null ? 0 : checkUser.message_count)}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
-                  .setColor(0x7a090c);
+                  .setColor(colors.general.error);
                 await channel.send({ content: `${message.member}`, embeds: [embedLog] });
               } else {
                 await runDb("UPDATE levels SET exp = ?, message_count = ? WHERE guilds_id = ? AND users_id = ?", checkUser.exp + getRandomInt(5, 10), checkUser.message_count + 1, message.guild.id, message.member.id);
