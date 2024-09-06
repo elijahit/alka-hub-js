@@ -8,6 +8,7 @@ const emoji = require('../../../bin/data/emoji');
 
 // QUERY DEFINITION
 let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
+let sqlFeatureCheck = `SELECT * FROM guilds WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
@@ -17,7 +18,7 @@ module.exports = {
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     const resultDb = await readDb(sql, oldChannel.guild.id);
     if (!resultDb) return;
-    if (resultDb["is_enabled"] != 1) return;
+    if (checkerFeatureDb["is_enabled_logs"] != 1) return;
     if (!resultDb["channel_state_channel"]) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
