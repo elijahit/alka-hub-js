@@ -14,56 +14,89 @@ module.exports = {
 			option
 				.addChoices({
 					name: "Logs System",
-					value: "logs_system",
+					value: "is_enabled_logs",
 				})
 				.addChoices({
 					name: "Ticket System",
-					value: "ticketSystem_enabled",
+					value: "is_enabled_ticket",
 				})
 				.addChoices({
 					name: "Auto Voice System",
-					value: "autoVoiceSystem_enabled",
+					value: "is_enabled_autovoice",
 				})
 				.addChoices({
 					name: "Auto Role System",
-					value: "autoRoleSystem_enabled",
+					value: "is_enabled_autorole",
 				})
 				.addChoices({
 					name: "Reaction Role System",
-					value: "reactionRoleSystem_enabled",
+					value: "is_enabled_reactionrole",
 				})
 				.addChoices({
 					name: "Stats Server System",
-					value: "statsServerSystem_enabled",
+					value: "is_enabled_stastserver",
 				})
 				.addChoices({
 					name: "Twitch Notify System",
-					value: "twitchNotifySystem_enabled",
+					value: "is_enabled_twitchnotify",
 				})
 				.addChoices({
 					name: "Giveaway System",
-					value: "giveawaySystem_enabled",
+					value: "is_enabled_giveaway",
 				})
 				.addChoices({
 					name: "Welcome Message System",
-					value: "welcomeMessage_enabled",
+					value: "is_enabled_welcome",
 				})
 				.addChoices({
 					name: "Levels System",
-					value: "levelsSystem_enabled",
+					value: "is_enabled_levels",
 				})
 				.setName('choices')
 				.setDescription('Name of the system you want to enable or disable')
 				.setRequired(true)
 		),
 	async execute(interaction) {
-		let nameChoices;
-		// RECUPERO LE OPZIONI INSERITE
-		await interaction.options._hoistedOptions.forEach(value => {
-			if (value.name == 'choices') {
-				nameChoices = value.value;
-			}
-		});
+		const nameChoices = interaction.options.data[0].value;
+		let nameFormatted;
+
+		switch(nameChoices) {
+			case "is_enabled_logs":
+				nameFormatted = "Logs System";
+				break;
+			case "is_enabled_ticket":
+				nameFormatted = "Ticket System";
+				break;
+			case "is_enabled_autovoice":
+				nameFormatted = "Auto Voice System";
+				break;
+			case "is_enabled_autorole":
+				nameFormatted = "Auto Role System";
+				break;
+			case "is_enabled_reactionrole":
+				nameFormatted = "Reaction Role System";
+				break;
+			case "is_enabled_stastserver":
+				nameFormatted = "Stats Server System";
+				break;
+			case "is_enabled_twitchnotify":
+				nameFormatted = "Twitch Notify System";
+				break;
+			case "is_enabled_giveaway":
+				nameFormatted = "Giveaway System";
+				break;
+			case "is_enabled_welcome": 
+				nameFormatted = "Welcome Message System";
+				break;
+			case "is_enabled_levels":
+				nameFormatted = "Levels System";
+				break;
+			default:
+				nameFormatted = "Undefined";
+				break;
+		}
+
+		
 
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id);
@@ -73,16 +106,16 @@ module.exports = {
 		await returnPermission(interaction, "features", async result => {
 			try {
 				if (result) {
-					const checkQuery = `SELECT * FROM ${nameChoices} WHERE guilds_id = ?`
+					const checkQuery = `SELECT ${nameChoices} FROM guilds WHERE guilds_id = ?`
 					const checkFeature = await readDb(checkQuery, interaction.guild.id);
 
 					if (checkFeature) {
-						let updateSql = `UPDATE ${nameChoices} SET is_enabled = ? WHERE guilds_id = ?`
-						if (checkFeature["is_enabled"] == 1) {
+						let updateSql = `UPDATE guilds SET ${nameChoices} = ? WHERE guilds_id = ?`
+						if (checkFeature.is_enabled_logs == 1) {
 							await runDb(updateSql, 0, interaction.guild.id);
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
-								.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", nameChoices))
+								.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", nameFormatted))
 								.setFooter({ text: `${language_result.disabledFeatures.embed_footer}`, iconURL: `${language_result.disabledFeatures.embed_icon_url}` })
 								.setColor(colors.general.error);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
@@ -90,20 +123,13 @@ module.exports = {
 							await runDb(updateSql, 1, interaction.guild.id);
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
-								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", nameChoices))
+								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", nameFormatted))
 								.setFooter({ text: `${language_result.enabledFeatures.embed_footer}`, iconURL: `${language_result.enabledFeatures.embed_icon_url}` })
 								.setColor(colors.general.success);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}
 					} else {
-						let updateSql = `INSERT INTO ${nameChoices} (guilds_id, is_enabled) VALUES(?, ?)`
-						await runDb(updateSql, interaction.guild.id, 1);
-						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
-							.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", nameChoices))
-							.setFooter({ text: `${language_result.enabledFeatures.embed_footer}`, iconURL: `${language_result.enabledFeatures.embed_icon_url}` })
-							.setColor(colors.general.success);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await noInitGuilds(interaction);
 					}
 				}
 				else {
