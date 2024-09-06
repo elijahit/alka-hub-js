@@ -16,9 +16,9 @@ async function readDbAll(table) {
   return result;
 }
 
-async function readDbAllWithParams(table, value) {
+async function readDbAllWithParams(querysql, ...parms) {
   const db = await AsyncDatabase.open(database);
-  const result = await db.all(`SELECT ${value} from ${table}`);
+  const result = await db.all(querysql, ...parms);
   await db.close();
   return result;
 }

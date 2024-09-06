@@ -1,7 +1,7 @@
 const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder, PermissionsBitField } = require('discord.js');
 const { readFileSync, writeFileSync, unlinkSync } = require('fs');
 const language = require('../../../languages/languages');
-const { runDb, readDb, readDbAll } = require('../../../bin/database');
+const { runDb, readDb, readDbAll, readDbAllWithParams } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, returnPermission, noHavePermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
 const { channel } = require('diagnostics_channel');
 const internal = require('stream');
@@ -44,11 +44,11 @@ async function checkExp(newState, checkUser) {
     const language_result = JSON.parse(langagues_path);
 
     
-    let checkRoles = await readDbAll("SELECT * FROM levels_roles WHERE guilds_id = ?", newState.guild.id);
+    let checkRoles = await readDbAllWithParams("SELECT * FROM levels_roles WHERE guilds_id = ?", newState.guild.id);
     checkRoles.map(async value => {
       if ((checkUser.levels + 1) >= value.level) {
         try {
-          let roleResolve = await newState.guild.roles.fetch(value.role_id)
+          let roleResolve = await newState.guild.roles.fetch(value.roles_id)
           await newState.member.roles.add(roleResolve)
         } catch (error) {
           console.log(error)
