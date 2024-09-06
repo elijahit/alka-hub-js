@@ -17,6 +17,7 @@ module.exports = {
     let customEmoji = emoji.general.updateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     const resultDb = await readDb(sql, oldChannel.guild.id);
+    const checkerFeatureDb = await readDb(sqlFeatureCheck, oldChannel.guild.id);
     if (!resultDb) return;
     if (checkerFeatureDb["is_enabled_logs"] != 1) return;
     if (!resultDb["channel_state_channel"]) return;
