@@ -18,6 +18,9 @@ const emoji = {
     updateMemberMarker: "https://cdn.discordapp.com/emojis/1280856253849141299.webp?size=32&quality=lossless",
     guildUpdateMarker: "https://cdn.discordapp.com/emojis/1280858840132227073.webp?size=32&quality=lossless",
     newInviteMarker: "https://cdn.discordapp.com/emojis/1280860615342166026.webp?size=32&quality=lossless",
+  },
+  levelsSystem: {
+    levelsMaker: "https://cdn.discordapp.com/emojis/1281660241775300632.webp?size=32&quality=lossless",
   }
 }
 
