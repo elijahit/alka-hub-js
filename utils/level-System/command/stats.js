@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
-const { readDb, runDb, readDbAllWith2Params, readDbAllWith1Params } = require('../../../bin/database');
+const { readDb, runDb } = require('../../../bin/database');
 const { errorSendControls, returnPermission, noInitGuilds, noHavePermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
@@ -31,7 +31,6 @@ module.exports = {
 
 			const customEmoji = emoji.levelsSystem.levelsMaker;
 			if (checkFeaturesisEnabled?.is_enabled_levels) {
-				console.log(checkUserIsPresent)
 				if (checkUserIsPresent) {
 
 					const embedLog = new EmbedBuilder()

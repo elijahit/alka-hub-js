@@ -30,11 +30,11 @@ module.exports = {
 				if (result) {
 					const checkFeaturesisEnabled = await readDb(`SELECT is_enabled_levels from guilds WHERE guilds_id = ?`, interaction.guild.id);
 
-					const checkChannelIsPresent = await readDbAllWith1Params(`SELECT * from levels_config WHERE guilds_id = ?`, interaction.guild.id);
+					const checkChannelIsPresent = await readDb(`SELECT * from levels_config WHERE guilds_id = ?`, interaction.guild.id);
 
 					const customEmoji = emoji.levelsSystem.levelsMaker;
 					if (checkFeaturesisEnabled?.is_enabled_levels) {
-						if (checkChannelIsPresent?.length > 0) {
+						if (checkChannelIsPresent) {
 							await runDb('DELETE FROM levels_config WHERE guilds_id = ?', interaction.guild.id);
 
 							const embedLog = new EmbedBuilder()
