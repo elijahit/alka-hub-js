@@ -5,6 +5,7 @@ const { readDb, runDb } = require('../../../bin/database');
 const { errorSendControls, returnPermission, noInitGuilds, noHavePermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -34,12 +35,11 @@ module.exports = {
 		await returnPermission(interaction, "levels", async result => {
 			try {
 				if (result) {
-					const checkFeaturesisEnabled = await readDb(`SELECT is_enabled_levels from guilds WHERE guilds_id = ?`, interaction.guild.id);
 
 					const checkLevelsIsPresent = await readDb(`SELECT * from levels_roles WHERE guilds_id = ? AND roles_id = ?`, interaction.guild.id, role.id);
 
 					const customEmoji = emoji.levelsSystem.levelsMaker;
-					if (checkFeaturesisEnabled?.is_enabled_levels) {
+					if (await checkFeaturesIsEnabled(interaction.guild, "is_enabled_levels")) {
 						if (checkLevelsIsPresent) {
 							await runDb('DELETE FROM levels_roles WHERE guilds_id = ? AND roles_id = ?', interaction.guild.id, role.id);
 

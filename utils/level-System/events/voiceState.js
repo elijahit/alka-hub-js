@@ -8,6 +8,7 @@ const internal = require('stream');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkUsersDb = require('../../../bin/functions/checkUsersDb');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 
 function getRandomInt(min, max) {
   const minCeiled = Math.ceil(min);
@@ -79,8 +80,7 @@ module.exports = {
       if (!newState.member.user.bot) {
         if ((oldState.channel == null || oldState.guild.afkChannel?.id == oldState.channel?.id) && newState.channel != null) {
           if (newState.guild.afkChannel?.id != newState.channel?.id) {
-            const checkFuncsIsEnabled = await readDb(`SELECT * from guilds WHERE guilds_id = ?`, newState.guild.id);
-            if (checkFuncsIsEnabled.is_enabled_levels) {
+            if (await checkFeaturesIsEnabled(oldState.guild, "is_enabled_levels")) {
               let checkUser = await readDb("SELECT * FROM levels WHERE guilds_id = ? AND users_id = ?", newState.guild.id, newState.member.id);
               if (checkUser) {
                 await runDb("UPDATE levels SET joined_time = ? WHERE guilds_id = ? AND users_id = ?", `${Date.now()}`,  newState.guild.id, newState.member.id);

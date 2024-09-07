@@ -106,11 +106,11 @@ module.exports = {
 		await returnPermission(interaction, "features", async result => {
 			try {
 				if (result) {
-					const checkQuery = `SELECT ${nameChoices} FROM guilds WHERE guilds_id = ?`
+					const checkQuery = `SELECT ${nameChoices} FROM guilds_features WHERE guilds_id = ?`
 					const checkFeature = await readDb(checkQuery, interaction.guild.id);
 
 					if (checkFeature) {
-						let updateSql = `UPDATE guilds SET ${nameChoices} = ? WHERE guilds_id = ?`
+						let updateSql = `UPDATE guilds_features SET ${nameChoices} = ? WHERE guilds_id = ?`
 						if (checkFeature.is_enabled_logs == 1) {
 							await runDb(updateSql, 0, interaction.guild.id);
 							const embedLog = new EmbedBuilder()

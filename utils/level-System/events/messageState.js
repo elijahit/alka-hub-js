@@ -7,6 +7,7 @@ const internal = require('stream');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkUsersDb = require('../../../bin/functions/checkUsersDb');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 
 function getRandomInt(min, max) {
   const minCeiled = Math.ceil(min);
@@ -19,9 +20,8 @@ module.exports = {
   async execute(message) {
     try {
       if(!message?.member?.user?.bot) { 
-        const checkFuncsIsEnabled = await readDb(`SELECT * from guilds WHERE guilds_id = ?`, message.guild.id);
         const levelsConfig = await readDb(`SELECT * from levels_config WHERE guilds_id = ?`, message.guild.id);
-        if (checkFuncsIsEnabled.is_enabled_levels) {
+        if (await checkFeaturesIsEnabled(message.guild, "is_enabled_levels")) {
             let checkUser = await readDb("SELECT * FROM levels WHERE guilds_id = ? AND users_id = ?", message.guild.id, message.member.id);
             if (checkUser) {
               if (checkUser.exp >= 75 + (25 * checkUser.levels)) {

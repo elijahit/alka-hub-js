@@ -5,10 +5,10 @@ const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 
 // QUERY DEFINITION
 let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
-let sqlFeatureCheck = `SELECT * FROM guilds WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
@@ -17,9 +17,8 @@ module.exports = {
     let customEmoji = emoji.logsSystem.guildUpdateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     const resultDb = await readDb(sql, oldGuild.id);
-    const checkerFeatureDb = await readDb(sqlFeatureCheck, oldGuild.id);
     if (!resultDb) return;
-    if (checkerFeatureDb["is_enabled_logs"] != 1) return;
+    if (!await checkFeaturesIsEnabled(oldGuild, "is_enabled_logs")) return;
     if (!resultDb["guild_state_channel"]) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {

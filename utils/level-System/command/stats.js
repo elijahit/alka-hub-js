@@ -25,12 +25,10 @@ module.exports = {
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		try {
-			const checkFeaturesisEnabled = await readDb(`SELECT is_enabled_levels from guilds WHERE guilds_id = ?`, interaction.guild.id);
-
 			const checkUserIsPresent = await readDb(`SELECT * from levels WHERE guilds_id = ? AND users_id = ?`, interaction.guild.id, user.id);
 
 			const customEmoji = emoji.levelsSystem.levelsMaker;
-			if (checkFeaturesisEnabled?.is_enabled_levels) {
+			if (await checkFeaturesIsEnabled(interaction.guild, "is_enabled_levels")) {
 				if (checkUserIsPresent) {
 
 					const embedLog = new EmbedBuilder()

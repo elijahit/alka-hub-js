@@ -61,7 +61,11 @@ module.exports = {
 
 						if(resolveData.length > 0) {
 							runInitSql = `INSERT INTO guilds (guilds_id, language, time_zone) VALUES (?, ?, ?)`
+							runInitFeatures = `INSERT INTO guilds_features (guilds_id) VALUES (?)`
+
 							await runDb(runInitSql, interaction.guild.id, choices, resolveData[0][1]);
+							await runDb(runInitFeatures, interaction.guild.id);
+
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: emoji.general.trueMaker })
 								.setDescription(language_result.initCommand.description_embed)
