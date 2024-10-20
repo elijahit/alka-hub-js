@@ -447,11 +447,10 @@ module.exports = {
 
               await runDb(`DELETE FROM ticket_system_tickets WHERE guildId = ? AND messageId = ?`, interaction.guild.id, interaction.message.id);
 
-              await interaction.channel.delete();
-
+              
               try {
                 const embedAuthor = new EmbedBuilder()
-                  .setAuthor({ name: `${language_result.ticketTranscription.embed_title}`, iconURL: customEmoji })
+                .setAuthor({ name: `${language_result.ticketTranscription.embed_title}`, iconURL: customEmoji })
                   .addFields([{ name: language_result.ticketTranscription.reason, value: `${description}` }])
                   .setFooter({ text: `${language_result.ticketTranscription.embed_footer}`, iconURL: `${language_result.ticketTranscription.embed_icon_url}` })
                   .setColor(0x1b9e31);
@@ -467,8 +466,9 @@ module.exports = {
                 // passa avanti
               }
               unlinkSync(`./utils/ticket-system/temporary_transcript//${checkSql[0].ID}.txt`);
-
+              
               await interaction.deferReply();
+              await interaction.channel.delete();
             }
           }
           else {
