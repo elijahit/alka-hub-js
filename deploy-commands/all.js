@@ -26,6 +26,7 @@ for (const folder of commandFolders) {
 }
 // Construct and prepare an instance of the REST module
 const filterToken = process.env.NODE_ENV === 'production' ? token : process.env.NODE_ENV === 'development' ? tokenDev : process.env.NODE_ENV === "beta" ? tokenBeta : "";
+
 const rest = new REST().setToken(filterToken);
 
 // and deploy your commands!
@@ -35,7 +36,7 @@ const rest = new REST().setToken(filterToken);
 
 		// The put method is used to fully refresh all commands in the guild with the current set
 		const data = await rest.put(
-      Routes.applicationCommands(process.env.NODE_ENV === 'production' ? clientId : process.env.NODE_ENV === 'development' ? clientIdDev : ""),
+      Routes.applicationCommands(process.env.NODE_ENV === 'production' ? clientId : process.env.NODE_ENV === 'development' ? clientIdDev : process.env.NODE_ENV === 'development' ? clientIdBeta : ""),
       { body: commands },
     );
 
