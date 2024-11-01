@@ -1,5 +1,5 @@
 const { REST, Routes } = require('discord.js');
-const { token, tokenDev, clientId, clientIdDev} = require('../config.json');
+const { token, tokenDev, tokenBeta, clientId, clientIdDev} = require('../config.json');
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -25,7 +25,7 @@ for (const folder of commandFolders) {
 	}
 }
 // Construct and prepare an instance of the REST module
-const filterToken = process.env.NODE_ENV === 'production' ? token : process.env.NODE_ENV === 'development' ? tokenDev : "";
+const filterToken = process.env.NODE_ENV === 'production' ? token : process.env.NODE_ENV === 'development' ? tokenDev : process.env.NODE_ENV === "beta" ? tokenBeta : "";
 const rest = new REST().setToken(filterToken);
 
 // and deploy your commands!
