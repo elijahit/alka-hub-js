@@ -51,6 +51,16 @@ module.exports = {
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							return;
 						}
+
+						const checkRolesSql = `SELECT *
+						FROM roles r
+						WHERE r.roles_id = ? AND r.guilds_id = ?`;
+						const resultRoles = await readDb(checkRolesSql, role.id, interaction.guild.id);
+						if(!resultRoles) {
+							let inserRolesSql = `INSERT INTO roles(roles_id, guilds_id) VALUES(?, ?)`;
+							await runDb(inserRolesSql, role.id, interaction.guild.id);
+						}
+						
 						await runDb('INSERT INTO levels_roles (guilds_id, roles_id, levels) VALUES (?, ?, ?)', interaction.guild.id, role.id, level);
 
 						const embedLog = new EmbedBuilder()
