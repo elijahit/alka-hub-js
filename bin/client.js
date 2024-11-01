@@ -1,4 +1,4 @@
-const {Client, GatewayIntentBits} = require('discord.js');
+const {Client, GatewayIntentBits, Partials} = require('discord.js');
 
 const client = new Client({ intents: [
   GatewayIntentBits.Guilds, 
@@ -11,6 +11,11 @@ const client = new Client({ intents: [
   GatewayIntentBits.MessageContent,
   GatewayIntentBits.GuildMessageReactions,
   GatewayIntentBits.GuildPresences,
+],
+partials: [Partials.Reaction,
+  Partials.User,
+  Partials.Message,
+  Partials.Channel
 ]});
 
 module.exports = {client}

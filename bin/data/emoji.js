@@ -24,6 +24,9 @@ const emoji = {
   },
   permissions: {
     list: "https://cdn.discordapp.com/emojis/1301916864510820374.webp?size=32&quality=lossless",
+  },
+  reactionRoleSystem: {
+    main: "https://cdn.discordapp.com/emojis/1301961456526557268.webp?size=32&quality=lossless"
   }
 }
 
