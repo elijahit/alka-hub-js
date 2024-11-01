@@ -10,94 +10,59 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('features')
 		.setDescription('Use this command to enable or disable the features')
-		.addStringOption(option =>
+		.addIntegerOption(option =>
 			option
 				.addChoices({
 					name: "Logs System",
-					value: "is_enabled_logs",
+					value: 1,
 				})
 				.addChoices({
 					name: "Ticket System",
-					value: "is_enabled_ticket",
+					value: 2,
 				})
 				.addChoices({
 					name: "Auto Voice System",
-					value: "is_enabled_autovoice",
+					value: 3,
 				})
 				.addChoices({
 					name: "Auto Role System",
-					value: "is_enabled_autorole",
+					value: 4,
 				})
 				.addChoices({
 					name: "Reaction Role System",
-					value: "is_enabled_reactionrole",
+					value: 5,
 				})
 				.addChoices({
 					name: "Stats Server System",
-					value: "is_enabled_stastserver",
+					value: 6,
 				})
 				.addChoices({
 					name: "Twitch Notify System",
-					value: "is_enabled_twitchnotify",
+					value: 7,
+				})
+				.addChoices({
+					name: "Youtube Notify System",
+					value: 8,
 				})
 				.addChoices({
 					name: "Giveaway System",
-					value: "is_enabled_giveaway",
+					value: 9,
 				})
 				.addChoices({
 					name: "Welcome Message System",
-					value: "is_enabled_welcome",
+					value: 10,
 				})
 				.addChoices({
 					name: "Levels System",
-					value: "is_enabled_levels",
+					value: 11,
 				})
 				.setName('choices')
 				.setDescription('Name of the system you want to enable or disable')
 				.setRequired(true)
 		),
 	async execute(interaction) {
-		const nameChoices = interaction.options.data[0].value;
-		let nameFormatted;
-
-		switch(nameChoices) {
-			case "is_enabled_logs":
-				nameFormatted = "Logs System";
-				break;
-			case "is_enabled_ticket":
-				nameFormatted = "Ticket System";
-				break;
-			case "is_enabled_autovoice":
-				nameFormatted = "Auto Voice System";
-				break;
-			case "is_enabled_autorole":
-				nameFormatted = "Auto Role System";
-				break;
-			case "is_enabled_reactionrole":
-				nameFormatted = "Reaction Role System";
-				break;
-			case "is_enabled_stastserver":
-				nameFormatted = "Stats Server System";
-				break;
-			case "is_enabled_twitchnotify":
-				nameFormatted = "Twitch Notify System";
-				break;
-			case "is_enabled_giveaway":
-				nameFormatted = "Giveaway System";
-				break;
-			case "is_enabled_welcome": 
-				nameFormatted = "Welcome Message System";
-				break;
-			case "is_enabled_levels":
-				nameFormatted = "Levels System";
-				break;
-			default:
-				nameFormatted = "Undefined";
-				break;
-		}
-
+		const featuresChoice = interaction.options.data[0].value;
 		
-
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id);
 		const langagues_path = readFileSync(`./languages/general/${data}.json`);
@@ -106,30 +71,38 @@ module.exports = {
 		await returnPermission(interaction, "features", async result => {
 			try {
 				if (result) {
-					const checkQuery = `SELECT ${nameChoices} FROM guilds_features WHERE guilds_id = ?`
-					const checkFeature = await readDb(checkQuery, interaction.guild.id);
+					const checkQuery = `SELECT * FROM guild_enabled_features WHERE guilds_id = ? AND feature_id = ?`;
+					const nameQuery = `SELECT feature_name FROM features WHERE feature_id = ?`;
+					const checkFeature = await readDb(checkQuery, interaction.guild.id, featuresChoice);
+					const checkName = await readDb(nameQuery, featuresChoice);
 
 					if (checkFeature) {
-						let updateSql = `UPDATE guilds_features SET ${nameChoices} = ? WHERE guilds_id = ?`
-						if (checkFeature.is_enabled_logs == 1) {
-							await runDb(updateSql, 0, interaction.guild.id);
+						let updateSql = `UPDATE guild_enabled_features SET is_enabled = ? WHERE guilds_id = ? AND feature_id = ?`;
+						if (checkFeature.is_enabled == 1) {
+							await runDb(updateSql, 0, interaction.guild.id, featuresChoice);
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
-								.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", nameFormatted))
+								.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", checkName.feature_name))
 								.setFooter({ text: `${language_result.disabledFeatures.embed_footer}`, iconURL: `${language_result.disabledFeatures.embed_icon_url}` })
 								.setColor(colors.general.error);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						} else {
-							await runDb(updateSql, 1, interaction.guild.id);
+							await runDb(updateSql, 1, interaction.guild.id, featuresChoice);
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
-								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", nameFormatted))
+								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", checkName.feature_name))
 								.setFooter({ text: `${language_result.enabledFeatures.embed_footer}`, iconURL: `${language_result.enabledFeatures.embed_icon_url}` })
 								.setColor(colors.general.success);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}
 					} else {
-						await noInitGuilds(interaction);
+							await runDb("INSERT INTO guild_enabled_features (guilds_id, feature_id, is_enabled) VALUES(?, ?, ?)", interaction.guild.id, featuresChoice, 1);
+							const embedLog = new EmbedBuilder()
+								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
+								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", checkName.feature_name))
+								.setFooter({ text: `${language_result.enabledFeatures.embed_footer}`, iconURL: `${language_result.enabledFeatures.embed_icon_url}` })
+								.setColor(colors.general.success);
+							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}
 				}
 				else {

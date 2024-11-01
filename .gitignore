@@ -3,3 +3,4 @@ config.json
 *.db
 utils/twitch-system/tokens.json
 utils_backup
+logs.txt

@@ -20,8 +20,9 @@ function executeFolderModule(client, mainDir) {
           client.commands.set(command.data.name, command);
         }
       }
-      catch {
+      catch (error){
         console.error(`[!C] ${file} non caricato`);
+        console.error(error);
       }
     }
     for (const file of eventsFiles) {
@@ -31,8 +32,8 @@ function executeFolderModule(client, mainDir) {
         client.on(event.name, (...args) => event.execute(...args));
       }
       catch (error) {
-        console.log(error)
         console.error(`[!E] ${file} non caricato`);
+        console.error(error)
       }
     }
   }
