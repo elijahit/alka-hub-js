@@ -30,7 +30,7 @@
   "scripts": {
     "start": "NODE_ENV=production node app.js",
     "dev": "NODE_ENV=development nodemon app.js",
-    "beta": "NODE_ENV=beta nodemon app.js",
+    "beta": "NODE_ENV=beta node app.js",
     "commandsDev": "NODE_ENV=development node ./deploy-commands/all.js",
     "commandsBeta": "NODE_ENV=beta node ./deploy-commands/all.js",
     "commandProd": "NODE_ENV=production node ./deploy-commands/all.js"
