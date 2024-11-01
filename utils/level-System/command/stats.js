@@ -5,6 +5,7 @@ const { readDb, runDb } = require('../../../bin/database');
 const { errorSendControls, returnPermission, noInitGuilds, noHavePermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -28,7 +29,7 @@ module.exports = {
 			const checkUserIsPresent = await readDb(`SELECT * from levels WHERE guilds_id = ? AND users_id = ?`, interaction.guild.id, user.id);
 
 			const customEmoji = emoji.levelsSystem.levelsMaker;
-			if (await checkFeaturesIsEnabled(interaction.guild, "is_enabled_levels")) {
+			if (await checkFeaturesIsEnabled(interaction.guild, 11)) {
 				if (checkUserIsPresent) {
 
 					const embedLog = new EmbedBuilder()

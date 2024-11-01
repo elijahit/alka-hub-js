@@ -39,7 +39,7 @@ module.exports = {
 					const checkLevelsIsPresent = await readDb(`SELECT * from levels_roles WHERE guilds_id = ? AND roles_id = ?`, interaction.guild.id, role.id);
 
 					const customEmoji = emoji.levelsSystem.levelsMaker;
-					if (await checkFeaturesIsEnabled(interaction.guild, "is_enabled_levels")) {
+					if (await checkFeaturesIsEnabled(interaction.guild, 11)) {
 						if (checkLevelsIsPresent) {
 							await runDb('DELETE FROM levels_roles WHERE guilds_id = ? AND roles_id = ?', interaction.guild.id, role.id);
 
