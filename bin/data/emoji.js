@@ -21,6 +21,9 @@ const emoji = {
   },
   levelsSystem: {
     levelsMaker: "https://cdn.discordapp.com/emojis/1281660241775300632.webp?size=32&quality=lossless",
+  },
+  permissions: {
+    list: "https://cdn.discordapp.com/emojis/1301916864510820374.webp?size=32&quality=lossless",
   }
 }
 

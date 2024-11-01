@@ -5,6 +5,7 @@ const { readDbWith3Params, readDbAllWithValue, runDb, readDb } = require('../../
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
+const checkRolesRelation = require('../../../bin/functions/checkRolesRelation');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -75,14 +76,7 @@ module.exports = {
 					.setColor(colors.general.error);
 				await interaction.reply({ embeds: [embedLog], ephemeral: true });
 			} else { // SE UN RUOLO NON ESISTE LO AGGIUNGE ->
-				const checkRolesSql = `SELECT *
-				FROM roles r
-				WHERE r.roles_id = ? AND r.guilds_id = ?`;
-				const resultRoles = await readDb(checkRolesSql, role.id, interaction.guild.id);
-				if(!resultRoles) {
-					let inserRolesSql = `INSERT INTO roles(roles_id, guilds_id) VALUES(?, ?)`;
-					await runDb(inserRolesSql, role.id, interaction.guild.id);
-				}
+				checkRolesRelation(role.id, interaction.guild.id);
 				let insertSql = `INSERT INTO roles_hash(roles_id, hash_id) VALUES(?, ?)`;
 				await runDb(insertSql, role.id, result.hash_id);
 				// let customEmoji = await getEmojifromUrl(interaction.client, "pexadd");

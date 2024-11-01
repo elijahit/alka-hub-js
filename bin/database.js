@@ -9,14 +9,7 @@ async function readDb(querysql, ...parms) {
   return result;
 }
 
-async function readDbAll(table) {
-  const db = await AsyncDatabase.open(database);
-  const result = await db.all(`SELECT * from ${table}`);
-  await db.close();
-  return result;
-}
-
-async function readDbAllWithParams(querysql, ...parms) {
+async function readDbAll(querysql, ...parms) {
   const db = await AsyncDatabase.open(database);
   const result = await db.all(querysql, ...parms);
   await db.close();
@@ -35,5 +28,4 @@ module.exports = {
   readDb,
   readDbAll,
   runDb,
-  readDbAllWithParams
 };
