@@ -60,7 +60,7 @@ module.exports = {
 								.replace("{0}", `${role}`))
 							.setFields(fields)
 							.setFooter({ text: `${language_result.permissionList.embed_footer}`, iconURL: `${language_result.permissionList.embed_icon_url}` })
-							.setColor(0x4287f5);
+							.setColor(colors.general.blue);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 				}
 				else {
