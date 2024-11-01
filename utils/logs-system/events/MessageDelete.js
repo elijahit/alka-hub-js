@@ -29,13 +29,12 @@ module.exports = {
 
         let channel_logs = await message.guild.channels.fetch(resultDb["message_state_channel"]);
         const fields = [];
-
         fields.push(
           { name: `${language_result.messageDelete.channel_message}`, value: `${message.channel}`, inline: true },
           { name: `${language_result.messageDelete.channel_message_id}`, value: `${message.channelId}`, inline: true },
           { name: " ", value: " " },
-          { name: `${language_result.messageDelete.author_message}`, value: `${message.author}`, inline: true },
-          { name: `${language_result.messageDelete.author_message_id}`, value: `${message.author.id}`, inline: true },
+          { name: `${language_result.messageDelete.author_message}`, value: `${message.author ?? "Undefined"}`, inline: true },
+          { name: `${language_result.messageDelete.author_message_id}`, value: `${message.author?.id ?? "Undefined"}`, inline: true },
           { name: " ", value: " " }
         );
 
