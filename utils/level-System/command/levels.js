@@ -32,13 +32,15 @@ module.exports = {
 					const checkChannelIsPresent = await readDb(`SELECT * from levels_config WHERE guilds_id = ?`, interaction.guild.id);
 
 					const customEmoji = emoji.levelsSystem.levelsMaker;
-					if (await checkFeaturesIsEnabled(interaction.guild, "is_enabled_levels")) {
+					if (await checkFeaturesIsEnabled(interaction.guild, 11)) {
 						if (checkChannelIsPresent) {
 							await runDb('DELETE FROM levels_config WHERE guilds_id = ?', interaction.guild.id);
 
+							const oldChannel = await interaction.guild.channels.fetch(checkChannelIsPresent.log_channel);
+
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-								.setDescription(language_result.levelsCommand.description_embed_delete.replace("{0}", channel))
+								.setDescription(language_result.levelsCommand.description_embed_delete.replace("{0}", oldChannel))
 								.setFooter({ text: `${language_result.levelsCommand.embed_footer}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
 								.setColor(colors.general.error);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
