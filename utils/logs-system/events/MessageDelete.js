@@ -18,7 +18,7 @@ module.exports = {
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     const resultDb = await readDb(sql, message.guild.id);
     if (!resultDb) return;
-    if (!await checkFeaturesIsEnabled(message.guild, "is_enabled_logs")) return;
+    if (!await checkFeaturesIsEnabled(message.guild, 1)) return;
     if (!resultDb["message_state_channel"]) return;
     try {
       // CONTROLLO DELLA LINGUA

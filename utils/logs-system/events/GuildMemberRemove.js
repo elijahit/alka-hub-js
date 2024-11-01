@@ -19,7 +19,7 @@ module.exports = {
     try {
       const resultDb = await readDb(sql, member.guild.id);
       if (!resultDb) return;
-      if (!await checkFeaturesIsEnabled(member.guild, "is_enabled_logs")) return;
+      if (!await checkFeaturesIsEnabled(member.guild, 1)) return;
       if(!resultDb["exit_member_channel"]) return;
       // CONTROLLO DELLA LINGUA
       if (member.guild?.id) {

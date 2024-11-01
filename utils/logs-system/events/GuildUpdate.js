@@ -18,7 +18,7 @@ module.exports = {
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     const resultDb = await readDb(sql, oldGuild.id);
     if (!resultDb) return;
-    if (!await checkFeaturesIsEnabled(oldGuild, "is_enabled_logs")) return;
+    if (!await checkFeaturesIsEnabled(oldGuild, 1)) return;
     if (!resultDb["guild_state_channel"]) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
