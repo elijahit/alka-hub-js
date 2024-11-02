@@ -45,7 +45,7 @@ async function checkExp(newState, checkUser) {
     const language_result = JSON.parse(langagues_path);
 
     
-    let checkRoles = await readDbAllWithParams("SELECT * FROM levels_roles WHERE guilds_id = ?", newState.guild.id);
+    let checkRoles = await readDbAll("SELECT * FROM levels_roles WHERE guilds_id = ?", newState.guild.id);
     checkRoles.map(async value => {
       if ((checkUser.levels + 1) >= value.level) {
         try {
