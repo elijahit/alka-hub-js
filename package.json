@@ -6,7 +6,6 @@
     "@twurple/eventsub-http": "^7.1.0",
     "@twurple/eventsub-ngrok": "^7.1.0",
     "@twurple/eventsub-ws": "^7.1.0",
-    "alka-hub": "file:",
     "axios": "^1.6.8",
     "common-tags": "^1.8.2",
     "discord.js": "^14.15.2",

@@ -4,3 +4,4 @@ config.json
 utils/twitch-system/tokens.json
 utils_backup
 logs.txt
+package-lock.json
