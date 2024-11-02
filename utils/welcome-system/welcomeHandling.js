@@ -1,5 +1,5 @@
 "use_strict"
-const Jimp = require("jimp");
+const {Jimp, loadFont, measureText} = require("jimp");
 
 
 async function makeWelcomeImage(user, serverName, language_result, color, backgroundUrl) {
@@ -17,29 +17,32 @@ async function makeWelcomeImage(user, serverName, language_result, color, backgr
   const avatarImage = await Jimp.read(avatarResolve);
 
   const fontRoboto42 = color == 0 ?
-    await Jimp.loadFont("./utils/welcome-system/font/ROBOTOWHITE64/ROBOTOWHITE64.fnt") :
-    await Jimp.loadFont("./utils/welcome-system/font/ROBOTOBLACK64/ROBOTOBLACK64.fnt");
+    await loadFont("./utils/welcome-system/font/ROBOTOWHITE64/ROBOTOWHITE64.fnt") :
+    await loadFont("./utils/welcome-system/font/ROBOTOBLACK64/ROBOTOBLACK64.fnt");
 
-  baseImage.resize(1280, 720);
+  baseImage.resize({w: 1280, h:720});
 
   // SCRIVO IL MESSAGGIO DI BENVENUTO NEL IMMAGINE
-  baseImage.print(fontRoboto42, 640 - (Jimp.measureText(fontRoboto42, language_result.welcomeMessage.description_embed) / 2), 470, language_result.welcomeMessage.description_embed);
+  baseImage.print({font: fontRoboto42, x: 640 - (measureText(fontRoboto42, language_result.welcomeMessage.description_embed) / 2), y: 470, text: language_result.welcomeMessage.description_embed});
   // SCRIVO IL NOME DEL SERVER NEL IMMAGINE
-  baseImage.print(fontRoboto42, 640 - (Jimp.measureText(fontRoboto42, serverName) / 2), 550, serverName);
+  baseImage.print({font: fontRoboto42, x: 640 - (measureText(fontRoboto42, serverName) / 2), y: 550, text: serverName});
   // SCRIVO IL NOME UTENTE NEL IMMAGINE
-  baseImage.print(fontRoboto42, 640 - (Jimp.measureText(fontRoboto42, user.username) / 2), 360, user.username);
+  baseImage.print({font: fontRoboto42, x: 640 - (measureText(fontRoboto42, user.username) / 2), y: 360, text: user.username});
   // METTO UN HORIZONTAL RULE
-  baseImage.print(fontRoboto42, 640 - (Jimp.measureText(fontRoboto42, "-") / 2), 415, "-");
+  baseImage.print({font: fontRoboto42, x: 640 - (measureText(fontRoboto42, "-") / 2), y: 415, text: "-"});
 
   // RIDIMENSIONO L'IMMAGINE UTENTE
+  /**
+   * @todo da controllare il .circle che da problemi
+   */
   avatarImage
-    .resize(220, 220)
-    .circle(20);
+    .resize({w: 220, h: 220})
+    .circle({x: 20});
   // RIDIMENSIONO IL CIRCLE MASK
   let colorChecker = color == 0 ? 255 : 0;
   baseCircleMask
-    .resize(230, 230)
-    .circle(20)
+    .resize({w: 230, h: 230})
+    .circle({x: 20})
     .normalize()
     .color([
       { apply: "red", params: [colorChecker] },
@@ -48,10 +51,10 @@ async function makeWelcomeImage(user, serverName, language_result, color, backgr
     ]);
 
   // APPLICO LE IMMAGINI SULLA BASE
-  baseImage.blit(baseCircleMask, 525, 100);
-  baseImage.blit(avatarImage, 530, 105);
+  baseImage.blit({src: baseCircleMask, x: 525, y: 100});
+  baseImage.blit({src: avatarImage, x: 530, y: 105});
 
-  return baseImage.getBufferAsync("image/jpeg");
+  return await baseImage.getBuffer("image/jpeg");
 }
 
 module.exports = {

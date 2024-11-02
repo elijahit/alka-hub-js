@@ -4,28 +4,25 @@ const language = require('../../../languages/languages');
 const { readDb, readDbAllWith1Params, runDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 const { makeWelcomeImage } = require('../welcomeHandling');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
+const checkUsersDb = require('../../../bin/functions/checkUsersDb');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 
-// QUERY DEFINITION
-let sqlChannelId_log = `SELECT addMember_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT welcomeMessage_enabled FROM guilds_config WHERE guildId = ?`;
-// ------------ //
 
 module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member) {
-    let customEmoji = await getEmojifromUrl(member.client, "welcome");
-    // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, member.guild.id);
-    if (!result_Db) return;
-    if (result_Db.welcomeMessage_enabled != 1) return;
+    checkUsersDb(member, member.guild);
+    if (!await checkFeaturesIsEnabled(member.guild, 10)) return;
     try {
-      let check = await readDbAllWith1Params('SELECT * FROM welcome_message_container WHERE guildId = ?', member.guild.id);
-      if (check.length > 0) {
+      let check = await readDb('SELECT * FROM welcome WHERE guilds_id = ?', member.guild.id);
+      if (check) {
         let channel;
         try {
-          channel = await member.guild.channels.fetch(check[0].channelId);
+          channel = await member.guild.channels.fetch(check.channel_id);
         } catch {
-          await runDb('DELETE FROM welcomeMessage_enabled WHERE guildId = ?', member.guild.id);
+          await runDb('DELETE FROM welcome WHERE guilds_id = ?', member.guild.id);
         }
         try {
 
@@ -36,19 +33,19 @@ module.exports = {
           const language_result = JSON.parse(langagues_path);
 
           
-          let imageResolve = await makeWelcomeImage(member.user, member.guild.name, language_result, check[0].color, check[0].backgroundUrl);
+          let imageResolve = await makeWelcomeImage(member.user, member.guild.name, language_result, check.color, check.backgroundUrl);
 
           const file = new AttachmentBuilder(imageResolve, {
             name: "welcome.jpg"
           })
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.welcomeMessage.embed_title}`, iconURL: customEmoji })
+            .setAuthor({ name: `${language_result.welcomeMessage.embed_title}`, iconURL: emoji.welcomeSystem.main })
             .setFooter({ text: `${language_result.welcomeMessage.embed_footer}`, iconURL: `${language_result.welcomeMessage.embed_icon_url}` })
             .setImage("attachment://welcome.jpg")
-            .setColor(0xebae34);
+            .setColor(colors.general.danger);
 
-          if(check[0].text && check[0].text?.length > 0) {
-            embedLog.setDescription(check[0].text);
+          if(check.text && check.text?.length > 0) {
+            embedLog.setDescription(check.text);
           }
 
           await channel.send({ content: `${member}`, files: [file], embeds: [embedLog] })

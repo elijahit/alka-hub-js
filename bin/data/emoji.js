@@ -27,6 +27,9 @@ const emoji = {
   },
   reactionRoleSystem: {
     main: "https://cdn.discordapp.com/emojis/1301961456526557268.webp?size=32&quality=lossless"
+  },
+  welcomeSystem: {
+    main: "https://cdn.discordapp.com/emojis/1302381194729754718.webp?size=32&quality=lossless"
   }
 }
 

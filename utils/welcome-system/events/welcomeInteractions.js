@@ -1,8 +1,10 @@
-const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder } = require('discord.js');
+const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder, Colors } = require('discord.js');
 const { readFileSync, writeFileSync, unlinkSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDbAllWith2Params, runDb, readDbWith3Params, readDbWith4Params, readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, returnPermission, noHavePermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
+const emoji = require('../../../bin/data/emoji');
+const color = require('../../../bin/data/colors');
 
 
 module.exports = {
@@ -18,14 +20,13 @@ module.exports = {
       if (interaction.customId == 'welcomeMessageSetting') {
         const text = interaction.fields.getTextInputValue('descriptionWelcome');
 
-        await runDb('UPDATE welcome_message_container SET text = ? WHERE guildId = ?', text, interaction.guild.id);
+        await runDb('UPDATE welcome SET text = ? WHERE guilds_id = ?', text, interaction.guild.id);
 
-        let customEmoji = await getEmojifromUrl(interaction.client, "welcome");
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.welcomeModal.embed_title}`, iconURL: customEmoji })
+          .setAuthor({ name: `${language_result.welcomeModal.embed_title}`, iconURL: emoji.welcomeSystem.main })
           .setFooter({ text: `${language_result.welcomeModal.embed_footer}`, iconURL: `${language_result.welcomeModal.embed_icon_url}` })
           .setDescription(language_result.welcomeModal.description)
-          .setColor(0xebae34);
+          .setColor(color.general.danger);
         await interaction.reply({embeds: [embedLog], ephemeral: true});
       }
 

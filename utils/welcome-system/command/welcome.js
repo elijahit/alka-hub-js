@@ -3,6 +3,10 @@ const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
 const { readDb, runDb, readDbAllWith2Params, readDbWith4Params, readDbWith3Params, readDbAllWith1Params } = require('../../../bin/database');
 const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermission, noEnabledFunc, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
+const checkUsersDb = require('../../../bin/functions/checkUsersDb');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -46,17 +50,15 @@ module.exports = {
 		await returnPermission(interaction, "welcome", async result => {
 			try {
 				if (result) {
-					const checkFeaturesisEnabled = await readDb(`SELECT welcomeMessage_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
-
-					if (checkFeaturesisEnabled?.welcomeMessage_enabled) {
+					if (await checkFeaturesIsEnabled(interaction.guild, 10)) {
 						//ESISTE GIA
-						const checkAlreadyExist = await readDbAllWith1Params('SELECT * FROM welcome_message_container WHERE guildId = ?', interaction.guild.id);
+						const checkAlreadyExist = await readDb('SELECT * FROM welcome WHERE guilds_id = ?', interaction.guild.id);
 						const modal = new ModalBuilder()
 							.setTitle('Welcome Message | Settings')
 							.setCustomId('welcomeMessageSetting');
-						if (checkAlreadyExist.length > 0) {
+						if (checkAlreadyExist) {
 							// DEFINISCO LA DESCRIZIONE
-							let checkText = checkAlreadyExist[0].text ? checkAlreadyExist[0].text : "";
+							let checkText = checkAlreadyExist.text ? checkAlreadyExist.text : "";
 							const descriptionDefine = new TextInputBuilder()
 								.setCustomId('descriptionWelcome')
 								.setLabel(language_result.welcomeModal.descriptionWelcome)
@@ -70,10 +72,10 @@ module.exports = {
 							modal.addComponents(descriptionRow);
 
 							// AGGIORNO IL CANALE NEL DATABASE
-							await runDb('UPDATE welcome_message_container SET channelId = ?, color = ? WHERE guildId = ?', channel.id, color, interaction.guild.id);
+							await runDb('UPDATE welcome SET channel_id = ?, color = ? WHERE guilds_id = ?', channel.id, color, interaction.guild.id);
 
 							if(background) {
-								await runDb('UPDATE welcome_message_container SET backgroundUrl = ? WHERE guildId = ?',background, interaction.guild.id);
+								await runDb('UPDATE welcome SET background_url = ? WHERE guilds_id = ?', background, interaction.guild.id);
 							}
 
 							await interaction.showModal(modal);
@@ -91,10 +93,10 @@ module.exports = {
 							modal.addComponents(descriptionRow);
 
 							// INSERISCO IL CANALE NEL DATABASE
-							await runDb('INSERT INTO welcome_message_container (guildId, channelId, color) VALUES(?,?,?)', interaction.guild.id, channel.id, color);
+							await runDb('INSERT INTO welcome (guilds_id, channel_id, color) VALUES(?,?,?)', interaction.guild.id, channel.id, color);
 
 							if(background) {
-								await runDb('UPDATE welcome_message_container SET backgroundUrl = ? WHERE guildId = ?',background, interaction.guild.id);
+								await runDb('UPDATE welcome SET background_url = ? WHERE guilds_id = ?',background, interaction.guild.id);
 							}
 
 							await interaction.showModal(modal);
