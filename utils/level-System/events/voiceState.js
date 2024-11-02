@@ -80,7 +80,7 @@ module.exports = {
       if (!newState.member.user.bot) {
         if ((oldState.channel == null || oldState.guild.afkChannel?.id == oldState.channel?.id) && newState.channel != null) {
           if (newState.guild.afkChannel?.id != newState.channel?.id) {
-            if (await checkFeaturesIsEnabled(oldState.guild, "is_enabled_levels")) {
+            if (await checkFeaturesIsEnabled(oldState.guild, 11)) {
               let checkUser = await readDb("SELECT * FROM levels WHERE guilds_id = ? AND users_id = ?", newState.guild.id, newState.member.id);
               if (checkUser) {
                 await runDb("UPDATE levels SET joined_time = ? WHERE guilds_id = ? AND users_id = ?", `${Date.now()}`,  newState.guild.id, newState.member.id);

@@ -21,7 +21,7 @@ module.exports = {
     try {
       if(!message?.member?.user?.bot) { 
         const levelsConfig = await readDb(`SELECT * from levels_config WHERE guilds_id = ?`, message.guild.id);
-        if (await checkFeaturesIsEnabled(message.guild, "is_enabled_levels")) {
+        if (await checkFeaturesIsEnabled(message.guild, 11)) {
             let checkUser = await readDb("SELECT * FROM levels WHERE guilds_id = ? AND users_id = ?", message.guild.id, message.member.id);
             if (checkUser) {
               if (checkUser.exp >= 75 + (25 * checkUser.levels)) {
