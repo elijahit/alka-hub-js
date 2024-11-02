@@ -28,12 +28,12 @@
   "description": "A bot javascript",
   "main": "app.js",
   "scripts": {
-    "start": "NODE_ENV=production node app.js",
-    "dev": "NODE_ENV=development nodemon app.js",
-    "beta": "NODE_ENV=beta node app.js",
-    "commandsDev": "NODE_ENV=development node ./deploy-commands/all.js",
-    "commandsBeta": "NODE_ENV=beta node ./deploy-commands/all.js",
-    "commandProd": "NODE_ENV=production node ./deploy-commands/all.js"
+    "start": "cross-env NODE_ENV=production node app.js",
+    "dev": "cross-env NODE_ENV=development nodemon app.js",
+    "beta": "cross-env NODE_ENV=beta node app.js",
+    "commandsDev": "cross-env NODE_ENV=development node ./deploy-commands/all.js",
+    "commandsBeta": "cross-env NODE_ENV=beta node ./deploy-commands/all.js",
+    "commandProd": "cross-env NODE_ENV=production node ./deploy-commands/all.js"
   },
   "repository": {
     "type": "git",
@@ -46,6 +46,7 @@
   },
   "homepage": "https://github.com/elijahit/alka-hub-js#readme",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "nodemon": "^3.1.4"
   }
 }
