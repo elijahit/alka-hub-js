@@ -22,9 +22,8 @@ module.exports = {
     if (!resultDb["channel_state_channel"]) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
-      // DA GESTIRE CON STATS SYSTEM
-      // const channelStatsSystem = await readDbAllWith2Params(`SELECT * FROM stats_system_channel WHERE channelId = ? AND guildId = ?`, channel.id, channel.guild.id);
-      // if (channelStatsSystem[0]?.channelId) return;
+      const channelStatsSystem = await readDb(`SELECT * FROM statistics WHERE channel_id = ? AND guilds_id = ?`, channel.id, channel.guild.id);
+      if (channelStatsSystem?.channel_id) return;
       // CONTROLLO DELLA LINGUA
       if (channel.guild?.id) {
         let data = await language.databaseCheck(channel.guild.id);
