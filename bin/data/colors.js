@@ -5,6 +5,7 @@ const color = {
     danger: 0xebb734,
     aquamarine: 0x1c7872,
     blue: 0x4287f5,
+    olive: 0x9ba832
   }
 }
 

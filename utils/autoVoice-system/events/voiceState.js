@@ -3,22 +3,21 @@ const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb, readDbAllWith2Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 
-// QUERY DEFINITION
-let sqlEnabledFeature = `SELECT autoVoiceSystem_enabled FROM guilds_config WHERE guildId = ?`;
-// ----------------
+
 // FUNCTION
 
 async function createChannel(oldState, newState) {
   let check;
   try {
-    check = await readDbAllWith2Params(`SELECT * FROM autovoice_system_creator WHERE guildId = ? AND categoryId = ?`, newState.guild.id, newState.channel.parentId);
+    check = await readDb(`SELECT * FROM auto_voice WHERE guilds_id = ? AND channel_id = ?`, newState.guild.id, newState.channel.parentId);
   } catch {
     return;
   }
-  if(check.length > 0) {
+  if(check) {
     // TIPO NUMERICO
-    if (check.length > 0 && check[0].typeVoice == 2) {
+    if (check.type == 2) {
       let channelName = newState.channel.name.split(" ");
       let channelNameResult = "";
       await channelName.forEach(value => {
@@ -28,7 +27,7 @@ async function createChannel(oldState, newState) {
         }
       })
   
-      let category = await oldState.guild.channels.fetch(check[0].categoryId);
+      let category = await oldState.guild.channels.fetch(check.channel_id);
       const checkSizeChannel = await category.children.cache;
       let channelAvaiable = 0;
       let channelCount = 0;
@@ -45,7 +44,6 @@ async function createChannel(oldState, newState) {
           name: newState.channel.name.replace(channelNameResult, `${channelCount + 1}`),
         });
         newChannel.setPosition(channelCount+2); // Imposto la posizione del nuovo canale
-        console.log(newChannel.position)
       }
     }
   }
@@ -55,14 +53,14 @@ async function createChannel(oldState, newState) {
 async function deleteChannel(oldState) {
   let check;
   try {
-    check = await readDbAllWith2Params(`SELECT * FROM autovoice_system_creator WHERE guildId = ? AND categoryId = ?`, oldState.guild.id, oldState.channel.parentId);
+    check = await readDb(`SELECT * FROM auto_voice WHERE guilds_id = ? AND channel_id = ?`, newState.guild.id, newState.channel.parentId);
   } catch {
     return;
   }
 
-  if (check.length > 0) {
+  if (check) {
     if (oldState.channel.members.size < 1) {
-      let category = await oldState.guild.channels.fetch(check[0].categoryId);
+      let category = await oldState.guild.channels.fetch(check.channel_id);
       const checkSizeChannel = await category.children.cache;
       let sizeChannel = 0;
 
@@ -71,8 +69,8 @@ async function deleteChannel(oldState) {
           sizeChannel++;
         }
       })
-
       setTimeout(async () => {
+
         if (sizeChannel > 1) {
 
 
@@ -93,7 +91,7 @@ async function deleteChannel(oldState) {
             const renameChannel = await category.children.cache;
             let channelCount = 0;
             await renameChannel.each(async value => {
-              if (value.type == 2 && value?.parentId == check[0].categoryId) {
+              if (value.type == 2 && value?.parentId == check.channel_id) {
                 let regex = /^[0-9]+$/;
                 let name = value.name.split(" ");
                 let nameResult = "";
@@ -120,12 +118,8 @@ module.exports = {
   name: Events.VoiceStateUpdate,
   async execute(oldState, newState) {
 
-
-
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, newState.guild.id);
-    if (!result_Db) return;
-    if (result_Db.autoVoiceSystem_enabled != 1) return;
+    if (!await checkFeaturesIsEnabled(newState.guild, 3)) return;
     try {
       // CONTROLLO DELLA LINGUA
       if (oldState.guild?.id) {

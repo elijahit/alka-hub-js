@@ -54,9 +54,9 @@ module.exports = {
 						const row = new ActionRowBuilder()
 							.addComponents(selectSetup);
 
-						// const customEmoji = await getEmojifromUrl(interaction.client, "utilitysettings");
+						const customEmoji = emoji.general.utility
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.selectSetup.embed_title}`/*, iconURL: customEmoji*/ })
+							.setAuthor({ name: `${language_result.selectSetup.embed_title}`, iconURL: customEmoji })
 							.setDescription(language_result.selectSetup.description_embed)
 							.setFooter({ text: `${language_result.selectSetup.embed_footer}`, iconURL: `${language_result.selectSetup.embed_icon_url}` })
 							.setColor(0x9ba832);
@@ -78,7 +78,7 @@ module.exports = {
 						})
 
 						const embedLogTwo = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.selectSetup.embed_title}`/*, iconURL: customEmoji */})
+							.setAuthor({ name: `${language_result.selectSetup.embed_title}`, iconURL: customEmoji  })
 							.setDescription(language_result.selectSetup.description_embed_two.replace("{0}", initChannel))
 							.setFooter({ text: `${language_result.selectSetup.embed_footer}`, iconURL: `${language_result.selectSetup.embed_icon_url}` })
 							.setColor(0x03cffc);

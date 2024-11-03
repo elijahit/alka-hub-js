@@ -9,6 +9,7 @@ const emoji = {
     updateMarker: "https://cdn.discordapp.com/emojis/1280837807665057845.webp?size=32&quality=lossless",
     voiceMarker: "https://cdn.discordapp.com/emojis/1280867067855110201.webp?size=32&quality=lossless",
     helpMaker: "https://cdn.discordapp.com/emojis/1280932826698481749.webp?size=32&quality=lossless",
+    utility: "https://cdn.discordapp.com/emojis/1302748649549463673.webp?size=32&quality=lossless"
   },
   logsSystem: {
     banMarker: "https://cdn.discordapp.com/emojis/1280844103000653897.webp?size=32&quality=lossless",
@@ -36,6 +37,10 @@ const emoji = {
   },
   gameTrackerSystem: {
     apex: "https://cdn.discordapp.com/emojis/1302701089707266048.webp?size=32&quality=lossless"
+  },
+  autoVoiceSystem: {
+    private: "https://cdn.discordapp.com/emojis/1302748999543029834.webp?size=32&quality=lossless",
+    free: "https://cdn.discordapp.com/emojis/1302749231853076490.webp?size=32&quality=lossless"
   }
 }
 
