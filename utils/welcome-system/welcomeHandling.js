@@ -32,17 +32,14 @@ async function makeWelcomeImage(user, serverName, language_result, color, backgr
   baseImage.print({font: fontRoboto42, x: 640 - (measureText(fontRoboto42, "-") / 2), y: 415, text: "-"});
 
   // RIDIMENSIONO L'IMMAGINE UTENTE
-  /**
-   * @todo da controllare il .circle che da problemi
-   */
   avatarImage
     .resize({w: 220, h: 220})
-    .circle({x: 20});
+    .circle();
   // RIDIMENSIONO IL CIRCLE MASK
   let colorChecker = color == 0 ? 255 : 0;
   baseCircleMask
     .resize({w: 230, h: 230})
-    .circle({x: 20})
+    .circle()
     .normalize()
     .color([
       { apply: "red", params: [colorChecker] },
