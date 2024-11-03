@@ -33,6 +33,9 @@ const emoji = {
   },
   statsServerSystem: {
     main: "https://cdn.discordapp.com/emojis/1302547775678058538.webp?size=32&quality=lossless"
+  },
+  gameTrackerSystem: {
+    apex: "https://cdn.discordapp.com/emojis/1302701089707266048.webp?size=32&quality=lossless"
   }
 }
 
