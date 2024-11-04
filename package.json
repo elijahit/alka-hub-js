@@ -29,7 +29,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node app.js",
     "dev": "cross-env NODE_ENV=development node app.js",
-    "beta": "cross-env NODE_ENV=beta node app.js",
+    "beta": "cross-env NODE_ENV=beta nodemon app.js",
     "commandsDev": "cross-env NODE_ENV=development node ./deploy-commands/all.js",
     "commandsBeta": "cross-env NODE_ENV=beta node ./deploy-commands/all.js",
     "commandProd": "cross-env NODE_ENV=production node ./deploy-commands/all.js"
