@@ -21,7 +21,7 @@ async function endSetup(language_result, interaction) {
       await interaction.deferReply();
     }
   }
-  const category = await interaction.guild.channels.fetch(data.category);
+  const category = await interaction.guild.channels.fetch(jsonData.category);
   // CREAZIONE DEL CANALE
   let channelObject = {};
 
@@ -284,63 +284,47 @@ module.exports = {
         }
 
         const filePath = `./utils/autoVoice-system/${interaction.guild.id}_${interaction.user.id}.json`;
-        fs.readFile(filePath, 'utf8', (err, data) => {
-          if (err) {
-            fs.unlinkSync(`./utils/autoVoice-system/${interaction.guild.id}_${interaction.user.id}.json`);
-            return;
-          }
-
-          let jsonData;
+        async function writeFileAsync() {
           try {
-            jsonData = JSON.parse(data);
-          } catch (parseErr) {
-            fs.unlinkSync(`./utils/autoVoice-system/${interaction.guild.id}_${interaction.user.id}.json`);
-            return;
+            // Leggi il file
+            let data;
+            try {
+              data =  fs.readFileSync(filePath);
+            } catch (err) {
+              // Se il file non esiste o c'è un errore di lettura, rimuovi il file e termina
+              await fs.unlinkSync(filePath); // Ignora l'errore se il file non esiste
+              return;
+            }
+
+            // Parsea i dati JSON
+            let jsonData;
+            try {
+              jsonData = JSON.parse(data);
+            } catch (parseErr) {
+              // Se il parsing fallisce, elimina il file e termina
+              await fs.unlinkSync(filePath);
+              return;
+            }
+
+            jsonData.category = interaction.values[0];
+
+            await fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), 'utf8');
+          } catch (error) {
+            console.error('Errore nella gestione del file:', error);
           }
-
-          // 3. Aggiungi le opzioni desiderate
-          jsonData.category = interaction.values[0];
-
-          // 4. Salva il file aggiornato
-          fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf8', (writeErr) => {
-          });
-        });
-        if (data.type == 2) {
-          endSetup(language_result, interaction);
         }
 
-        const modal = new ModalBuilder()
-          .setCustomId("autoVoiceModalSelectSize")
-          .setTitle(language_result.select_size.embed_title);
+        await writeFileAsync();
+        if (data.type == 2) {
+          await endSetup(language_result, interaction);
+        }
 
-        const sizeSelect = new TextInputBuilder()
-          .setCustomId('sizeSelectAutoVoice')
-          .setLabel(language_result.select_size.label)
-          .setPlaceholder(language_result.select_size.placeholder)
-          .setStyle(TextInputStyle.Short)
-          .setMaxLength(2)
 
         if (data.type == 1) {
-          const messageSelect = new TextInputBuilder()
-            .setCustomId('messageSelectAutoVoice')
-            .setLabel(language_result.select_size.label_message)
-            .setPlaceholder(language_result.select_size.placeholder_message)
-            .setStyle(TextInputStyle.Paragraph)
-          const row = new ActionRowBuilder().addComponents(sizeSelect);
-          const row2 = new ActionRowBuilder().addComponents(messageSelect);
-          modal.addComponents(row, row2);
+          await endSetup(language_result, interaction);
         } else {
-
-          const row = new ActionRowBuilder().addComponents(sizeSelect);
-          modal.addComponents(row);
+          await endSetup(language_result, interaction);
         }
-
-
-        await interaction.showModal(modal);
-      }
-
-      if (interaction.customId == "autoVoiceModalSelectSize") {
-        await endSetup(language_result, interaction);
       }
 
     }

@@ -53,8 +53,8 @@ async function createChannel(oldState, newState) {
 async function deleteChannel(oldState) {
   let check;
   try {
-    check = await readDb(`SELECT * FROM auto_voice WHERE guilds_id = ? AND channel_id = ?`, newState.guild.id, newState.channel.parentId);
-  } catch {
+    check = await readDb(`SELECT * FROM auto_voice WHERE guilds_id = ? AND channel_id = ?`, oldState.guild.id, oldState.channel.parentId);
+  } catch (error){
     return;
   }
 
