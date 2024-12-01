@@ -31,7 +31,6 @@ async function findAll() {
   return UserGuild.findAll();
 }
 
-addUser('23813812838123', '23123123123', 'test')
 module.exports = {
   addUser,
   findAll,
