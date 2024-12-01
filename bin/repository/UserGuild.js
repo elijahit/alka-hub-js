@@ -1,6 +1,6 @@
 const {UserGuild} = require('../models/UserGuild');
-const {User} = require('../models/User');
-const {Guild} = require('../models/Guild');
+const User = require('../repository/User');
+const Guild = require('../repository/Guild');
 
 
 /**
@@ -10,14 +10,14 @@ const {Guild} = require('../models/Guild');
  */
 async function addUser(userId, guildId, username) {
   try {
-    const user = await User.findOne({where: {user_id: userId}});
-    const guild = await Guild.findOne({where: {guild_id: guildId}});
+    const user = await User.findByUserId(userId);
+    const guild = await Guild.findByGuildId(guildId);
 
     if (!user) {
-      await User.create({user_id: userId, name: username});
+      await User.create(userId, username);
     }
     if (!guild) {
-      await Guild.create({guild_id: guildId, language: "EN", time_zone: "Europe/London"});
+      await Guild.create(guildId);
     }
 
     await UserGuild.create({user_id: userId, guild_id: guildId});
@@ -27,6 +27,12 @@ async function addUser(userId, guildId, username) {
   }
 }
 
+async function findAll() {
+  return UserGuild.findAll();
+}
+
+addUser('23813812838123', '23123123123', 'test')
 module.exports = {
   addUser,
+  findAll,
 }
