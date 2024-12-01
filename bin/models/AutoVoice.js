@@ -1,5 +1,6 @@
 const { database } = require('../database');
 const { Sequelize } = require('sequelize');
+const { Guild } = require('./Guild');
 
 const AutoVoice = database.define('auto_voice', {
   auto_voice_id: { type: Sequelize.INTEGER },
@@ -10,6 +11,7 @@ const AutoVoice = database.define('auto_voice', {
 
 }, {tableName: 'auto_voice'});
 
+Guild.hasMany(AutoVoice, { foreignKey: 'guild_id' });
 
 module.exports = {
   AutoVoice,
