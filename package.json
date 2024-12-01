@@ -16,9 +16,11 @@
     "googleapis": "^137.1.0",
     "jimp": "^1.6.0",
     "moment-timezone": "^0.5.45",
+    "mysql2": "^3.11.5",
     "ngrok": "^5.0.0-beta.2",
     "pm2": "^5.3.1",
     "promised-sqlite3": "^2.1.0",
+    "sequelize": "^6.37.5",
     "sodium-native": "^4.1.1",
     "sqlite3": "^5.1.7"
   },

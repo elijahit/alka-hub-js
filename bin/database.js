@@ -1,31 +1,11 @@
-const { AsyncDatabase } = require('promised-sqlite3');
-const database = "./bin/database.db";
+const { Sequelize } = require('sequelize');
 
 
-async function readDb(querysql, ...parms) {
-  const db = await AsyncDatabase.open(database);
-  const result = await db.get(querysql, ...parms);
-  await db.close();
-  return result;
-}
-
-async function readDbAll(querysql, ...parms) {
-  const db = await AsyncDatabase.open(database);
-  const result = await db.all(querysql, ...parms);
-  await db.close();
-  return result;
-}
-
-
-async function runDb(querysql, ...params) {
-  const db = await AsyncDatabase.open(database);
-  await db.run(querysql, params);
-  await db.close();
-  return;
-}
+const database = new Sequelize('alka_bot', 'alka', 'I6STIUfJkfEoX0nl', {
+  host: 'alkanetwork.eu',
+  dialect: 'mysql'
+});
 
 module.exports = {
-  readDb,
-  readDbAll,
-  runDb,
+  database,
 };
