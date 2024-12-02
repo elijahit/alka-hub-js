@@ -1,3 +1,8 @@
+/**
+ * QUESTO E' UN FILE CENTRALIZZATO PER CONTENERE TUTTI I MODELLI, I REPOSITORY
+ * CHIAMERANNO QUESTO FILE PER INCLUDERE I VARI MODELLI.
+ */
+
 const { Hash } = require('./Hash');
 const { Permissions } = require('./Permissions');
 const { HashPermissions } = require('./HashPermissions');
