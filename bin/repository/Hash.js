@@ -17,7 +17,7 @@ async function findByHashName(hash_name) {
       model: Permissions,
       required: true,
     }]
-  }).then(v => v.get({plain: true}));
+  });
 }
 
 /**
@@ -30,14 +30,14 @@ async function findAllCorrespondenceByHashName(hash_name) {
       model: Permissions,
       required: true,
     }],
-  }).then(v => v);
+  });
 }
 
 /**
  * @param {int} id 
  */
 async function findById(id) {
-  return Hash.findByPk(id).then(v => v.get({plain: true}));
+  return Hash.findByPk(id);
 }
 
 /**
@@ -45,7 +45,7 @@ async function findById(id) {
  * @param {string} hash_name 
  */
 async function create(hash_name) {
-  return Hash.create({hash_name}).then(v => v.get({plain: true}));
+  return Hash.create({hash_name});
 }
 
 /**
@@ -54,7 +54,7 @@ async function create(hash_name) {
  * @param {string} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
-  return Hash.update(objToUpdate, {where: objToCondition}).then(v => v);
+  return Hash.update(objToUpdate, {where: objToCondition});
 }
 
 

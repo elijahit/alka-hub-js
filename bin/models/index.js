@@ -39,8 +39,8 @@ User.belongsToMany(Guild, { through: UserGuild, foreignKey: 'guild_id', otherKey
 /**
  *  ONE TO ONE (AutoRoles)
  */
-Role.hasOne(AutoRoles, { foreignKey: 'role_id' });
-AutoRoles.belongsTo(Role, { foreignKey: 'role_id'});
+Role.hasOne(AutoRoles, { foreignKey: 'role_id', sourceKey: 'role_id' });
+AutoRoles.belongsTo(Role, { foreignKey: 'role_id', targetKey: 'role_id' });
 
 module.exports = {
   Hash,

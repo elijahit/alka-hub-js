@@ -10,7 +10,7 @@ async function findAll() {
  * @param {string} userId 
  */
 async function findByUserId(userId) {
-  return User.findOne({where: {user_id: userId}}).then(v => v.get({plain: true}));
+  return User.findOne({where: {user_id: userId}});
 }
 
 /**
@@ -19,7 +19,7 @@ async function findByUserId(userId) {
  * @param {string} username 
  */
 async function create(userId, username) {
-  return User.create({user_id: userId, name: username}).then(v => v.get({plain: true}));
+  return User.create({user_id: userId, name: username});
 }
 
 /**
@@ -28,7 +28,7 @@ async function create(userId, username) {
  * @param {string} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
-  return User.update(objToUpdate, {where: objToCondition}).then(v => v);
+  return User.update(objToUpdate, {where: objToCondition});
 }
 
 module.exports = {

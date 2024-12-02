@@ -18,14 +18,14 @@ async function findByPermissionName(permission_name) {
       model: Hash,
       required: true,
     }]
-  }).then(v => v.get({plain: true}));
+  });
 }
 
 /**
  * @param {int} id 
  */
 async function findById(id) {
-  return Permissions.findByPk(id).then(v => v.get({plain: true}));
+  return Permissions.findByPk(id);
 }
 
 /**
@@ -33,7 +33,7 @@ async function findById(id) {
  * @param {string} permission_name 
  */
 async function create(permission_name) {
-  return Permissions.create({permission_name}).then(v => v.get({plain: true}));
+  return Permissions.create({permission_name});
 }
 
 /**
@@ -42,7 +42,7 @@ async function create(permission_name) {
  * @param {string} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
-  return Permissions.update(objToUpdate, {where: objToCondition}).then(v => v);
+  return Permissions.update(objToUpdate, {where: objToCondition});
 }
 
 

@@ -2,7 +2,7 @@ const {AutoRoles, Role} = require('../models');
 
 
 async function findAll() {
-  return AutoRoles.findAll().then(v => v);
+  return AutoRoles.findAll();
 }
 
 
@@ -15,7 +15,7 @@ async function finByRoleId(roleId) {
       model: Role,
       required: true,
     }]
-  }).then(v => v.get({plain: true}));
+  });
 }
 
 /**
@@ -23,7 +23,7 @@ async function finByRoleId(roleId) {
  * @param {string} roleId 
  */
 async function create(roleId, guildId) {
-  return AutoRoles.create({role_id: roleId}).then(v => v.get({plain: true}));
+  return AutoRoles.create({role_id: roleId});
 }
 
 /**
@@ -32,7 +32,7 @@ async function create(roleId, guildId) {
  * @param {string} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
-  return AutoRoles.update(objToUpdate, {where: objToCondition}).then(v => v);
+  return AutoRoles.update(objToUpdate, {where: objToCondition});
 }
 
 module.exports = {

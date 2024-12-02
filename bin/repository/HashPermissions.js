@@ -4,7 +4,7 @@ const {Permissions} = require('../models');
 
 
 async function findAll() {
-  return HashPermissions.findAll().then(v => v);
+  return HashPermissions.findAll();
 }
 
 
@@ -18,14 +18,14 @@ async function findByPermissionName(permission_name) {
       model: Permissions,
       required: true,
     }]
-  }).then(v => v.get({plain: true}));
+  });
 }
 
 /**
  * @param {int} id 
  */
 async function findById(id) {
-  return HashPermissions.findByPk(id).then(v => v.get({plain: true}));
+  return HashPermissions.findByPk(id);
 }
 
 /**
@@ -34,7 +34,7 @@ async function findById(id) {
  * @param {string} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
-  return HashPermissions.update(objToUpdate, {where: objToCondition}).then(v => v);
+  return HashPermissions.update(objToUpdate, {where: objToCondition});
 }
 
 

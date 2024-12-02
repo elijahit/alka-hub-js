@@ -23,8 +23,8 @@ const { finByRoleId: autoRolesFindByRoleId } = require('../repository/AutoRoles'
 // autoRolesFindByRoleId -> Permette di cercare un ruolo nella tabella AutoRoles
 
 (async function s () {
-  const test = await findAllCorrespondenceByHashName("features");
-  console.log(test)
+  const test = await autoRolesFindByRoleId("1108839240525168762");
+  console.log(test.get({plain: true}))
 })()
 
 
