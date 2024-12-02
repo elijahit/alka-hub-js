@@ -2,7 +2,7 @@ const {Guild} = require('../models');
 
 
 async function findAll() {
-  return Guild.findAll();
+  return Guild.findAll().then(v => v);
 }
 
 
@@ -10,7 +10,7 @@ async function findAll() {
  * @param {string} guildId 
  */
 async function findByGuildId(guildId) {
-  return Guild.findOne({where: {guild_id: guildId}});
+  return Guild.findOne({where: {guild_id: guildId}}).then(v => v.get({plain: true}));
 }
 
 /**
@@ -20,7 +20,7 @@ async function findByGuildId(guildId) {
  * @param {string} time_zone 
  */
 async function create(guildId, language = "EN", time_zone = "Europe/London") {
-  return Guild.create({guild_id: guildId, language: language, time_zone: time_zone})
+  return Guild.create({guild_id: guildId, language: language, time_zone: time_zone}).then(v => v.get({plain: true}));
 }
 
 /**
@@ -29,7 +29,7 @@ async function create(guildId, language = "EN", time_zone = "Europe/London") {
  * @param {string} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
-  return Permissions.update(objToUpdate, {where: objToCondition})
+  return Guild.update(objToUpdate, {where: objToCondition}).then(v => v);
 }
 
 module.exports = {

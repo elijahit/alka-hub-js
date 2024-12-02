@@ -19,6 +19,14 @@ const { findByHashName, findAllCorrespondenceByHashName } = require('../reposito
 // findByHashName -> Permette di cercare un permesso tramite il suo hashName
 // findAllCorrespondenceByHashName -> Permette di cercare un permesso tramite hashName e restituisce tutte le sue corrispondenze della tabella permissions
 
+const { finByRoleId: autoRolesFindByRoleId } = require('../repository/AutoRoles');
+// autoRolesFindByRoleId -> Permette di cercare un ruolo nella tabella AutoRoles
+
+(async function s () {
+  const test = await findAllCorrespondenceByHashName("features");
+  console.log(test)
+})()
+
 
 module.exports = {
   addUserGuild,
@@ -26,5 +34,6 @@ module.exports = {
   findGuildById,
   findByPermissionName,
   findByHashName,
-  findAllCorrespondenceByHashName
+  findAllCorrespondenceByHashName,
+  autoRolesFindByRoleId
 }
