@@ -1,5 +1,5 @@
-const {Permissions} = require('../models/Permissions');
-const {Hash} = require('../models/Hash');
+const {Permissions} = require('../models');
+const {Hash} = require('../models');
 
 
 async function findAll() {
@@ -11,7 +11,7 @@ async function findAll() {
  * @param {string} permission_name 
  * @TODO Da fixare, non funziona da capire il perchè
  */
-async function findbyPermissionName(permission_name) {
+async function findByPermissionName(permission_name) {
   return await Permissions.findOne({
     where: {permission_name: permission_name},
     include: [{
@@ -49,7 +49,7 @@ async function update(objToUpdate, objToCondition) {
 module.exports = {
   findAll,
   findById,
-  findbyPermissionName,
+  findByPermissionName,
   create,
   update
 }

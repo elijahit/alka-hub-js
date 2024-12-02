@@ -11,9 +11,6 @@ const GuildEnabledFeatures = database.define('guild_enabled_features', {
 }, {tableName: 'guild_enabled_features'});
 
 
-Guild.belongsToMany(Feature, { through: GuildEnabledFeatures, foreignKey: 'guild_id', otherKey: 'feature_id'});
-Feature.belongsToMany(Guild, { through: GuildEnabledFeatures,  foreignKey: 'id', otherKey: 'guild_id' });
-
 module.exports = {
   GuildEnabledFeatures,
 };

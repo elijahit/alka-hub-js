@@ -1,6 +1,5 @@
-const {HashPermissions} = require('../models/HashPermissions');
-const {Permissions} = require('../models/Permissions');
-const {Hash} = require('../models/Hash');
+const {HashPermissions} = require('../models');
+const {Permissions} = require('../models');
 
 
 
@@ -12,7 +11,7 @@ async function findAll() {
 /**
  * @param {string} permission_name 
  */
-async function findPermissionName(permission_name) {
+async function findByPermissionName(permission_name) {
   return await Permissions.findOne({
     where: {permission_name: permission_name},
     include: [{

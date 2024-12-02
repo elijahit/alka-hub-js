@@ -1,4 +1,4 @@
-const {UserGuild} = require('../models/UserGuild');
+const {UserGuild} = require('../models');
 const User = require('../repository/User');
 const Guild = require('../repository/Guild');
 

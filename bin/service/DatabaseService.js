@@ -6,13 +6,16 @@
 const { addUser: addUserGuild } = require('../repository/UserGuild');
 const { findByUserId: findUserById } = require('../repository/User');
 const { findByGuildId: findGuildById } = require('../repository/Guild');
-const { findbyPermissionName } = require('../repository/Permissions');
+const { findByPermissionName } = require('../repository/Permissions');
+const { findByHashName, findAllCorrespondenceByHashName } = require('../repository/Hash');
 
-//findbyPermissionName("features").then(v => console.log(v)); // <- da fixare
+findAllCorrespondenceByHashName("features").then(v => console.log(v)); // <- da fixare
 
 module.exports = {
   addUserGuild,
   findUserById,
   findGuildById,
-  findbyPermissionName
+  findByPermissionName,
+  findByHashName,
+  findAllCorrespondenceByHashName
 }

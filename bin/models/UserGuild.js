@@ -10,10 +10,6 @@ const UserGuild = database.define('users_guilds', {
 }, {tableName: 'users_guilds'});
 
 
-Guild.belongsToMany(User, { through: UserGuild, foreignKey: 'user_id', otherKey: 'user_id'});
-User.belongsToMany(Guild, { through: UserGuild,  foreignKey: 'guild_id', otherKey: 'guild_id' });
-
-
 module.exports = {
   UserGuild,
 };

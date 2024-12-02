@@ -10,10 +10,6 @@ const HashPermissions = database.define('hash_permissions', {
 }, {tableName: 'hash_permissions'});
 
 
-Hash.belongsToMany(Permissions, { through: HashPermissions, foreignKey: 'hash_id', otherKey: 'permission_id' });
-Permissions.belongsToMany(Hash, { through: HashPermissions, foreignKey: 'permission_id', otherKey: 'hash_id' });
-
-
 module.exports = {
   HashPermissions,
 };
