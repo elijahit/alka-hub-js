@@ -6,11 +6,13 @@
 const { addUser: addUserGuild } = require('../repository/UserGuild');
 const { findByUserId: findUserById } = require('../repository/User');
 const { findByGuildId: findGuildById } = require('../repository/Guild');
+const { findbyPermissionName } = require('../repository/Permissions');
 
-
+//findbyPermissionName("features").then(v => console.log(v)); // <- da fixare
 
 module.exports = {
   addUserGuild,
   findUserById,
-  findGuildById
+  findGuildById,
+  findbyPermissionName
 }

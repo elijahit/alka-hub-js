@@ -23,9 +23,18 @@ async function create(guildId, language = "EN", time_zone = "Europe/London") {
   return Guild.create({guild_id: guildId, language: language, time_zone: time_zone})
 }
 
+/**
+ * 
+ * @param {string} objToUpdate 
+ * @param {string} objToCondition 
+ */
+async function update(objToUpdate, objToCondition) {
+  return Permissions.update(objToUpdate, {where: objToCondition})
+}
 
 module.exports = {
   findAll,
   findByGuildId,
-  create
+  create,
+  update
 }
