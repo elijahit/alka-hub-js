@@ -3,7 +3,7 @@ const {Permissions} = require('../models');
 
 
 async function findAll() {
-  return Hash.findAll();
+  return await Hash.findAll();
 }
 
 
@@ -37,7 +37,7 @@ async function findAllCorrespondenceByHashName(hash_name) {
  * @param {int} id 
  */
 async function findById(id) {
-  return Hash.findByPk(id);
+  return await Hash.findByPk(id);
 }
 
 /**
@@ -45,7 +45,7 @@ async function findById(id) {
  * @param {string} hash_name 
  */
 async function create(hash_name) {
-  return Hash.create({hash_name});
+  return await Hash.create({hash_name});
 }
 
 /**
@@ -54,7 +54,7 @@ async function create(hash_name) {
  * @param {string} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
-  return Hash.update(objToUpdate, {where: objToCondition});
+  return await Hash.update(objToUpdate, {where: objToCondition});
 }
 
 

@@ -1,10 +1,13 @@
 const { readDb } = require('../../bin/database');
+const {checkFeatureEnabled} = require('../service/DatabaseService');
 
 const checkFeaturesIsEnabled = async (guild, features) => {
-  const sqlChecker = await readDb(`SELECT is_enabled from guild_enabled_features WHERE guilds_id = ? AND feature_id = ?`, guild.id, features);
-  if(!sqlChecker) return false;
-  if(sqlChecker.is_enabled == 1) return true;
-  if(sqlChecker.is_enabled == 0) return false;
+  let featureIsEnabled = await checkFeatureEnabled(guild, features);
+  featureIsEnabled = featureIsEnabled.get({plain: true}).guilds[0].GuildEnabledFeatures.is_enabled;
+  if(featureIsEnabled == 1) return true;
+  if(featureIsEnabled == 0) return false;
 }
+
+console.log(checkFeaturesIsEnabled("312", 1).then(v => console.log(v)));
 
 module.exports = checkFeaturesIsEnabled;

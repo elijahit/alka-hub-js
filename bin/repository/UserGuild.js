@@ -28,7 +28,7 @@ async function addUser(userId, guildId, username) {
 }
 
 async function findAll() {
-  return UserGuild.findAll();
+  return await UserGuild.findAll();
 }
 
 module.exports = {

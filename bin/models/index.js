@@ -27,8 +27,8 @@ Permissions.belongsToMany(Hash, { through: HashPermissions, foreignKey: 'permiss
 /**
   * MANY TO MANY (GuilEnabledFeatures)
 */
-Guild.belongsToMany(Feature, { through: GuildEnabledFeatures, foreignKey: 'guild_id', otherKey: 'feature_id' });
-Feature.belongsToMany(Guild, { through: GuildEnabledFeatures, foreignKey: 'id', otherKey: 'guild_id' });
+Guild.belongsToMany(Feature, { through: GuildEnabledFeatures, foreignKey: 'guild_id', otherKey: 'feature_id', sourceKey: 'guild_id'});
+Feature.belongsToMany(Guild, { through: GuildEnabledFeatures, foreignKey: 'feature_id', otherKey: 'guild_id'});
 
 /**
  * MANY TO MANY (UserGuild)

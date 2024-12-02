@@ -3,7 +3,7 @@ const {Hash} = require('../models');
 
 
 async function findAll() {
-  return Permissions.findAll();
+  return await Permissions.findAll();
 }
 
 
@@ -25,7 +25,7 @@ async function findByPermissionName(permission_name) {
  * @param {int} id 
  */
 async function findById(id) {
-  return Permissions.findByPk(id);
+  return await Permissions.findByPk(id);
 }
 
 /**
@@ -33,7 +33,7 @@ async function findById(id) {
  * @param {string} permission_name 
  */
 async function create(permission_name) {
-  return Permissions.create({permission_name});
+  return await Permissions.create({permission_name});
 }
 
 /**
@@ -42,7 +42,7 @@ async function create(permission_name) {
  * @param {string} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
-  return Permissions.update(objToUpdate, {where: objToCondition});
+  return await Permissions.update(objToUpdate, {where: objToCondition});
 }
 
 

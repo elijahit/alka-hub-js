@@ -1,9 +1,7 @@
 const { database } = require('../database');
 const { Sequelize } = require('sequelize');
-const { Guild } = require('./Guild');
-const { Feature } = require('./Feature');
 
-const GuildEnabledFeatures = database.define('guild_enabled_features', {
+const GuildEnabledFeatures = database.define('GuildEnabledFeatures', {
   guild_id: { type: Sequelize.STRING },
   feature_id: { type: Sequelize.INTEGER },
   is_enabled: { type: Sequelize.INTEGER }

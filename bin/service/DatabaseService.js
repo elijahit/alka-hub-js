@@ -22,9 +22,11 @@ const { findByHashName, findAllCorrespondenceByHashName } = require('../reposito
 const { finByRoleId: autoRolesFindByRoleId } = require('../repository/AutoRoles');
 // autoRolesFindByRoleId -> Permette di cercare un ruolo nella tabella AutoRoles
 
-(async function s () {
-  const test = await autoRolesFindByRoleId("1108839240525168762");
-  console.log(test.get({plain: true}))
+const { checkFeatureEnabled } = require('../repository/Feature');
+// autoRolesFindByRoleId -> Permette di cercare un ruolo nella tabella AutoRoles
+
+(async () => {
+
 })()
 
 
@@ -35,5 +37,6 @@ module.exports = {
   findByPermissionName,
   findByHashName,
   findAllCorrespondenceByHashName,
-  autoRolesFindByRoleId
+  autoRolesFindByRoleId,
+  checkFeatureEnabled
 }

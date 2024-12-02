@@ -2,7 +2,7 @@ const {User} = require('../models');
 
 
 async function findAll() {
-  return User.findAll();
+  return await User.findAll();
 }
 
 
@@ -10,7 +10,7 @@ async function findAll() {
  * @param {string} userId 
  */
 async function findByUserId(userId) {
-  return User.findOne({where: {user_id: userId}});
+  return await User.findOne({where: {user_id: userId}});
 }
 
 /**
@@ -19,7 +19,7 @@ async function findByUserId(userId) {
  * @param {string} username 
  */
 async function create(userId, username) {
-  return User.create({user_id: userId, name: username});
+  return await User.create({user_id: userId, name: username});
 }
 
 /**
@@ -28,7 +28,7 @@ async function create(userId, username) {
  * @param {string} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
-  return User.update(objToUpdate, {where: objToCondition});
+  return await User.update(objToUpdate, {where: objToCondition});
 }
 
 module.exports = {

@@ -2,7 +2,7 @@ const {AutoRoles, Role} = require('../models');
 
 
 async function findAll() {
-  return AutoRoles.findAll();
+  return await AutoRoles.findAll();
 }
 
 
@@ -10,7 +10,7 @@ async function findAll() {
  * @param {string} roleId 
  */
 async function finByRoleId(roleId) {
-  return AutoRoles.findOne({where: {role_id: roleId},
+  return await AutoRoles.findOne({where: {role_id: roleId},
     include: [{
       model: Role,
       required: true,
@@ -23,7 +23,7 @@ async function finByRoleId(roleId) {
  * @param {string} roleId 
  */
 async function create(roleId, guildId) {
-  return AutoRoles.create({role_id: roleId});
+  return await AutoRoles.create({role_id: roleId});
 }
 
 /**
@@ -32,7 +32,7 @@ async function create(roleId, guildId) {
  * @param {string} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
-  return AutoRoles.update(objToUpdate, {where: objToCondition});
+  return await AutoRoles.update(objToUpdate, {where: objToCondition});
 }
 
 module.exports = {
