@@ -1,15 +1,13 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Levels System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Levels System",
+
     "description_embed": "Non hai il permesso per usare questo comando!",
     "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
   },
   "voiceState": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "move_to": "L'utente {1} si è spostato in un altro canale",
     "join_now": "L'utente {1} si è connesso al canale vocale {2}",
     "left_now": "L'utente {1} si è disconnesso dal canale vocale {2}",
@@ -17,9 +15,8 @@
     "old_channel": "Vecchio Canale"
   },
   "channelCreate": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "created_channel": "E' stato creato un canale testuale nel server",
     "created_channel_voice": "E' stato creato un canale vocale nel server",
     "created_category": "E' stata creata una categoria nel server",
@@ -35,9 +32,8 @@
     "category_channel": "Categoria"
   },
   "channelDelete": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "deleted_channel": "E' stato cancellato un canale testuale nel server",
     "deleted_channel_voice": "E' stato cancellato un canale vocale nel server",
     "deleted_category": "E' stata cancellata una categoria nel server",
@@ -53,9 +49,8 @@
     "category_channel": "Categoria"
   },
   "channelUpdate": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "id_channel": "ID Canale",
     "category_channel": "Categoria",
     "go_channel": "Vai al Canale",
@@ -86,10 +81,9 @@
     "new_permissions": "Nuovi Permessi"
   },
   "guildAuditLogsEntry": {
-    "embed_title": "Alka Hub | Logs System",
+    "embed_title": "Logs System",
     "embed_footer": "Alka Hub by alkanetwork.eu 🎈(Experimental Feature)",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "log_executor": "Azione da",
+"log_executor": "Azione da",
     "id_executor": "ID Utente",
     "action": "Azione",
     "undefined": "Non disponibile",
@@ -112,9 +106,8 @@
     "nochanges": "Nessun cambiamento"
   },
   "emojiCreate": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "emoji_create": "E' stata aggiunta un Emoji al server",
     "emoji_name": "Nome Emoji",
     "emoji_id": "ID Emoji",
@@ -127,17 +120,15 @@
     "emoji_rappresentative": "Rappresentazione"
   },
   "emojiDelete": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "emoji_delete": "E' stata rimossa un Emoji dal server",
     "emoji_name": "Nome Emoji",
     "emoji_id": "ID Emoji"
   },
   "emojiUpdate": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "emoji_update": "E' stata modificata un Emoji nel server",
     "emoji_name_old": "Vecchio Nome",
     "emoji_name_new": "Nuovo Nome",
@@ -151,7 +142,7 @@
     "emoji_rappresentative": "Rappresentazione"
   },
   "guildBanAdd": {
-    "ban_title": "Alka Hub | Logs System",
+    "ban_title": "Logs System",
     "ban_footer": "Alka Hub by alkanetwork.eu",
     "ban_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "ban_create": "Un utente è stato Bannato dal server",
@@ -163,7 +154,7 @@
     "ban_reason_embed": "Motivo"
   },
   "guildBanRemove": {
-    "ban_title": "Alka Hub | Logs System",
+    "ban_title": "Logs System",
     "ban_footer": "Alka Hub by alkanetwork.eu",
     "ban_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
     "ban_remove": "Un utente è stato Sbannato dal server",
@@ -175,9 +166,8 @@
     "ban_reason_embed": "Motivo"
   },
   "guildMemberAdd": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "embed_description": "Un utente si è unito al server",
     "embed_user": "Utente",
     "embed_id": "ID Utente",
@@ -186,9 +176,8 @@
     "bot_embed_response": "Si"
   },
   "guildMemberRemove": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "embed_description": "Un utente è uscito dal server",
     "embed_user": "Utente",
     "embed_id": "ID Utente",
@@ -197,9 +186,8 @@
     "bot_embed_response": "Si"
   },
   "guildMemberUpdate": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "embed_description": "Una modifica è stata effettuata sul utente",
     "embed_user": "Utente",
     "embed_id": "ID Utente",
@@ -213,9 +201,8 @@
     "new_role": "Nuovi Ruoli"
   },
   "guildUpdate": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "embed_empty": "Nessuno",
     "embed_name": "Il nome del server è stato cambiato",
     "old_name": "Vecchio Nome",
@@ -235,9 +222,8 @@
     "new_owner": "Nuovo Proprietario"
   },
   "inviteCreate": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "embed_description": "Un invito è stato creato nel server",
     "channel_invite": "Canale invito",
     "invite_code": "Codice",
@@ -250,18 +236,16 @@
     "embed_url": "Link invito"
   },
   "inviteDelete": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "embed_description": "Un invito è stato rimosso nel server",
     "channel_invite": "Canale invito",
     "invite_code": "Codice",
     "embed_url": "Link invito"
   },
   "messageDelete": {
-    "embed_title": "Alka Hub | Logs System - Messaggio Eliminato",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System - Messaggio Eliminato",
+
     "embed_description": "Contenuto",
     "channel_message": "Canale",
     "channel_message_id": "ID Canale",
@@ -270,9 +254,8 @@
     "attachments_message": "Link Allegati"
   },
   "messageUpdate": {
-    "embed_title": "Alka Hub | Logs System - Messaggio Modificato",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System - Messaggio Modificato",
+
     "embed_description": "Vecchio Contenuto",
     "embed_description_new": "Nuovo Contenuto",
     "channel_message": "Canale",
@@ -283,9 +266,8 @@
     "go_message": "Vai al Messaggio"
   },
   "messageReactionRemoveAll": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "embed_description": "Le reazioni in un messaggio sono state resettate",
     "message_channel": "Canale",
     "message_channel_id": "ID Canale",
@@ -294,9 +276,8 @@
     "embed_reactions": "Reazioni"
   },
   "commandLogsChannel": {
-    "embed_title": "Alka Hub | Logs System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Logs System",
+
     "description_embed": "Hai inserito con successo il canale per l'evento **{0}**, adesso le tue logs saranno registrate li!",
     "description_embed_removed": "Hai rimosso con successo il canale per l'evento **{0}**, adesso le tue logs non saranno più inviate!"
   }

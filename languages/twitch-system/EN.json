@@ -1,42 +1,36 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Twitch Notify",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Twitch Notify",
+
     "description_embed": "You do not have permission to use this command!",
     "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable."
   },
   "twitchEmbed": {
-    "embed_title": "Alka Hub | Twitch Notify",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Twitch Notify",
+
     "description": "{0} is now live on Twitch!",
     "tags": "Tags",
     "game": "It is transmitting",
     "viewers": "Spectators"
   },
   "twitchAddSuccess": {
-    "embed_title": "Alka Hub | Twitch Notify",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Twitch Notify",
+
     "description": "{0} has been successfully added and notifications when live will appear in the channel {1}"
   },
   "twitchRemove": {
-    "embed_title": "Alka Hub | Twitch Notify",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Twitch Notify",
+
     "description": "{0} is removed and notifications will no longer be sent in the {1} channel."
   },
   "twitchNotFound": {
-    "embed_title": "Alka Hub | Twitch Notify",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Twitch Notify",
+
     "description": "The selected user does not exist, please try again!"
   },
   "notifyList": {
-    "embed_title": "Alka Hub | Twitch Notify",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Twitch Notify",
+
     "permissions_embed": "Below is the list of twitch channel notifications on your discord server",
     "permissionsfield_embed": "Channel list",
     "permissions_empty": "No channel found"

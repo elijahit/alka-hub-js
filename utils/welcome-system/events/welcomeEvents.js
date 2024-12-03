@@ -32,8 +32,7 @@ module.exports = {
           const langagues_path = readFileSync(`./languages/welcome-system/${data}.json`);
           const language_result = JSON.parse(langagues_path);
 
-          
-          let imageResolve = await makeWelcomeImage(member.user, member.guild.name, language_result, check.color, check.background_url);
+            let imageResolve = await makeWelcomeImage(member.user, member.guild.name, language_result, check.color, check.background_url);
 
           const file = new AttachmentBuilder(imageResolve, {
             name: "welcome.jpg"

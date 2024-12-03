@@ -1,15 +1,13 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Levels System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Levels System",
+
     "description_embed": "You do not have permission to use this command!",
     "description_embed_no_features": "The feature is currently disabled. An administrator needs to enable it for it to be usable."
   },
   "levelsCommand": {
-    "embed_title": "Alka Hub | Levels System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Levels System",
+
     "description_embed_delete": "The configuration of the Levels System has been removed, the channel {0} has been deleted and will no longer receive notifications.",
     "description_embed": "The Levels System has been configured and the channel {0} has been set, it will now receive level advancement notifications for various users.",
     "newLevel_embed": "Congratulations {0}, you have leveled up now you are level {1}.",

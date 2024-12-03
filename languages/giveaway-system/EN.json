@@ -1,21 +1,18 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Giveaway System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Giveaway System",
+
     "description_embed": "You do not have permission to use this command!",
     "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable."
   },
   "invalidDate": {
-    "embed_title": "Alka Hub | Giveaway System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Giveaway System",
+
     "description_embed": "The entered date format is invalid, please use the correct format ```DD/MM/YYYY 00:00``` check our [documentation](https://docs.alkanetwork.eu/giveaway) if you're unsure."
   },
   "giveawayStart": {
-    "embed_title": "Alka Hub | Giveaway System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Giveaway System",
+
     "description_embed": "Giveaway started, join by clicking the button below!\n\n**Prize**: {0}\n**End Date**: {1}\n**Slots Available**: {2}\n**Winners**: {3}",
     "slotsInfinity": "Unlimited",
     "button": "Participate now!",
@@ -24,37 +21,32 @@
     "noWinners": "No winners"
   },
   "giveawayNotFound": {
-    "embed_title": "Alka Hub | Giveaway System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Giveaway System",
+
     "description_embed": "We encountered an error while searching for the giveaway, it's not present in our systems. Please contact an administrator for more information."
   },
   "giveawayPartecipants": {
-    "embed_title": "Alka Hub | Giveaway System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Giveaway System",
+
     "interactionResponse": "You have successfully joined the giveaway, wait for the draw and good luck! 🥳",
     "alreadyPartecipants": "You are already participating in this giveaway, wait for the draw.",
     "noSlots": "I'm sorry, but the available slots are not sufficient to accept your entry! Please try again at the next giveaway 🎈"
   },
   "giveawayUserContact": {
-    "embed_title": "Alka Hub | Giveaway System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Giveaway System",
+
     "description_embed": "Congratulations 🥳, you have won the prize for the giveaway {0}. Follow the instructions provided during participation to redeem your prize!"
   },
   "giveawayParticipantsCheck": {
-    "embed_title": "Alka Hub | Giveaway System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Giveaway System",
+
     "description_embed": "Here's the list of participants for the giveaway ID: {0}\n**Total Participants:** {1}\n\n{2}",
     "noParticipants": "No participants",
     "noGiveawayExist": "No giveaway with this ID was found, please try again or contact an administrator."
   },
   "giveawayEnd": {
-    "embed_title": "Alka Hub | Giveaway System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Giveaway System",
+
     "description_embed": "You have successfully ended the giveaway id: {0}.",
     "noGiveawayExist": "No giveaway with this ID was found, please try again or contact an administrator."
   }

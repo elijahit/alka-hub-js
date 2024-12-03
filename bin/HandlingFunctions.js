@@ -15,9 +15,9 @@ function errorSendControls(error, client, guild_error, system) {
           if (!MissingMessage) {
             if (channel.type == 0) {
               const embedLog = new EmbedBuilder()
-                .setAuthor({ name: `Alka Hub | Missing Permissions` })
-                .setDescription("You haven't invited Alka Hub correctly and you don't have permission to perform this action. We invite you to invite Alka Hub again or contact our [support discord](https://discord.gg/DqRcKB75N5).\n\n-> [Invite Again](https://discord.com/api/oauth2/authorize?client_id=843183839869665280&permissions=8&scope=bot+applications.commands)")
-                .setFooter({ text: `Alka Hub di alkanetwork.eu`, iconURL: emoji.general.appIcon })
+                .setAuthor({ name: `${Variables.getBotName()} | Missing Permissions` })
+                .setDescription(`You haven't invited ${Variables.getBotName()} correctly and you don't have permission to perform this action. We invite you to invite ${Variables.getBotName()} again or contact our [support discord](https://discord.gg/DqRcKB75N5).`)
+                .setFooter({ text: `${Variables.getBotFooter}`, iconURL: Variables.getBotFooterIcon() })
                 .setColor(colors.general.error);
               channel.send({ embeds: [embedLog] });
               MissingMessage = true;
@@ -64,7 +64,7 @@ function errorSendControls(error, client, guild_error, system) {
       guild.channels.fetch(channelError)
         .then(channel => {
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: "Alka Hub | Controls Error ❌" })
+            .setAuthor({ name: `${Variables.getBotName()} - ${Variables.getNameConfiguration()} | Controls Error ❌` })
             .addFields(
               { name: `Informazioni Guilds`, value: `*Nome Server*\n${guild_error.name}\n*ID Server*\n${guild_error.id}`, inline: true },
               { name: `Owner Guilds | Members`, value: `*Owner ID*\n${guild_error.ownerId}\n*Membri totali*\n${guild_error.memberCount}`, inline: true },
@@ -116,9 +116,9 @@ async function returnPermission(interaction, pex, fn) {
 async function noInitGuilds(interaction) {
   let customEmoji = emoji.general.errorMarker;
   const embedLog = new EmbedBuilder()
-    .setAuthor({ name: `Alka Hub | Init Controls`, iconURL: customEmoji })
-    .setDescription("You can't execute this command at the moment. You need to initialize Alka first with **/init**")
-    .setFooter({ text: `Alka Hub by alkanetwork.eu`, iconURL: `https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png` })
+    .setAuthor({ name: `${Variables.getBotName()} | Init Controls`, iconURL: customEmoji })
+    .setDescription("You can't execute this command at the moment. You need to initialize bot first with **/init**")
+    .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
     .setColor(colors.general.error);
   return await interaction.reply({ embeds: [embedLog], ephemeral: true });
 }
@@ -126,9 +126,9 @@ async function noInitGuilds(interaction) {
 async function noEnabledFunc(interaction, language) {
   let customEmoji = emoji.general.errorMarker;
   const embedLog = new EmbedBuilder()
-    .setAuthor({ name: `Alka Hub | Features Controls`, iconURL: customEmoji })
+    .setAuthor({ name: `${Variables.getBotName()} | Features Controls`, iconURL: customEmoji })
     .setDescription(language)
-    .setFooter({ text: `Alka Hub by alkanetwork.eu`, iconURL: `https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png` })
+    .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
     .setColor(colors.general.error);
   return await interaction.reply({ embeds: [embedLog], ephemeral: true });
 }
@@ -144,156 +144,6 @@ async function noHavePermission(interaction, language) {
   await interaction.reply({ embeds: [embedLog], ephemeral: true });
 }
 
-async function cleanerDatabase(client) {
-  // CONTROLLO SE LA GUILD DI guilds_config NEL DATABASE SONO TRUE
-  const checkGuildsConfig = await readDbAll('guilds_config');
-  for (const value of checkGuildsConfig) {
-    try {
-      await client.guilds.fetch(value.guildId);
-    } catch (error) {
-      const errorCheck = new Error(error);
-      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
-        await runDb('DELETE FROM guilds_config WHERE guildId = ?', value.guildId);
-      }
-    }
-  }
-
-  // CONTROLLO SE LA GUILD DI log_system_config NEL DATABASE SONO TRUE
-  const checkGuildsLogs = await readDbAll('log_system_config');
-  for (const value of checkGuildsLogs) {
-    try {
-      await client.guilds.fetch(value.guildId);
-    } catch (error) {
-      const errorCheck = new Error(error);
-      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
-        await runDb('DELETE FROM log_system_config WHERE guildId = ?', value.guildId);
-      }
-    }
-  }
-
-  // CONTROLLO SE LA GUILD DI rank_system_permissions NEL DATABASE SONO TRUE
-  const checkPermissionsGuilds = await readDbAll('rank_system_permissions');
-  for (const value of checkPermissionsGuilds) {
-    try {
-      await client.guilds.fetch(value.guildId);
-    } catch (error) {
-      const errorCheck = new Error(error);
-      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
-        await runDb('DELETE FROM rank_system_permissions WHERE guildId = ?', value.guildId);
-      }
-    }
-  }
-
-  // CONTROLLO SE LA GUILD DI ticket_system_message NEL DATABASE SONO TRUE
-  const checkTicketMessage = await readDbAll('ticket_system_message');
-  for (const value of checkTicketMessage) {
-    try {
-      const guild = await client.guilds.fetch(value.guildId);
-      const channel = await guild.channels.fetch(value.channelId);
-      await channel.messages.fetch(value.messageId);
-    } catch (error) {
-      if (value.initAuthorId == null) {
-        const errorCheck = new Error(error);
-        if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
-          await runDb('DELETE FROM ticket_system_message WHERE guildId = ?', value.guildId);
-        }
-        else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel") {
-          await runDb('DELETE FROM ticket_system_message WHERE guildId = ? AND channelId = ?', value.guildId, value.channelId);
-        }
-        else if (errorCheck.message == "DiscordAPIError[10008]: Unknown Message") {
-          await runDb('DELETE FROM ticket_system_message WHERE guildId = ? AND channelId = ? AND messageId = ?', value.guildId, value.channelId, value.messageId);
-        }
-      }
-    }
-  }
-
-  // CONTROLLO SE LA GUILD DI ticket_system_tickets NEL DATABASE SONO TRUE
-  const checkTicketChannel = await readDbAll('ticket_system_tickets');
-  for (const value of checkTicketChannel) {
-    try {
-      const guild = await client.guilds.fetch(value.guildId);
-      const channel = await guild.channels.fetch(value.channelId);
-      await channel.messages.fetch(value.messageId);
-    } catch (error) {
-      const errorCheck = new Error(error);
-      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
-        await runDb('DELETE FROM ticket_system_tickets WHERE guildId = ?', value.guildId);
-      }
-      else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel") {
-        await runDb('DELETE FROM ticket_system_tickets WHERE guildId = ? AND channelId = ?', value.guildId, value.channelId);
-      }
-      else if (errorCheck.message == "DiscordAPIError[10008]: Unknown Message") {
-        await runDb('DELETE FROM ticket_system_tickets WHERE guildId = ? AND channelId = ? AND messageId = ?', value.guildId, value.channelId, value.messageId);
-      }
-    }
-  }
-
-  // CONTROLLO SE LA GUILD DI autovoice_system_creator NEL DATABASE SONO TRUE
-  const checkAutoVoiceCategory = await readDbAll('autovoice_system_creator');
-  for (const value of checkAutoVoiceCategory) {
-    try {
-      const guild = await client.guilds.fetch(value.guildId);
-      await guild.channels.fetch(value.categoryId);
-    } catch (error) {
-      const errorCheck = new Error(error);
-      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
-        await runDb('DELETE FROM autovoice_system_creator WHERE guildId = ?', value.guildId);
-      }
-      else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel") {
-        await runDb('DELETE FROM autovoice_system_creator WHERE guildId = ? AND categoryId = ?', value.guildId, value.categoryId);
-      }
-    }
-  }
-
-  // CONTROLLO SE LA GUILD DI stats_system_category NEL DATABASE SONO TRUE
-  const checkStatsSystemCategory = await readDbAll('stats_system_category');
-  for (const value of checkStatsSystemCategory) {
-    try {
-      const guild = await client.guilds.fetch(value.guildId);
-      await guild.channels.fetch(value.categoryId);
-    } catch (error) {
-      const errorCheck = new Error(error);
-      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
-        await runDb('DELETE FROM stats_system_category WHERE guildId = ?', value.guildId);
-      }
-      else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel") {
-        await runDb('DELETE FROM stats_system_category WHERE guildId = ? AND categoryId = ?', value.guildId, value.categoryId);
-      }
-    }
-  }
-
-  // CONTROLLO SE LA GUILD DI stats_system_channel NEL DATABASE SONO TRUE
-  const checkStatsSystemChannel = await readDbAll('stats_system_channel');
-  for (const value of checkStatsSystemChannel) {
-    try {
-      const guild = await client.guilds.fetch(value.guildId);
-      await guild.channels.fetch(value.categoryId);
-    } catch (error) {
-      const errorCheck = new Error(error);
-      if (errorCheck.message == "DiscordAPIError[10004]: Unknown Guild") {
-        await runDb('DELETE FROM stats_system_channel WHERE guildId = ?', value.guildId);
-      }
-      else if (errorCheck.message == "DiscordAPIError[10003]: Unknown Channel") {
-        await runDb('DELETE FROM stats_system_channel WHERE guildId = ? AND channelId = ?', value.guildId, value.channelId);
-      }
-    }
-  }
-}
-
-// REACTION ROLE SYSTEM
-async function reactionRoleCached(client) {
-  const reactionRoles = await readDbAll('reactionrole_system_reactions');
-  for (const value of reactionRoles) {
-    try {
-      const guild = await client.guilds.fetch(value.guildId);
-      const channel = await guild.channels.fetch(value.channelId);
-      await channel.messages.fetch(value.messageId);
-    } catch {
-      await runDb('DELETE FROM reactionrole_system_reactions WHERE guildId = ? AND channelId = ? AND messageId = ?', value.guildId, value.channelId, value.messageId);
-    }
-  }
-}
-
 
 module.exports = {
   errorSendControls,
@@ -302,6 +152,4 @@ module.exports = {
   noInitGuilds,
   noEnabledFunc,
   noHavePermission,
-  cleanerDatabase,
-  reactionRoleCached,
 }

@@ -17,6 +17,7 @@ if(process.env.NODE_ENV) {
         if(configObj?.guildMainId == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro guildMainId assente');
         if(configObj?.channelError == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro channelError assente');
         if(configObj?.presenceStatus == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro presenceStatus assente');
+        if(configObj?.botFooterIcon == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro presenceStatus assente');
         client.commands = new Collection();
         mainEvents(client);
 
@@ -24,6 +25,7 @@ if(process.env.NODE_ENV) {
         Variables.setNameConfiguration(process.env.NODE_ENV);
         Variables.setBotName(configObj.botName);
         Variables.setBotFooter(configObj.botFooter);
+        Variables.setBotFooterIcon(configObj.botFooterIcon);
         Variables.setIsActive(1);
         Variables.setPremium(1);
         Variables.setToken(configObj.token);

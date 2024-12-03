@@ -1,34 +1,24 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | General",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "General",
     "description_embed": "Non hai il permesso per usare questo comando!"
   },
   "disabledFeatures": {
-    "embed_title": "Alka Hub | General",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "General",
     "description_embed": "Hai disabilitato la funzione **{0}** con successo."
   },
   "enabledFeatures": {
-    "embed_title": "Alka Hub | General",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "General",
     "description_embed": "Hai abilitato la funzione **{0}** con successo."
   },
   "initCommand": {
-    "embed_title": "Alka Hub | General",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "General",
     "description_already_embed": "Questo server è già stato inizializzato. Non è possibile procedere con un'ulteriore inizializzazione. Utilizza **/config** per modificarne la configurazione.",
     "error_timezone": "La timezone inserita non risulta riconosciuta, utilizza ad esempio \"GB\" per la time zone inglese, se reputi che questo sia un errore contatta il supporto nel discord ufficiale che trovi in https://docs.alkanetwork.eu/",
     "description_embed": "Hai inizializzato Alka Hub con successo. Ora puoi godere appieno di tutte le funzionalità di Alka Hub!"
   },
   "helpCommand": {
-    "embed_title": "Alka Hub | Help Commands",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Help Commands",
     "documentationRefer":"**->** Approfondisci nella nostra [documentazione](https://docs.alkanetwork.eu/it/{0})",
     "noModuleSelectTitle": "Sei pronto?",
     "noModuleSelectEmbed": "[->] Non sai come utilizzare Alka Hub?\n[->] Visita la nostra documentazione al link https://docs.alkanetwork.eu/\n[->] Se hai bisogno di aiuto contatta il supporto nel nostro discord ufficiale https://discord.gg/DqRcKB75N5\nSeleziona un modulo dai parametri del comando /help per approfondirne il contenuto.",

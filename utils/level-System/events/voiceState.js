@@ -35,17 +35,14 @@ function getMinutesBetweenTimestamps(startTimestamp) {
 async function checkExp(newState, checkUser) {
   if (checkUser.exp >= 75 + (25 * checkUser.levels)) {
     const configLevelsSystem = await readDb(`SELECT * from levels_config WHERE guilds_id = ?`, newState.guild.id);
-    
-    await runDb("UPDATE levels SET exp = ?, levels = ? WHERE guilds_id = ? AND users_id = ?", checkUser.exp - (75 + (25 * checkUser.levels)), checkUser.levels + 1, newState.guild.id, newState.member.id);
-    
-    const channel = await newState.guild.channels.fetch(configLevelsSystem.log_channel);
+await runDb("UPDATE levels SET exp = ?, levels = ? WHERE guilds_id = ? AND users_id = ?", checkUser.exp - (75 + (25 * checkUser.levels)), checkUser.levels + 1, newState.guild.id, newState.member.id);
+const channel = await newState.guild.channels.fetch(configLevelsSystem.log_channel);
 
     let data = await language.databaseCheck(newState.guild.id);
     const langagues_path = readFileSync(`./languages/levels-system/${data}.json`);
     const language_result = JSON.parse(langagues_path);
 
-    
-    let checkRoles = await readDbAll("SELECT * FROM levels_roles WHERE guilds_id = ?", newState.guild.id);
+let checkRoles = await readDbAll("SELECT * FROM levels_roles WHERE guilds_id = ?", newState.guild.id);
     checkRoles.map(async value => {
       if ((checkUser.levels + 1) >= value.level) {
         try {
@@ -56,13 +53,11 @@ async function checkExp(newState, checkUser) {
         }
       }
     })
-    
-    checkUser = await readDb("SELECT * FROM levels WHERE guilds_id = ? AND users_id = ?", newState.guild.id, newState.member.id);
+checkUser = await readDb("SELECT * FROM levels WHERE guilds_id = ? AND users_id = ?", newState.guild.id, newState.member.id);
     if(checkUser.exp >= 75 + (25 * checkUser.levels)) {
       return await checkExp(newState, checkUser);
     }
-    
-    const customEmoji = emoji.levelsSystem.levelsMaker;
+const customEmoji = emoji.levelsSystem.levelsMaker;
     const embedLog = new EmbedBuilder()
       .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
       .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", newState.member).replace("{1}", checkUser.levels))
@@ -94,8 +89,7 @@ module.exports = {
         } else if (!newState.channel || newState.guild.afkChannel?.id == newState.channel?.id) {
           let checkUser = await readDb("SELECT * FROM levels WHERE guilds_id = ? AND users_id = ?", newState.guild.id, newState.member.id);
           if (checkUser && (checkUser.joined_time != null && checkUser.joined_time > 0)) {
-            
-            await runDb('UPDATE levels SET exp = ?, minute_vocal = ?, joined_time = ? WHERE guilds_id = ? AND users_id = ?', checkUser.exp + (getMinutesBetweenTimestamps(+checkUser.joined_time)*3), checkUser.minute_vocal + (getMinutesBetweenTimestamps(+checkUser.joined_time)), null, newState.guild.id, newState.member.id);
+                await runDb('UPDATE levels SET exp = ?, minute_vocal = ?, joined_time = ? WHERE guilds_id = ? AND users_id = ?', checkUser.exp + (getMinutesBetweenTimestamps(+checkUser.joined_time)*3), checkUser.minute_vocal + (getMinutesBetweenTimestamps(+checkUser.joined_time)), null, newState.guild.id, newState.member.id);
 
             checkUser = await readDb("SELECT * FROM levels WHERE guilds_id = ? AND users_id = ?", newState.guild.id, newState.member.id);
 

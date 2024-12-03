@@ -1,125 +1,105 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description_embed": "You do not have permission to use this command!",
     "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable."
   },
   "playing": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "Currently playing",
     "songTitle": "Now playing",
     "queueSlot": "Queue"
   },
   "queueEnd": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "The queue has ended and no playback is in progress, so Alka Hub has disconnected from the channel."
   },
   "addQueue": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "The track has been added to the queue.\n**Track**: {0}"
   },
   "addQueuePlaylist": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "The playlist has been added to the queue.\n**Tracks added to queue**: {0}"
   },
   "alreadyConnect": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "Alka Hub is already connected to a voice channel and playing music."
   },
   "notFound": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "The provided QUERY was not found during the search, please try again."
   },
   "ready": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "Loading... Playback is about to start, enjoy your listening."
   },
   "noVoice": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "This command cannot be executed unless you are connected to a voice channel."
   },
   "noUserOnline": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "No user was connected to the voice channel, consequently the queue has been cleared and Alka Hub has been disconnected."
   },
   "stopVoteClose": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "The player {0} has been stopped successfully. If you want to listen to music again, use **/play**."
   },
   "stopVoteMessage": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "A vote has been requested to stop the player {0}\n**Votes**: {1} out of {2} required."
   },
   "alreadyVoteStop": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "You have already voted, please wait for the vote to finish."
   },
   "noConnectStopVote": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "You are not connected to the voice channel where Alka Hub's player is located."
   },
   "noBotConnectStopVote": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "No Alka Hub player is connected to the voice channel."
   },
   "NextVoteClose": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "The currently playing song has been changed to the next one."
   },
   "NextVoteMessage": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "A vote has been requested to change the currently playing song for player {0}\n**Votes**: {1} out of {2} required."
   },
   "alreadyVoteNext": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "You have already voted, please wait for the vote to finish."
   },
   "noConnectNextVote": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "You are not connected to the voice channel where Alka Hub's player is located."
   },
   "noBotConnectNextVote": {
-    "embed_title": "Alka Hub | Music Bot",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Music Bot",
+
     "description": "No Alka Hub player is connected to the voice channel."
   }
 }

@@ -3,6 +3,7 @@ class Variables {
     static nameConfiguration;
     static botName;
     static botFooter;
+    static botFooterIcon;
     static isActive;
     static premium;
     static token;
@@ -23,6 +24,14 @@ class Variables {
 
     static getBotFooter() {
         return this.botFooter;
+    }
+
+    static setBotFooterIcon(value) {
+        this.botFooterIcon = value;
+    }
+
+    static getBotFooterIcon() {
+        return this.botFooterIcon;
     }
 
     static setBotFooter(value) {
