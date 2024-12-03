@@ -9,11 +9,21 @@ if(process.env.NODE_ENV) {
     if(v) {
       const config = v.get({plain: true});
       if(config.isActive == 1 && config.premium == 1) {
+        const configObj = JSON.parse(config.json);
+        if(configObj?.botName == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro botName assente');
+        if(configObj?.botFooter == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro botFooter assente');
+        if(configObj?.token == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro token assente');
+        if(configObj?.clientId == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro clientId assente');
+        if(configObj?.guildMainId == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro guildMainId assente');
+        if(configObj?.channelError == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro channelError assente');
+        if(configObj?.presenceStatus == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro presenceStatus assente');
         client.commands = new Collection();
         mainEvents(client);
-        const configObj = JSON.parse(config.json);
-        
+
         // Imposto le variabili globali
+        Variables.setNameConfiguration(process.env.NODE_ENV);
+        Variables.setBotName(configObj.botName);
+        Variables.setBotFooter(configObj.botFooter);
         Variables.setIsActive(1);
         Variables.setPremium(1);
         Variables.setToken(configObj.token);

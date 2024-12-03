@@ -1,6 +1,8 @@
 class Variables {
     // Variabili statiche
-    static name;
+    static nameConfiguration;
+    static botName;
+    static botFooter;
     static isActive;
     static premium;
     static token;
@@ -11,12 +13,28 @@ class Variables {
     static presenceCounter = 0;
 
     // Getter e Setter per ogni variabile statica
-    static getName() {
-        return this.name;
+    static getBotName() {
+        return this.botName;
     }
 
-    static setName(value) {
-        this.name = value;
+    static setBotName(value) {
+        this.botName = value;
+    }
+
+    static getBotFooter() {
+        return this.botFooter;
+    }
+
+    static setBotFooter(value) {
+        this.botFooter = value;
+    }
+
+    static getNameConfiguration() {
+        return this.nameConfiguration;
+    }
+
+    static setNameConfiguration(value) {
+        this.nameConfiguration = value;
     }
 
     static getIsActive() {
