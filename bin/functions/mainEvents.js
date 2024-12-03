@@ -1,19 +1,20 @@
 const { Events, ActivityType } = require('discord.js');
 const executeFolderModule = require('./executeFunctions');
-const { presenceStatusName, botState } = require('../../config.json');
+const Variables = require('../classes/GlobalVariables');
+
 
 const mainEvents = (client) => {
   client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand()) return;
     if (!interaction.guild) return;
-  
+
     const command = interaction.client.commands.get(interaction.commandName);
-  
+
     if (!command) {
       console.error(`[WARNING] Il comando ${interaction.commandName} lanciato da ${interaction.user.username} non è stato trovato.`);
       return;
     }
-  
+
     try {
       await command.execute(interaction);
     } catch (error) {
@@ -25,34 +26,47 @@ const mainEvents = (client) => {
       }
     }
   });
-  
+
   // ERROR LISTENER
   client.on(Events.ShardError, error => {
     console.log(error);
   })
-  
+
   // EVENT LISTNER PER AVVIO DEL BOT
-  
-  client.once(Events.ClientReady, readyClient => {
-    const runtimeConsole = process.env.NODE_ENV === 'production' ? "production" : process.env.NODE_ENV === 'development' ? "development" : "";
+
+  client.once(Events.ClientReady, async readyClient => {
+    const runtimeConsole = process.env.NODE_ENV;
     console.clear();
     console.log('-------------------------------------');
     console.log('ALKA HUB BOT v2.0.0 REWORK / BETA');
     console.log('Author: Elijah (Gabriele Mario Tosto)');
-    console.log('Contributors: Nico995 (Nicola Occelli)');
     console.log('Since: 2024');
     console.log(`Runtime: ${runtimeConsole}`);
     console.log('Technology: JavaScript - Node - Discord.js');
-    console.log('Web: https://alkanetwork.eu');
+    console.log('Powered by alkanetwork.eu');
     console.log('-------------------------------------');
     // FUNZIONI
     executeFolderModule(client, 'utils');
-  
-  
-    client.user.setPresence({
-      activities: [{ name: presenceStatusName, state: botState, type: ActivityType.Custom }],
-      status: 'online'
-    });
+
+    const presenceArray = Variables.getPresenceStatus();
+    if(presenceArray.length == 1) {
+      await client.user.setPresence({
+        activities: [{ name: presenceArray[count], state: presenceArray[count], type: ActivityType.Custom }],
+        status: 'online'
+      });
+    } else {
+      setInterval(async () => {
+        const count = Variables.getPresenceCounter();
+        await client.user.setPresence({
+          activities: [{ name: presenceArray[count], state: presenceArray[count], type: ActivityType.Custom }],
+          status: 'online'
+        });
+        Variables.setPresenceCounter(count + 1)
+        if (count == presenceArray.length-1) {
+          Variables.setPresenceCounter(0);
+        }
+      }, 5000);
+    }
   })
 }
 

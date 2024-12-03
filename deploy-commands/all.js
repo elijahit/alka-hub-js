@@ -1,5 +1,6 @@
 const { REST, Routes } = require('discord.js');
-const { token, tokenDev, tokenBeta, clientId, clientIdDev, clientIdBeta} = require('../config.json');
+// const { token, tokenDev, tokenBeta, clientId, clientIdDev, clientIdBeta} = require('../config.json');
+// @TODO Da decidere come far funzionare il deploy dei comandi per multibot
 const fs = require('node:fs');
 const path = require('node:path');
 

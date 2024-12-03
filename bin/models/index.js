@@ -14,6 +14,7 @@ const { GuildEnabledFeatures } = require('./GuildEnabledFeatures');
 const { User } = require('./User');
 const { UserGuild } = require('./UserGuild');
 const { Role } = require('./Role');
+const { Config } = require('./Config');
 
 
 
@@ -54,4 +55,5 @@ module.exports = {
   UserGuild,
   User,
   Role,
+  Config,
 }

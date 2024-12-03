@@ -1,10 +1,10 @@
-const { guildMainId, guildMainChannelsControlsError, emojiGuildId_01 } = require('../config.json');
 const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const { readDbWith3Params, readDb, readDbAll, runDb, readDbAllWith2Params, readDbAllWithValue } = require("../bin/database");
 const { readFileSync, readdir, writeFile } = require("fs");
 const { stripIndents } = require('common-tags');
 const colors = require('./data/colors');
 const emoji = require('./data/emoji');
+const Variables = require('./classes/GlobalVariables');
 
 function errorSendControls(error, client, guild_error, system) {
   if (error == "DiscordAPIError[50013]: Missing Permissions") {
@@ -56,9 +56,12 @@ function errorSendControls(error, client, guild_error, system) {
   })
 
   // LA FUNZIONE GESTISCE GLI ERRORI E LI MANDA AL SERVER MAIN
-  client.guilds.fetch(guildMainId)
+  const guildMain = Variables.getGuildMainId();
+  const channelError = Variables.getChannelError();
+  if(!guildMain || !channelError) return;
+  client.guilds.fetch(guildMain)
     .then(guild => {
-      guild.channels.fetch(guildMainChannelsControlsError)
+      guild.channels.fetch(channelError)
         .then(channel => {
           const embedLog = new EmbedBuilder()
             .setAuthor({ name: "Alka Hub | Controls Error ❌" })

@@ -25,6 +25,10 @@ const { finByRoleId: autoRolesFindByRoleId } = require('../repository/AutoRoles'
 const { checkFeatureEnabled } = require('../repository/Feature');
 // autoRolesFindByRoleId -> Permette di cercare un ruolo nella tabella AutoRoles
 
+const { findByName: findConfigByName } = require('../repository/Config');
+// findByName -> Permette di creare una configurazione nella tabella configs tramite il nome
+
+
 (async () => {
 
 })()
@@ -38,5 +42,6 @@ module.exports = {
   findByHashName,
   findAllCorrespondenceByHashName,
   autoRolesFindByRoleId,
-  checkFeatureEnabled
+  checkFeatureEnabled,
+  findConfigByName
 }
