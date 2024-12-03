@@ -32,7 +32,7 @@ module.exports = {
 									type: 0,
 								}
 							],
-							name: "💻 ALKA STATS",
+							name: "💻 ServerStats",
 						});
 						await category.setPosition(0); // Imposto la posizione del canale in cima.
 						const embedLog = new EmbedBuilder()
