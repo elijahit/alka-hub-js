@@ -76,8 +76,9 @@ module.exports = {
 					let checkFeature = await getFeatureIsEnabled(interaction.guild.id, featuresChoice);
 					checkFeature = checkFeature?.get({ plain: true }).guilds[0].GuildEnabledFeatures ?? null;
 					
-					let featureIsDisabled = await findFeatureById(featuresChoice);
-					featureIsDisabled = featureIsDisabled.get({ plain: true }).is_disabled ?? 1;
+					let featureTable = await findFeatureById(featuresChoice);
+					featureIsDisabled = featureTable.get({ plain: true }).is_disabled ?? 1;
+					let featureName = featureTable.get({ plain: true }).feature_name ?? null;
 					if (featureIsDisabled == 1) {
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
@@ -87,9 +88,6 @@ module.exports = {
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
 					}
-
-					let featureName = await findFeatureById(featuresChoice);
-					featureName = featureName.get({ plain: true }).feature_name;
 
 					if (checkFeature) {
 						if (checkFeature.is_enabled == 1) {
