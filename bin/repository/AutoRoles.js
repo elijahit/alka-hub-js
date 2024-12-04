@@ -31,8 +31,8 @@ async function create(roleId, guildId) {
  * @param {string} objToUpdate 
  * @param {string} objToCondition 
  */
-async function update(objToUpdate, {where: objToCondition}) {
-  return await AutoRoles.update(objToUpdate, {where: objToCondition});
+async function update(objToUpdate, objToCondition) {
+  return await AutoRoles.update(objToUpdate, objToCondition);
 }
 
 module.exports = {
