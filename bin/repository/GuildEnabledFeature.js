@@ -23,9 +23,14 @@ async function update(objToUpdate, objToCondition) {
   return await GuildEnabledFeature.update(objToUpdate, objToCondition);
 }
 
+async function create(guildId, featureId, isEnabled) {
+  return await GuildEnabledFeature.create({guild_id: guildId, feature_id: featureId, is_enabled: isEnabled, config_id: Variables.getConfigId()});
+}
+
 
 module.exports = {
   findAll,
   findById,
-  update
+  update,
+  create
 }

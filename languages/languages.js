@@ -1,11 +1,12 @@
 const {readDb} = require('../bin/database');
+const { findGuildById } = require('../bin/service/DatabaseService');
 
-let sqlConfigGuilds = `SELECT * FROM guilds WHERE guilds_id = ?`;
-
-async function databaseCheck (guilds) {
+async function databaseCheck (guildId) {
   try {
-    const result = await readDb(sqlConfigGuilds, guilds);
-    return result.language;
+    let result = await findGuildById(guildId);
+    if(!result) return "EN";
+    
+    return result.get({plain: true}).language;
   } catch {
     return "EN"
   }

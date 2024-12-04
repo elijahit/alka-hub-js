@@ -28,8 +28,9 @@ const { getFeatureIsEnabled, findById: findFeatureById } = require('../repositor
 const { findByName: findConfigByName } = require('../repository/Config');
 // findByName -> Permette di creare una configurazione nella tabella configs tramite il nome
 
-const { update: updateEnabledFeature } = require('../repository/GuildEnabledFeature');
-// findByName -> Permette di creare una configurazione nella tabella configs tramite il nome
+const { update: updateEnabledFeature, create: createEnabledFeature } = require('../repository/GuildEnabledFeature');
+// updateEnabledFeature -> Permette di aggiornare la tabella guild_enabled_feature
+// createEnabledFeature -> Permette di aggiungere un record sulla tabella guild_enabled_feature
 
 
 (async () => {
@@ -48,5 +49,6 @@ module.exports = {
   getFeatureIsEnabled,
   findConfigByName,
   findFeatureById,
-  updateEnabledFeature
+  updateEnabledFeature,
+  createEnabledFeature
 }

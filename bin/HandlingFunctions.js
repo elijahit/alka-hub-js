@@ -7,6 +7,7 @@ const emoji = require('./data/emoji');
 const Variables = require('./classes/GlobalVariables');
 
 function errorSendControls(error, client, guild_error, system) {
+  console.error(error);
   if (error == "DiscordAPIError[50013]: Missing Permissions") {
     return guild_error.channels.fetch()
       .then(channels => {

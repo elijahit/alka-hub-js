@@ -22,7 +22,7 @@ async function finByRoleId(roleId) {
  * 
  * @param {string} roleId 
  */
-async function create(roleId, guildId) {
+async function create(roleId) {
   return await AutoRoles.create({role_id: roleId});
 }
 
