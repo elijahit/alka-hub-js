@@ -31,7 +31,6 @@
   "scripts": {
     "prod": "cross-env NODE_ENV=alka node app.js",
     "dev": "cross-env NODE_ENV=alka-dev nodemon app.js",
-    "test": "cross-env NODE_ENV=alka nodemon app.js",
     "commandsDev": "cross-env NODE_ENV=development node ./deploy-commands/all.js",
     "commandsBeta": "cross-env NODE_ENV=beta node ./deploy-commands/all.js",
     "commandProd": "cross-env NODE_ENV=production node ./deploy-commands/all.js"
