@@ -14,7 +14,7 @@ module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
     if (!interaction.guild) return;
-    if (!await checkFeaturesIsEnabled(interaction.guild, 6)) return;
+    if (!await checkFeaturesIsEnabled(interaction.guild.id, 6)) return;
     try {
       // CONTROLLO LINGUA
       let data = await language.databaseCheck(interaction.guild.id);

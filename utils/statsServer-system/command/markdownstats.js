@@ -20,7 +20,7 @@ module.exports = {
 		await returnPermission(interaction, "statsServer", async result => {
 			try {
 				if (result) {
-					if (await checkFeaturesIsEnabled(interaction.guild, 6)) {
+					if (await checkFeaturesIsEnabled(interaction.guild.id, 6)) {
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.markdownHelp.embed_title}`, iconURL: emoji.statsServerSystem.main })
 							.setDescription(language_result.markdownHelp.description_embed)

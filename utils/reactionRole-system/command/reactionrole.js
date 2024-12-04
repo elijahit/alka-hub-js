@@ -45,7 +45,7 @@ module.exports = {
 			try {
 				if (result) {
 
-					if (await checkFeaturesIsEnabled(interaction.guild, 5)) {
+					if (await checkFeaturesIsEnabled(interaction.guild.id, 5)) {
 						// CONTROLLO SE IL RUOLO SI TROVA SOTTO AL RUOLO DA IMPOSTARE
 						if(interaction.guild.roles.botRoleFor(interaction.client.user).rawPosition < role.rawPosition) {
 							const embedLog = new EmbedBuilder()

@@ -29,7 +29,7 @@ module.exports = {
 			const checkUserIsPresent = await readDb(`SELECT * from levels WHERE guilds_id = ? AND users_id = ?`, interaction.guild.id, user.id);
 
 			const customEmoji = emoji.levelsSystem.levelsMaker;
-			if (await checkFeaturesIsEnabled(interaction.guild, 11)) {
+			if (await checkFeaturesIsEnabled(interaction.guild.id, 11)) {
 				if (checkUserIsPresent) {
 
 					const embedLog = new EmbedBuilder()

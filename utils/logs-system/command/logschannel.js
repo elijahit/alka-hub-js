@@ -84,7 +84,7 @@ module.exports = {
 		await returnPermission(interaction, "logschannel", async result => {
 			try {
 				if (result) {
-					if (await checkFeaturesIsEnabled(interaction.guild, 1)) {
+					if (await checkFeaturesIsEnabled(interaction.guild.id, 1)) {
 						const checkQuery = `SELECT * FROM logs_system WHERE guilds_id = ?`
 						const checkFeature = await readDb(checkQuery, interaction.guild.id);
 						const embedLog = new EmbedBuilder();

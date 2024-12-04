@@ -32,7 +32,7 @@ module.exports = {
 					const checkChannelIsPresent = await readDb(`SELECT * from levels_config WHERE guilds_id = ?`, interaction.guild.id);
 
 					const customEmoji = emoji.levelsSystem.levelsMaker;
-					if (await checkFeaturesIsEnabled(interaction.guild, 11)) {
+					if (await checkFeaturesIsEnabled(interaction.guild.id, 11)) {
 						if (checkChannelIsPresent) {
 							await runDb('DELETE FROM levels_config WHERE guilds_id = ?', interaction.guild.id);
 

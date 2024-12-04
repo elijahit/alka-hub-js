@@ -28,7 +28,7 @@ module.exports = {
 					JOIN roles r ON r.roles_id = rs.roles_id
 					WHERE r.guilds_id = ?`, interaction.guild.id);
 
-					if (await checkFeaturesIsEnabled(interaction.guild, 5)) {
+					if (await checkFeaturesIsEnabled(interaction.guild.id, 5)) {
 						reactionRoleString += `${language_result.listCommand.description_embed.replace("{0}", interaction.user)}\n\n`;
 						if (checkReactionAlreadySet?.length > 0) {
 							for (const value of checkReactionAlreadySet) {

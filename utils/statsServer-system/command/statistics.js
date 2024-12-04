@@ -20,7 +20,7 @@ module.exports = {
 		await returnPermission(interaction, "statsServer", async result => {
 			try {
 				if (result) {
-					if (await checkFeaturesIsEnabled(interaction.guild, 6)) {
+					if (await checkFeaturesIsEnabled(interaction.guild.id, 6)) {
 						// CREO LA CATEGORIA DA IMPOSTARE COME STATS CATEGORY
 						const category = await interaction.guild.channels.create({
 							type: ChannelType.GuildCategory,

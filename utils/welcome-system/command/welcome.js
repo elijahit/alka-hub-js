@@ -50,7 +50,7 @@ module.exports = {
 		await returnPermission(interaction, "welcome", async result => {
 			try {
 				if (result) {
-					if (await checkFeaturesIsEnabled(interaction.guild, 10)) {
+					if (await checkFeaturesIsEnabled(interaction.guild.id, 10)) {
 						//ESISTE GIA
 						const checkAlreadyExist = await readDb('SELECT * FROM welcome WHERE guilds_id = ?', interaction.guild.id);
 						const modal = new ModalBuilder()

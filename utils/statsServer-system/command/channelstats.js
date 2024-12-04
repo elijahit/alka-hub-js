@@ -71,7 +71,7 @@ module.exports = {
 		await returnPermission(interaction, "statsServer", async result => {
 			try {
 				if (result) {
-					if (await checkFeaturesIsEnabled(interaction.guild, 6)) {
+					if (await checkFeaturesIsEnabled(interaction.guild.id, 6)) {
 						const checkCategory = await readDb('SELECT * FROM statistics_category WHERE guilds_id = ? AND category_id = ?', interaction.guild.id, categoryId)
 						if (checkCategory) {
 							const modal = new ModalBuilder()

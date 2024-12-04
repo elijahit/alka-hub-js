@@ -21,7 +21,7 @@ module.exports = {
 		await returnPermission(interaction, "autovoice", async result => {
 			try {
 				if (result) {
-					if (await checkFeaturesIsEnabled(interaction.guild, 3)) {
+					if (await checkFeaturesIsEnabled(interaction.guild.id, 3)) {
 						const filePath = `./utils/autoVoice-system/${interaction.guild.id}_${interaction.user.id}.json`;
 						if(fs.existsSync(filePath)) {
 							const fileJson = fs.readFileSync(filePath);

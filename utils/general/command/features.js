@@ -74,8 +74,8 @@ module.exports = {
 				if (result) {
 					const checkQuery = `SELECT * FROM guild_enabled_features WHERE guilds_id = ? AND feature_id = ?`;
 					const nameQuery = `SELECT feature_name FROM features WHERE feature_id = ?`;
-					// const checkFeature = await checkFeatureEnabled(interaction.guild.id, featuresChoice);
-					// console.log(checkFeature);
+					const checkFeature = await checkFeatureEnabled(interaction.guild.id, featuresChoice);
+					console.log(checkFeature);
 					return;
 					const checkName = await readDb(nameQuery, featuresChoice);
 					
