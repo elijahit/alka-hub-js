@@ -5,7 +5,8 @@
   },
   "disabledFeatures": {
     "embed_title": "General",
-    "description_embed": "You have successfully disabled the **{0}** feature."
+    "description_embed": "You have successfully disabled the **{0}** feature.",
+    "feature_disabled_by_alka": "The function is currently disabled and cannot be enabled/disabled."
   },
   "enabledFeatures": {
     "embed_title": "General",

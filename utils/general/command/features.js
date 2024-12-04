@@ -64,7 +64,7 @@ module.exports = {
 		),
 	async execute(interaction) {
 		const featuresChoice = interaction.options.data[0].value;
-		
+
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id);
 		const langagues_path = readFileSync(`./languages/general/${data}.json`);
@@ -74,13 +74,25 @@ module.exports = {
 			try {
 				if (result) {
 					let checkFeature = await getFeatureIsEnabled(interaction.guild.id, featuresChoice);
-					checkFeature = checkFeature?.get({plain: true}).guilds[0].GuildEnabledFeatures ?? null;
+					let featureIsDisabled = checkFeature?.get({ plain: true }).is_disabled ?? 1
+					checkFeature = checkFeature?.get({ plain: true }).guilds[0].GuildEnabledFeatures ?? null;
+
+					if (featureIsDisabled == 1) {
+						const embedLog = new EmbedBuilder()
+							.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
+							.setDescription(language_result.disabledFeatures.feature_disabled_by_alka)
+							.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+							.setColor(colors.general.error);
+						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						return;
+					}
+
 					let featureName = await findFeatureById(featuresChoice);
-					featureName = featureName.get({plain: true}).feature_name;
-					
+					featureName = featureName.get({ plain: true }).feature_name;
+
 					if (checkFeature) {
 						if (checkFeature.is_enabled == 1) {
-							await updateEnabledFeature({is_enabled: 0}, {where: {guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: Variables.getConfigId()}});
+							await updateEnabledFeature({ is_enabled: 0 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: Variables.getConfigId() } });
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
 								.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", featureName))
@@ -88,7 +100,7 @@ module.exports = {
 								.setColor(colors.general.error);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						} else {
-							await updateEnabledFeature({is_enabled: 1}, {where: {guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: Variables.getConfigId()}});
+							await updateEnabledFeature({ is_enabled: 1 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: Variables.getConfigId() } });
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
 								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", featureName))
@@ -97,13 +109,13 @@ module.exports = {
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}
 					} else {
-							await createEnabledFeature(interaction.guild.id, featuresChoice, 1);
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
-								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", featureName))
-								.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
-								.setColor(colors.general.success);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await createEnabledFeature(interaction.guild.id, featuresChoice, 1);
+						const embedLog = new EmbedBuilder()
+							.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
+							.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", featureName))
+							.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+							.setColor(colors.general.success);
+						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}
 				}
 				else {
