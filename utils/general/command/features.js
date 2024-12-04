@@ -1,8 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
-const { readDb, runDb } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
+const { errorSendControls, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const { findFeatureById, updateEnabledFeature, getFeatureIsEnabled, createEnabledFeature } = require('../../../bin/service/DatabaseService');
