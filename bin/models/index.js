@@ -10,7 +10,7 @@ const { AutoRoles } = require('./AutoRoles');
 const { AutoVoice } = require('./AutoVoice');
 const { Feature } = require('./Feature');
 const { Guild } = require('./Guild');
-const { GuildEnabledFeatures } = require('./GuildEnabledFeatures');
+const { GuildEnabledFeature } = require('./GuildEnabledFeature');
 const { User } = require('./User');
 const { UserGuild } = require('./UserGuild');
 const { Role } = require('./Role');
@@ -28,8 +28,8 @@ Permissions.belongsToMany(Hash, { through: HashPermissions, foreignKey: 'permiss
 /**
   * MANY TO MANY (GuilEnabledFeatures)
 */
-Guild.belongsToMany(Feature, { through: GuildEnabledFeatures, foreignKey: 'guild_id', otherKey: 'feature_id', sourceKey: 'guild_id'});
-Feature.belongsToMany(Guild, { through: GuildEnabledFeatures, foreignKey: 'feature_id', otherKey: 'guild_id'});
+Guild.belongsToMany(Feature, { through: GuildEnabledFeature, foreignKey: 'guild_id', otherKey: 'feature_id', sourceKey: 'guild_id'});
+Feature.belongsToMany(Guild, { through: GuildEnabledFeature, foreignKey: 'feature_id', otherKey: 'guild_id'});
 
 /**
  * MANY TO MANY (UserGuild)
@@ -51,7 +51,7 @@ module.exports = {
   AutoVoice,
   Feature,
   Guild,
-  GuildEnabledFeatures,
+  GuildEnabledFeature,
   UserGuild,
   User,
   Role,

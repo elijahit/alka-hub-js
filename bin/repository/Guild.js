@@ -29,7 +29,7 @@ async function create(guildId, language = "EN", time_zone = "Europe/London") {
  * @param {string} objToUpdate 
  * @param {string} objToCondition 
  */
-async function update(objToUpdate, objToCondition) {
+async function update(objToUpdate, {where: objToCondition}) {
   return await Guild.update(objToUpdate, {where: objToCondition});
 }
 

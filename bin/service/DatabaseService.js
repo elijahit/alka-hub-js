@@ -22,10 +22,13 @@ const { findByHashName, findAllCorrespondenceByHashName } = require('../reposito
 const { finByRoleId: autoRolesFindByRoleId } = require('../repository/AutoRoles');
 // autoRolesFindByRoleId -> Permette di cercare un ruolo nella tabella AutoRoles
 
-const { checkFeatureEnabled } = require('../repository/Feature');
+const { getFeatureIsEnabled, findById: findFeatureById } = require('../repository/Feature');
 // autoRolesFindByRoleId -> Permette di cercare un ruolo nella tabella AutoRoles
 
 const { findByName: findConfigByName } = require('../repository/Config');
+// findByName -> Permette di creare una configurazione nella tabella configs tramite il nome
+
+const { update: updateEnabledFeature } = require('../repository/GuildEnabledFeature');
 // findByName -> Permette di creare una configurazione nella tabella configs tramite il nome
 
 
@@ -42,6 +45,8 @@ module.exports = {
   findByHashName,
   findAllCorrespondenceByHashName,
   autoRolesFindByRoleId,
-  checkFeatureEnabled,
-  findConfigByName
+  getFeatureIsEnabled,
+  findConfigByName,
+  findFeatureById,
+  updateEnabledFeature
 }

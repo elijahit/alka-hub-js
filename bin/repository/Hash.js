@@ -53,7 +53,7 @@ async function create(hash_name) {
  * @param {string} objToUpdate 
  * @param {string} objToCondition 
  */
-async function update(objToUpdate, objToCondition) {
+async function update(objToUpdate, {where: objToCondition}) {
   return await Hash.update(objToUpdate, {where: objToCondition});
 }
 

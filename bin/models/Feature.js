@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize');
 
 const Feature = database.define('features', {
   feature_name: { type: Sequelize.STRING },
-  id_disabled: { type: Sequelize.INTEGER }
+  is_disabled: { type: Sequelize.INTEGER }
 
 }, {tableName: 'features'});
 

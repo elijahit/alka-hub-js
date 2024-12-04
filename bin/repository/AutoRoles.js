@@ -31,7 +31,7 @@ async function create(roleId, guildId) {
  * @param {string} objToUpdate 
  * @param {string} objToCondition 
  */
-async function update(objToUpdate, objToCondition) {
+async function update(objToUpdate, {where: objToCondition}) {
   return await AutoRoles.update(objToUpdate, {where: objToCondition});
 }
 

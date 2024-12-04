@@ -41,7 +41,7 @@ async function create(permission_name) {
  * @param {string} objToUpdate 
  * @param {string} objToCondition 
  */
-async function update(objToUpdate, objToCondition) {
+async function update(objToUpdate, {where: objToCondition}) {
   return await Permissions.update(objToUpdate, {where: objToCondition});
 }
 

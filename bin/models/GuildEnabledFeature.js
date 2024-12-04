@@ -1,7 +1,7 @@
 const { database } = require('../database');
 const { Sequelize } = require('sequelize');
 
-const GuildEnabledFeatures = database.define('GuildEnabledFeatures', {
+const GuildEnabledFeature = database.define('GuildEnabledFeatures', {
   config_id: { type: Sequelize.INTEGER },
   guild_id: { type: Sequelize.STRING },
   feature_id: { type: Sequelize.INTEGER },
@@ -11,5 +11,5 @@ const GuildEnabledFeatures = database.define('GuildEnabledFeatures', {
 
 
 module.exports = {
-  GuildEnabledFeatures,
+  GuildEnabledFeature,
 };

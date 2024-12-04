@@ -5,7 +5,9 @@ const { readDb, runDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
-const { checkFeatureEnabled } = require('../../../bin/repository/Feature');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findFeatureById, updateEnabledFeature } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -72,17 +74,13 @@ module.exports = {
 		await returnPermission(interaction, "features", async result => {
 			try {
 				if (result) {
-					const checkQuery = `SELECT * FROM guild_enabled_features WHERE guilds_id = ? AND feature_id = ?`;
-					const nameQuery = `SELECT feature_name FROM features WHERE feature_id = ?`;
-					const checkFeature = await checkFeatureEnabled(interaction.guild.id, featuresChoice);
-					console.log(checkFeature);
-					return;
-					const checkName = await readDb(nameQuery, featuresChoice);
+					const checkFeature = await checkFeaturesIsEnabled(interaction.guild.id, featuresChoice);
+					let featureName = await findFeatureById(featuresChoice);
+					featureName = featureName.get({plain: true}).feature_name;
 					
 					if (checkFeature) {
-						let updateSql = `UPDATE guild_enabled_features SET is_enabled = ? WHERE guilds_id = ? AND feature_id = ?`;
 						if (checkFeature.is_enabled == 1) {
-							await runDb(updateSql, 0, interaction.guild.id, featuresChoice);
+							await updateEnabledFeature({is_enabled: 0}, {where: {guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: Variables.getConfigId()}});
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
 								.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", checkName.feature_name))
@@ -90,7 +88,7 @@ module.exports = {
 								.setColor(colors.general.error);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						} else {
-							await runDb(updateSql, 1, interaction.guild.id, featuresChoice);
+							await updateEnabledFeature({is_enabled: 1}, {where: {guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: Variables.getConfigId()}});
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
 								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", checkName.feature_name))

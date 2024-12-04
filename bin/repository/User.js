@@ -27,7 +27,7 @@ async function create(userId, username) {
  * @param {string} objToUpdate 
  * @param {string} objToCondition 
  */
-async function update(objToUpdate, objToCondition) {
+async function update(objToUpdate, {where: objToCondition}) {
   return await User.update(objToUpdate, {where: objToCondition});
 }
 

@@ -1,7 +1,6 @@
 const Variables = require('../classes/GlobalVariables');
 const {Feature} = require('../models');
 const {Guild} = require('../models');
-const {GuildEnabledFeatures} = require('../models');
 
 
 
@@ -14,7 +13,7 @@ async function findAll() {
  * @param {string} guildId 
  * @param {string} featureId 
  */
-async function checkFeatureEnabled(guildId, featureId) {
+async function getFeatureIsEnabled(guildId, featureId) {
   return await Feature.findOne({
     where: {id: featureId},
     include: [{
@@ -38,7 +37,7 @@ async function findById(id) {
  * @param {string} objToUpdate 
  * @param {string} objToCondition 
  */
-async function update(objToUpdate, objToCondition) {
+async function update(objToUpdate, {where: objToCondition}) {
   return await Feature.update(objToUpdate, {where: objToCondition});
 }
 
@@ -47,5 +46,5 @@ module.exports = {
   findAll,
   findById,
   update,
-  checkFeatureEnabled
+  getFeatureIsEnabled
 }
