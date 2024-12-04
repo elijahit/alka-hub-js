@@ -5,6 +5,7 @@ const { readDb, runDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
+const { checkFeatureEnabled } = require('../../../bin/repository/Feature');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -73,9 +74,11 @@ module.exports = {
 				if (result) {
 					const checkQuery = `SELECT * FROM guild_enabled_features WHERE guilds_id = ? AND feature_id = ?`;
 					const nameQuery = `SELECT feature_name FROM features WHERE feature_id = ?`;
-					const checkFeature = await readDb(checkQuery, interaction.guild.id, featuresChoice);
+					// const checkFeature = await checkFeatureEnabled(interaction.guild.id, featuresChoice);
+					// console.log(checkFeature);
+					return;
 					const checkName = await readDb(nameQuery, featuresChoice);
-
+					
 					if (checkFeature) {
 						let updateSql = `UPDATE guild_enabled_features SET is_enabled = ? WHERE guilds_id = ? AND feature_id = ?`;
 						if (checkFeature.is_enabled == 1) {

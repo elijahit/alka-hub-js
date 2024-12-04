@@ -11,6 +11,7 @@ class Variables {
     static guildMainId;
     static channelError;
     static presenceStatus;
+    static configId;
     static presenceCounter = 0;
 
     // Getter e Setter per ogni variabile statica
@@ -20,6 +21,14 @@ class Variables {
 
     static setBotName(value) {
         this.botName = value;
+    }
+
+    static getConfigId() {
+        return this.configId;
+    }
+
+    static setConfigId(value) {
+        this.configId = value;
     }
 
     static getBotFooter() {

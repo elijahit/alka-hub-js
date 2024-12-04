@@ -33,6 +33,7 @@ if(process.env.NODE_ENV) {
         Variables.setGuildMainId(configObj.guildMainId);
         Variables.setChannelError(configObj.channelError);
         Variables.setPresenceStatus(configObj.presenceStatus);
+        Variables.setConfigId(config.id);
 
         client.login(configObj.token);
       } else {

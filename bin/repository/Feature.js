@@ -1,3 +1,4 @@
+const Variables = require('../classes/GlobalVariables');
 const {Feature} = require('../models');
 const {Guild} = require('../models');
 const {GuildEnabledFeatures} = require('../models');
@@ -19,8 +20,8 @@ async function checkFeatureEnabled(guildId, featureId) {
     include: [{
       model: Guild,
       required: true,
-      where: {guild_id: guildId},
-      through: {attributes: ['guild_id', 'feature_id', 'is_enabled']},
+      where: {guild_id: guildId, config_id: Variables.getConfigId()},
+      through: {attributes: ['guild_id', 'feature_id', 'is_enabled', 'config_id']},
     }]
   });
 }
