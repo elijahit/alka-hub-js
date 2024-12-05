@@ -38,14 +38,17 @@ if(process.env.NODE_ENV) {
         client.login(configObj.token);
       } else {
         console.error('[ERRORE] Impossibile avviare il bot il suo stato non è attivo.');
+        process.exit(0);
       }
     } else {
       console.error('[ERRORE] Impossibile avviare il bot nessuna configurazione trovata.');
+      process.exit(0);
     }
   });
 
 } else {
   console.error('[ERRORE] Impossibile avviare il bot di env assente');
+  process.exit(0);
 }
 
 
