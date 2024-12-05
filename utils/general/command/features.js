@@ -4,7 +4,7 @@ const { readFileSync, read } = require('fs');
 const { errorSendControls, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
-const { findFeatureById, updateEnabledFeature, getFeatureIsEnabled, createEnabledFeature } = require('../../../bin/service/DatabaseService');
+const { findFeatureById, updateEnabledFeature, getFeatureIsEnabled, createEnabledFeature, findGuildById } = require('../../../bin/service/DatabaseService');
 const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
@@ -71,34 +71,46 @@ module.exports = {
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		await returnPermission(interaction, "features", async result => {
 			try {
-				if (result) {
-					let checkFeature = await getFeatureIsEnabled(interaction.guild.id, featuresChoice);
-					checkFeature = checkFeature?.get({ plain: true }).guilds[0].GuildEnabledFeatures ?? null;
-					
-					let featureTable = await findFeatureById(featuresChoice);
-					featureIsDisabled = featureTable.get({ plain: true }).is_disabled ?? 1;
-					let featureName = featureTable.get({ plain: true }).feature_name ?? null;
-					if (featureIsDisabled == 1) {
-						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
-							.setDescription(language_result.disabledFeatures.feature_disabled_by_alka)
-							.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
-							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
-						return;
-					}
-
-					if (checkFeature) {
-						if (checkFeature.is_enabled == 1) {
-							await updateEnabledFeature({ is_enabled: 0 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: Variables.getConfigId() } });
+				let checkGuild = await findGuildById(interaction.guild.id);
+				checkGuild = checkGuild?.get({plain: true}) ?? false;
+				if(checkGuild) {
+					if (result) {
+						let checkFeature = await getFeatureIsEnabled(interaction.guild.id, featuresChoice);
+						checkFeature = checkFeature?.get({ plain: true }).guilds[0].GuildEnabledFeatures ?? null;
+						
+						let featureTable = await findFeatureById(featuresChoice);
+						featureIsDisabled = featureTable.get({ plain: true }).is_disabled ?? 1;
+						let featureName = featureTable.get({ plain: true }).feature_name ?? null;
+						if (featureIsDisabled == 1) {
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
-								.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", featureName))
+								.setDescription(language_result.disabledFeatures.feature_disabled_by_alka)
 								.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
 								.setColor(colors.general.error);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
+							return;
+						}
+	
+						if (checkFeature) {
+							if (checkFeature.is_enabled == 1) {
+								await updateEnabledFeature({ is_enabled: 0 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: Variables.getConfigId() } });
+								const embedLog = new EmbedBuilder()
+									.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
+									.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", featureName))
+									.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+									.setColor(colors.general.error);
+								await interaction.reply({ embeds: [embedLog], ephemeral: true });
+							} else {
+								await updateEnabledFeature({ is_enabled: 1 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: Variables.getConfigId() } });
+								const embedLog = new EmbedBuilder()
+									.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
+									.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", featureName))
+									.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+									.setColor(colors.general.success);
+								await interaction.reply({ embeds: [embedLog], ephemeral: true });
+							}
 						} else {
-							await updateEnabledFeature({ is_enabled: 1 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: Variables.getConfigId() } });
+							await createEnabledFeature(interaction.guild.id, featuresChoice, 1);
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
 								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", featureName))
@@ -106,18 +118,12 @@ module.exports = {
 								.setColor(colors.general.success);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}
-					} else {
-						await createEnabledFeature(interaction.guild.id, featuresChoice, 1);
-						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
-							.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", featureName))
-							.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
-							.setColor(colors.general.success);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}
-				}
-				else {
-					await noHavePermission(interaction, language_result);
+					else {
+						await noHavePermission(interaction, language_result);
+					}
+				} else {
+					await noInitGuilds(interaction);
 				}
 			}
 			catch (error) {

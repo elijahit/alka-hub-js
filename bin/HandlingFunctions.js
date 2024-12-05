@@ -1,5 +1,4 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js');
-const { readDbWith3Params, readDb, readDbAll, runDb, readDbAllWith2Params, readDbAllWithValue } = require("../bin/database");
 const { readFileSync, readdir, writeFile } = require("fs");
 const { stripIndents } = require('common-tags');
 const colors = require('./data/colors');
@@ -65,7 +64,7 @@ function errorSendControls(error, client, guild_error, system) {
       guild.channels.fetch(channelError)
         .then(channel => {
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${Variables.getBotName()} - ${Variables.getNameConfiguration()} | Controls Error ❌` })
+            .setAuthor({ name: `${Variables.getBotName()} - ${Variables.getNameConfiguration()}(${Variables.getConfigId()}) | Controls Error ❌` })
             .addFields(
               { name: `Informazioni Guilds`, value: `*Nome Server*\n${guild_error.name}\n*ID Server*\n${guild_error.id}`, inline: true },
               { name: `Owner Guilds | Members`, value: `*Owner ID*\n${guild_error.ownerId}\n*Membri totali*\n${guild_error.memberCount}`, inline: true },
