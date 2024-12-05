@@ -7,7 +7,7 @@
     "embed_title": "General",
     "description_embed": "You have successfully disabled the **{0}** feature.",
     "feature_disabled_by_alka": "The function is currently disabled and cannot be enabled/disabled.",
-    "feature_premium": "This feature is premium. Get the Pro version for €1.99 or purchase your own White Label bot and make Alka Hub yours for just €3.99. See terms and conditions at [alkanetwork.eu](https://alkanetwork.eu/)"
+    "feature_premium": "This feature is premium. Get the Pro version for €1.99/month or purchase your own White Label bot and make Alka Hub yours for just €3.99/month. See terms and conditions at [alkanetwork.eu](https://alkanetwork.eu/)"
   },
   "enabledFeatures": {
     "embed_title": "General",
