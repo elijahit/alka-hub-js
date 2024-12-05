@@ -8,7 +8,7 @@ if(process.env.NODE_ENV) {
   findConfigByName(process.env.NODE_ENV).then(v => {
     if(v) {
       const config = v.get({plain: true});
-      if(config.isActive == 1 && config.premium == 1) {
+      if(config.isActive == 1) {
         const configObj = JSON.parse(config.json);
         if(configObj?.botName == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro botName assente');
         if(configObj?.botFooter == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro botFooter assente');
@@ -27,7 +27,7 @@ if(process.env.NODE_ENV) {
         Variables.setBotFooter(configObj.botFooter);
         Variables.setBotFooterIcon(configObj.botFooterIcon);
         Variables.setIsActive(1);
-        Variables.setPremium(1);
+        Variables.setPremium(config.premium);
         Variables.setToken(configObj.token);
         Variables.setClientId(configObj.clientId);
         Variables.setGuildMainId(configObj.guildMainId);

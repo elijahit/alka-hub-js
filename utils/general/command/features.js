@@ -6,6 +6,8 @@ const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const { findFeatureById, updateEnabledFeature, getFeatureIsEnabled, createEnabledFeature, findGuildById } = require('../../../bin/service/DatabaseService');
 const Variables = require('../../../bin/classes/GlobalVariables');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -79,12 +81,24 @@ module.exports = {
 						checkFeature = checkFeature?.get({ plain: true }).guilds[0].GuildEnabledFeatures ?? null;
 						
 						let featureTable = await findFeatureById(featuresChoice);
-						featureIsDisabled = featureTable.get({ plain: true }).is_disabled ?? 1;
+						let featureIsDisabled = await checkFeatureSystemDisabled(featuresChoice);
 						let featureName = featureTable.get({ plain: true }).feature_name ?? null;
-						if (featureIsDisabled == 1) {
+						let featurePremium = await checkPremiumFeature(interaction.guild.id, featuresChoice);
+
+						if (!featureIsDisabled) {
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
 								.setDescription(language_result.disabledFeatures.feature_disabled_by_alka)
+								.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+								.setColor(colors.general.error);
+							await interaction.reply({ embeds: [embedLog], ephemeral: true });
+							return;
+						}
+
+						if (!featurePremium) {
+							const embedLog = new EmbedBuilder()
+								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
+								.setDescription(language_result.disabledFeatures.feature_premium)
 								.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
 								.setColor(colors.general.error);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
