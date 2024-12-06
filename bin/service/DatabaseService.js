@@ -9,7 +9,7 @@ const { addUser: addUserGuild } = require('../repository/UserGuild');
 const { findByUserId: findUserById } = require('../repository/User');
 // findUserById -> Permette di cercare un utente tramite discordId
 
-const { findByGuildId: findGuildById } = require('../repository/Guild');
+const { findByGuildId: findGuildById, update: updateGuild, create: createGuild } = require('../repository/Guild');
 // findGuildById -> Permette di cercare un una guild tramite discordId
 
 const { findByPermissionName } = require('../repository/Permissions');
@@ -50,5 +50,7 @@ module.exports = {
   findConfigByName,
   findFeatureById,
   updateEnabledFeature,
-  createEnabledFeature
+  createEnabledFeature,
+  updateGuild,
+  createGuild
 }

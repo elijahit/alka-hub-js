@@ -14,10 +14,15 @@
     "description_embed": "Hai abilitato la funzione **{0}** con successo."
   },
   "initCommand": {
-    "embed_title": "General",
-    "description_already_embed": "Questo server è già stato inizializzato. Non è possibile procedere con un'ulteriore inizializzazione. Utilizza **/config** per modificarne la configurazione.",
-    "error_timezone": "La timezone inserita non risulta riconosciuta, utilizza ad esempio \"GB\" per la time zone inglese, se reputi che questo sia un errore contatta il supporto nel discord ufficiale che trovi in https://docs.alkanetwork.eu/",
-    "description_embed": "Hai inizializzato Alka Hub con successo. Ora puoi godere appieno di tutte le funzionalità di Alka Hub!"
+    "embed_title": "Generale",
+    "language_label": "Lingua",
+    "language_placeHolder": "Inserisci la lingua (IT/EN)",
+    "time_zone_label": "Fuso orario",
+    "time_zone_placeHolder": "Inserisci il fuso orario (GB/IT..altri)",
+    "plan_label": "Piano attivo",
+    "plan_placeHolder": "Questo campo è di sola lettura",
+    "error_timezone": "Il fuso orario inserito non è riconosciuto, usa ad esempio \"GB\" per il fuso orario inglese. Se pensi che si tratti di un errore, contatta il supporto nel server ufficiale Discord all'indirizzo https://docs.alkanetwork.eu/",
+    "description_embed": "Hai inizializzato correttamente {0}. Ora puoi usufruire di tutte le funzionalità di {0}!"
   },
   "helpCommand": {
     "embed_title": "Help Commands",

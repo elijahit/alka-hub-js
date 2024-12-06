@@ -15,9 +15,14 @@
   },
   "initCommand": {
     "embed_title": "General",
-    "description_already_embed": "This server has already been initialized. Further initialization is not possible. Use **/config** to modify its configuration.",
+    "language_label": "Language",
+    "language_placeHolder": "Enter the language (IT/EN)",
+    "time_zone_label": "Time Zone",
+    "time_zone_placeHolder": "Enter the time zone (GB/IT..others)",
+    "plan_label": "Active plan",
+    "plan_placeHolder": "This field is read-only",
     "error_timezone": "The time zone entered is not recognised, use for example \"GB\" for the English time zone, if you think this is an error contact support in the official discord at https://docs.alkanetwork.eu/",
-    "description_embed": "You have successfully initialized Alka Hub. Now you can fully enjoy all the features of Alka Hub!"
+    "description_embed": "You have successfully initialized {0}. Now you can fully enjoy all the features of {0}!"
   },
   "helpCommand": {
     "embed_title": "Help Commands",
