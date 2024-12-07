@@ -1,10 +1,11 @@
 const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ApplicationEmoji } = require('discord.js');
 const fs = require('fs');
 const language = require('../../../languages/languages');
-const { readDbAllWith2Params, runDb, readDbWith3Params, readDbWith4Params, readDb, readDbAll } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, getEmoji, returnPermission, noHavePermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
 const emoji = require('../../../bin/data/emoji');
 const color = require('../../../bin/data/colors');
+const Variables = require('../../../bin/classes/GlobalVariables');
+const { findAutoVoiceByChannelId, createAutoVoice } = require('../../../bin/service/DatabaseService');
 
 
 // FUNZIONI
@@ -38,7 +39,7 @@ async function endSetup(language_result, interaction) {
   }
 
   await interaction.guild.channels.create(channelObject);
-  await runDb(`INSERT INTO auto_voice (guilds_id, type, channel_id, nickname) VALUES(?,?,?,?)`, interaction.guild.id, jsonData.type, jsonData.category, jsonData.creator);
+  await createAutoVoice(interaction.guild.id, jsonData.type, jsonData.category, jsonData.creator);
 
   // INVIO MESSAGGIO DI FINE SETUP E CANCELLO IL CANALE
   await interaction.channel.delete();
@@ -49,7 +50,7 @@ async function endSetup(language_result, interaction) {
   const embedLog = new EmbedBuilder()
     .setAuthor({ name: `${language_result.endSetup_message.embed_title}`, iconURL: customEmoji })
     .setDescription(language_result.endSetup_message.description_embed)
-    .setFooter({ text: `${language_result.endSetup_message.embed_footer}`, iconURL: `${language_result.endSetup_message.embed_icon_url}` })
+    .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
     .setColor(color.general.olive);
   await setupChannel.send({ embeds: [embedLog] });
 }
@@ -124,7 +125,7 @@ module.exports = {
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.selectSetup_Creator.embed_title}`, iconURL: customEmoji })
           .setDescription(language_result.selectSetup_Creator.description_embed)
-          .setFooter({ text: `${language_result.selectSetup_Creator.embed_footer}`, iconURL: `${language_result.selectSetup_Creator.embed_icon_url}` })
+          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
           .setColor(color.general.olive);
         await interaction.message.delete();
         await interaction.reply({ embeds: [embedLog], components: [row] });
@@ -195,7 +196,7 @@ module.exports = {
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.selectSetup_TypeAccess.embed_title}`, iconURL: customEmoji })
           .setDescription(language_result.selectSetup_TypeAccess.description_embed)
-          .setFooter({ text: `${language_result.selectSetup_TypeAccess.embed_footer}`, iconURL: `${language_result.selectSetup_TypeAccess.embed_icon_url}` })
+          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
           .setColor(color.general.olive);
         await interaction.message.delete();
         await interaction.reply({ embeds: [embedLog], components: [row] });
@@ -254,7 +255,7 @@ module.exports = {
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.select_category.embed_title}`, iconURL: customEmoji })
           .setDescription(language_result.select_category.description_embed)
-          .setFooter({ text: `${language_result.select_category.embed_footer}`, iconURL: `${language_result.select_category.embed_icon_url}` })
+          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
           .setColor(color.general.olive);
         await interaction.message.delete();
         await interaction.reply({ embeds: [embedLog], components: [row] });
@@ -267,7 +268,9 @@ module.exports = {
         jsonData = JSON.parse(data);
 
         // CONTROLLO SE LA CATEGORIA ESISTE GIA'
-        const checkCategory = await readDb(`SELECT * FROM auto_voice WHERE guilds_id = ? AND channel_id = ?`, interaction.guild.id, interaction.values[0]);
+        
+        let checkCategory = await findAutoVoiceByChannelId(interaction.guild.id, interaction.values[0]);
+        checkCategory = checkCategory?.get({plain: true}) ?? false;
         if (checkCategory) {
           await interaction.channel.delete();
           const setupChannel = await interaction.guild.channels.fetch(jsonData.channel_start);
@@ -276,7 +279,7 @@ module.exports = {
           const embedLog = new EmbedBuilder()
             .setAuthor({ name: `${language_result.endSetup_message.embed_title}`, iconURL: customEmoji })
             .setDescription(language_result.endSetup_message.description_embed_errorcategory)
-            .setFooter({ text: `${language_result.endSetup_message.embed_footer}`, iconURL: `${language_result.endSetup_message.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(color.general.error);
           await setupChannel.send({ embeds: [embedLog] });
           fs.unlinkSync(`./utils/autoVoice-system/${interaction.guild.id}_${interaction.user.id}.json`);

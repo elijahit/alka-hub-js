@@ -1,7 +1,7 @@
 {
   "noPermission": {
     "embed_title": "Auto Voice System",
-
+    "description_limit_premium": "Hai raggiunto il numero massimo di AutoVoice disponibili nel tuo piano. Passa al piano Premium per sbloccare AutoVoice illimitati!",
     "description_embed": "Non hai il permesso per usare questo comando!",
     "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
   },
