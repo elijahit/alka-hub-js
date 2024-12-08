@@ -113,7 +113,7 @@ async function deleteChannel(oldState) {
 module.exports = {
   name: Events.VoiceStateUpdate,
   async execute(oldState, newState) {
-    if(!await checkFeatureSystemDisabled(newState.guild.id, 3)) return;
+    if(!await checkFeatureSystemDisabled(3)) return;
     if(!await checkFeaturesIsEnabled(newState.guild.id, 3)) return;
     if(!await checkPremiumFeature(newState.guild.id, 3)) return;
 

@@ -15,7 +15,7 @@ module.exports = {
   async execute(channel) {
     let customEmoji = emoji.general.newMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    if(!await checkFeatureSystemDisabled(channel.guild.id, 1)) return;
+    if(!await checkFeatureSystemDisabled(1)) return;
     if(!await checkFeaturesIsEnabled(channel.guild.id, 1)) return;
     if(!await checkPremiumFeature(channel.guild.id, 1)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
