@@ -6,7 +6,6 @@
     "description_embed": "Non hai il permesso per usare questo comando!",
     "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla.",
     "description_embed_no_features_by_system": "Questa funzionalità è temporaneamente disabilitata per manutenzione straordinaria. Ti invitiamo a pazientare: sarà nuovamente disponibile a breve."
-
   },
   "selectSetup": {
     "embed_title": "Auto Voice System",

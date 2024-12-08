@@ -1,13 +1,14 @@
 {
   "noPermission": {
-    "embed_title": "Levels System",
-
+    "embed_title": "Logs System",
+    "description_limit_premium": "You have reached the maximum number of Logs channels available in your plan. Upgrade to the Premium plan to unlock unlimited Logs channels!",
+    "description_premium_feature": "This feature is only available with the Premium plan. Upgrade your plan now to unlock it!",
     "description_embed": "You do not have permission to use this command!",
-    "description_embed_no_features": "The feature is currently disabled. An administrator needs to enable it for it to be usable."
+    "description_embed_no_features": "The feature is currently disabled. An administrator needs to enable it for it to be usable.",
+    "description_embed_no_features_by_system": "This feature is temporarily disabled for extraordinary maintenance. Please be patient: it will be available again shortly."
   },
   "voiceState": {
     "embed_title": "Logs System",
-
     "move_to": "User {1} has moved to another channel",
     "join_now": "User {1} has joined voice channel {2}",
     "left_now": "User {1} has left voice channel {2}",
@@ -16,7 +17,6 @@
   },
   "channelCreate": {
     "embed_title": "Logs System",
-
     "created_channel": "A textual channel has been created on the server",
     "created_channel_voice": "A voice channel has been created on the server",
     "created_category": "A category has been created on the server",
@@ -33,7 +33,6 @@
   },
   "channelDelete": {
     "embed_title": "Logs System",
-
     "deleted_channel": "A textual channel has been deleted on the server",
     "deleted_channel_voice": "A voice channel has been deleted on the server",
     "deleted_category": "A category has been deleted on the server",
@@ -50,7 +49,6 @@
   },
   "channelUpdate": {
     "embed_title": "Logs System",
-
     "id_channel": "Channel ID",
     "category_channel": "Category",
     "go_channel": "Go to Channel",
@@ -83,7 +81,7 @@
   "guildAuditLogsEntry": {
     "embed_title": "Logs System",
     "embed_footer": "Alka Hub by alkanetwork.eu 🎈(Experimental Feature)",
-"log_executor": "Action by",
+    "log_executor": "Action by",
     "id_executor": "User ID",
     "action": "Action",
     "undefined": "Not available",
@@ -107,7 +105,6 @@
   },
   "emojiCreate": {
     "embed_title": "Logs System",
-
     "emoji_create": "An Emoji has been added to the server",
     "emoji_name": "Emoji Name",
     "emoji_id": "Emoji ID",
@@ -121,14 +118,12 @@
   },
   "emojiDelete": {
     "embed_title": "Logs System",
-
     "emoji_delete": "An Emoji has been removed from the server",
     "emoji_name": "Emoji Name",
     "emoji_id": "Emoji ID"
   },
   "emojiUpdate": {
     "embed_title": "Logs System",
-
     "emoji_update": "An Emoji has been updated in the server",
     "emoji_name_old": "Old Name",
     "emoji_name_new": "New Name",
@@ -167,7 +162,6 @@
   },
   "guildMemberAdd": {
     "embed_title": "Logs System",
-
     "embed_description": "A user has joined the server",
     "embed_user": "User",
     "embed_id": "User ID",
@@ -177,7 +171,6 @@
   },
   "guildMemberRemove": {
     "embed_title": "Logs System",
-
     "embed_description": "A user has left the server",
     "embed_user": "User",
     "embed_id": "User ID",
@@ -187,7 +180,6 @@
   },
   "guildMemberUpdate": {
     "embed_title": "Logs System",
-
     "embed_description": "A modification has been made to the user",
     "embed_user": "User",
     "embed_id": "User ID",
@@ -202,7 +194,6 @@
   },
   "guildUpdate": {
     "embed_title": "Logs System",
-
     "embed_empty": "None",
     "embed_name": "Server Name Changed",
     "old_name": "Old Name",
@@ -223,7 +214,6 @@
   },
   "inviteCreate": {
     "embed_title": "Logs System",
-
     "embed_description": "An invite has been created in the server",
     "channel_invite": "Invite Channel",
     "invite_code": "Code",
@@ -237,7 +227,6 @@
   },
   "inviteDelete": {
     "embed_title": "Logs System",
-
     "embed_description": "An invite has been removed in the server",
     "channel_invite": "Invite Channel",
     "invite_code": "Code",
@@ -245,7 +234,6 @@
   },
   "messageDelete": {
     "embed_title": "Logs System - Deleted Message",
-
     "embed_description": "Content",
     "channel_message": "Channel",
     "channel_message_id": "Channel ID",
@@ -255,7 +243,6 @@
   },
   "messageUpdate": {
     "embed_title": "Logs System - Message Edited",
-
     "embed_description": "Old Content",
     "embed_description_new": "New Content",
     "channel_message": "Channel",
@@ -267,7 +254,6 @@
   },
   "messageReactionRemoveAll": {
     "embed_title": "Logs System",
-
     "embed_description": "Reactions on a message have been cleared",
     "message_channel": "Channel",
     "message_channel_id": "Channel ID",
@@ -277,7 +263,6 @@
   },
   "commandLogsChannel": {
     "embed_title": "Logs System",
-
     "description_embed": "You have successfully set the channel for the event **{0}**. Now your logs will be recorded there!",
     "description_embed_removed": "You have successfully removed the channel for the event **{0}**, now your logs will no longer be sent!"
   }

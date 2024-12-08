@@ -36,6 +36,14 @@ const { findByChannelId: findAutoVoiceByChannelId, create: createAutoVoice, find
 // findByChannelId -> Permette di cercare un autoVoice nella tabella auto_voice.
 
 
+const { findByGuildId: findLogsByGuildId, update: updateLogs, create: createLogs } = require('../repository/LogsSystem');
+// findByGuildId -> Permette di cercare una configurazione di LogsSystem nella tabella logs_system.
+// updateLogs -> Permette di aggiornare un record nella tabella logs_system
+// createLogs -> Permette di creare un record nella tabella logs_system
+
+
+
+
 (async () => {
 
 })()
@@ -58,5 +66,8 @@ module.exports = {
   createGuild,
   findAutoVoiceByChannelId,
   createAutoVoice,
-  findAllAutoVoice
+  findAllAutoVoice,
+  findLogsByGuildId,
+  updateLogs,
+  createLogs
 }

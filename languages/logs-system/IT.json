@@ -1,13 +1,14 @@
 {
   "noPermission": {
-    "embed_title": "Levels System",
-
-    "description_embed": "Non hai il permesso per usare questo comando!",
-    "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
+    "embed_title": "Auto Voice System",
+    "description_limit_premium": "You have reached the maximum number of AutoVoices available in your plan. Upgrade to the Premium plan to unlock unlimited AutoVoices!",
+    "description_premium_feature": "This feature is only available with the Premium plan. Upgrade your plan now to unlock it!",
+    "description_embed": "You do not have permission to use this command!",
+    "description_embed_no_features": "The feature is currently disabled. An administrator needs to enable it for it to be usable.",
+    "description_embed_no_features_by_system": "This feature is temporarily disabled for extraordinary maintenance. Please be patient: it will be available again shortly."
   },
   "voiceState": {
     "embed_title": "Logs System",
-
     "move_to": "L'utente {1} si è spostato in un altro canale",
     "join_now": "L'utente {1} si è connesso al canale vocale {2}",
     "left_now": "L'utente {1} si è disconnesso dal canale vocale {2}",
@@ -16,7 +17,6 @@
   },
   "channelCreate": {
     "embed_title": "Logs System",
-
     "created_channel": "E' stato creato un canale testuale nel server",
     "created_channel_voice": "E' stato creato un canale vocale nel server",
     "created_category": "E' stata creata una categoria nel server",
@@ -33,7 +33,6 @@
   },
   "channelDelete": {
     "embed_title": "Logs System",
-
     "deleted_channel": "E' stato cancellato un canale testuale nel server",
     "deleted_channel_voice": "E' stato cancellato un canale vocale nel server",
     "deleted_category": "E' stata cancellata una categoria nel server",
@@ -50,7 +49,6 @@
   },
   "channelUpdate": {
     "embed_title": "Logs System",
-
     "id_channel": "ID Canale",
     "category_channel": "Categoria",
     "go_channel": "Vai al Canale",
@@ -83,7 +81,7 @@
   "guildAuditLogsEntry": {
     "embed_title": "Logs System",
     "embed_footer": "Alka Hub by alkanetwork.eu 🎈(Experimental Feature)",
-"log_executor": "Azione da",
+    "log_executor": "Azione da",
     "id_executor": "ID Utente",
     "action": "Azione",
     "undefined": "Non disponibile",
@@ -107,7 +105,6 @@
   },
   "emojiCreate": {
     "embed_title": "Logs System",
-
     "emoji_create": "E' stata aggiunta un Emoji al server",
     "emoji_name": "Nome Emoji",
     "emoji_id": "ID Emoji",
@@ -121,14 +118,12 @@
   },
   "emojiDelete": {
     "embed_title": "Logs System",
-
     "emoji_delete": "E' stata rimossa un Emoji dal server",
     "emoji_name": "Nome Emoji",
     "emoji_id": "ID Emoji"
   },
   "emojiUpdate": {
     "embed_title": "Logs System",
-
     "emoji_update": "E' stata modificata un Emoji nel server",
     "emoji_name_old": "Vecchio Nome",
     "emoji_name_new": "Nuovo Nome",
@@ -167,7 +162,6 @@
   },
   "guildMemberAdd": {
     "embed_title": "Logs System",
-
     "embed_description": "Un utente si è unito al server",
     "embed_user": "Utente",
     "embed_id": "ID Utente",
@@ -177,7 +171,6 @@
   },
   "guildMemberRemove": {
     "embed_title": "Logs System",
-
     "embed_description": "Un utente è uscito dal server",
     "embed_user": "Utente",
     "embed_id": "ID Utente",
@@ -187,7 +180,6 @@
   },
   "guildMemberUpdate": {
     "embed_title": "Logs System",
-
     "embed_description": "Una modifica è stata effettuata sul utente",
     "embed_user": "Utente",
     "embed_id": "ID Utente",
@@ -202,14 +194,13 @@
   },
   "guildUpdate": {
     "embed_title": "Logs System",
-
     "embed_empty": "Nessuno",
     "embed_name": "Il nome del server è stato cambiato",
     "old_name": "Vecchio Nome",
-    "new_name":"Nuovo Nome",
+    "new_name": "Nuovo Nome",
     "embed_afkchannel": "Il canale di AFK per i membri inattivi è stato cambiato",
     "old_afkchannel": "Vecchio Canale",
-    "new_afkchannel":"Nuovo Canale",
+    "new_afkchannel": "Nuovo Canale",
     "embed_timeout": "Il timeout per il controllo AFK è cambiato",
     "old_timeout": "Vecchio Time",
     "new_timeout": "Nuovo Time",
@@ -223,7 +214,6 @@
   },
   "inviteCreate": {
     "embed_title": "Logs System",
-
     "embed_description": "Un invito è stato creato nel server",
     "channel_invite": "Canale invito",
     "invite_code": "Codice",
@@ -237,7 +227,6 @@
   },
   "inviteDelete": {
     "embed_title": "Logs System",
-
     "embed_description": "Un invito è stato rimosso nel server",
     "channel_invite": "Canale invito",
     "invite_code": "Codice",
@@ -245,7 +234,6 @@
   },
   "messageDelete": {
     "embed_title": "Logs System - Messaggio Eliminato",
-
     "embed_description": "Contenuto",
     "channel_message": "Canale",
     "channel_message_id": "ID Canale",
@@ -255,7 +243,6 @@
   },
   "messageUpdate": {
     "embed_title": "Logs System - Messaggio Modificato",
-
     "embed_description": "Vecchio Contenuto",
     "embed_description_new": "Nuovo Contenuto",
     "channel_message": "Canale",
@@ -267,7 +254,6 @@
   },
   "messageReactionRemoveAll": {
     "embed_title": "Logs System",
-
     "embed_description": "Le reazioni in un messaggio sono state resettate",
     "message_channel": "Canale",
     "message_channel_id": "ID Canale",
@@ -277,7 +263,6 @@
   },
   "commandLogsChannel": {
     "embed_title": "Logs System",
-
     "description_embed": "Hai inserito con successo il canale per l'evento **{0}**, adesso le tue logs saranno registrate li!",
     "description_embed_removed": "Hai rimosso con successo il canale per l'evento **{0}**, adesso le tue logs non saranno più inviate!"
   }

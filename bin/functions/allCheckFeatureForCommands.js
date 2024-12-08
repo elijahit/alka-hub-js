@@ -25,10 +25,10 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, langu
   if (await checkFeaturesIsEnabled(guildId, featureId)) {
     
     const howManyLengthUseForFeature = await getLengthFeature(featureId);
-
+    
     if (await checkPremiumLimitation(guildId, featureId) == -1 || howManyLengthUseForFeature < await checkPremiumLimitation(guildId, featureId)) {
       if (await checkPremiumFeature(guildId, featureId)) {
-        if (await checkFeatureSystemDisabled(guildId, featureId)) {
+        if (await checkFeatureSystemDisabled(featureId, featureId)) {
           return true;
         }
         else {
@@ -77,7 +77,7 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, langu
  * @returns {integer}
  */
 async function getLengthFeature(featureId) {
-  let howManyLengthUseForFeature;
+  let howManyLengthUseForFeature = 0;
     switch(featureId) {
       case 1:
         break;

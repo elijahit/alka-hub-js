@@ -18,8 +18,8 @@ async function findByGuildId(guildId) {
  * 
  * @param {string} guildId  
  */
-async function create(guildId) {
-  return await LogsSystem.create({guild_id: guildId, config_id: Variables.getConfigId()});
+async function create(guildId, customTable, customValue) {
+  return await LogsSystem.create({guild_id: guildId, config_id: Variables.getConfigId(), [customTable]: customValue});
 }
 
 /**
@@ -28,7 +28,7 @@ async function create(guildId) {
  * @param {string} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
-  return await Guild.update(objToUpdate, objToCondition);
+  return await LogsSystem.update(objToUpdate, objToCondition);
 }
 
 module.exports = {
