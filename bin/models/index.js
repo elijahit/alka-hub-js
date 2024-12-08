@@ -15,6 +15,7 @@ const { User } = require('./User');
 const { UserGuild } = require('./UserGuild');
 const { Role } = require('./Role');
 const { Config } = require('./Config');
+const { LogsSystem } = require('./LogsSystem');
 
 
 
@@ -48,6 +49,11 @@ AutoRoles.belongsTo(Role, { foreignKey: 'role_id', targetKey: 'role_id' });
  */
 AutoVoice.hasMany(Guild, { foreignKey: 'guild_id' });
 
+/**
+ * ONE TO ONE (LogsSystem)
+ */
+LogsSystem.hasOne(Guild, { foreignKey: 'guild_id' });
+
 module.exports = {
   Hash,
   Permissions,
@@ -61,4 +67,5 @@ module.exports = {
   User,
   Role,
   Config,
+  LogsSystem,
 }
