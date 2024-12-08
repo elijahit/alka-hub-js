@@ -6,20 +6,19 @@ const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFun
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
-
-// QUERY DEFINITION
-let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
-// ------------ //
+const { findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.MessageUpdate,
   async execute(oldMessage, newMessage) {
     let customEmoji = emoji.general.updateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const resultDb = await readDb(sql, oldMessage.guild.id);
-    if (!resultDb) return;
-    if (!await checkFeaturesIsEnabled(oldMessage.guild, 1)) return;
-    if (!resultDb["message_state_channel"]) return;
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(oldMessage.guild.id, 1)) return;
+    if (!await checkPremiumFeature(oldMessage.guild.id, 1)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       if(oldMessage.author.id == oldMessage.client.user.id) return;
@@ -28,6 +27,10 @@ module.exports = {
         let data = await language.databaseCheck(oldMessage.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
+
+        let resultDb = await findLogsByGuildId(oldMessage.guild.id);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["message_state_channel"]) return;
 
         let channel_logs = await oldMessage.guild.channels.fetch(resultDb["message_state_channel"]);
         const fields = [];
@@ -65,7 +68,7 @@ module.exports = {
         embedLog
           .setAuthor({ name: `${language_result.messageUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${language_result.messageUpdate.embed_footer}`, iconURL: `${language_result.messageUpdate.embed_icon_url}` })
+          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
           .setColor(colors.general.danger);
         channel_logs.send({ embeds: [embedLog] });
       }

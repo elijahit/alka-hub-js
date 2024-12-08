@@ -1,7 +1,7 @@
 const { database } = require('../database');
 const { Sequelize } = require('sequelize');
 
-const Statistics = database.define('Statistics', {
+const Statistics = database.define('statistics', {
   config_id: { type: Sequelize.INTEGER },
   guild_id: { type: Sequelize.STRING },
   channel_id: { type: Sequelize.STRING },

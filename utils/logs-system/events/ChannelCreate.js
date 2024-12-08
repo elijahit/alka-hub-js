@@ -9,6 +9,8 @@ const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEn
 const { findStatistics, findLogsByGuildId } = require('../../../bin/service/DatabaseService');
 const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
 const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
+
 
 module.exports = {
   name: Events.ChannelCreate,
@@ -31,7 +33,7 @@ module.exports = {
         if (channelStatsSystem?.channel_id) return;
         let resultDb = await findLogsByGuildId(channel.guild.id);
         resultDb = resultDb?.get({plain: true});
-        if(!resultDb) return;
+        if(!resultDb || !resultDb["channel_state_channel"]) return;
 
         let channel_logs = await channel.guild.channels.fetch(resultDb["channel_state_channel"])
         // SE VIENE CREATO UN CANALE TESTUALE
@@ -49,7 +51,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelCreate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_channel)
-            .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -68,7 +70,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelCreate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_channel_voice)
-            .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -81,7 +83,8 @@ module.exports = {
               { name: `${language_result.channelCreate.id_channel}`, value: `${channel.id}`, inline: true },
               { name: `${language_result.channelCreate.go_channel}`, value: `${channel.url}` })
             .setDescription(language_result.channelCreate.created_category)
-            .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+  
             .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -100,7 +103,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelCreate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_forum)
-            .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -119,7 +122,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelCreate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_media)
-            .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -138,7 +141,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelCreate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_private_thread)
-            .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -157,7 +160,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelCreate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_public_thread)
-            .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -176,7 +179,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelCreate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_stage)
-            .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -195,7 +198,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelCreate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelCreate.created_announce)
-            .setFooter({ text: `${language_result.channelCreate.embed_footer}`, iconURL: `${language_result.channelCreate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.success);
           channel_logs.send({ embeds: [embedLog] });
         }

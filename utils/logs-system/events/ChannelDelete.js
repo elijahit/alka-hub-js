@@ -8,6 +8,8 @@ const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
 const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const { findStatistics, findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 // QUERY DEFINITION
 let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
@@ -34,7 +36,7 @@ module.exports = {
         if (channelStatsSystem?.channel_id) return;
         let resultDb = await findLogsByGuildId(channel.guild.id);
         resultDb = resultDb?.get({plain: true});
-        if(!resultDb) return;
+        if(!resultDb || !resultDb["channel_state_channel"]) return;
 
         let channel_logs = await channel.guild.channels.fetch(resultDb["channel_state_channel"]);
         // SE VIENE CANCELLATO UN CANALE TESTUALE
@@ -51,7 +53,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_channel)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
@@ -69,7 +71,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_channel_voice)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
@@ -81,7 +83,7 @@ module.exports = {
               { name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
               { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true })
             .setDescription(language_result.channelDelete.deleted_category)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -99,7 +101,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_forum)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
@@ -117,7 +119,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_media)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -135,7 +137,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_private_thread)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -153,7 +155,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_public_thread)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -171,7 +173,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_stage)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -189,7 +191,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_announce)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }

@@ -6,20 +6,20 @@ const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFun
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
-
-// QUERY DEFINITION
-let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
-// ------------ //
+const { findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.MessageReactionRemoveAll,
   async execute(message, reactions) {
+    console.log(message.guild.id)
     let customEmoji = emoji.general.deleteMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const resultDb = await readDb(sql, message.guild.id);
-    if (!resultDb) return;
-    if (!await checkFeaturesIsEnabled(message.guild, 1)) return;
-    if (!resultDb["message_state_channel"]) return;
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(message.guild.id, 1)) return;
+    if (!await checkPremiumFeature(message.guild.id, 1)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // CONTROLLO DELLA LINGUA
@@ -27,6 +27,10 @@ module.exports = {
         let data = await language.databaseCheck(message.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
+
+        let resultDb = await findLogsByGuildId(message.guild.id);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["message_state_channel"]) return;
 
         let channel_logs = await message.guild.channels.fetch(resultDb["message_state_channel"]);
         const fields = [];
@@ -42,6 +46,7 @@ module.exports = {
         await reactions.each(reaction => {
           reactionsContainer += `> ${reaction._emoji} (${reaction.count})\n`;
         })
+        if(reactionsContainer == "") reactionsContainer = "Undefined";
 
         fields.push({ name: `${language_result.messageReactionRemoveAll.embed_reactions}`, value: `${reactionsContainer}` });
 
@@ -50,7 +55,7 @@ module.exports = {
           .setAuthor({ name: `${language_result.messageReactionRemoveAll.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setDescription(language_result.messageReactionRemoveAll.embed_description)
-          .setFooter({ text: `${language_result.messageReactionRemoveAll.embed_footer}`, iconURL: `${language_result.messageReactionRemoveAll.embed_icon_url}` })
+          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
           .setColor(colors.general.error);
         channel_logs.send({ embeds: [embedLog] });
       }

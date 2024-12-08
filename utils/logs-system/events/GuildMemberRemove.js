@@ -6,26 +6,29 @@ const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFun
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
-
-// QUERY DEFINITION
-let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
-// ------------ //
+const { findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.GuildMemberRemove,
   async execute(member) {
     let customEmoji = emoji.logsSystem.exitMemberMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(member.guild.id, 1)) return;
+    if (!await checkPremiumFeature(member.guild.id, 1)) return;
     try {
-      const resultDb = await readDb(sql, member.guild.id);
-      if (!resultDb) return;
-      if (!await checkFeaturesIsEnabled(member.guild, 1)) return;
-      if(!resultDb["exit_member_channel"]) return;
       // CONTROLLO DELLA LINGUA
       if (member.guild?.id) {
         let data = await language.databaseCheck(member.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
+
+        let resultDb = await findLogsByGuildId(member.guild.id);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["exit_member_channel"]) return;
 
         let channel_logs = await member.guild.channels.fetch(resultDb["exit_member_channel"]);
         const fields = [];
@@ -44,7 +47,7 @@ module.exports = {
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.guildMemberRemove.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${language_result.guildMemberRemove.embed_footer}`, iconURL: `${language_result.guildMemberRemove.embed_icon_url}` })
+          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
           .setDescription(language_result.guildMemberRemove.embed_description)
           .setColor(colors.general.error);
         if (member.user.avatar) {

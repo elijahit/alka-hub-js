@@ -6,20 +6,19 @@ const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFun
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
-
-// QUERY DEFINITION
-let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
-// ------------ //
+const { findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.GuildUpdate,
   async execute(oldGuild, newGuild) {
     let customEmoji = emoji.logsSystem.guildUpdateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const resultDb = await readDb(sql, oldGuild.id);
-    if (!resultDb) return;
-    if (!await checkFeaturesIsEnabled(oldGuild, 1)) return;
-    if (!resultDb["guild_state_channel"]) return;
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(oldGuild.id, 1)) return;
+    if (!await checkPremiumFeature(oldGuild.id, 1)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // CONTROLLO DELLA LINGUA
@@ -27,6 +26,10 @@ module.exports = {
         let data = await language.databaseCheck(oldGuild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
+
+        let resultDb = await findLogsByGuildId(oldGuild.id);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["guild_state_channel"]) return;
 
         let channel_logs = await oldGuild.channels.fetch(resultDb["guild_state_channel"]);
         const fields = [];
@@ -111,7 +114,6 @@ module.exports = {
         // SE IL PROPRIETARIO VIENE CAMBIATO
         if (oldGuild.ownerId != newGuild.ownerId) {
           changeCheck = true;
-          let oldOwner, newOwner;
           fields.push(
             { name: ` `, value: ` ` }
           );
@@ -130,7 +132,7 @@ module.exports = {
         embedLog
           .setAuthor({ name: `${language_result.guildUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${language_result.guildUpdate.embed_footer}`, iconURL: `${language_result.guildUpdate.embed_icon_url}` })
+          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
           .setColor(colors.general.blue);
         channel_logs.send({ embeds: [embedLog] });
       }

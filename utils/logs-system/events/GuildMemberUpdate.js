@@ -6,26 +6,29 @@ const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFun
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
-
-// QUERY DEFINITION
-let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
-// ------------ //
+const { findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.GuildMemberUpdate,
   async execute(oldMember, newMember) {
     let customEmoji = emoji.logsSystem.updateMemberMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(oldMember.guild.id, 1)) return;
+    if (!await checkPremiumFeature(oldMember.guild.id, 1)) return;
     try {
-      const resultDb = await readDb(sql, oldMember.guild.id);
-      if (!resultDb) return;
-      if (!await checkFeaturesIsEnabled(oldMember.guild, 1)) return;
-      if(!resultDb["member_state_channel"]) return;
       // CONTROLLO DELLA LINGUA
       if (oldMember.guild?.id) {
         let data = await language.databaseCheck(oldMember.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
+
+        let resultDb = await findLogsByGuildId(oldMember.guild.id);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["member_state_channel"]) return;
 
         let channelLogs = await oldMember.guild.channels.fetch(resultDb["member_state_channel"]);
         const fields = [];
@@ -92,7 +95,7 @@ module.exports = {
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.guildMemberUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${language_result.guildMemberUpdate.embed_footer}`, iconURL: `${language_result.guildMemberUpdate.embed_icon_url}` })
+          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
           .setDescription(language_result.guildMemberUpdate.embed_description)
           .setColor(colors.general.blue);
         if (oldMember.user.avatar) {

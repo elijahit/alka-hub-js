@@ -6,10 +6,10 @@ const { errorSendControls, getEmoji, getEmojifromUrl } = require('../../../bin/H
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
-
-// QUERY DEFINITION
-let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
-// ------------ //
+const { findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.InviteDelete,
@@ -17,10 +17,9 @@ module.exports = {
     let customEmoji = emoji.general.deleteMarker;
 
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const resultDb = await readDb(sql, invite.guild.id);
-    if (!resultDb) return;
-    if (!await checkFeaturesIsEnabled(invite.guild, 1)) return;
-    if (!resultDb["invite_state_channel"]) return;
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(invite.guild.id, 1)) return;
+    if (!await checkPremiumFeature(invite.guild.id, 1)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // CONTROLLO DELLA LINGUA
@@ -30,8 +29,11 @@ module.exports = {
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        const channel_logs = await invite.guild.channels.fetch(resultDb["invite_state_channel"]);
+        let resultDb = await findLogsByGuildId(invite.guild.id);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["invite_state_channel"]) return;
 
+        const channel_logs = await invite.guild.channels.fetch(resultDb["invite_state_channel"]);
         const fields = [];
         const embedLog = new EmbedBuilder();
 
@@ -46,7 +48,7 @@ module.exports = {
         embedLog
           .setAuthor({ name: `${language_result.inviteDelete.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${language_result.inviteDelete.embed_footer}`, iconURL: `${language_result.inviteDelete.embed_icon_url}` })
+          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
           .setDescription(language_result.inviteDelete.embed_description)
           .setColor(colors.general.error);
         channel_logs.send({ embeds: [embedLog] })

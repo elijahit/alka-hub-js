@@ -6,29 +6,33 @@ const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFun
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
-
-// QUERY DEFINITION
-let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
-// ------------ //
+const { findStatistics, findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.ChannelUpdate,
   async execute(oldChannel, newChannel) {
     let customEmoji = emoji.general.updateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const resultDb = await readDb(sql, oldChannel.guild.id);
-    if (!resultDb) return;
-    if (!await checkFeaturesIsEnabled(oldChannel.guild, 1)) return;
-    if (!resultDb["channel_state_channel"]) return;
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(oldChannel.guild.id, 1)) return;
+    if (!await checkPremiumFeature(oldChannel.guild.id, 1)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
-      const channelStatsSystem = await readDb(`SELECT * FROM statistics WHERE channel_id = ? AND guilds_id = ?`, oldChannel?.id, oldChannel.guild.id);
-      if (channelStatsSystem?.channel_id) return;
       // CONTROLLO DELLA LINGUA
       if (oldChannel.guild?.id) {
         let data = await language.databaseCheck(oldChannel.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
+
+        let channelStatsSystem = await findStatistics(oldChannel.guild.id, oldChannel.id);
+        channelStatsSystem = channelStatsSystem?.get({ plain: true });
+        if (channelStatsSystem?.channel_id) return;
+        let resultDb = await findLogsByGuildId(oldChannel.guild.id);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["channel_state_channel"]) return;
 
         let channel_logs = await oldChannel.guild.channels.fetch(resultDb["channel_state_channel"]);
         // SE IL NOME DI UN CANALE VIENE CAMBIATO
@@ -47,7 +51,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.name_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -74,7 +78,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.category_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -94,7 +98,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.bitrate_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -114,7 +118,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.userlimit_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -139,7 +143,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.description_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -168,7 +172,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.ratelimit_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -180,12 +184,12 @@ module.exports = {
               try {
                 let value = await oldChannel.guild.roles.fetch(perms.id);
                 oldValuePermissions += `${value}\n`;
-              } catch {}
+              } catch { }
             } else if (perms.type == 1) {
               try {
                 let value = await oldChannel.guild.members.fetch(perms.id);
                 oldValuePermissions += `${value}\n`;
-              } catch {}
+              } catch { }
             }
           });
           newChannel.permissionOverwrites.cache.each(async perms => {
@@ -210,7 +214,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.permissions_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
+            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }

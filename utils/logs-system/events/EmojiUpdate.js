@@ -6,19 +6,19 @@ const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFun
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
-// QUERY DEFINITION
-let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
-// ------------ //
 module.exports = {
   name: Events.GuildEmojiUpdate,
   async execute(oldEmoji, newEmoji) {
     let customEmoji = emoji.general.updateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const resultDb = await readDb(sql, oldEmoji.guild.id);
-    if (!resultDb) return;
-    if (!await checkFeaturesIsEnabled(oldEmoji.guild, 1)) return;
-    if (!resultDb["emoji_state_channel"]) return;
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(oldEmoji.guild.id, 1)) return;
+    if (!await checkPremiumFeature(oldEmoji.guild.id, 1)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // CONTROLLO DELLA LINGUA
@@ -27,6 +27,10 @@ module.exports = {
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
+        let resultDb = await findLogsByGuildId(oldEmoji.guild.id);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["emoji_state_channel"]) return;
+        
         let channel_logs = await oldEmoji.guild.channels.fetch(resultDb["emoji_state_channel"]);
         const fields = [];
 
@@ -64,7 +68,7 @@ module.exports = {
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.emojiUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${language_result.emojiUpdate.embed_footer}`, iconURL: `${language_result.emojiUpdate.embed_icon_url}` })
+          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
           .setDescription(language_result.emojiUpdate.emoji_update)
           .setColor(colors.general.aquamarine);
         channel_logs.send({ embeds: [embedLog] });
