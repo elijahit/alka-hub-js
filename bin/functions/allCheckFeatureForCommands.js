@@ -23,7 +23,35 @@ const Variables = require('../classes/GlobalVariables');
  */
 async function allCheckFeatureForCommands(interaction, guildId, featureId, languageSystemDisabled, languagePremiumLimitation, languagePremiumFeature, languageFeatureIsEnabled) {
   if (await checkFeaturesIsEnabled(guildId, featureId)) {
-    if (await checkPremiumLimitation(guildId, featureId) == -1 || (await findAllAutoVoice()).length < await checkPremiumLimitation(guildId, featureId)) {
+    
+    let howManyLengthUseForFeature;
+    switch(featureId) {
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        howManyLengthUseForFeature = (await findAllAutoVoice()).length;
+        break;
+      case 4:
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
+      case 7:
+        break;
+      case 8:
+        break;
+      case 9:
+        break;
+      case 10:
+        break;
+      case 11:
+        break;
+    }
+
+    if (await checkPremiumLimitation(guildId, featureId) == -1 || howManyLengthUseForFeature < await checkPremiumLimitation(guildId, featureId)) {
       if (await checkPremiumFeature(guildId, featureId)) {
         if (await checkFeatureSystemDisabled(guildId, featureId)) {
           return true;
