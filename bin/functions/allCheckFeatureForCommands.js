@@ -11,6 +11,7 @@ const Variables = require('../classes/GlobalVariables');
 
 /**
  * Questa funzione dev'essere utilizzata solo in un comando che utilizza la tecnologia slashCommands.
+ * la funzione serve per fare tutti i check su una feature di Alka Hub.
  * 
  * @param {*} guildId (L'id del server)
  * @param {*} featureId (L'id della feature)
