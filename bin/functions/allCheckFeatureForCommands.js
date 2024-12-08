@@ -73,7 +73,7 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, langu
 
 /**
  * Questa funzione serve per controllare quante volte una configurazione si ripete nel database, cosi da poterne limitare l'usabilità per i casi non premium.
- * @param {string} featureId 
+ * @param {integer} featureId 
  * @returns {integer}
  */
 async function getLengthFeature(featureId) {
