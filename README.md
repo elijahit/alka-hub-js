@@ -1,6 +1,6 @@
 # Alka Hub 🌐  
 
-Benvenuto nel repository ufficiale di **Alka Hub**, una applicazione versatile progettata per semplificare la creazione di bot multi-server e white-label su Discord.  ù
+Benvenuto nel repository ufficiale di **Alka Hub**, una applicazione versatile progettata per semplificare la creazione di bot multi-server e white-label su Discord.
 
 ### Author: Elijah (Gabriele Mario Tosto)
 
