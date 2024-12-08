@@ -1,20 +1,20 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
-const { readDb, readDbAllWith2Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findAutoVoiceByChannelId } = require('../../../bin/service/DatabaseService');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
 
 
 // FUNCTION
 
 async function createChannel(oldState, newState) {
-  let check;
-  try {
-    check = await readDb(`SELECT * FROM auto_voice WHERE guilds_id = ? AND channel_id = ?`, newState.guild.id, newState.channel.parentId);
-  } catch {
-    return;
-  }
+
+  let check = await findAutoVoiceByChannelId(newState.guild.id, newState.channel.parentId);
+  check = check?.get({ plain: true }) ?? false;
+
   if(check) {
     // TIPO NUMERICO
     if (check.type == 2) {
@@ -51,12 +51,8 @@ async function createChannel(oldState, newState) {
 }
 
 async function deleteChannel(oldState) {
-  let check;
-  try {
-    check = await readDb(`SELECT * FROM auto_voice WHERE guilds_id = ? AND channel_id = ?`, oldState.guild.id, oldState.channel.parentId);
-  } catch (error){
-    return;
-  }
+  let check = await findAutoVoiceByChannelId(oldState.guild.id, oldState.channel.parentId);
+  check = check?.get({ plain: true }) ?? false;
 
   if (check) {
     if (oldState.channel.members.size < 1) {
@@ -117,9 +113,10 @@ async function deleteChannel(oldState) {
 module.exports = {
   name: Events.VoiceStateUpdate,
   async execute(oldState, newState) {
+    if(!await checkFeatureSystemDisabled(newState.guild.id, 3)) return;
+    if(!await checkFeaturesIsEnabled(newState.guild.id, 3)) return;
+    if(!await checkPremiumFeature(newState.guild.id, 3)) return;
 
-    // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    if (!await checkFeaturesIsEnabled(newState.guild, 3)) return;
     try {
       // CONTROLLO DELLA LINGUA
       if (oldState.guild?.id) {

@@ -6,6 +6,7 @@ const emoji = require('../../../bin/data/emoji');
 const color = require('../../../bin/data/colors');
 const Variables = require('../../../bin/classes/GlobalVariables');
 const { findAutoVoiceByChannelId, createAutoVoice } = require('../../../bin/service/DatabaseService');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
 
 
 // FUNZIONI
@@ -60,6 +61,7 @@ module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
     if (!interaction.guild) return;
+
     try {
       // CONTROLLO LINGUA
       let data = await language.databaseCheck(interaction.guild.id);

@@ -5,10 +5,8 @@ const { readDb, runDb, readDbAllWith2Params } = require('../../../bin/database')
 const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermission, noEnabledFunc, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
-const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 const Variables = require('../../../bin/classes/GlobalVariables');
-const { checkPremiumLimitation } = require('../../../bin/functions/checkPremiumFeature');
-const { findAllAutoVoice } = require('../../../bin/service/DatabaseService');
+const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -21,92 +19,79 @@ module.exports = {
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		await returnPermission(interaction, "autovoice", async result => {
+			if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 3, language_result.noPermission.description_embed_no_features_by_system, 
+				language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
+				language_result.noPermission.description_embed_no_features)) return;
 			try {
 				if (result) {
-					if (await checkFeaturesIsEnabled(interaction.guild.id, 3)) {
-						if (await checkPremiumLimitation(interaction.guild.id, 3) == -1 || (await findAllAutoVoice()).length < await checkPremiumLimitation(interaction.guild.id, 3)) {
-							const filePath = `./utils/autoVoice-system/${interaction.guild.id}_${interaction.user.id}.json`;
-							if (fs.existsSync(filePath)) {
-								const fileJson = fs.readFileSync(filePath);
-								const fileJsonToObj = JSON.parse(fileJson);
-								try {
-									const deleteChannel = await interaction.guild.channels.fetch(fileJsonToObj.channel_setup);
-									if (deleteChannel) {
-										await deleteChannel.delete();
-									}
-								} catch (error) {
-									// Ignora se non trova il canale
-								}
-								fs.unlinkSync(filePath);
+					const filePath = `./utils/autoVoice-system/${interaction.guild.id}_${interaction.user.id}.json`;
+					if (fs.existsSync(filePath)) {
+						const fileJson = fs.readFileSync(filePath);
+						const fileJsonToObj = JSON.parse(fileJson);
+						try {
+							const deleteChannel = await interaction.guild.channels.fetch(fileJsonToObj.channel_setup);
+							if (deleteChannel) {
+								await deleteChannel.delete();
 							}
-							fs.writeFileSync(filePath, '{\n');
-							const selectSetup = new StringSelectMenuBuilder()
-								.setCustomId('autoVoiceSelectMenu')
-								.setPlaceholder(language_result.selectSetup.placeholder)
-								.addOptions(
-									// new StringSelectMenuOptionBuilder() //DA PROGRAMMARE
-									// 	.setLabel(language_result.selectSetup.label_interaction)
-									// 	.setValue("interactionVoice")
-									// 	.setEmoji(channelTextEmoji.id),
-									new StringSelectMenuOptionBuilder()
-										.setLabel(language_result.selectSetup.label_automatic)
-										.setValue("automaticVoice")
-									/*.setEmoji(channelVoiceEmoji.id),*/
-								);
-
-							const row = new ActionRowBuilder()
-								.addComponents(selectSetup);
-
-							const customEmoji = emoji.general.utility
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.selectSetup.embed_title}`, iconURL: customEmoji })
-								.setDescription(language_result.selectSetup.description_embed)
-								.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
-								.setColor(0x9ba832);
-
-							// CREO IL CANALE TEMPORANEO DI SETUP
-							const initChannel = await interaction.guild.channels.create({
-								name: 'setup-autovoice',
-								type: ChannelType.GuildText,
-								permissionOverwrites: [
-									{
-										id: interaction.user.id,
-										allow: [PermissionFlagsBits.ViewChannel],
-									},
-									{
-										id: interaction.guild.roles.everyone.id,
-										deny: [PermissionFlagsBits.ViewChannel],
-									}
-								],
-							})
-
-							const embedLogTwo = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.selectSetup.embed_title}`, iconURL: customEmoji })
-								.setDescription(language_result.selectSetup.description_embed_two.replace("{0}", initChannel))
-								.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
-								.setColor(0x03cffc);
-
-							await interaction.reply({ embeds: [embedLogTwo], ephemeral: true });
-							await initChannel.send({ embeds: [embedLog], components: [row] });
-							fs.appendFileSync(filePath, `"guild_id": "${interaction.guild.id}",
-	"author_id": "${interaction.user.id}",
-	"channel_start": "${interaction.channel.id}",
-	"channel_setup": "${initChannel.id}" 
-	}`, 'utf8');
+						} catch (error) {
+							// Ignora se non trova il canale
 						}
-						else {
-							let customEmoji = emoji.general.errorMarker;
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${Variables.getBotName()} | ${language_result.noPermission.embed_title}`, iconURL: customEmoji })
-								.setDescription(language_result.noPermission.description_limit_premium)
-								.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
-								.setColor(colors.general.error);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
-						}
-
-					} else {
-						await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
+						fs.unlinkSync(filePath);
 					}
+					fs.writeFileSync(filePath, '{\n');
+					const selectSetup = new StringSelectMenuBuilder()
+						.setCustomId('autoVoiceSelectMenu')
+						.setPlaceholder(language_result.selectSetup.placeholder)
+						.addOptions(
+							// new StringSelectMenuOptionBuilder() //DA PROGRAMMARE
+							// 	.setLabel(language_result.selectSetup.label_interaction)
+							// 	.setValue("interactionVoice")
+							// 	.setEmoji(channelTextEmoji.id),
+							new StringSelectMenuOptionBuilder()
+								.setLabel(language_result.selectSetup.label_automatic)
+								.setValue("automaticVoice")
+							/*.setEmoji(channelVoiceEmoji.id),*/
+						);
+
+					const row = new ActionRowBuilder()
+						.addComponents(selectSetup);
+
+					const customEmoji = emoji.general.utility
+					const embedLog = new EmbedBuilder()
+						.setAuthor({ name: `${language_result.selectSetup.embed_title}`, iconURL: customEmoji })
+						.setDescription(language_result.selectSetup.description_embed)
+						.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+						.setColor(0x9ba832);
+
+					// CREO IL CANALE TEMPORANEO DI SETUP
+					const initChannel = await interaction.guild.channels.create({
+						name: 'setup-autovoice',
+						type: ChannelType.GuildText,
+						permissionOverwrites: [
+							{
+								id: interaction.user.id,
+								allow: [PermissionFlagsBits.ViewChannel],
+							},
+							{
+								id: interaction.guild.roles.everyone.id,
+								deny: [PermissionFlagsBits.ViewChannel],
+							}
+						],
+					})
+
+					const embedLogTwo = new EmbedBuilder()
+						.setAuthor({ name: `${language_result.selectSetup.embed_title}`, iconURL: customEmoji })
+						.setDescription(language_result.selectSetup.description_embed_two.replace("{0}", initChannel))
+						.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+						.setColor(0x03cffc);
+
+					await interaction.reply({ embeds: [embedLogTwo], ephemeral: true });
+					await initChannel.send({ embeds: [embedLog], components: [row] });
+					fs.appendFileSync(filePath, `"guild_id": "${interaction.guild.id}",
+			"author_id": "${interaction.user.id}",
+			"channel_start": "${interaction.channel.id}",
+			"channel_setup": "${initChannel.id}" 
+			}`, 'utf8');
 				}
 				else {
 					await noHavePermission(interaction, language_result);

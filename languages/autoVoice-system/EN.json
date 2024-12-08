@@ -2,8 +2,10 @@
   "noPermission": {
     "embed_title": "Auto Voice System",
     "description_limit_premium": "You have reached the maximum number of AutoVoice available in your plan. Upgrade to the Premium plan to unlock unlimited AutoVoice!",
+    "description_premium_feature": "This feature is only available with the Premium plan. Upgrade your plan now to unlock it!",
     "description_embed": "You do not have permission to use this command!",
-    "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable."
+    "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable.",
+    "description_embed_no_features_by_system": "This feature is temporarily disabled for scheduled maintenance. Please bear with us; it will be available again shortly."
   },
   "selectSetup": {
     "embed_title": "Auto Voice System",
