@@ -42,6 +42,9 @@ const { findByGuildId: findLogsByGuildId, update: updateLogs, create: createLogs
 // createLogs -> Permette di creare un record nella tabella logs_system
 
 
+const { findByGuildIdAndChannelId: findStatistics } = require('../repository/Statistics');
+
+
 
 
 (async () => {
@@ -69,5 +72,6 @@ module.exports = {
   findAllAutoVoice,
   findLogsByGuildId,
   updateLogs,
-  createLogs
+  createLogs,
+  findStatistics
 }

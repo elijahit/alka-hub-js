@@ -16,6 +16,7 @@ const { UserGuild } = require('./UserGuild');
 const { Role } = require('./Role');
 const { Config } = require('./Config');
 const { LogsSystem } = require('./LogsSystem');
+const { Statistics } = require('./Statistics');
 
 
 
@@ -68,4 +69,5 @@ module.exports = {
   Role,
   Config,
   LogsSystem,
+  Statistics
 }

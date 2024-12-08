@@ -26,8 +26,8 @@ async function create(guildId, type, categoryId, nickname) {
 
 /**
  * 
- * @param {string} objToUpdate 
- * @param {string} objToCondition 
+ * @param {object} objToUpdate 
+ * @param {object} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
   return await AutoVoice.update(objToUpdate, objToCondition);

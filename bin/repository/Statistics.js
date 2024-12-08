@@ -1,0 +1,41 @@
+const Variables = require('../classes/GlobalVariables');
+const {Statistics} = require('../models');
+
+
+async function findAll() {
+  return await Statistics.findAll({where: {config_id: Variables.getConfigId()}});
+}
+
+
+/**
+ * @param {string} guildId 
+ */
+async function findByGuildIdAndChannelId(guildId, channelId) {
+  return await Statistics.findOne({where: {guild_id: guildId, channel_id: channelId, config_id: Variables.getConfigId()}});
+}
+
+/**
+ * 
+ * @param {string} guildId 
+ * @param {string} language 
+ * @param {string} time_zone 
+ */
+async function create(guildId, language = "EN", time_zone = "Europe/London") {
+  return await Statistics.create({guild_id: guildId, language: language, time_zone: time_zone, config_id: Variables.getConfigId()});
+}
+
+/**
+ * 
+ * @param {object} objToUpdate 
+ * @param {object} objToCondition 
+ */
+async function update(objToUpdate, objToCondition) {
+  return await Statistics.update(objToUpdate, objToCondition);
+}
+
+module.exports = {
+  findAll,
+  findByGuildIdAndChannelId,
+  create,
+  update
+}

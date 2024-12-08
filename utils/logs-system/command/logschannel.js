@@ -103,6 +103,7 @@ module.exports = {
 						} else {
 							customEmoji = emoji.general.trueMaker
 							await updateLogs({ [checkTable[choices]]: channel }, { where: { id: checkTable.id } });
+							console.log()
 							embedLog
 								.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
 								.setColor(colors.general.success);

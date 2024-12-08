@@ -24,8 +24,8 @@ async function create(guildId, customTable, customValue) {
 
 /**
  * 
- * @param {string} objToUpdate 
- * @param {string} objToCondition 
+ * @param {object} objToUpdate 
+ * @param {object} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
   return await LogsSystem.update(objToUpdate, objToCondition);

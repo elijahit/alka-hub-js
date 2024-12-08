@@ -16,8 +16,8 @@ async function findById(id) {
 
 /**
  * 
- * @param {string} objToUpdate 
- * @param {string} objToCondition 
+ * @param {object} objToUpdate 
+ * @param {object} objToCondition 
  */
 async function update(objToUpdate, objToCondition) {
   return await GuildEnabledFeature.update(objToUpdate, objToCondition);
