@@ -12,12 +12,12 @@ Benvenuto nel repository ufficiale di **Alka Hub**, una applicazione versatile p
 ## 📦 Installazione  
 
 ### Prerequisiti  
-1. Node.js (versione 16 o superiore)  
+1. Node.js (versione 20.14.0 o superiore)  
 2. MySQL installato e configurato  
 3. Discord Bot Token e permessi adeguati  
 
 ### Setup  
 1. Clona il repository:  
    ```bash  
-   git clone https://github.com/tuo-utente/alka-hub.git  
+   git clone https://github.com/elijahit/alka-hub.git  
    cd alka-hub  
