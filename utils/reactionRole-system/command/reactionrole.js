@@ -6,7 +6,6 @@ const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermi
 const colors = require('../../../bin/data/colors');
 const emojis = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
-const checkRolesRelation = require('../../../bin/functions/checkRolesRelation');
 
 
 module.exports = {
@@ -98,7 +97,7 @@ module.exports = {
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							return;
 						}
-						checkRolesRelation(roleId, interaction.guild.id);
+						//checkRolesRelation(roleId, interaction.guild.id);
 						await runDb('INSERT INTO reaction_roles (roles_id, emoji, message_id) VALUES (?, ?, ?)', roleId, emoji, message);
 
 						const embedLog = new EmbedBuilder()

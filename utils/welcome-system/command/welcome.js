@@ -5,7 +5,6 @@ const { readDb, runDb, readDbAllWith2Params, readDbWith4Params, readDbWith3Param
 const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermission, noEnabledFunc, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
-const checkUsersDb = require('../../../bin/functions/checkUsersDb');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 
 module.exports = {

@@ -6,7 +6,6 @@ const { errorSendControls, returnPermission, noInitGuilds, noHavePermission, noE
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
-const checkRolesRelation = require('../../../bin/functions/checkRolesRelation');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -53,7 +52,7 @@ module.exports = {
 							return;
 						}
 
-						checkRolesRelation(role.id, interaction.guild.id);
+						//checkRolesRelation(role.id, interaction.guild.id);
 
 						await runDb('INSERT INTO levels_roles (guilds_id, roles_id, levels) VALUES (?, ?, ?)', interaction.guild.id, role.id, level);
 
