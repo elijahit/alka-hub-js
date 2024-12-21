@@ -17,6 +17,15 @@ async function findByChannelId(guildId, channelId) {
 }
 
 /**
+ * @param {string} guildId 
+ * @param {integer} id 
+ */
+async function findBylId(guildId, id) {
+  return await AutoVoice.findOne({where: {id: id, guild_id: guildId, config_id: Variables.getConfigId()}});
+}
+
+
+/**
  * 
  * @param {string} roleId 
  */
@@ -36,6 +45,7 @@ async function update(objToUpdate, objToCondition) {
 module.exports = {
   findAll,
   findByChannelId,
+  findBylId,
   create,
   update
 }

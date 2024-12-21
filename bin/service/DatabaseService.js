@@ -32,7 +32,7 @@ const { update: updateEnabledFeature, create: createEnabledFeature } = require('
 // updateEnabledFeature -> Permette di aggiornare la tabella guild_enabled_feature
 // createEnabledFeature -> Permette di aggiungere un record sulla tabella guild_enabled_feature
 
-const { findByChannelId: findAutoVoiceByChannelId, create: createAutoVoice, findAll: findAllAutoVoice } = require('../repository/AutoVoice');
+const { findByChannelId: findAutoVoiceByChannelId, create: createAutoVoice, findAll: findAllAutoVoice, findBylId: findAutoVoiceById } = require('../repository/AutoVoice');
 // findByChannelId -> Permette di cercare un autoVoice nella tabella auto_voice.
 
 
@@ -70,6 +70,7 @@ module.exports = {
   findAutoVoiceByChannelId,
   createAutoVoice,
   findAllAutoVoice,
+  findAutoVoiceById,
   findLogsByGuildId,
   updateLogs,
   createLogs,
