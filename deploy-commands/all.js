@@ -36,6 +36,7 @@ const rest = new REST().setToken("ODUxMTY0Nzk4MzA5NzYxMDM0.G83Dsk._tPJeGK9QSRt7t
 		console.log(`Avvio di ricarica dei comandi (${commands.length}) (/) slashCommands.`);
 
 		// The put method is used to fully refresh all commands in the guild with the current set
+		// TODO a quanto pare il metodo put aggiunge sempre e non sovrascrive i comandi, bisogna trovare un modo per sovrascrivere i comandi esistenti
 		const data = await rest.put(
       Routes.applicationCommands(process.env.NODE_ENV === 'production' ? clientId : process.env.NODE_ENV === 'development' ? clientIdDev : process.env.NODE_ENV === 'beta' ? clientIdBeta : "851164798309761034"),
       { body: commands },
