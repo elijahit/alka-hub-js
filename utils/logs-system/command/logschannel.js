@@ -97,13 +97,12 @@ module.exports = {
 					if (checkTable) {
 						if (checkTable[choices]) {
 							customEmoji = emoji.general.falseMaker;
-							await updateLogs({ [checkTable[choices]]: channel }, { where: { id: checkTable.id } });
+							await updateLogs({ [choices]: null }, { where: { id: checkTable.id } });
 							embedLog.setDescription(language_result.commandLogsChannel.description_embed_removed.replace("{0}", choices.split("_")[0]))
 								.setColor(colors.general.error);
 						} else {
 							customEmoji = emoji.general.trueMaker
-							await updateLogs({ [checkTable[choices]]: channel }, { where: { id: checkTable.id } });
-							console.log()
+							await updateLogs({ [choices]: channel }, { where: { id: checkTable.id } });
 							embedLog
 								.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
 								.setColor(colors.general.success);
