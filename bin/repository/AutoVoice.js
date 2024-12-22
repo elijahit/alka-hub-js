@@ -42,10 +42,23 @@ async function update(objToUpdate, objToCondition) {
   return await AutoVoice.update(objToUpdate, objToCondition);
 }
 
+/**
+ * @param {object} objToCondition 
+ */
+async function remove(objToCondition) {
+  return await AutoVoice.destroy({
+    where: {
+      ...objToCondition,
+      config_id: Variables.getConfigId()
+    }
+});
+}
+
 module.exports = {
   findAll,
   findByChannelId,
   findBylId,
   create,
-  update
+  update,
+  remove
 }

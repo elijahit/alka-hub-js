@@ -53,5 +53,10 @@
     "label": "Maximum number of people in the channel",
     "label_message": "Message to send",
     "placeholder_message": "Message for the channel"
+  },
+  "remove": {
+    "embed_title": "Auto Voice System",
+    "success_description": "You have successfully removed the Auto Voice System configuration ID {0}.",
+    "error_description": "This configuration does not exist; check the ID and try again."
   }
 }

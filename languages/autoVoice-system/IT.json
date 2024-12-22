@@ -53,5 +53,10 @@
     "label": "Numero di persone massime nel canale",
     "label_message": "Messaggio da inviare",
     "placeholder_message": "Messaggio per il canale"
-  }
+  },
+  "remove": {
+    "embed_title": "Auto Voice System",
+    "success_description": "Hai rimosso con successo la configurazione Auto Voice System ID {0}.",
+    "error_description": "Questa configurazione non esiste, controlla l'ID e riprova."
+  } 
 }

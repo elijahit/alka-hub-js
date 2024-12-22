@@ -32,8 +32,12 @@ const { update: updateEnabledFeature, create: createEnabledFeature } = require('
 // updateEnabledFeature -> Permette di aggiornare la tabella guild_enabled_feature
 // createEnabledFeature -> Permette di aggiungere un record sulla tabella guild_enabled_feature
 
-const { findByChannelId: findAutoVoiceByChannelId, create: createAutoVoice, findAll: findAllAutoVoice, findBylId: findAutoVoiceById } = require('../repository/AutoVoice');
+const { findByChannelId: findAutoVoiceByChannelId, create: createAutoVoice, findAll: findAllAutoVoice, findBylId: findAutoVoiceById, remove: removeAutoVoiceById } = require('../repository/AutoVoice');
 // findByChannelId -> Permette di cercare un autoVoice nella tabella auto_voice.
+// createAutoVoice -> Permette di creare un autoVoice nella tabella auto_voice.
+// findAllAutoVoice -> Permette di cercare tutti gli autoVoice nella tabella auto_voice.
+// findAutoVoiceById -> Permette di cercare un autoVoice nella tabella auto_voice tramite l'id.
+// removeAutoVoiceById -> Permette di rimuovere un autoVoice nella tabella auto_voice tramite l'id.
 
 
 const { findByGuildId: findLogsByGuildId, update: updateLogs, create: createLogs } = require('../repository/LogsSystem');
@@ -43,6 +47,7 @@ const { findByGuildId: findLogsByGuildId, update: updateLogs, create: createLogs
 
 
 const { findByGuildIdAndChannelId: findStatistics } = require('../repository/Statistics');
+// findByGuildIdAndChannelId -> Permette di cercare una configurazione di Statistics nella tabella statistics
 
 
 
@@ -71,6 +76,7 @@ module.exports = {
   createAutoVoice,
   findAllAutoVoice,
   findAutoVoiceById,
+  removeAutoVoiceById,
   findLogsByGuildId,
   updateLogs,
   createLogs,

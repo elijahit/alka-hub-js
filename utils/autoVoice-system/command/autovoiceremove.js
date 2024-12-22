@@ -7,7 +7,7 @@ const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const Variables = require('../../../bin/classes/GlobalVariables');
 const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
-const { findAutoVoiceById } = require('../../../bin/service/DatabaseService');
+const { findAutoVoiceById, removeAutoVoiceById } = require('../../../bin/service/DatabaseService');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -23,9 +23,6 @@ module.exports = {
     const language_result = JSON.parse(langagues_path);
     // CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
     await returnPermission(interaction, "autovoice", async result => {
-      if (!await allCheckFeatureForCommands(interaction, interaction.guild.id, 3, language_result.noPermission.description_embed_no_features_by_system,
-        language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature,
-        language_result.noPermission.description_embed_no_features)) return;
       try {
         if (result) {
           let logsTable = await findAutoVoiceById(interaction.guild.id, autoVoiceId);
@@ -33,11 +30,22 @@ module.exports = {
           const embedLog = new EmbedBuilder();
           //CONTROLLO SE LA ROW E' PRESENTE NEL DB
           if (checkTable) {
-            //REMOVE THE AUTO VOICE SYSTEM CONFIGURATION
+            // SE E' PRESENTE NEL DB LA ELIMINA E MOSTRA UN MESSAGGIO DI SUCCESSO
+            customEmoji = emoji.general.trueMaker
+            embedLog.setColor(colors.general.success);
+            embedLog.setDescription(language_result.remove.success_description.replace("{0}", autoVoiceId));
+            await removeAutoVoiceById({ id: checkTable.id, guild_id: interaction.guild.id });
 
           } else {
-            //THE AUTO VOICE SYSTEM CONFIGURATION DOES NOT EXIST
+            // SE NON E' PRESENTE NEL DB MOSTRA UN ERRORE
+            customEmoji = emoji.general.errorMarker
+            embedLog.setColor(colors.general.error);
+            embedLog.setDescription(language_result.remove.error_description);
           }
+          embedLog.setTitle(language_result.remove.embed_title);
+          embedLog.setAuthor({ name: `${language_result.remove.embed_title}`, iconURL: customEmoji })
+          embedLog.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` });
+					await interaction.reply({ embeds: [embedLog], ephemeral: true });
         }
         else {
           await noHavePermission(interaction, language_result);
