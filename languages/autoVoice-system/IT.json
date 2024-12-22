@@ -58,5 +58,10 @@
     "embed_title": "Auto Voice System",
     "success_description": "Hai rimosso con successo la configurazione Auto Voice System ID {0}.",
     "error_description": "Questa configurazione non esiste, controlla l'ID e riprova."
-  } 
+  },
+  "list": {
+    "embed_title": "Auto Voice System",
+    "description_embed": "Ecco la lista delle configurazioni Auto Voice attualmente attive nel server.",
+    "description_embed_empty": "Non ci sono configurazioni Auto Voice attive."
+  }
 }

@@ -7,6 +7,11 @@ async function findAll() {
   return await AutoVoice.findAll({where: {config_id: Variables.getConfigId()}});
 }
 
+async function findAllbyGuild(guildId) {
+  return await AutoVoice.findAll({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+}
+
+
 
 /**
  * @param {string} guildId 
@@ -60,5 +65,6 @@ module.exports = {
   findBylId,
   create,
   update,
-  remove
+  remove,
+  findAllbyGuild
 }
