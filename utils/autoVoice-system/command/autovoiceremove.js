@@ -1,3 +1,11 @@
+// Code: utils/autoVoice-system/command/autovoiceremove.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file autovoiceremove.js
+ * @module autovoiceremove
+ * @description Questo file contiene il comando per eliminare una configurazione del sistema di auto voice
+ */
+
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits } = require('discord.js');
 const language = require('../../../languages/languages');
 const fs = require('fs');

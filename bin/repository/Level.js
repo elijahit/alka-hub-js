@@ -1,3 +1,11 @@
+// Code: Level - bin/repository/Level.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file Level.js
+ * @module Level
+ * @description Contiene i metodi per richiamare la tabella Level
+ */
+
 const Variables = require('../classes/GlobalVariables');
 const {Level} = require('../models');
 

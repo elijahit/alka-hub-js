@@ -1,3 +1,11 @@
+// Code: utils/ranks-system/command/permissionlist.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file permissionlist.js
+ * @module permissionlist
+ * @description Questo file gestisce il comando per visualizzare i permessi assegnati ad un ruolo!
+ */
+
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync } = require('fs');

@@ -1,3 +1,11 @@
+// Code: GlobalVariables - bin/classes/GlobalVariables.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file GlobalVariables.js
+ * @module GlobalVariables
+ * @description Contiene le variabili globali
+*/
+
 class Variables {
     // Variabili statiche
     static nameConfiguration;

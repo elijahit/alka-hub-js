@@ -1,3 +1,11 @@
+// Code: checkFeatureSystemDisabled - bin/functions/checkFeatureSystemDisabled.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file checkFeatureSystemDisabled.js
+ * @module checkFeatureSystemDisabled
+ * @description Contiene il metodo {checkFeatureSystemDisabled}
+ */
+
 const {findFeatureById} = require('../service/DatabaseService');
 
 

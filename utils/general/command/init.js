@@ -1,3 +1,11 @@
+// Code: utils/general/command/init.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file init.js
+ * @module init
+ * @description Questo file contiene il comando per inizializzare il bot sul server
+ */
+
 const { SlashCommandBuilder, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { read, readFileSync } = require('fs');

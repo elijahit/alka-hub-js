@@ -1,3 +1,11 @@
+// Code: utils/logs-system/events/ChannelUpdate.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file ChannelUpdate.js
+ * @module ChannelUpdate
+ * @description Questo file contiene l'evento per il sistema di logs
+ */
+
 const { Events, EmbedBuilder, TextChannel } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');

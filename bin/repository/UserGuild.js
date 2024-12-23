@@ -1,3 +1,11 @@
+// Code: UserGuild - bin/repository/UserGuild.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file UserGuild.js
+ * @module UserGuild
+ * @description Contiene i metodi per richiamare la tabella UserGuild
+ */
+
 const {UserGuild} = require('../models');
 const User = require('../repository/User');
 const Guild = require('../repository/Guild');

@@ -1,3 +1,11 @@
+// Code: utils/ranks-system/command/permissions.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file permissions.js
+ * @module permissions
+ * @description Questo file gestisce il comando per assegnare o rimuovere livelli di accesso basati sui ruoli!
+ */
+
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync } = require('fs');

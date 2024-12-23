@@ -1,3 +1,11 @@
+// Code: UserGuild - bin/models/UserGuild.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file UserGuild.js
+ * @module UserGuild
+ * @description Contiene il modello UserGuild
+ */
+
 const { database } = require('../database');
 const { Sequelize } = require('sequelize');
 const { Guild } = require('./Guild');

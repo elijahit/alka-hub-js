@@ -1,3 +1,11 @@
+// Code: Config - bin/models/Config.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file Config.js
+ * @module Config
+ * @description Contiene il modello Config
+ */
+
 const { database } = require('../database');
 const { Sequelize } = require('sequelize');
 

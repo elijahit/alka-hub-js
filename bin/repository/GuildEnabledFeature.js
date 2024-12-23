@@ -1,3 +1,11 @@
+// Code: GuildEnabledFeature - bin/repository/GuildEnabledFeature.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file GuildEnabledFeature.js
+ * @module GuildEnabledFeature
+ * @description Contiene i metodi per richiamare la tabella GuildEnabledFeature
+ */
+
 const Variables = require('../classes/GlobalVariables');
 const {GuildEnabledFeature} = require('../models');
 

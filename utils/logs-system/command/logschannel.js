@@ -1,3 +1,11 @@
+// Code: utils/logs-system/command/logschannel.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file logschannel.js
+ * @module logschannel
+ * @description Questo file contiene il comando per impostare i canali del sistema di Logs
+ */
+
 const { SlashCommandBuilder, EmbedBuilder, ChannelType } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');

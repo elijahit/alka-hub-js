@@ -1,6 +1,10 @@
+// Code: bin/models/index.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
 /**
- * QUESTO E' UN FILE CENTRALIZZATO PER CONTENERE TUTTI I MODELLI, I REPOSITORY
- * CHIAMERANNO QUESTO FILE PER INCLUDERE I VARI MODELLI.
+ * @file index.js
+ * @module index
+ * @description Contiene i modelli del database
+ * @see {@link module:Feature}
  */
 
 const { Hash } = require('./Hash');

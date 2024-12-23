@@ -1,3 +1,11 @@
+// Code: colors - bin/data/colors.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file colors.js
+ * @module colors
+ * @description Contiene i colori utilizzati dal bot
+ */
+
 const color = {
   general: {
     success: 0x119c05,

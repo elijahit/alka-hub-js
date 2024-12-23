@@ -1,3 +1,11 @@
+// Code: Level - bin/models/Level.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file Level.js
+ * @module Level
+ * @description Contiene il modello Level
+ */
+
 const { database } = require('../database');
 const { Sequelize } = require('sequelize');
 

@@ -1,3 +1,11 @@
+// Code: utils/logs-system/events/GuildMemberAdd.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file GuildMemberAdd.js
+ * @module GuildMemberAdd
+ * @description Questo file contiene l'evento per il sistema di Logs
+ */
+
 const { Events, EmbedBuilder, TextChannel } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');

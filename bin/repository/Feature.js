@@ -1,3 +1,11 @@
+// Code: Feature - bin/repository/Feature.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file Feature.js
+ * @module Feature
+ * @description Contiene i metodi per richiamare la tabella Feature
+ */
+
 const Variables = require('../classes/GlobalVariables');
 const {Feature} = require('../models');
 const {Guild} = require('../models');

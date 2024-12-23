@@ -1,3 +1,11 @@
+// Code: utils/statsServer-system/command/channelstatsedit.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file channelstatsedit.js
+ * @module channelstatsedit
+ * @description Questo file gestisce il comando per modificare il nome del proprio canale di statistiche!
+ */
+
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits, PermissionsBitField, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');

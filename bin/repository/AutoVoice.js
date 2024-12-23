@@ -1,3 +1,11 @@
+// Code: AutoVoice - bin/repository/AutoVoice.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file AutoVoice.js
+ * @module AutoVoice
+ * @description Contiene i metodi per richiamare la tabella AutoVoice
+ */
+
 const {AutoVoice, Guild} = require('../models');
 const Variables = require('../classes/GlobalVariables');
 

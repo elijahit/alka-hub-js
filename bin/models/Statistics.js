@@ -1,3 +1,11 @@
+// Code: Statistics - bin/models/Statistics.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file Statistics.js
+ * @module Statistics
+ * @description Contiene il modello Statistics
+ */
+
 const { database } = require('../database');
 const { Sequelize } = require('sequelize');
 

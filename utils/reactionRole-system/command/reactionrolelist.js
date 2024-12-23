@@ -1,3 +1,11 @@
+// Code: utils/reactionRole-system/command/reactionrolelist.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file reactionrolelist.js
+ * @module reactionrolelist
+ * @description Questo file gestisce il comando per visualizzare i ruoli reazione impostati.
+ */
+
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');

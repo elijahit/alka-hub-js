@@ -1,3 +1,11 @@
+// Code: utils/autoVoice-system/command/autovoicelist.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file autovoicelist.js
+ * @module autovoicelist
+ * @description Questo file contiene il comando per visualizzare la lista delle configurazioni del sistema di auto voice
+ */
+
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits } = require('discord.js');
 const language = require('../../../languages/languages');
 const fs = require('fs');

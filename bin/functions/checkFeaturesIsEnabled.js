@@ -1,3 +1,11 @@
+// Code: checkFeaturesIsEnabled - bin/functions/checkFeaturesIsEnabled.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file checkFeaturesIsEnabled.js
+ * @module checkFeaturesIsEnabled
+ * @description Contiene il metodo {checkFeaturesIsEnabled}
+ */
+
 const {getFeatureIsEnabled} = require('../service/DatabaseService');
 
 

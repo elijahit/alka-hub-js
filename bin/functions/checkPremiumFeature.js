@@ -1,3 +1,11 @@
+// Code: checkPremiumFeature - bin/functions/checkPremiumFeature.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file checkPremiumFeature.js
+ * @module checkPremiumFeature
+ * @description Contiene il metodo {checkPremiumFeature} e {checkPremiumLimitation}
+ */
+
 const Variables = require("../classes/GlobalVariables");
 const { findByGuildId } = require("../repository/Guild");
 const { findFeatureById } = require("../service/DatabaseService");

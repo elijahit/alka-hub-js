@@ -1,3 +1,11 @@
+// Code: Statistics - bin/repository/Statistics.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file Statistics.js
+ * @module Statistics
+ * @description Contiene i metodi per richiamare la tabella Statistics
+ */
+
 const Variables = require('../classes/GlobalVariables');
 const {Statistics} = require('../models');
 

@@ -1,3 +1,11 @@
+// Code: utils/autoVoice-system/events/autovoiceinteractions.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file autovoiceinteractions.js
+ * @module autovoiceinteractions
+ * @description Questo file contiene gli eventi per la gestione delle interazioni del sistema di auto voice
+ */
+
 const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ApplicationEmoji } = require('discord.js');
 const fs = require('fs');
 const language = require('../../../languages/languages');

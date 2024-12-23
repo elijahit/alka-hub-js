@@ -1,3 +1,11 @@
+// Code: Hash - bin/repository/Hash.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file Hash.js
+ * @module Hash
+ * @description Contiene i metodi per richiamare la tabella Hash
+ */
+
 const {Hash} = require('../models');
 const {Permissions} = require('../models');
 

@@ -1,3 +1,11 @@
+// Code: utils/level-system/command/levels.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file levels.js
+ * @module levels
+ * @description Questo file contiene il comando per impostare il sistema di livelli
+ */
+
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');

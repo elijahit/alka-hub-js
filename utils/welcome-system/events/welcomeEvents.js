@@ -1,3 +1,11 @@
+// Code: utils/welcome-system/events/welcomeEvents.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file welcomeEvents.js
+ * @module welcomeEvents
+ * @description Questo file gestisce l'evento per il benvenuto di un utente!
+ */
+
 const { Events, EmbedBuilder, TextChannel, AttachmentBuilder } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');

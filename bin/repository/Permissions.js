@@ -1,3 +1,11 @@
+// Code: Permissions - bin/repository/Permissions.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file Permissions.js
+ * @module Permissions
+ * @description Contiene i metodi per richiamare la tabella Permissions
+ */
+
 const {Permissions} = require('../models');
 const {Hash} = require('../models');
 

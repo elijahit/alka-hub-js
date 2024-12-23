@@ -1,3 +1,11 @@
+// Code: mainEvents - bin/functions/mainEvents.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file mainEvents.js
+ * @module mainEvents
+ * @description Contiene il metodo {mainEvents}
+ */
+
 const { Events, ActivityType } = require('discord.js');
 const executeFolderModule = require('./executeFunctions');
 const Variables = require('../classes/GlobalVariables');

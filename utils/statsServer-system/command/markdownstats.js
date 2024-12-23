@@ -1,3 +1,11 @@
+// Code: utils/statsServer-system/command/markdownstats.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file markdownstats.js
+ * @module markdownstats
+ * @description Questo file gestisce il comando per visualizzare l'aiuto per il markdown di Stats Server!
+ */
+
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits, PermissionsBitField } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');

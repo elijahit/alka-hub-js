@@ -1,3 +1,11 @@
+// Code: utils/statsServer-system/events/statsinteraction.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file statsinteraction.js
+ * @module statsinteraction
+ * @description Questo file gestisce l'evento per l'interazione con i bottoni di Stats Server!
+ */
+
 const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder, PermissionsBitField } = require('discord.js');
 const { readFileSync, writeFileSync, unlinkSync } = require('fs');
 const language = require('../../../languages/languages');

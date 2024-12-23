@@ -1,3 +1,11 @@
+// Code: User - bin/repository/User.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file User.js
+ * @module User
+ * @description Contiene i metodi per richiamare la tabella User
+ */
+
 const {User} = require('../models');
 
 

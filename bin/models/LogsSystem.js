@@ -1,3 +1,11 @@
+// Code: LogsSystem - bin/models/LogsSystem.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file LogsSystem.js
+ * @module LogsSystem
+ * @description Contiene il modello LogsSystem
+ */
+
 const { database } = require('../database');
 const { Sequelize } = require('sequelize');
 

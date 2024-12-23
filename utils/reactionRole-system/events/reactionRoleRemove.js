@@ -1,3 +1,11 @@
+// Code: utils/reactionRole-system/events/reactionRoleRemove.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file reactionRoleRemove.js
+ * @module reactionRoleRemove
+ * @description Questo file gestisce l'evento per la rimozione di un ruolo reazione!
+ */
+
 const { Events, EmbedBuilder} = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');

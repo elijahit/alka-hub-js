@@ -1,3 +1,11 @@
+// Code: app.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file app.js
+ * @module app
+ * @description Questo file gestisce l'avvio del bot!
+ */
+
 const { Collection } = require('discord.js');
 const { client } = require('./bin/client');
 const Variables = require('./bin/classes/GlobalVariables');

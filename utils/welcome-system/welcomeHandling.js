@@ -1,3 +1,11 @@
+// Code: utils/welcome-system/welcomeHandling.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file welcomeHandling.js
+ * @module welcomeHandling
+ * @description Questo file gestisce la creazione dell'immagine di benvenuto!
+ */
+
 "use_strict"
 const {Jimp, loadFont, measureText} = require("jimp");
 

@@ -1,3 +1,11 @@
+// Code: utils/trackerGame-system/command/apex.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file apex.js
+ * @module apex
+ * @description Questo file gestisce il comando per visualizzare le informazioni di un utente di Apex Legends!
+ */
+
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');

@@ -1,3 +1,11 @@
+// Code: utils/statsServer-system/command/statistics.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file statistics.js
+ * @module statistics
+ * @description Questo file gestisce il comando per impostare la propria categoria di statistiche!
+ */
+
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits, PermissionsBitField } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');

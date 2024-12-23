@@ -1,3 +1,11 @@
+// Code: LogsSystem - bin/repository/LogsSystem.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file LogsSystem.js
+ * @module LogsSystem
+ * @description Contiene i metodi per richiamare la tabella LogsSystem
+ */
+
 const Variables = require('../classes/GlobalVariables');
 const {LogsSystem} = require('../models');
 

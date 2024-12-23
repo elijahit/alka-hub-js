@@ -1,3 +1,8 @@
+// Code: all - deploy-commands/all.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+// Description: Questo file è un esempio di come caricare i comandi slash in un bot Discord.js
+
+
 const { REST, Routes } = require('discord.js');
 // const { token, tokenDev, tokenBeta, clientId, clientIdDev, clientIdBeta} = require('../config.json');
 // @TODO Da decidere come far funzionare il deploy dei comandi per multibot

@@ -1,3 +1,11 @@
+// Code: utils/general/data/timeZone.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file timeZone.js
+ * @module timeZone
+ * @description Questo file contiene la lista delle time zone
+ */
+
 let array = [
   "AD|Europe/Andorra",
   "AE|Asia/Dubai",

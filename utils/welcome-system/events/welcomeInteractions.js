@@ -1,3 +1,11 @@
+// Code: utils/welcome-system/events/welcomeInteractions.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file welcomeInteractions.js
+ * @module welcomeInteractions
+ * @description Questo file gestisce le interazioni per il sistema di benvenuto!
+ */
+
 const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder, Colors } = require('discord.js');
 const { readFileSync, writeFileSync, unlinkSync } = require('fs');
 const language = require('../../../languages/languages');

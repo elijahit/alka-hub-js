@@ -1,3 +1,11 @@
+// Code: Feature - bin/models/Feature.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file Feature.js
+ * @module Feature
+ * @description Contiene il modello Feature
+ */
+
 const { database } = require('../database');
 const { Sequelize } = require('sequelize');
 

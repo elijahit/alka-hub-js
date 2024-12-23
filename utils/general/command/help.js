@@ -1,3 +1,11 @@
+// Code: utils/general/command/help.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file help.js
+ * @module help
+ * @description Questo file contiene il comando per visualizzare la lista completa dei comandi nel server
+ */ 
+
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');

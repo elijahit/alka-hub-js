@@ -1,3 +1,11 @@
+// Code: executeFolderModule - bin/functions/executeFolderModule.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file executeFolderModule.js
+ * @module executeFolderModule
+ * @description Contiene il metodo {executeFolderModule}
+ */
+
 const fs = require('node:fs');
 const path = require('node:path');
 

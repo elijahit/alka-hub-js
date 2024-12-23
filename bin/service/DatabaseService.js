@@ -1,7 +1,11 @@
-/*
-  QUESTO E' UN FILE DI SERVIZIO PER RICHIAMARE I METODI DEI REPOSITORY SENZA CHIAMARE DIRETTAMENTE I REPOSITORY
-                            CONTERRA' SOLO I METODI USATI DALL'APPLICAZIONE
-*/
+// Code: DatabaseService - bin/service/DatabaseService.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file DatabaseService.js
+ * @module DatabaseService
+ * @description Contiene i metodi per richiamare i repository
+ * @see repository
+ */
 
 const { addUser: addUserGuild } = require('../repository/UserGuild');
 // addUserGuild - > Permette di aggiungere un utente rispettando le relazioni (User e Guild)

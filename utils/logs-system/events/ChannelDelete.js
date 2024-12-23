@@ -1,3 +1,11 @@
+// Code: utils/logs-system/events/ChannelDelete.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file ChannelDelete.js
+ * @module ChannelDelete
+ * @description Questo file contiene l'evento per il sistema di Logs
+ */
+
 const { Events, EmbedBuilder, TextChannel } = require('discord.js');
 const { readFileSync, read } = require('fs');
 const language = require('../../../languages/languages');

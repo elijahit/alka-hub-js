@@ -1,3 +1,11 @@
+// Code: utils/welcome-system/command/welcome.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file welcome.js
+ * @module welcome
+ * @description Questo file gestisce il comando per impostare i messaggi di benvenuto!
+ */
+
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');

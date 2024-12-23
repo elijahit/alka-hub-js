@@ -1,3 +1,11 @@
+// Code: utils/general/command/features.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file features.js
+ * @module features
+ * @description Questo file contiene il comando per abilitare o disabilitare le features
+ */
+
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');

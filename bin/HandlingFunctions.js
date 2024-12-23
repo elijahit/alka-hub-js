@@ -1,3 +1,11 @@
+// Code: HandlingFunctions - bin/HandlingFunctions.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file HandlingFunctions.js
+ * @module HandlingFunctions
+ * @description Contiene i metodi per la gestione degli errori e delle funzioni di controllo
+ */
+
 const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const { readFileSync, readdir, writeFile } = require("fs");
 const { stripIndents } = require('common-tags');

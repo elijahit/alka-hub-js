@@ -1,3 +1,11 @@
+// Code: utils/reactionRole-system/command/reactionroleremove.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file reactionroleremove.js
+ * @module reactionroleremove
+ * @description Questo file gestisce il comando per rimuovere i ruoli reazione
+ */
+
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');

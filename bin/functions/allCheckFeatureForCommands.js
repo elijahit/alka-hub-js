@@ -1,3 +1,11 @@
+// Code: allCheckFeatureForCommands - bin/functions/allCheckFeatureForCommands.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/** 
+ * Questa funzione dev'essere utilizzata solo in un comando che utilizza la tecnologia slashCommands.
+ * la funzione serve per fare tutti i check su una feature di Alka Hub.
+ * 
+*/
+
 const { EmbedBuilder } = require('discord.js');
 const { checkPremiumLimitation, checkPremiumFeature } = require('../../bin/functions/checkPremiumFeature');
 const { findAllAutoVoice } = require('../../bin/service/DatabaseService');
