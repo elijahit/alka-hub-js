@@ -1,6 +1,9 @@
 const {AutoRoles, Role} = require('../models');
 
-
+/**
+ * 
+ * @returns {Promise<Array<AutoRoles>>}
+ */
 async function findAll() {
   return await AutoRoles.findAll();
 }
@@ -8,6 +11,7 @@ async function findAll() {
 
 /**
  * @param {string} roleId 
+ * @returns {Promise<AutoRoles>}
  */
 async function finByRoleId(roleId) {
   return await AutoRoles.findOne({where: {role_id: roleId},
@@ -19,8 +23,8 @@ async function finByRoleId(roleId) {
 }
 
 /**
- * 
  * @param {string} roleId 
+ * @returns {Promise<AutoRoles>}
  */
 async function create(roleId) {
   return await AutoRoles.create({role_id: roleId});
@@ -30,6 +34,7 @@ async function create(roleId) {
  * 
  * @param {object} objToUpdate 
  * @param {object} objToCondition 
+ * @returns {Promise<AutoRoles>}
  */
 async function update(objToUpdate, objToCondition) {
   return await AutoRoles.update(objToUpdate, objToCondition);

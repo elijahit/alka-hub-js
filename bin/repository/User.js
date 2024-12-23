@@ -1,6 +1,10 @@
 const {User} = require('../models');
 
 
+/**
+ * 
+ * @returns {Promise<Array<User>>}
+ */
 async function findAll() {
   return await User.findAll();
 }
@@ -8,6 +12,7 @@ async function findAll() {
 
 /**
  * @param {string} userId 
+ * @returns {Promise<User>}
  */
 async function findByUserId(userId) {
   return await User.findOne({where: {user_id: userId}});
@@ -17,6 +22,7 @@ async function findByUserId(userId) {
  * 
  * @param {string} userId 
  * @param {string} username 
+ * @returns {Promise<User>} 
  */
 async function create(userId, username) {
   return await User.create({user_id: userId, name: username});
@@ -25,7 +31,8 @@ async function create(userId, username) {
 /**
  * 
  * @param {object} objToUpdate 
- * @param {object} objToCondition 
+ * @param {object} objToCondition
+ * @returns {Promise<[number, User[]]>} 
  */
 async function update(objToUpdate, objToCondition) {
   return await User.update(objToUpdate, objToCondition);

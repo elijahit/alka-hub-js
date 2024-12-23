@@ -1,7 +1,10 @@
 const {Permissions} = require('../models');
 const {Hash} = require('../models');
 
-
+/**
+ * 
+ * @returns {Promise<Array<Permissions>>}
+ */
 async function findAll() {
   return await Permissions.findAll();
 }
@@ -9,7 +12,7 @@ async function findAll() {
 
 /**
  * @param {string} permission_name 
- * @TODO Da fixare, non funziona da capire il perchè
+ * @returns {Promise<Permissions>}
  */
 async function findByPermissionName(permission_name) {
   return await Permissions.findOne({
@@ -23,6 +26,7 @@ async function findByPermissionName(permission_name) {
 
 /**
  * @param {int} id 
+ * @returns {Promise<Permissions>}
  */
 async function findById(id) {
   return await Permissions.findByPk(id);
@@ -31,6 +35,7 @@ async function findById(id) {
 /**
  * 
  * @param {string} permission_name 
+ * @returns {Promise<Permissions>}
  */
 async function create(permission_name) {
   return await Permissions.create({permission_name});
@@ -40,6 +45,7 @@ async function create(permission_name) {
  * 
  * @param {object} objToUpdate 
  * @param {object} objToCondition 
+ * @returns {Promise<[number, Permissions[]]>}
  */
 async function update(objToUpdate, objToCondition) {
   return await Permissions.update(objToUpdate, objToCondition);

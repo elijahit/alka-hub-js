@@ -3,7 +3,9 @@ const {Feature} = require('../models');
 const {Guild} = require('../models');
 
 
-
+/**
+ * @returns {Promise<Array<Feature>>} 
+ */
 async function findAll() {
   return await Feature.findAll();
 }
@@ -12,6 +14,7 @@ async function findAll() {
 /**
  * @param {string} guildId 
  * @param {string} featureId 
+ * @returns {Promise<Feature>}
  */
 async function getFeatureIsEnabled(guildId, featureId) {
   return await Feature.findOne({
@@ -27,6 +30,7 @@ async function getFeatureIsEnabled(guildId, featureId) {
 
 /**
  * @param {int} id 
+ * @returns {Promise<Feature>}
  */
 async function findById(id) {
   return await Feature.findByPk(id);
@@ -36,6 +40,7 @@ async function findById(id) {
  * 
  * @param {object} objToUpdate 
  * @param {object} objToCondition 
+ * @returns {Promise<Feature>}
  */
 async function update(objToUpdate, objToCondition) {
   return await Feature.update(objToUpdate, objToCondition);

@@ -7,6 +7,7 @@ const Guild = require('../repository/Guild');
  * @param {string} userId
  * @param {string} guildId 
  * @param {string} username 
+ * @returns {Promise<void>}
  */
 async function addUser(userId, guildId, username) {
   try {
@@ -27,6 +28,10 @@ async function addUser(userId, guildId, username) {
   }
 }
 
+/**
+ * 
+ * @returns {Promise<Array<UserGuild>>}
+ */
 async function findAll() {
   return await UserGuild.findAll();
 }

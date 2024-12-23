@@ -1,6 +1,10 @@
 const {Config} = require('../models');
 
 
+/**
+ * 
+ * @returns {Promise<Array<Config>>}
+ */
 async function findAll() {
   return await Config.findAll();
 }
@@ -8,6 +12,7 @@ async function findAll() {
 
 /**
  * @param {string} name 
+ * @returns {Promise<Config>}
  */
 async function findByName(name) {
   return await Config.findOne({where: {name: name}});
@@ -15,4 +20,5 @@ async function findByName(name) {
 
 module.exports = {
   findByName,
+  findAll
 }

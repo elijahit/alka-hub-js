@@ -13,12 +13,13 @@ const Variables = require('../classes/GlobalVariables');
  * Questa funzione dev'essere utilizzata solo in un comando che utilizza la tecnologia slashCommands.
  * la funzione serve per fare tutti i check su una feature di Alka Hub.
  * 
- * @param {*} guildId (L'id del server)
- * @param {*} featureId (L'id della feature)
- * @param {*} languageSystemDisabled (La scritta che deve apparire quando una funzione è disabilitata da sistema)
- * @param {*} languagePremiumLimitation (La scritta che deve apparire quando una funzione è limitata)
- * @param {*} languagePremiumFeature (La scritta che deve apparire quando una funzione è premium)
- * @param {*} languageFeatureIsEnabled (La scritta che deve apparire quando una funzionalità è disabilitata da utente)
+ * @param {object} interaction (L'interazione del comando slash)
+ * @param {string} guildId (L'id della gilda)
+ * @param {integer} featureId (L'id della feature)
+ * @param {string} languageSystemDisabled (Il messaggio di errore se il sistema è disabilitato)
+ * @param {string} languagePremiumLimitation (Il messaggio di errore se la limitazione premium è stata raggiunta)
+ * @param {string} languagePremiumFeature (Il messaggio di errore se la feature è premium)
+ * @param {string} languageFeatureIsEnabled (Il messaggio di errore se la feature è disabilitata)
  * @return {boolean} (Ritorna true, se tutto va bene, false se c'è qualche problema e manda di conseguenza una risposta a un interazione)
  */
 async function allCheckFeatureForCommands(interaction, guildId, featureId, languageSystemDisabled, languagePremiumLimitation, languagePremiumFeature, languageFeatureIsEnabled) {
