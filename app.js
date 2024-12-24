@@ -89,7 +89,7 @@ client.once(Events.ClientReady, readyClient => {
   // FUNZIONI
   executeFolderModule('utils');
 
-
+  let count = 0;
   const presenceArray = ["👷‍♂️ by alkanetwork.eu", "🕵️‍♀️ Multibot and multilanguage",
     "🎫 Tickets - Logs and more", "💸 buy a custom bot now", "🤯 try me with /help",
     "😏 custom bot start 1.99€", "💨 2.0.0 in coming!"];
@@ -101,13 +101,13 @@ client.once(Events.ClientReady, readyClient => {
     });
   } else {
     setInterval(async () => {
-      const count = Variables.getPresenceCounter();
+      
       client.user.setPresence({
         activities: [{ name: presenceArray[count], state: presenceArray[count], type: ActivityType.Custom }],
         status: 'online'
       });
       Variables.setPresenceCounter(count + 1)
-      if (count == presenceArray.length - 1) {
+      if (count == count - 1) {
         Variables.setPresenceCounter(0);
       }
     }, 5000);
