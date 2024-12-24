@@ -106,7 +106,7 @@ client.once(Events.ClientReady, readyClient => {
         activities: [{ name: presenceArray[count], state: presenceArray[count], type: ActivityType.Custom }],
         status: 'online'
       });
-      Variables.setPresenceCounter(count + 1)
+      count = count + 1;
       if (count == count - 1) {
         count = 0;
       }
