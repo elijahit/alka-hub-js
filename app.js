@@ -90,41 +90,42 @@ client.once(Events.ClientReady, readyClient => {
   executeFolderModule('utils');
 
 
-  const presenceArray = ["👷‍♂️ by alkanetwork.eu", "🕵️‍♀️ Multibot and multilanguage", 
-  "🎫 Tickets - Logs and more", "💸 buy a custom bot now", "🤯 try me with /help", 
-  "😏 custom bot start 1.99€", "💨 2.0.0 in coming!"];
+  const presenceArray = ["👷‍♂️ by alkanetwork.eu", "🕵️‍♀️ Multibot and multilanguage",
+    "🎫 Tickets - Logs and more", "💸 buy a custom bot now", "🤯 try me with /help",
+    "😏 custom bot start 1.99€", "💨 2.0.0 in coming!"];
 
-    if(presenceArray.length == 1) {
+  if (presenceArray.length == 1) {
+    client.user.setPresence({
+      activities: [{ name: presenceArray[count], state: presenceArray[count], type: ActivityType.Custom }],
+      status: 'online'
+    });
+  } else {
+    setInterval(async () => {
+      const count = Variables.getPresenceCounter();
       client.user.setPresence({
         activities: [{ name: presenceArray[count], state: presenceArray[count], type: ActivityType.Custom }],
         status: 'online'
       });
-    } else {
-      setInterval(async () => {
-        const count = Variables.getPresenceCounter();
-        client.user.setPresence({
-          activities: [{ name: presenceArray[count], state: presenceArray[count], type: ActivityType.Custom }],
-          status: 'online'
-        });
-        Variables.setPresenceCounter(count + 1)
-        if (count == presenceArray.length-1) {
-          Variables.setPresenceCounter(0);
-        }
-      }, 5000);
+      Variables.setPresenceCounter(count + 1)
+      if (count == presenceArray.length - 1) {
+        Variables.setPresenceCounter(0);
+      }
+    }, 5000);
+  }
 
   // FUNZIONI DI HandlingFunction
-  
+
   // FUNZIONE DI CLEANER PER IL DATABASE
   setInterval(async () => {
     await cleanerDatabase(client);
   }, 21600000);
-  
+
   // FUNZIONE DI reactionRole-system
   setTimeout(async () => {
     await reactionRoleCached(client);
     console.log('[REACTION ROLES] Cache caricata con successo!');
   }, 3000);
-  
+
   // FUNZIONE DI statsServer-system
   setInterval(async () => {
     await statisticsUpdate(client);
