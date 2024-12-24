@@ -107,7 +107,7 @@ client.once(Events.ClientReady, readyClient => {
         status: 'online'
       });
       count = count + 1;
-      if (count == count - 1) {
+      if (count == presenceArray.length - 1) {
         count = 0;
       }
     }, 5000);
