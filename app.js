@@ -108,7 +108,7 @@ client.once(Events.ClientReady, readyClient => {
       });
       Variables.setPresenceCounter(count + 1)
       if (count == count - 1) {
-        Variables.setPresenceCounter(0);
+        count = 0;
       }
     }, 5000);
   }
