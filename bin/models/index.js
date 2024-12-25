@@ -22,6 +22,7 @@ const { Config } = require('./Config');
 const { LogsSystem } = require('./LogsSystem');
 const { Statistics } = require('./Statistics');
 const { Level } = require('./Level');
+const { LevelsConfig } = require('./LevelsConfig');
 
 
 
@@ -75,5 +76,6 @@ module.exports = {
   Config,
   LogsSystem,
   Statistics,
-  Level
+  Level,
+  LevelsConfig
 }

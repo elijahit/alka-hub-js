@@ -54,6 +54,13 @@ const { findByGuildId: findLogsByGuildId, update: updateLogs, create: createLogs
 const { findByGuildIdAndChannelId: findStatistics } = require('../repository/Statistics');
 // findByGuildIdAndChannelId -> Permette di cercare una configurazione di Statistics nella tabella statistics
 
+const {findByGuildId: findLevelsConfigByGuildId, findAll: findLevelsConfigAll, create: createLevelsConfig, update: updateLevelsConfig, findByGuildIdAndChannelId: findLevelsConfigByGuildIdAndChannelId} = require('../repository/LevelsConfig'); 
+// findLevelsConfigByGuildId -> Permette di cercare una configurazione di LevelsConfig nella tabella levels_config
+// findLevelsConfigAll -> Permette di cercare tutte le configurazioni di LevelsConfig nella tabella levels_config
+// createLevelsConfig -> Permette di creare una configurazione di LevelsConfig nella tabella levels_config
+// updateLevelsConfig -> Permette di aggiornare una configurazione di LevelsConfig nella tabella levels_config
+// findLevelsConfigByGuildIdAndChannelId -> Permette di cercare una configurazione di LevelsConfig nella tabella levels_config tramite guildId e channelId
+
 
 
 
@@ -86,5 +93,10 @@ module.exports = {
   findLogsByGuildId,
   updateLogs,
   createLogs,
-  findStatistics
+  findStatistics,
+  findLevelsConfigByGuildId,
+  findLevelsConfigAll,
+  createLevelsConfig,
+  updateLevelsConfig,
+  findLevelsConfigByGuildIdAndChannelId
 }
