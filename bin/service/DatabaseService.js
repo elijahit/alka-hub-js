@@ -101,12 +101,6 @@ const { findAll: findAllLevelsRoles,
 // updateLevelsRoles -> Permette di aggiornare una configurazione di LevelsRoles nella tabella levels_roles
 
 
-
-(async () => {
-
-})()
-
-
 module.exports = {
   addUserGuild,
   findUserById,
