@@ -115,6 +115,20 @@ const {
 // createRole -> Permette di creare una configurazione di Role nella tabella roles
 // updateRole -> Permette di aggiornare una configurazione di Role nella tabella roles
 
+const {
+  findAll: findAllReactions,
+  findByGuildId: findByGuildIdReactions,
+  findByGuildIdAndMessageId: findByGuildIdAndMessageIdReactions,
+  create: createReaction,
+  update: updateReaction
+} = require('../repository/ReactionRole');
+// findAllReactions -> Permette di cercare tutte le configurazioni di ReactionRole nella tabella reaction_roles
+// findByGuildIdReactions -> Permette di cercare una configurazione di ReactionRole nella tabella reaction_roles tramite guildId
+// findByGuildIdAndMessageIdReactions -> Permette di cercare una configurazione di ReactionRole nella tabella reaction_roles tramite guildId e messageId
+// createReaction -> Permette di creare una configurazione di ReactionRole nella tabella reaction_roles
+// updateReaction -> Permette di aggiornare una configurazione di ReactionRole nella tabella reaction_roles
+
+
 
 module.exports = {
   addUserGuild,
@@ -162,5 +176,10 @@ module.exports = {
   findAllRoles,
   findByGuildIdRole,
   createRole,
-  updateRole
+  updateRole,
+  findAllReactions,
+  findByGuildIdReactions,
+  findByGuildIdAndMessageIdReactions,
+  createReaction,
+  updateReaction
 }

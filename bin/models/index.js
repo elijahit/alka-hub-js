@@ -24,6 +24,7 @@ const { Statistics } = require('./Statistics');
 const { Level } = require('./Level');
 const { LevelsConfig } = require('./LevelsConfig');
 const { LevelsRoles } = require('./LevelsRoles');
+const { ReactionRole } = require('./ReactionRole');
 
 
 
@@ -79,5 +80,6 @@ module.exports = {
   Statistics,
   Level,
   LevelsConfig,
-  LevelsRoles
+  LevelsRoles,
+  ReactionRole
 }
