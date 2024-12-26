@@ -1,7 +1,7 @@
 {
   "noPermission": {
     "embed_title": "Levels System",
-    "description_limit_premium": "Hai raggiunto il numero massimo di AutoVoice disponibili nel tuo piano. Passa al piano Premium per sbloccare AutoVoice illimitati!",
+    "description_limit_premium": "Hai raggiunto il numero massimo di LevelsRoles disponibili nel tuo piano. Passa al piano Premium per sbloccare LevelsRoles illimitati!",
     "description_premium_feature": "Questa funzionalità è disponibile solo con il piano Premium. Aggiorna subito il tuo piano per sbloccarla!",
     "description_embed": "Non hai il permesso per usare questo comando!",
     "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla.",

@@ -8,7 +8,7 @@
 
 const { EmbedBuilder } = require('discord.js');
 const { checkPremiumLimitation, checkPremiumFeature } = require('../../bin/functions/checkPremiumFeature');
-const { findAllAutoVoice } = require('../../bin/service/DatabaseService');
+const { findAllAutoVoice, findAllLevelsRolesByGuildId, findAllAutoVoiceByGuild } = require('../../bin/service/DatabaseService');
 const { checkFeatureSystemDisabled } = require('../../bin/functions/checkFeatureSystemDisabled');
 const checkFeaturesIsEnabled = require('../../bin/functions/checkFeaturesIsEnabled');
 const { noEnabledFunc } = require('../HandlingFunctions');
@@ -34,7 +34,7 @@ const Variables = require('../classes/GlobalVariables');
 async function allCheckFeatureForCommands(interaction, guildId, featureId, featureLimitationControl, languageSystemDisabled, languagePremiumLimitation, languagePremiumFeature, languageFeatureIsEnabled) {
   if (await checkFeaturesIsEnabled(guildId, featureId)) {
     
-    const howManyLengthUseForFeature = await getLengthFeature(featureId);
+    const howManyLengthUseForFeature = await getLengthFeature(featureId, guildId);
     
     if (await checkPremiumLimitation(guildId, featureId) == -1 || howManyLengthUseForFeature < await checkPremiumLimitation(guildId, featureId) || featureLimitationControl == false) {
       if (await checkPremiumFeature(guildId, featureId)) {
@@ -86,7 +86,7 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, featu
  * @param {integer} featureId 
  * @returns {integer}
  */
-async function getLengthFeature(featureId) {
+async function getLengthFeature(featureId, guildId) {
   let howManyLengthUseForFeature = 0;
     switch(featureId) {
       case 1:
@@ -94,7 +94,7 @@ async function getLengthFeature(featureId) {
       case 2:
         break;
       case 3:
-        howManyLengthUseForFeature = (await findAllAutoVoice()).length;
+        howManyLengthUseForFeature = (await findAllAutoVoiceByGuildId(guildId)).length;
         break;
       case 4:
         break;
@@ -111,6 +111,7 @@ async function getLengthFeature(featureId) {
       case 10:
         break;
       case 11:
+        howManyLengthUseForFeature = (await findAllLevelsRolesByGuildId(guildId)).length;
         break;
     }
     return howManyLengthUseForFeature;

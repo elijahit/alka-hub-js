@@ -46,7 +46,7 @@ const { findByChannelId: findAutoVoiceByChannelId,
   findAll: findAllAutoVoice, 
   findBylId: findAutoVoiceById, 
   remove: removeAutoVoiceById, 
-  findAllbyGuild: findAllAutoVoiceByGuild } = require('../repository/AutoVoice');
+  findAllbyGuild: findAllAutoVoiceByGuildId } = require('../repository/AutoVoice');
 // findByChannelId -> Permette di cercare un autoVoice nella tabella auto_voice.
 // createAutoVoice -> Permette di creare un autoVoice nella tabella auto_voice.
 // findAllAutoVoice -> Permette di cercare tutti gli autoVoice nella tabella auto_voice.
@@ -92,6 +92,7 @@ const { findAll: findAllLevels,
 const { findAll: findAllLevelsRoles,
   findByGuildId: findByGuildIdLevelsRoles,
   findByGuildIdAndRoleId: findByGuildIdAndRoleIdLevelsRoles,
+  findAllByGuildId: findAllLevelsRolesByGuildId,
   create: createLevelsRoles,
   update: updateLevelsRoles,
   remove: removeLevelsRoles } = require('../repository/LevelsRoles');
@@ -123,7 +124,7 @@ module.exports = {
   findAllAutoVoice,
   findAutoVoiceById,
   removeAutoVoiceById,
-  findAllAutoVoiceByGuild,
+  findAllAutoVoiceByGuildId,
   findLogsByGuildId,
   updateLogs,
   createLogs,
@@ -143,5 +144,6 @@ module.exports = {
   findByGuildIdAndRoleIdLevelsRoles,
   createLevelsRoles,
   updateLevelsRoles,
-  removeLevelsRoles
+  removeLevelsRoles,
+  findAllLevelsRolesByGuildId
 }

@@ -46,10 +46,6 @@ module.exports = {
 		await returnPermission(interaction, "levels", async result => {
 			try {
 				if (result) {
-					if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 11, true, language_result.noPermission.description_embed_no_features_by_system, 
-						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
-						language_result.noPermission.description_embed_no_features)) return;
-
 					let checkLevelsIsPresent = await findByGuildIdAndRoleIdLevelsRoles(interaction.guild.id, role.id);
 					checkLevelsIsPresent = checkLevelsIsPresent?.get({ plain: true });
 					
@@ -65,6 +61,12 @@ module.exports = {
 							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					} else {
+						// CONTROLLA SE L'UTENTE HA LE FUNZIONI ABILITATE PER QUESTO COMANDO E SE HA LIMITAZIONI PREMIUM RAGGIUNTE
+						// SOLO PER LA CREAZIONE DEL RUOLO NEL SISTEMA DI LIVELLI (FEATURE 11)
+						if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 11, true, language_result.noPermission.description_embed_no_features_by_system, 
+							language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
+							language_result.noPermission.description_embed_no_features)) return;
+
 						await createLevelsRoles(interaction.guild.id, role.id, level);
 	
 						const embedLog = new EmbedBuilder()

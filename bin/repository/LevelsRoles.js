@@ -17,6 +17,14 @@ async function findAll() {
   return await LevelsRoles.findAll({where: {config_id: Variables.getConfigId()}});
 }
 
+/**
+ * @param {string} guildId
+ * @returns {Promise<Model[]>}
+ */
+async function findAllByGuildId(guildId) {
+  return await LevelsRoles.findAll({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+}
+
 
 /**
  * @param {string} guildId 
@@ -44,7 +52,7 @@ async function findByGuildIdAndRoleId(guildId, roleId) {
  * @throws {Error}
  */
 async function create(guildId, roleId, level) {
-  const existingLevelsRoles = await LevelsRoles.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+  const existingLevelsRoles = await LevelsRoles.findOne({where: {guild_id: guildId, role_id: roleId, config_id: Variables.getConfigId()}});
   if (!existingLevelsRoles) {
     return await LevelsRoles.create({guild_id: guildId, role_id: roleId, level: level, config_id: Variables.getConfigId()});
   }
@@ -69,6 +77,7 @@ async function remove(objToCondition) {
 
 module.exports = {
   findAll,
+  findAllByGuildId,
   findByGuildId,
   findByGuildIdAndRoleId,
   create,
