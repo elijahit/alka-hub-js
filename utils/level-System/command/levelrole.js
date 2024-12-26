@@ -14,6 +14,7 @@ const { errorSendControls, returnPermission, noInitGuilds, noHavePermission, noE
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -43,37 +44,37 @@ module.exports = {
 		await returnPermission(interaction, "levels", async result => {
 			try {
 				if (result) {
+					if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 11, true, language_result.noPermission.description_embed_no_features_by_system, 
+						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
+						language_result.noPermission.description_embed_no_features)) return;
 
 					const checkLevelsIsPresent = await readDb(`SELECT * from levels_roles WHERE guilds_id = ? AND roles_id = ?`, interaction.guild.id, role.id);
 
 					const customEmoji = emoji.levelsSystem.levelsMaker;
-					if (await checkFeaturesIsEnabled(interaction.guild.id, 11)) {
-						if (checkLevelsIsPresent) {
-							await runDb('DELETE FROM levels_roles WHERE guilds_id = ? AND roles_id = ?', interaction.guild.id, role.id);
-
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-								.setDescription(language_result.levelsCommand.description_embed_delrole.replace("{0}", role))
-								.setFooter({ text: `${language_result.levelsCommand.embed_footer}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
-								.setColor(colors.general.error);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
-							return;
-						}
-
-						//checkRolesRelation(role.id, interaction.guild.id);
-
-						await runDb('INSERT INTO levels_roles (guilds_id, roles_id, levels) VALUES (?, ?, ?)', interaction.guild.id, role.id, level);
+					if (checkLevelsIsPresent) {
+						await runDb('DELETE FROM levels_roles WHERE guilds_id = ? AND roles_id = ?', interaction.guild.id, role.id);
 
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-							.setDescription(language_result.levelsCommand.description_embed_addrole.replace("{0}", role).replace("{1}", level))
+							.setDescription(language_result.levelsCommand.description_embed_delrole.replace("{0}", role))
 							.setFooter({ text: `${language_result.levelsCommand.embed_footer}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
-							.setColor(colors.general.success);
+							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						return;
 					}
-					else {
-						await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
-					}
+
+					//checkRolesRelation(role.id, interaction.guild.id);
+
+					await runDb('INSERT INTO levels_roles (guilds_id, roles_id, levels) VALUES (?, ?, ?)', interaction.guild.id, role.id, level);
+
+					const embedLog = new EmbedBuilder()
+						.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
+						.setDescription(language_result.levelsCommand.description_embed_addrole.replace("{0}", role).replace("{1}", level))
+						.setFooter({ text: `${language_result.levelsCommand.embed_footer}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
+						.setColor(colors.general.success);
+					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+
+
 				}
 				else {
 					await noHavePermission(interaction, language_result);

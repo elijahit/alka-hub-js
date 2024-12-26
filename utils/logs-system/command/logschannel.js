@@ -93,7 +93,7 @@ module.exports = {
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		await returnPermission(interaction, "logschannel", async result => {
-			if (!await allCheckFeatureForCommands(interaction, interaction.guild.id, 1, language_result.noPermission.description_embed_no_features_by_system,
+			if (!await allCheckFeatureForCommands(interaction, interaction.guild.id, 1, true, language_result.noPermission.description_embed_no_features_by_system,
 				language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature,
 				language_result.noPermission.description_embed_no_features)) return;
 			try {

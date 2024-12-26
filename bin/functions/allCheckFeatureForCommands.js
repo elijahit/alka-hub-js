@@ -24,18 +24,19 @@ const Variables = require('../classes/GlobalVariables');
  * @param {object} interaction (L'interazione del comando slash)
  * @param {string} guildId (L'id della gilda)
  * @param {integer} featureId (L'id della feature)
+ * @param {boolean} featureLimitationControl (Il controllo della limitazione della feature)
  * @param {string} languageSystemDisabled (Il messaggio di errore se il sistema è disabilitato)
  * @param {string} languagePremiumLimitation (Il messaggio di errore se la limitazione premium è stata raggiunta)
  * @param {string} languagePremiumFeature (Il messaggio di errore se la feature è premium)
  * @param {string} languageFeatureIsEnabled (Il messaggio di errore se la feature è disabilitata)
  * @return {boolean} (Ritorna true, se tutto va bene, false se c'è qualche problema e manda di conseguenza una risposta a un interazione)
  */
-async function allCheckFeatureForCommands(interaction, guildId, featureId, languageSystemDisabled, languagePremiumLimitation, languagePremiumFeature, languageFeatureIsEnabled) {
+async function allCheckFeatureForCommands(interaction, guildId, featureId, featureLimitationControl, languageSystemDisabled, languagePremiumLimitation, languagePremiumFeature, languageFeatureIsEnabled) {
   if (await checkFeaturesIsEnabled(guildId, featureId)) {
     
     const howManyLengthUseForFeature = await getLengthFeature(featureId);
     
-    if (await checkPremiumLimitation(guildId, featureId) == -1 || howManyLengthUseForFeature < await checkPremiumLimitation(guildId, featureId)) {
+    if (await checkPremiumLimitation(guildId, featureId) == -1 || howManyLengthUseForFeature < await checkPremiumLimitation(guildId, featureId) || featureLimitationControl == false) {
       if (await checkPremiumFeature(guildId, featureId)) {
         if (await checkFeatureSystemDisabled(featureId, featureId)) {
           return true;

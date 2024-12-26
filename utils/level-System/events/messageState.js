@@ -28,9 +28,10 @@ module.exports = {
   async execute(message) {
     try {
       if (!message?.member?.user?.bot) {
-        if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 11, language_result.noPermission.description_embed_no_features_by_system, 
-          language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
-          language_result.noPermission.description_embed_no_features)) return;
+        // if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 11, language_result.noPermission.description_embed_no_features_by_system, 
+        //   language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
+        //   language_result.noPermission.description_embed_no_features)) return;
+        // QUESTO SISTEMA QUI NON VA BENE, PERCHE' NON E' UN COMANDO SLASH, MA UN EVENTO, QUINDI NON POSSO USARE L'INTERAZIONE
           
         const levelsConfig = await readDb(`SELECT * from levels_config WHERE guilds_id = ?`, message.guild.id);
         let checkUser = await readDb("SELECT * FROM levels WHERE guilds_id = ? AND users_id = ?", message.guild.id, message.member.id);
