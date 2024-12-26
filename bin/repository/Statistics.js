@@ -31,12 +31,14 @@ async function findByGuildIdAndChannelId(guildId, channelId) {
 /**
  * 
  * @param {string} guildId 
- * @param {string} language 
- * @param {string} time_zone
+ * @param {string} channelId
+ * @param {string} channelName
+ * @param {integer} type
  * @returns {Promise<Model>}
  */
-async function create(guildId, language = "EN", time_zone = "Europe/London") {
-  return await Statistics.create({guild_id: guildId, language: language, time_zone: time_zone, config_id: Variables.getConfigId()});
+async function create(guildId, channelId, channelName, type) {
+  if(Statistics.findOne({where: {guild_id: guildId, channel_id: channelId, config_id: Variables.getConfigId()}})) return null;
+  return await Statistics.create({guild_id: guildId, channel_id: channelId, channel_name: channelName, type: type, config_id: Variables.getConfigId()});
 }
 
 /**

@@ -36,6 +36,7 @@ async function findByGuildId(guildId) {
  * @returns {Promise<Model>}
  */
 async function create(guildId, customTable, customValue) {
+  if(LogsSystem.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}})) return null;
   return await LogsSystem.create({guild_id: guildId, config_id: Variables.getConfigId(), [customTable]: customValue});
 }
 

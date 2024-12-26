@@ -45,6 +45,7 @@ async function update(objToUpdate, objToCondition) {
  * @returns {Promise<Model>}
  */
 async function create(guildId, featureId, isEnabled) {
+  if(GuildEnabledFeature.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}})) return null;
   return await GuildEnabledFeature.create({guild_id: guildId, feature_id: featureId, is_enabled: isEnabled, config_id: Variables.getConfigId()});
 }
 

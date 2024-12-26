@@ -47,6 +47,7 @@ async function findById(id) {
  * @returns {Promise<Model>}
  */
 async function create(permission_name) {
+  if(Permissions.findOne({where: {permission_name: permission_name}})) return null;
   return await Permissions.create({permission_name});
 }
 

@@ -8,6 +8,7 @@
 
 const { Model } = require('sequelize');
 const {AutoRoles, Role} = require('../models');
+const Variables = require('../classes/GlobalVariables');
 
 /**
  * 
@@ -33,10 +34,12 @@ async function finByRoleId(roleId) {
 
 /**
  * @param {string} roleId 
+ * @param {string} guildId 
  * @returns {Promise<Model>}
  */
-async function create(roleId) {
-  return await AutoRoles.create({role_id: roleId});
+async function create(roleId, guildId) {
+  if(AutoRoles.findOne({where: {role_id: roleId, guild_id: guildId, config_id: Variables.getConfigId()}})) return null;
+  return await AutoRoles.create({role_id: roleId , guild_id: guildId, config_id: Variables.getConfigId()});
 }
 
 /**

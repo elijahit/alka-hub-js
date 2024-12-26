@@ -10,6 +10,8 @@ const { database } = require('../database');
 const { Sequelize } = require('sequelize');
 
 const AutoRoles = database.define('auto_roles', {
+  config_id: { type: Sequelize.INTEGER },
+  guild_id: { type: Sequelize.STRING },
   role_id: { type: Sequelize.STRING }
 });
 

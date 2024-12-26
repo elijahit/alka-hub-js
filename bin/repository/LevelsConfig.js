@@ -43,13 +43,8 @@ async function findByGuildIdAndChannelId(guildId, channelId) {
  * @throws {Error}
  */
 async function create(guildId, channelId) {
-  const existingLevelsConfig = await LevelsConfig.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
-  if (!existingLevelsConfig) {
-    return await LevelsConfig.create({guild_id: guildId, log_channel: channelId, config_id: Variables.getConfigId()});
-  }
-  else {
-    throw new Error('LevelsConfig already exists');
-  }
+  if(LevelsConfig.findOne({where: {guild_id: guildId, log_channel: channelId, config_id: Variables.getConfigId()}})) return null;
+  return await LevelsConfig.create({guild_id: guildId, log_channel: channelId, config_id: Variables.getConfigId()});
 }
 
 /**
