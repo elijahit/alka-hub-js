@@ -52,7 +52,7 @@ async function findByGuildIdAndRoleId(guildId, roleId) {
  * @throws {Error}
  */
 async function create(guildId, roleId, level) {
-  if(LevelsRoles.findOne({where: {guild_id: guildId, role_id: roleId, config_id: Variables.getConfigId()}})) return null;
+  if(await LevelsRoles.findOne({where: {guild_id: guildId, role_id: roleId, config_id: Variables.getConfigId()}})) return null;
   return await LevelsRoles.create({guild_id: guildId, role_id: roleId, level: level, config_id: Variables.getConfigId()});
 }
 

@@ -55,7 +55,7 @@ async function findBylId(guildId, id) {
  * @returns {Promise<Model>}
  */
 async function create(guildId, type, categoryId, nickname) {
-  if(AutoVoice.findOne({where: {guild_id: guildId, channel_id: categoryId, config_id: Variables.getConfigId()}})) return null;
+  if(await AutoVoice.findOne({where: {guild_id: guildId, channel_id: categoryId, config_id: Variables.getConfigId()}})) return null;
   return await AutoVoice.create({guild_id: guildId, type: type, channel_id: categoryId, nickname: nickname, config_id: Variables.getConfigId()});
 }
 

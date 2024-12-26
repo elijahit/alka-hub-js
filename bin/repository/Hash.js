@@ -62,7 +62,7 @@ async function findById(id) {
  * @returns {Promise<Model>}
  */
 async function create(hash_name) {
-  if(Hash.findOne({where: {hash_name}})) return null;
+  if(await Hash.findOne({where: {hash_name}})) return null;
   return await Hash.create({hash_name});
 }
 

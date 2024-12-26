@@ -14,19 +14,22 @@ const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermi
 const colors = require('../../../bin/data/colors');
 const emojis = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
+const { createRole, createReaction, findByGuildIdAndMessageIdAndEmojiReactions } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('reactionrole')
 		.setDescription('Use this command to set your reaction roles')
-		.addStringOption(message => 
+		.addStringOption(message =>
 			message
 				.setName('message')
 				.setDescription('The message ID to which you want to assign the reaction role')
 				.setRequired(true)
 		)
-		.addStringOption(emoji => 
+		.addStringOption(emoji =>
 			emoji
 				.setName('emoji')
 				.setDescription('The emoji to which the user must react for the reaction role')
@@ -51,72 +54,69 @@ module.exports = {
 		await returnPermission(interaction, "reactionrole", async result => {
 			try {
 				if (result) {
+					if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 5, true, language_result.noPermission.description_embed_no_features_by_system, 
+						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
+						language_result.noPermission.description_embed_no_features)) return;
 
-					if (await checkFeaturesIsEnabled(interaction.guild.id, 5)) {
-						// CONTROLLO SE IL RUOLO SI TROVA SOTTO AL RUOLO DA IMPOSTARE
-						if(interaction.guild.roles.botRoleFor(interaction.client.user).rawPosition < role.rawPosition) {
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-								.setDescription(language_result.addCommand.description_embed_missingpermissions.replace("{0}", `${interaction.guild.roles.botRoleFor(interaction.client.user)}`))
-								.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
-								.setColor(colors.general.error);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
-							return;
-						}
-						// CONTROLLO SE IL MESSAGGIO SI TROVA NELLO STESSO CANALE DI DOVE VIENE FATTA L'INTERAZIONE
-						let messageResolve;
-						try {
-							messageResolve = await interaction.channel.messages.fetch(message)
-						}
-						catch {
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-								.setDescription(language_result.addCommand.description_embed_channelnotfound)
-								.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
-								.setColor(colors.general.error);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
-							return;
-						}
-
-						const checkReactionAlreadySet = await readDb(`SELECT * 
-						FROM reaction_roles rs
-						JOIN roles r ON rs.roles_id = r.roles_id
-						WHERE rs.roles_id = ? AND rs.message_id = ? AND rs.emoji = ? AND (r.guilds_id = ? OR r.guilds_id IS NULL)`, roleId, message, emoji, interaction.guild.id);
-
-						if (checkReactionAlreadySet) {
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-								.setDescription(language_result.addCommand.description_embed_alreadyset)
-								.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
-								.setColor(colors.general.error);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
-							return;
-						}
-						// IMPOSTO LA REACTION ALTRIMENTI ANNULLO TUTTO
-						try {
-							await messageResolve.react(emoji);
-						}
-						catch {
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-								.setDescription(language_result.addCommand.description_embed_emojinotfound)
-								.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
-								.setColor(colors.general.error);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
-							return;
-						}
-						//checkRolesRelation(roleId, interaction.guild.id);
-						await runDb('INSERT INTO reaction_roles (roles_id, emoji, message_id) VALUES (?, ?, ?)', roleId, emoji, message);
-
+					// CONTROLLO SE IL RUOLO SI TROVA SOTTO AL RUOLO DA IMPOSTARE
+					if (interaction.guild.roles.botRoleFor(interaction.client.user).rawPosition < role.rawPosition) {
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-							.setDescription(language_result.addCommand.description_embed.replace("{0}", role))
+							.setDescription(language_result.addCommand.description_embed_missingpermissions.replace("{0}", `${interaction.guild.roles.botRoleFor(interaction.client.user)}`))
 							.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
-							.setColor(colors.general.success);
+							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
-					} else {
-						await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
+						return;
 					}
+					// CONTROLLO SE IL MESSAGGIO SI TROVA NELLO STESSO CANALE DI DOVE VIENE FATTA L'INTERAZIONE
+					let messageResolve;
+					try {
+						messageResolve = await interaction.channel.messages.fetch(message)
+					}
+					catch {
+						const embedLog = new EmbedBuilder()
+							.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
+							.setDescription(language_result.addCommand.description_embed_channelnotfound)
+							.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
+							.setColor(colors.general.error);
+						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						return;
+					}
+
+					let checkReactionAlreadySet = await findByGuildIdAndMessageIdAndEmojiReactions(interaction.guild.id, message, emoji);
+					checkReactionAlreadySet = checkReactionAlreadySet?.get({ plain: true });
+					if (checkReactionAlreadySet) {
+						const embedLog = new EmbedBuilder()
+							.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
+							.setDescription(language_result.addCommand.description_embed_alreadyset)
+							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setColor(colors.general.error);
+						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						return;
+					}
+					// IMPOSTO LA REACTION ALTRIMENTI ANNULLO TUTTO
+					try {
+						await messageResolve.react(emoji);
+					}
+					catch {
+						const embedLog = new EmbedBuilder()
+							.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
+							.setDescription(language_result.addCommand.description_embed_emojinotfound)
+							.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
+							.setColor(colors.general.error);
+						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						return;
+					}
+					await createRole(roleId, interaction.guild.id);
+					await createReaction(roleId, interaction.guild.id, emoji, message);
+
+					const embedLog = new EmbedBuilder()
+						.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
+						.setDescription(language_result.addCommand.description_embed.replace("{0}", role))
+						.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+						.setColor(colors.general.success);
+					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+
 				}
 				else {
 					await noHavePermission(interaction, language_result);

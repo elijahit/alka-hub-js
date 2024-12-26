@@ -47,7 +47,7 @@ async function findByGuildIdAndUserId(guildId, userId) {
  * @throws {Error}
  */
 async function create(userId, guildId, messageCount, exp, joinedTime) {
-  if(Level.findOne({where: {guild_id: guildId, user_id: userId, config_id: Variables.getConfigId()}})) return null;
+  if(await Level.findOne({where: {guild_id: guildId, user_id: userId, config_id: Variables.getConfigId()}})) return null;
   return await Level.create({guild_id: guildId, user_id: userId, exp: exp, minute_vocal: 0, message_count: messageCount, joined_time: joinedTime, level: 1, config_id: Variables.getConfigId()});
 }
 

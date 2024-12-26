@@ -38,7 +38,7 @@ async function finByRoleId(roleId) {
  * @returns {Promise<Model>}
  */
 async function create(roleId, guildId) {
-  if(AutoRoles.findOne({where: {role_id: roleId, guild_id: guildId, config_id: Variables.getConfigId()}})) return null;
+  if(await AutoRoles.findOne({where: {role_id: roleId, guild_id: guildId, config_id: Variables.getConfigId()}})) return null;
   return await AutoRoles.create({role_id: roleId , guild_id: guildId, config_id: Variables.getConfigId()});
 }
 

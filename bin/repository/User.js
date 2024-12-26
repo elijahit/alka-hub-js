@@ -34,7 +34,7 @@ async function findByUserId(userId) {
  * @returns {Promise<Model>} 
  */
 async function create(userId, username) {
-  if(User.findOne({where: {user_id: userId}})) return null;
+  if(await User.findOne({where: {user_id: userId}})) return null;
   return await User.create({user_id: userId, name: username});
 }
 

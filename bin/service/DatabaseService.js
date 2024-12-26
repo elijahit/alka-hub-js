@@ -120,13 +120,19 @@ const {
   findByGuildId: findByGuildIdReactions,
   findByGuildIdAndMessageId: findByGuildIdAndMessageIdReactions,
   create: createReaction,
-  update: updateReaction
+  update: updateReaction,
+  findByGuildIdAndMessageIdAndEmojiAndRoleId: findByGuildIdAndMessageIdAndEmojiAndRoleReactions,
+  findAllByGuildId: findAllReactionsByGuildId,
+  findByGuildIdAndMessageIdAndEmoji: findByGuildIdAndMessageIdAndEmojiReactions
 } = require('../repository/ReactionRole');
 // findAllReactions -> Permette di cercare tutte le configurazioni di ReactionRole nella tabella reaction_roles
 // findByGuildIdReactions -> Permette di cercare una configurazione di ReactionRole nella tabella reaction_roles tramite guildId
 // findByGuildIdAndMessageIdReactions -> Permette di cercare una configurazione di ReactionRole nella tabella reaction_roles tramite guildId e messageId
 // createReaction -> Permette di creare una configurazione di ReactionRole nella tabella reaction_roles
 // updateReaction -> Permette di aggiornare una configurazione di ReactionRole nella tabella reaction_roles
+// findByGuildIdAndMessageIdAndEmojiAndRoleReactions -> Permette di cercare una configurazione di ReactionRole nella tabella reaction_roles tramite guildId, messageId, emoji e roleId
+// findAllReactionsByGuildId -> Permette di cercare tutte le configurazioni di ReactionRole nella tabella reaction_roles tramite guildId
+// findByGuildIdAndMessageIdAndEmojiReactions -> Permette di cercare una configurazione di ReactionRole nella tabella reaction_roles tramite guildId, messageId e emoji
 
 
 
@@ -181,5 +187,8 @@ module.exports = {
   findByGuildIdReactions,
   findByGuildIdAndMessageIdReactions,
   createReaction,
-  updateReaction
+  updateReaction,
+  findByGuildIdAndMessageIdAndEmojiAndRoleReactions,
+  findAllReactionsByGuildId,
+  findByGuildIdAndMessageIdAndEmojiReactions
 }

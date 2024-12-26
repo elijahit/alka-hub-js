@@ -1,14 +1,16 @@
 {
   "noPermission": {
     "embed_title": "Reaction Role System",
-
+    "description_limit_premium": "Hai raggiunto il numero massimo di Ruoli di Reaction disponibili nel tuo piano. Passa al piano Premium per sbloccare Ruoli illimitati!",
+    "description_premium_feature": "Questa funzionalità è disponibile solo con il piano Premium. Aggiorna subito il tuo piano per sbloccarla!",
     "description_embed": "Non hai il permesso per usare questo comando!",
-    "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
+    "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla.",
+    "description_embed_no_features_by_system": "Questa funzionalità è temporaneamente disabilitata per manutenzione straordinaria. Ti invitiamo a pazientare: sarà nuovamente disponibile a breve."
   },
   "addCommand": {
     "embed_title": "Reaction Role System",
     "embed_footer": "Alka Hub di alkanetwork.eu",
-"description_embed": "Hai impostato con successo la reaction role per il ruolo {0}. Ora, quando un utente reagirà al messaggio, il ruolo verrà assegnato.",
+    "description_embed": "Hai impostato con successo la reaction role per il ruolo {0}. Ora, quando un utente reagirà al messaggio, il ruolo verrà assegnato.",
     "description_embed_alreadyset": "La reaction role che stai cercando di impostare esiste già. Non può esistere una reaction role con la stessa emoji.",
     "description_embed_missingpermissions": "Il ruolo che stai cercando di impostare/rimuovere si trova sopra al ruolo {0}, che appartiene ad Alka. Per poterlo impostare/rimuovere dalla lista, sposta il ruolo di Alka al di sopra del ruolo che vuoi impostare.",
     "description_embed_channelnotfound": "Il messaggio non si trova nello stesso canale in cui viene eseguita l'interazione. Esegui il comando nel canale in cui si trova il messaggio a cui vuoi impostare i tuoi reaction role.",
@@ -16,7 +18,6 @@
   },
   "listCommand": {
     "embed_title": "Reaction Role System",
-
     "description_embed": "{0} Eccoti la lista di tutti Reaction Role attualmente impostati.",
     "no_role": "Nessun reaction role ancora impostato, impostali con /reactionrole.",
     "most_lenght": "... Molti altri"
@@ -24,7 +25,7 @@
   "removeCommand": {
     "embed_title": "Reaction Role System",
     "embed_footer": "Alka Hub di alkanetwork.eu",
-"description_embed": "Hai rimosso con successo la reaction role. Ora non è più disponibile",
+    "description_embed": "Hai rimosso con successo la reaction role. Ora non è più disponibile",
     "description_embed_notset": "La reaction role che stai cercando non esiste nei nostri database, riprova.",
     "description_embed_missingpermissions": "Il ruolo che stai cercando di impostare/rimuovere si trova sopra al ruolo {0}, che appartiene ad Alka. Per poterlo impostare/rimuovere dalla lista, sposta il ruolo di Alka al di sopra del ruolo che vuoi impostare.",
     "description_embed_channelnotfound": "Il messaggio non si trova nello stesso canale in cui viene eseguita l'interazione. Esegui il comando nel canale in cui si trova il messaggio a cui vuoi rimuovere i tuoi reaction role.",

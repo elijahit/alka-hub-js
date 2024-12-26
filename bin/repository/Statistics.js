@@ -37,7 +37,7 @@ async function findByGuildIdAndChannelId(guildId, channelId) {
  * @returns {Promise<Model>}
  */
 async function create(guildId, channelId, channelName, type) {
-  if(Statistics.findOne({where: {guild_id: guildId, channel_id: channelId, config_id: Variables.getConfigId()}})) return null;
+  if(await Statistics.findOne({where: {guild_id: guildId, channel_id: channelId, config_id: Variables.getConfigId()}})) return null;
   return await Statistics.create({guild_id: guildId, channel_id: channelId, channel_name: channelName, type: type, config_id: Variables.getConfigId()});
 }
 

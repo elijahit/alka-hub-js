@@ -34,7 +34,7 @@ async function findByGuildId(guildId) {
  * @returns {Promise<Model> | null}
  */
 async function create(roleId, guildId) {
-  if(Role.findOne({where: {guild_id: guildId, role_id: roleId, config_id: Variables.getConfigId()}})) return null;
+  if(await Role.findOne({where: {guild_id: guildId, role_id: roleId, config_id: Variables.getConfigId()}})) return null;
   return await Role.create({guild_id: guildId, role_id: roleId, config_id: Variables.getConfigId()});
 }
 
