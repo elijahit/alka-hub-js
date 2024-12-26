@@ -93,7 +93,7 @@ module.exports = {
           }
         } else {
           await addUserGuild(message.member.id, message.guild.id, message.member.user.username);
-          await createLevel(message.guild.id, message.member.id, getRandomInt(5, 10), 1);
+          await createLevel(message.member.id, message.guild.id, 1, getRandomInt(5, 10), null);
         }
       }
     }

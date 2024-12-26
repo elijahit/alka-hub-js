@@ -40,13 +40,16 @@ async function findByGuildIdAndUserId(guildId, userId) {
  * 
  * @param {string} userId 
  * @param {string} guildId
+ * @param {number} messageCount
+ * @param {number} exp
+ * @param {timestamp} joinedTime
  * @returns {Promise<Model>}
  * @throws {Error}
  */
-async function create(userId, guildId) {
+async function create(userId, guildId, messageCount, exp, joinedTime) {
   const existingLevel = await Level.findOne({where: {guild_id: guildId, user_id: userId, config_id: Variables.getConfigId()}});
   if (!existingLevel) {
-    return await Level.create({guild_id: guildId, user_id: userId, exp: 1, minute_vocal: 0, message_count: 1, config_id: Variables.getConfigId()});
+    return await Level.create({guild_id: guildId, user_id: userId, exp: exp, minute_vocal: 0, message_count: messageCount, joined_time: joinedTime, level: 1, config_id: Variables.getConfigId()});
   }
   else {
     throw new Error('Level already exists');
