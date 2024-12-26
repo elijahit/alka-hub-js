@@ -15,7 +15,8 @@ const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
-const { findByGuildIdAndRoleIdLevelsRoles } = require('../../../bin/service/DatabaseService');
+const { findByGuildIdAndRoleIdLevelsRoles, removeLevelsRoles, createLevelsRoles } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -50,34 +51,29 @@ module.exports = {
 						language_result.noPermission.description_embed_no_features)) return;
 
 					let checkLevelsIsPresent = await findByGuildIdAndRoleIdLevelsRoles(interaction.guild.id, role.id);
-					// TODO il return della funzione è sbagliato
+					checkLevelsIsPresent = checkLevelsIsPresent?.get({ plain: true });
 					
 
 					const customEmoji = emoji.levelsSystem.levelsMaker;
 					if (checkLevelsIsPresent) {
-						await runDb('DELETE FROM levels_roles WHERE guilds_id = ? AND roles_id = ?', interaction.guild.id, role.id);
+						await removeLevelsRoles({where: { guild_id: interaction.guild.id, role_id: role.id, config_id: Variables.getConfigId() }});
 
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
 							.setDescription(language_result.levelsCommand.description_embed_delrole.replace("{0}", role))
-							.setFooter({ text: `${language_result.levelsCommand.embed_footer}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
+							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
 							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
-						return;
+					} else {
+						await createLevelsRoles(interaction.guild.id, role.id, level);
+	
+						const embedLog = new EmbedBuilder()
+							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
+							.setDescription(language_result.levelsCommand.description_embed_addrole.replace("{0}", role).replace("{1}", level))
+							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setColor(colors.general.success);
+						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}
-
-					//checkRolesRelation(role.id, interaction.guild.id);
-
-					await runDb('INSERT INTO levels_roles (guilds_id, roles_id, levels) VALUES (?, ?, ?)', interaction.guild.id, role.id, level);
-
-					const embedLog = new EmbedBuilder()
-						.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-						.setDescription(language_result.levelsCommand.description_embed_addrole.replace("{0}", role).replace("{1}", level))
-						.setFooter({ text: `${language_result.levelsCommand.embed_footer}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
-						.setColor(colors.general.success);
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
-
-
 				}
 				else {
 					await noHavePermission(interaction, language_result);

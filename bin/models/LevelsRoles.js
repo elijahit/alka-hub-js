@@ -14,7 +14,8 @@ const { Sequelize } = require('sequelize');
 const LevelsRoles = database.define('levels_roles', {
   config_id: { type: Sequelize.INTEGER },
   guild_id: { type: Sequelize.STRING },
-  log_channel: { type: Sequelize.STRING }
+  role_id: { type: Sequelize.STRING },
+  level: { type: Sequelize.INTEGER }
 }, {tableName: 'levels_roles'});
 
 module.exports = {

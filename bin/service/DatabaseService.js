@@ -93,12 +93,14 @@ const { findAll: findAllLevelsRoles,
   findByGuildId: findByGuildIdLevelsRoles,
   findByGuildIdAndRoleId: findByGuildIdAndRoleIdLevelsRoles,
   create: createLevelsRoles,
-  update: updateLevelsRoles } = require('../repository/LevelsRoles');
+  update: updateLevelsRoles,
+  remove: removeLevelsRoles } = require('../repository/LevelsRoles');
 // findAllLevelsRoles -> Permette di cercare tutte le configurazioni di LevelsRoles nella tabella levels_roles
 // findByGuildIdLevelsRoles -> Permette di cercare una configurazione di LevelsRoles nella tabella levels_roles tramite guildId
 // findByGuildIdAndRoleIdLevelsRoles -> Permette di cercare una configurazione di LevelsRoles nella tabella levels_roles tramite guildId e roleId
 // createLevelsRoles -> Permette di creare una configurazione di LevelsRoles nella tabella levels_roles
 // updateLevelsRoles -> Permette di aggiornare una configurazione di LevelsRoles nella tabella levels_roles
+// removeLevelsRoles -> Permette di rimuovere una configurazione di LevelsRoles nella tabella levels_roles
 
 
 module.exports = {
@@ -140,5 +142,6 @@ module.exports = {
   findByGuildIdLevelsRoles,
   findByGuildIdAndRoleIdLevelsRoles,
   createLevelsRoles,
-  updateLevelsRoles
+  updateLevelsRoles,
+  removeLevelsRoles
 }
