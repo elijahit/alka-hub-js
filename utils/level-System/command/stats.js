@@ -14,6 +14,9 @@ const { errorSendControls, returnPermission, noInitGuilds, noHavePermission, noE
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
+const { findByGuildIdAndUserIdLevel } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -34,31 +37,32 @@ module.exports = {
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		try {
-			const checkUserIsPresent = await readDb(`SELECT * from levels WHERE guilds_id = ? AND users_id = ?`, interaction.guild.id, user.id);
+			if (!await allCheckFeatureForCommands(interaction, interaction.guild.id, 11, false, language_result.noPermission.description_embed_no_features_by_system,
+				language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature,
+				language_result.noPermission.description_embed_no_features)) return;
+
+			let checkUserIsPresent = await findByGuildIdAndUserIdLevel(interaction.guild.id, user.id);
+			checkUserIsPresent = checkUserIsPresent?.get({ plain: true });
 
 			const customEmoji = emoji.levelsSystem.levelsMaker;
-			if (await checkFeaturesIsEnabled(interaction.guild.id, 11)) {
-				if (checkUserIsPresent) {
 
-					const embedLog = new EmbedBuilder()
-						.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-						.setDescription(language_result.levelsCommand.description_embed_stats.replace("{0}", user).replace("{1}", checkUserIsPresent.levels).replace("{2}", checkUserIsPresent.exp).replace("{3}", 75 + (25 * checkUserIsPresent.levels)))
-						.setFooter({ text: language_result.levelsCommand.newLevel_footer.replace("{0}", checkUserIsPresent.minute_vocal == null ? 0 : checkUserIsPresent.minute_vocal).replace("{1}", checkUserIsPresent.message_count == null ? 0 : checkUserIsPresent.message_count), iconURL: `${language_result.levelsCommand.embed_icon_url}` })
-						.setColor(colors.general.success);
-					await interaction.reply({ embeds: [embedLog] });
-					return;
-				}
+			if (checkUserIsPresent) {
 
 				const embedLog = new EmbedBuilder()
 					.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-					.setDescription(language_result.levelsCommand.description_embed_statsNotFound)
-					.setFooter({ text: `${language_result.levelsCommand.embed_footer}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
-					.setColor(colors.general.error);
-				await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					.setDescription(language_result.levelsCommand.description_embed_stats.replace("{0}", user).replace("{1}", checkUserIsPresent.level).replace("{2}", checkUserIsPresent.exp).replace("{3}", 75 + (25 * checkUserIsPresent.level)))
+					.setFooter({ text: language_result.levelsCommand.newLevel_footer.replace("{0}", checkUserIsPresent.minute_vocal == null ? 0 : checkUserIsPresent.minute_vocal).replace("{1}", checkUserIsPresent.message_count == null ? 0 : checkUserIsPresent.message_count), iconURL: Variables.getBotFooterIcon() })
+					.setColor(colors.general.success);
+				await interaction.reply({ embeds: [embedLog] });
+				return;
 			}
-			else {
-				await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
-			}
+
+			const embedLog = new EmbedBuilder()
+				.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
+				.setDescription(language_result.levelsCommand.description_embed_statsNotFound)
+				.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+				.setColor(colors.general.error);
+			await interaction.reply({ embeds: [embedLog], ephemeral: true });
 		}
 		catch (error) {
 			console.log(error)
