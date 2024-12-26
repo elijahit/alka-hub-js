@@ -70,7 +70,8 @@ const {findByGuildId: findLevelsConfigByGuildId,
   findAll: findLevelsConfigAll, 
   create: createLevelsConfig, 
   update: updateLevelsConfig, 
-  findByGuildIdAndChannelId: findLevelsConfigByGuildIdAndChannelId } = require('../repository/LevelsConfig'); 
+  findByGuildIdAndChannelId: findLevelsConfigByGuildIdAndChannelId,
+  remove: removeLevelsConfig } = require('../repository/LevelsConfig'); 
 // findLevelsConfigByGuildId -> Permette di cercare una configurazione di LevelsConfig nella tabella levels_config
 // findLevelsConfigAll -> Permette di cercare tutte le configurazioni di LevelsConfig nella tabella levels_config
 // createLevelsConfig -> Permette di creare una configurazione di LevelsConfig nella tabella levels_config
@@ -133,6 +134,7 @@ module.exports = {
   findLevelsConfigAll,
   createLevelsConfig,
   updateLevelsConfig,
+  removeLevelsConfig,
   findLevelsConfigByGuildIdAndChannelId,
   findAllLevels,
   findByGuildIdLevel,

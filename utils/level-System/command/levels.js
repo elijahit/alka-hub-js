@@ -14,6 +14,9 @@ const { errorSendControls, returnPermission, noInitGuilds, noHavePermission, noE
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findLevelsConfigByGuildId, removeLevelsConfig, createLevelsConfig } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
+const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -37,35 +40,38 @@ module.exports = {
 		await returnPermission(interaction, "levels", async result => {
 			try {
 				if (result) {
-					const checkChannelIsPresent = await readDb(`SELECT * from levels_config WHERE guilds_id = ?`, interaction.guild.id);
+					if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 11, false, language_result.noPermission.description_embed_no_features_by_system, 
+						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
+						language_result.noPermission.description_embed_no_features)) return;
+
+					let checkChannelIsPresent = await findLevelsConfigByGuildId(interaction.guild.id);
+					checkChannelIsPresent = checkChannelIsPresent?.get({ plain: true });
+					
 
 					const customEmoji = emoji.levelsSystem.levelsMaker;
-					if (await checkFeaturesIsEnabled(interaction.guild.id, 11)) {
-						if (checkChannelIsPresent) {
-							await runDb('DELETE FROM levels_config WHERE guilds_id = ?', interaction.guild.id);
 
-							const oldChannel = await interaction.guild.channels.fetch(checkChannelIsPresent.log_channel);
+					if (checkChannelIsPresent) {
+						await removeLevelsConfig({where: { guild_id: interaction.guild.id, config_id: Variables.getConfigId() }});
 
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-								.setDescription(language_result.levelsCommand.description_embed_delete.replace("{0}", oldChannel))
-								.setFooter({ text: `${language_result.levelsCommand.embed_footer}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
-								.setColor(colors.general.error);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
-							return;
-						}
-						await runDb('INSERT INTO levels_config (guilds_id, log_channel) VALUES (?, ?)', interaction.guild.id, channel.id);
+						const oldChannel = await interaction.guild.channels.fetch(checkChannelIsPresent.log_channel);
 
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-							.setDescription(language_result.levelsCommand.description_embed.replace("{0}", channel))
-							.setFooter({ text: `${language_result.levelsCommand.embed_footer}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
-							.setColor(colors.general.success);
+							.setDescription(language_result.levelsCommand.description_embed_delete.replace("{0}", oldChannel))
+							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						return;
 					}
-					else {
-						await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
-					}
+					await createLevelsConfig(interaction.guild.id, channel.id);
+
+					const embedLog = new EmbedBuilder()
+						.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
+						.setDescription(language_result.levelsCommand.description_embed.replace("{0}", channel))
+						.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+						.setColor(colors.general.success);
+					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+
 				}
 				else {
 					await noHavePermission(interaction, language_result);

@@ -62,10 +62,15 @@ async function update(objToUpdate, objToCondition) {
   return await LevelsConfig.update(objToUpdate, objToCondition);
 }
 
+async function remove(objToDelete) {
+  return await LevelsConfig.destroy(objToDelete);
+}
+
 module.exports = {
   findAll,
   findByGuildId,
   findByGuildIdAndChannelId,
   create,
-  update
+  update,
+  remove
 }
