@@ -8,11 +8,12 @@
 
 const {AutoVoice, Guild} = require('../models');
 const Variables = require('../classes/GlobalVariables');
+const { Model } = require('sequelize');
 
 
 /**
  * 
- * @returns {Promise<Array<AutoVoice>>}
+ * @returns {Promise<Array<Model>>}
  */
 async function findAll() {
   return await AutoVoice.findAll({where: {config_id: Variables.getConfigId()}});
@@ -21,7 +22,7 @@ async function findAll() {
 /**
  * 
  * @param {string} guildId 
- * @returns {Promise<Array<AutoVoice>>}
+ * @returns {Promise<Array<Model>>}
  */
 async function findAllbyGuild(guildId) {
   return await AutoVoice.findAll({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
@@ -32,7 +33,7 @@ async function findAllbyGuild(guildId) {
 /**
  * @param {string} guildId 
  * @param {string} channelId 
- * @returns {Promise<AutoVoice>}
+ * @returns {Promise<Model>}
  */
 async function findByChannelId(guildId, channelId) {
   return await AutoVoice.findOne({where: {channel_id: channelId, guild_id: guildId, config_id: Variables.getConfigId()}});
@@ -41,7 +42,7 @@ async function findByChannelId(guildId, channelId) {
 /**
  * @param {string} guildId 
  * @param {integer} id 
- * @returns {Promise<AutoVoice>}
+ * @returns {Promise<Model>}
  */
 async function findBylId(guildId, id) {
   return await AutoVoice.findOne({where: {id: id, guild_id: guildId, config_id: Variables.getConfigId()}});
@@ -51,7 +52,7 @@ async function findBylId(guildId, id) {
 /**
  * 
  * @param {string} roleId 
- * @returns {Promise<AutoVoice>}
+ * @returns {Promise<Model>}
  */
 async function create(guildId, type, categoryId, nickname) {
   return await AutoVoice.create({guild_id: guildId, type: type, channel_id: categoryId, nickname: nickname, config_id: Variables.getConfigId()});
@@ -61,7 +62,7 @@ async function create(guildId, type, categoryId, nickname) {
  * 
  * @param {object} objToUpdate 
  * @param {object} objToCondition 
- * @returns {Promise<AutoVoice>}
+ * @returns {Promise<Model>}
  */
 async function update(objToUpdate, objToCondition) {
   return await AutoVoice.update(objToUpdate, objToCondition);
@@ -69,7 +70,7 @@ async function update(objToUpdate, objToCondition) {
 
 /**
  * @param {object} objToCondition 
- * @returns {Promise<AutoVoice>}
+ * @returns {Promise<Model>}
  */
 async function remove(objToCondition) {
   return await AutoVoice.destroy({

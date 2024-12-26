@@ -6,11 +6,12 @@
  * @description Contiene i metodi per richiamare la tabella AutoRoles
  */
 
+const { Model } = require('sequelize');
 const {AutoRoles, Role} = require('../models');
 
 /**
  * 
- * @returns {Promise<Array<AutoRoles>>}
+ * @returns {Promise<Array<Model>>}
  */
 async function findAll() {
   return await AutoRoles.findAll();
@@ -19,7 +20,7 @@ async function findAll() {
 
 /**
  * @param {string} roleId 
- * @returns {Promise<AutoRoles>}
+ * @returns {Promise<Model>}
  */
 async function finByRoleId(roleId) {
   return await AutoRoles.findOne({where: {role_id: roleId},
@@ -32,7 +33,7 @@ async function finByRoleId(roleId) {
 
 /**
  * @param {string} roleId 
- * @returns {Promise<AutoRoles>}
+ * @returns {Promise<Model>}
  */
 async function create(roleId) {
   return await AutoRoles.create({role_id: roleId});
@@ -42,7 +43,7 @@ async function create(roleId) {
  * 
  * @param {object} objToUpdate 
  * @param {object} objToCondition 
- * @returns {Promise<AutoRoles>}
+ * @returns {Promise<Model>}
  */
 async function update(objToUpdate, objToCondition) {
   return await AutoRoles.update(objToUpdate, objToCondition);

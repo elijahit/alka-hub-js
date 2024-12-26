@@ -6,13 +6,14 @@
  * @description Contiene i metodi per richiamare la tabella Hash
  */
 
+const { Model } = require('sequelize');
 const {Hash} = require('../models');
 const {Permissions} = require('../models');
 
 
 /**
  * 
- * @returns {Promise<Array<Hash>>}
+ * @returns {Promise<Array<Model>>}
  */
 async function findAll() {
   return await Hash.findAll();
@@ -21,7 +22,7 @@ async function findAll() {
 
 /**
  * @param {string} hash_name 
- * @returns {Promise<Hash>}
+ * @returns {Promise<Model>}
  */
 async function findByHashName(hash_name) {
   return await Hash.findOne({
@@ -35,7 +36,7 @@ async function findByHashName(hash_name) {
 
 /**
  * @param {string} hash_name 
- * @returns {Promise<Hash>}
+ * @returns {Promise<Model>}
  */
 async function findAllCorrespondenceByHashName(hash_name) {
   return await Hash.findOne({
@@ -49,7 +50,7 @@ async function findAllCorrespondenceByHashName(hash_name) {
 
 /**
  * @param {int} id 
- * @returns {Promise<Hash>}
+ * @returns {Promise<Model>}
  */
 async function findById(id) {
   return await Hash.findByPk(id);
@@ -58,7 +59,7 @@ async function findById(id) {
 /**
  * 
  * @param {string} hash_name 
- * @returns {Promise<Hash>}
+ * @returns {Promise<Model>}
  */
 async function create(hash_name) {
   return await Hash.create({hash_name});
@@ -68,7 +69,7 @@ async function create(hash_name) {
  * 
  * @param {object} objToUpdate 
  * @param {object} objToCondition 
- * @returns {Promise<Hash>}
+ * @returns {Promise<Model>}
  */
 async function update(objToUpdate, objToCondition) {
   return await Hash.update(objToUpdate, objToCondition);

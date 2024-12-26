@@ -6,13 +6,14 @@
  * @description Contiene i metodi per richiamare la tabella Feature
  */
 
+const { Model } = require('sequelize');
 const Variables = require('../classes/GlobalVariables');
 const {Feature} = require('../models');
 const {Guild} = require('../models');
 
 
 /**
- * @returns {Promise<Array<Feature>>} 
+ * @returns {Promise<Array<Model>>} 
  */
 async function findAll() {
   return await Feature.findAll();
@@ -22,7 +23,7 @@ async function findAll() {
 /**
  * @param {string} guildId 
  * @param {string} featureId 
- * @returns {Promise<Feature>}
+ * @returns {Promise<Model>}
  */
 async function getFeatureIsEnabled(guildId, featureId) {
   return await Feature.findOne({
@@ -38,7 +39,7 @@ async function getFeatureIsEnabled(guildId, featureId) {
 
 /**
  * @param {int} id 
- * @returns {Promise<Feature>}
+ * @returns {Promise<Model>}
  */
 async function findById(id) {
   return await Feature.findByPk(id);
@@ -48,7 +49,7 @@ async function findById(id) {
  * 
  * @param {object} objToUpdate 
  * @param {object} objToCondition 
- * @returns {Promise<Feature>}
+ * @returns {Promise<Model>}
  */
 async function update(objToUpdate, objToCondition) {
   return await Feature.update(objToUpdate, objToCondition);

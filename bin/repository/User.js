@@ -6,12 +6,13 @@
  * @description Contiene i metodi per richiamare la tabella User
  */
 
+const { Model } = require('sequelize');
 const {User} = require('../models');
 
 
 /**
  * 
- * @returns {Promise<Array<User>>}
+ * @returns {Promise<Array<Model>>}
  */
 async function findAll() {
   return await User.findAll();
@@ -20,7 +21,7 @@ async function findAll() {
 
 /**
  * @param {string} userId 
- * @returns {Promise<User>}
+ * @returns {Promise<Model>}
  */
 async function findByUserId(userId) {
   return await User.findOne({where: {user_id: userId}});
@@ -30,7 +31,7 @@ async function findByUserId(userId) {
  * 
  * @param {string} userId 
  * @param {string} username 
- * @returns {Promise<User>} 
+ * @returns {Promise<Model>} 
  */
 async function create(userId, username) {
   return await User.create({user_id: userId, name: username});
@@ -40,7 +41,7 @@ async function create(userId, username) {
  * 
  * @param {object} objToUpdate 
  * @param {object} objToCondition
- * @returns {Promise<[number, User[]]>} 
+ * @returns {Promise<[number, Model[]]>} 
  */
 async function update(objToUpdate, objToCondition) {
   return await User.update(objToUpdate, objToCondition);

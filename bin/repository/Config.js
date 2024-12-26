@@ -6,12 +6,13 @@
  * @description Contiene i metodi per richiamare la tabella Config
  */
 
+const { Model } = require('sequelize');
 const {Config} = require('../models');
 
 
 /**
  * 
- * @returns {Promise<Array<Config>>}
+ * @returns {Promise<Array<Model>>}
  */
 async function findAll() {
   return await Config.findAll();
@@ -20,7 +21,7 @@ async function findAll() {
 
 /**
  * @param {string} name 
- * @returns {Promise<Config>}
+ * @returns {Promise<Model>}
  */
 async function findByName(name) {
   return await Config.findOne({where: {name: name}});

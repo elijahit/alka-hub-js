@@ -15,6 +15,7 @@ const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
+const { findByGuildIdAndRoleIdLevelsRoles } = require('../../../bin/service/DatabaseService');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -48,7 +49,9 @@ module.exports = {
 						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
 						language_result.noPermission.description_embed_no_features)) return;
 
-					const checkLevelsIsPresent = await readDb(`SELECT * from levels_roles WHERE guilds_id = ? AND roles_id = ?`, interaction.guild.id, role.id);
+					let checkLevelsIsPresent = await findByGuildIdAndRoleIdLevelsRoles(interaction.guild.id, role.id);
+					// TODO il return della funzione è sbagliato
+					
 
 					const customEmoji = emoji.levelsSystem.levelsMaker;
 					if (checkLevelsIsPresent) {

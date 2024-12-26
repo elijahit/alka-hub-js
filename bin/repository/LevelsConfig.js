@@ -5,12 +5,13 @@
  * @module LevelsConfig
  * @description Contiene i metodi per l'interazione con il modello LevelsConfig
  */
+const { Model } = require('sequelize');
 const Variables = require('../classes/GlobalVariables');
 const {LevelsConfig} = require('../models');
 
 /**
  * 
- * @returns {Promise<LevelsConfig[]>}
+ * @returns {Promise<Model[]>}
  */
 async function findAll() {
   return await LevelsConfig.findAll({where: {config_id: Variables.getConfigId()}});
@@ -19,7 +20,7 @@ async function findAll() {
 
 /**
  * @param {string} guildId 
- * @returns {Promise<LevelsConfig>}
+ * @returns {Promise<Model>}
  */
 async function findByGuildId(guildId) {
   return await LevelsConfig.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
@@ -28,7 +29,7 @@ async function findByGuildId(guildId) {
 /**
  * @param {string} guildId 
  * @param {string} channelId
- * @returns {Promise<LevelsConfig>}
+ * @returns {Promise<Model>}
  */
 async function findByGuildIdAndChannelId(guildId, channelId) {
   return await LevelsConfig.findOne({where: {guild_id: guildId, log_channel: channelId, config_id: Variables.getConfigId()}});

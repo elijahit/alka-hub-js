@@ -6,12 +6,13 @@
  * @description Contiene i metodi per richiamare la tabella Statistics
  */
 
+const { Model } = require('sequelize');
 const Variables = require('../classes/GlobalVariables');
 const {Statistics} = require('../models');
 
 /**
  * 
- * @returns {Promise<Array<Statistics>>}
+ * @returns {Promise<Array<Model>>}
  */
 async function findAll() {
   return await Statistics.findAll({where: {config_id: Variables.getConfigId()}});
@@ -21,7 +22,7 @@ async function findAll() {
 /**
  * @param {string} guildId 
  * @param {string} channelId
- * @returns {Promise<Statistics>}
+ * @returns {Promise<Model>}
  */
 async function findByGuildIdAndChannelId(guildId, channelId) {
   return await Statistics.findOne({where: {guild_id: guildId, channel_id: channelId, config_id: Variables.getConfigId()}});
@@ -32,7 +33,7 @@ async function findByGuildIdAndChannelId(guildId, channelId) {
  * @param {string} guildId 
  * @param {string} language 
  * @param {string} time_zone
- * @returns {Promise<Statistics>}
+ * @returns {Promise<Model>}
  */
 async function create(guildId, language = "EN", time_zone = "Europe/London") {
   return await Statistics.create({guild_id: guildId, language: language, time_zone: time_zone, config_id: Variables.getConfigId()});
@@ -42,7 +43,7 @@ async function create(guildId, language = "EN", time_zone = "Europe/London") {
  * 
  * @param {object} objToUpdate 
  * @param {object} objToCondition 
- * @returns {Promise<[number, Statistics[]]>}
+ * @returns {Promise<[number, Model[]]>}
  */
 async function update(objToUpdate, objToCondition) {
   return await Statistics.update(objToUpdate, objToCondition);

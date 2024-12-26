@@ -9,6 +9,7 @@
 const {UserGuild} = require('../models');
 const User = require('../repository/User');
 const Guild = require('../repository/Guild');
+const { Model } = require('sequelize');
 
 
 /**
@@ -38,7 +39,7 @@ async function addUser(userId, guildId, username) {
 
 /**
  * 
- * @returns {Promise<Array<UserGuild>>}
+ * @returns {Promise<Array<Model>>}
  */
 async function findAll() {
   return await UserGuild.findAll();

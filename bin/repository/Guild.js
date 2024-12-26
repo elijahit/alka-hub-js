@@ -6,12 +6,13 @@
  * @description Contiene i metodi per richiamare la tabella Guild
  */
 
+const { Model } = require('sequelize');
 const Variables = require('../classes/GlobalVariables');
 const {Guild} = require('../models');
 
 /**
  * 
- * @returns {Promise<Array<Guild>>}
+ * @returns {Promise<Array<Model>>}
  */
 async function findAll() {
   return await Guild.findAll({where: {config_id: Variables.getConfigId()}});
@@ -20,7 +21,7 @@ async function findAll() {
 
 /**
  * @param {string} guildId 
- * @returns {Promise<Guild>}
+ * @returns {Promise<Model>}
  */
 async function findByGuildId(guildId) {
   return await Guild.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
@@ -31,7 +32,7 @@ async function findByGuildId(guildId) {
  * @param {string} guildId 
  * @param {string} language 
  * @param {string} time_zone 
- * @returns {Promise<Guild>}
+ * @returns {Promise<Model>}
  */
 async function create(guildId, language = "EN", time_zone = "Europe/London") {
   return await Guild.create({guild_id: guildId, language: language, time_zone: time_zone, config_id: Variables.getConfigId()});
@@ -41,7 +42,7 @@ async function create(guildId, language = "EN", time_zone = "Europe/London") {
  * 
  * @param {object} objToUpdate 
  * @param {object} objToCondition 
- * @returns {Promise<Guild>}
+ * @returns {Promise<Model>}
  */
 async function update(objToUpdate, objToCondition) {
   return await Guild.update(objToUpdate, objToCondition);

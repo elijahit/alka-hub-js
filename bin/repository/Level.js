@@ -6,12 +6,13 @@
  * @description Contiene i metodi per richiamare la tabella Level
  */
 
+const { Model } = require('sequelize');
 const Variables = require('../classes/GlobalVariables');
 const {Level} = require('../models');
 
 /**
  * 
- * @returns {Promise<Level[]>}
+ * @returns {Promise<Model[]>}
  */
 async function findAll() {
   return await Level.findAll({where: {config_id: Variables.getConfigId()}});
@@ -20,7 +21,7 @@ async function findAll() {
 
 /**
  * @param {string} guildId 
- * @returns {Promise<Level>}
+ * @returns {Promise<Model>}
  */
 async function findByGuildId(guildId) {
   return await Level.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
@@ -29,7 +30,7 @@ async function findByGuildId(guildId) {
 /**
  * @param {string} guildId 
  * @param {string} userId
- * @returns {Promise<Level>}
+ * @returns {Promise<Model>}
  */
 async function findByGuildIdAndUserId(guildId, userId) {
   return await Level.findOne({where: {guild_id: guildId, user_id: userId, config_id: Variables.getConfigId()}});
@@ -39,7 +40,7 @@ async function findByGuildIdAndUserId(guildId, userId) {
  * 
  * @param {string} userId 
  * @param {string} guildId
- * @returns {Promise<Level>}
+ * @returns {Promise<Model>}
  * @throws {Error}
  */
 async function create(userId, guildId) {
@@ -56,7 +57,7 @@ async function create(userId, guildId) {
  * 
  * @param {object} objToUpdate 
  * @param {object} objToCondition 
- * @returns {Promise<[number, Level[]]>}
+ * @returns {Promise<[number, Model[]]>}
  */
 async function update(objToUpdate, objToCondition) {
   return await Level.update(objToUpdate, objToCondition);

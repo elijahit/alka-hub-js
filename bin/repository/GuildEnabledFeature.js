@@ -6,13 +6,14 @@
  * @description Contiene i metodi per richiamare la tabella GuildEnabledFeature
  */
 
+const { Model } = require('sequelize');
 const Variables = require('../classes/GlobalVariables');
 const {GuildEnabledFeature} = require('../models');
 
 
 /**
  * 
- * @returns {Promise<Array<GuildEnabledFeature>>}
+ * @returns {Promise<Array<Model>>}
  */
 async function findAll() {
   return await GuildEnabledFeature.findAll();
@@ -20,7 +21,7 @@ async function findAll() {
 
 /**
  * @param {int} id 
- * @returns {Promise<GuildEnabledFeature>}
+ * @returns {Promise<Model>}
  */
 async function findById(id) {
   return await GuildEnabledFeature.findByPk(id);
@@ -30,7 +31,7 @@ async function findById(id) {
  * 
  * @param {object} objToUpdate 
  * @param {object} objToCondition 
- * @returns {Promise<GuildEnabledFeature>}
+ * @returns {Promise<Model>}
  */
 async function update(objToUpdate, objToCondition) {
   return await GuildEnabledFeature.update(objToUpdate, objToCondition);
@@ -41,7 +42,7 @@ async function update(objToUpdate, objToCondition) {
  * @param {string} guildId 
  * @param {int} featureId 
  * @param {tinyint} isEnabled 
- * @returns {Promise<GuildEnabledFeature>}
+ * @returns {Promise<Model>}
  */
 async function create(guildId, featureId, isEnabled) {
   return await GuildEnabledFeature.create({guild_id: guildId, feature_id: featureId, is_enabled: isEnabled, config_id: Variables.getConfigId()});
