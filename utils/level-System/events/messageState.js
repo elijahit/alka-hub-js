@@ -15,7 +15,7 @@ const internal = require('stream');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
-const { findLevelsConfigByGuildId, findByGuildIdAndUserIdLevel, updateLevel, findAllLevelsRolesByGuildId, createLevel } = require('../../../bin/service/DatabaseService');
+const { findLevelsConfigByGuildId, findByGuildIdAndUserIdLevel, updateLevel, findAllLevelsRolesByGuildId, createLevel, addUserGuild } = require('../../../bin/service/DatabaseService');
 const Variables = require('../../../bin/classes/GlobalVariables');
 const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
 const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
@@ -92,7 +92,7 @@ module.exports = {
             }, { where: { guild_id: message.guild.id, user_id: message.member.id, config_id: Variables.getConfigId() } });
           }
         } else {
-          await addUserGuild(message.member.id, message.guild.id);
+          await addUserGuild(message.member.id, message.guild.id, message.member.user.username);
           await createLevel(message.guild.id, message.member.id, getRandomInt(5, 10), 1);
         }
       }
