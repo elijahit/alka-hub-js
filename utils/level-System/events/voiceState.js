@@ -15,7 +15,6 @@ const { channel } = require('diagnostics_channel');
 const internal = require('stream');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
-const checkUsersDb = require('../../../bin/functions/checkUsersDb');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 
 function getRandomInt(min, max) {
@@ -88,7 +87,7 @@ module.exports = {
               if (checkUser) {
                 await runDb("UPDATE levels SET joined_time = ? WHERE guilds_id = ? AND users_id = ?", `${Date.now()}`,  newState.guild.id, newState.member.id);
               } else {
-                await checkUsersDb(newState.member, newState.guild);
+                //await checkUsersDb(newState.member, newState.guild);
                 await runDb('INSERT INTO levels (guilds_id, users_id, joined_time) VALUES (?, ?, ?)', newState.guild.id, newState.member.id, `${Date.now()}`);
               }
             }

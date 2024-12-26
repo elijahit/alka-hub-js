@@ -16,6 +16,7 @@
     "description_embed_delrole": "Hai rimosso con successo il ruolo {0} e adesso non sarà più impostato",
     "description_embed_addrole": "Hai aggiunto con successo il ruolo {0} e sarà impostato ai membri con livello {1}",
     "description_embed_stats": "L'utente {0} è livello **{1}**\n**Esperienza**: {2}/{3}",
-    "description_embed_statsNotFound": "L'utente non ha ancora statistiche disponibili, riprova più tardi."
+    "description_embed_statsNotFound": "L'utente non ha ancora statistiche disponibili, riprova più tardi.",
+    "missing_permissions": "Il ruolo {0} non è stato assegnato all'utente {1} perché il bot non dispone dei permessi necessari. Assicurati che il bot abbia i permessi adeguati per assegnare ruoli e che il suo ruolo principale sia superiore al ruolo da assegnare. Se il problema persiste, contatta un amministratore."
   }
 }

@@ -30,7 +30,9 @@ async function addUser(userId, guildId, username) {
       await Guild.create(guildId);
     }
 
-    await UserGuild.create({user_id: userId, guild_id: guildId});
+    const userGuild = await UserGuild.findOne({where: {user_id: userId, guild_id: guildId}});
+
+    if(!userGuild) await UserGuild.create({user_id: userId, guild_id: guildId});
 
   } catch (error) {
     console.error('[addUser] Repository UserGuild: ', error);

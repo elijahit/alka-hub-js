@@ -14,8 +14,11 @@ const { errorSendControls, returnPermission, noHavePermission, noEnabledFunc } =
 const internal = require('stream');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
-const checkUsersDb = require('../../../bin/functions/checkUsersDb');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findLevelsConfigByGuildId, findByGuildIdAndUserIdLevel, updateLevel, findAllLevelsRolesByGuildId, createLevel } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
 
 function getRandomInt(min, max) {
   const minCeiled = Math.ceil(min);
@@ -28,16 +31,22 @@ module.exports = {
   async execute(message) {
     try {
       if (!message?.member?.user?.bot) {
-        // if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 11, language_result.noPermission.description_embed_no_features_by_system, 
-        //   language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
-        //   language_result.noPermission.description_embed_no_features)) return;
-        // QUESTO SISTEMA QUI NON VA BENE, PERCHE' NON E' UN COMANDO SLASH, MA UN EVENTO, QUINDI NON POSSO USARE L'INTERAZIONE
-          
-        const levelsConfig = await readDb(`SELECT * from levels_config WHERE guilds_id = ?`, message.guild.id);
-        let checkUser = await readDb("SELECT * FROM levels WHERE guilds_id = ? AND users_id = ?", message.guild.id, message.member.id);
+        if (!await checkFeatureSystemDisabled(11)) return;
+        if (!await checkFeaturesIsEnabled(message.guild.id, 11)) return;
+        if (!await checkPremiumFeature(message.guild.id, 11)) return;
+        let levelsConfig = await findLevelsConfigByGuildId(message.guild.id);
+        levelsConfig = levelsConfig?.get({ plain: true });
+        if (!levelsConfig) return;
+
+        let checkUser = await findByGuildIdAndUserIdLevel(message.guild.id, message.member.id);
+        checkUser = checkUser?.get({ plain: true });
         if (checkUser) {
-          if (checkUser.exp >= 75 + (25 * checkUser.levels)) {
-            await runDb("UPDATE levels SET exp = ?, levels = ?, message_count = ? WHERE guilds_id = ? AND users_id = ?", checkUser.exp - (75 + (25 * checkUser.levels)) + getRandomInt(5, 10), checkUser.levels + 1, checkUser.message_count + 1, message.guild.id, message.member.id);
+          if (checkUser.exp >= 75 + (25 * checkUser.level)) {
+            await updateLevel({
+              exp: checkUser.exp - (75 + (25 * checkUser.level)) + getRandomInt(5, 10),
+              level: checkUser.level + 1,
+              message_count: checkUser.message_count + 1
+            }, { where: { guild_id: message.guild.id, user_id: message.member.id, config_id: Variables.getConfigId() } });
 
             const channel = await message.guild.channels.fetch(levelsConfig.log_channel);
 
@@ -47,35 +56,48 @@ module.exports = {
 
             const customEmoji = emoji.levelsSystem.levelsMaker;
 
-            let checkRoles = await readDbAll("SELECT * FROM levels_roles WHERE guilds_id = ?", message.guild.id);
+            let checkRoles = await findAllLevelsRolesByGuildId(message.guild.id);
             checkRoles.map(async value => {
-              if ((checkUser.levels + 1) >= value.levels) {
+              if ((checkUser.level + 1) >= value.level) {
                 try {
-                  let roleResolve = await message.guild.roles.fetch(value.roles_id)
+                  let roleResolve = await message.guild.roles.fetch(value.role_id)
                   await message.member.roles.add(roleResolve)
                 } catch (error) {
-                  console.log(error)
+                  if (error == "DiscordAPIError[50013]: Missing Permissions") {
+                    let roleResolve = await message.guild.roles.fetch(value.role_id)
+                    const embedLog = new EmbedBuilder()
+                      .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: emoji.general.errorMarker })
+                      .setDescription(language_result.levelsCommand.missing_permissions.replace("{0}", roleResolve).replace("{1}", message.member))
+                      .setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+                      .setColor(colors.general.error);
+                    await channel.send({ embeds: [embedLog] });
+                  } else {
+                    errorSendControls(error, message.guild.client, message.guild, "\\levels-system\\voiceState.js");
+                  }
+
                 }
               }
             })
 
             const embedLog = new EmbedBuilder()
               .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-              .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", message.member).replace("{1}", checkUser.levels + 1))
-              .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser.minute_vocal == null ? 0 : checkUser.minute_vocal).replace("{1}", checkUser.message_count == null ? 0 : checkUser.message_count)}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
+              .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", message.member).replace("{1}", checkUser.level + 1))
+              .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser.minute_vocal == null ? 0 : checkUser.minute_vocal).replace("{1}", checkUser.message_count == null ? 0 : checkUser.message_count)}`, iconURL: Variables.getBotFooterIcon() })
               .setColor(colors.general.blue);
             await channel.send({ content: `${message.member}`, embeds: [embedLog] });
           } else {
-            await runDb("UPDATE levels SET exp = ?, message_count = ? WHERE guilds_id = ? AND users_id = ?", checkUser.exp + getRandomInt(5, 10), checkUser.message_count + 1, message.guild.id, message.member.id);
+            await updateLevel({
+              exp: checkUser.exp + getRandomInt(5, 10),
+              message_count: checkUser.message_count + 1
+            }, { where: { guild_id: message.guild.id, user_id: message.member.id, config_id: Variables.getConfigId() } });
           }
         } else {
-          await checkUsersDb(message.member, message.guild);
-          await runDb('INSERT INTO levels (guilds_id, users_id, exp, message_count) VALUES (?, ?, ?, ?)', message.guild.id, message.member.id, getRandomInt(5, 10), 1);
+          await addUserGuild(message.member.id, message.guild.id);
+          await createLevel(message.guild.id, message.member.id, getRandomInt(5, 10), 1);
         }
       }
     }
     catch (error) {
-      console.log(error)
       errorSendControls(error, message.guild.client, message.guild, "\\levels-system\\voiceState.js");
     }
   },

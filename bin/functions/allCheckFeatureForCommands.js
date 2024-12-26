@@ -38,7 +38,7 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, featu
     
     if (await checkPremiumLimitation(guildId, featureId) == -1 || howManyLengthUseForFeature < await checkPremiumLimitation(guildId, featureId) || featureLimitationControl == false) {
       if (await checkPremiumFeature(guildId, featureId)) {
-        if (await checkFeatureSystemDisabled(featureId, featureId)) {
+        if (await checkFeatureSystemDisabled(featureId)) {
           return true;
         }
         else {
