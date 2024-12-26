@@ -104,6 +104,17 @@ const { findAll: findAllLevelsRoles,
 // updateLevelsRoles -> Permette di aggiornare una configurazione di LevelsRoles nella tabella levels_roles
 // removeLevelsRoles -> Permette di rimuovere una configurazione di LevelsRoles nella tabella levels_roles
 
+const {
+  findAll: findAllRoles,
+  findByGuildId: findByGuildIdRole,
+  create: createRole,
+  update: updateRole
+} = require('../repository/Role');
+// findAllRoles -> Permette di cercare tutte le configurazioni di Role nella tabella roles
+// findByGuildIdRole -> Permette di cercare una configurazione di Role nella tabella roles tramite guildId
+// createRole -> Permette di creare una configurazione di Role nella tabella roles
+// updateRole -> Permette di aggiornare una configurazione di Role nella tabella roles
+
 
 module.exports = {
   addUserGuild,
@@ -147,5 +158,9 @@ module.exports = {
   createLevelsRoles,
   updateLevelsRoles,
   removeLevelsRoles,
-  findAllLevelsRolesByGuildId
+  findAllLevelsRolesByGuildId,
+  findAllRoles,
+  findByGuildIdRole,
+  createRole,
+  updateRole
 }

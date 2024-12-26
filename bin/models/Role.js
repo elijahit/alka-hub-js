@@ -10,6 +10,7 @@ const { database } = require('../database');
 const { Sequelize } = require('sequelize');
 
 const Role = database.define('roles', {
+  config_id: { type: Sequelize.INTEGER },
   role_id: { type: Sequelize.STRING },
   guild_id: { type: Sequelize.STRING }
 });
