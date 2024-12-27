@@ -9,28 +9,33 @@
 const { Events, EmbedBuilder, TextChannel, AttachmentBuilder } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
-const { readDb, readDbAllWith1Params, runDb } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const { errorSendControls } = require('../../../bin/HandlingFunctions');
 const { makeWelcomeImage } = require('../welcomeHandling');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
-const checkUsersDb = require('../../../bin/functions/checkUsersDb');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findByGuildIdWelcome } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 
 module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member) {
-    checkUsersDb(member, member.guild);
-    if (!await checkFeaturesIsEnabled(member.guild, 10)) return;
+    if (!await checkFeatureSystemDisabled(10)) return;
+    if (!await checkFeaturesIsEnabled(member.guild.id, 10)) return;
+    if (!await checkPremiumFeature(member.guild.id, 10)) return;
     try {
-      let check = await readDb('SELECT * FROM welcome WHERE guilds_id = ?', member.guild.id);
+      let check = await findByGuildIdWelcome(member.guild.id);
+      check = check?.get({ plain: true });
       if (check) {
         let channel;
         try {
           channel = await member.guild.channels.fetch(check.channel_id);
         } catch {
-          await runDb('DELETE FROM welcome WHERE guilds_id = ?', member.guild.id);
+          // SE NON TROVO IL CANALE
+          return;
         }
         try {
 
@@ -47,7 +52,7 @@ module.exports = {
           })
           const embedLog = new EmbedBuilder()
             .setAuthor({ name: `${language_result.welcomeMessage.embed_title}`, iconURL: emoji.welcomeSystem.main })
-            .setFooter({ text: `${language_result.welcomeMessage.embed_footer}`, iconURL: `${language_result.welcomeMessage.embed_icon_url}` })
+            .setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
             .setImage("attachment://welcome.jpg")
             .setColor(colors.general.danger);
 

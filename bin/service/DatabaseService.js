@@ -136,9 +136,27 @@ const {
 // findByGuildIdAndMessageIdAndEmojiReactions -> Permette di cercare una configurazione di ReactionRole nella tabella reaction_roles tramite guildId, messageId e emoji
 // removeReactions -> Permette di rimuovere una configurazione di ReactionRole nella tabella reaction_roles
 
+const {
+  findAll: findAllWelcome,
+  findByGuildIdAndChannelId: findByGuildIdAndChannelIdWelcome,
+  findByGuildId: findByGuildIdWelcome,
+  create: createWelcome,
+  update: updateWelcome
+} = require('../repository/Welcome');
+// findAllWelcome -> Permette di cercare tutte le configurazioni di Welcome nella tabella welcome
+// findByGuildIdAndChannelIdWelcome -> Permette di cercare una configurazione di Welcome nella tabella welcome tramite guildId e channelId
+// findByGuildIdWelcome -> Permette di cercare una configurazione di Welcome nella tabella welcome tramite guildId
+// createWelcome -> Permette di creare una configurazione di Welcome nella tabella welcome
+// updateWelcome -> Permette di aggiornare una configurazione di Welcome nella tabella welcome
+
 
 
 module.exports = {
+  findAllWelcome,
+  findByGuildIdAndChannelIdWelcome,
+  findByGuildIdWelcome,
+  createWelcome,
+  updateWelcome,
   addUserGuild,
   findUserById,
   findGuildById,

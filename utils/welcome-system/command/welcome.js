@@ -6,14 +6,14 @@
  * @description Questo file gestisce il comando per impostare i messaggi di benvenuto!
  */
 
-const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ChannelType, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
-const { readDb, runDb, readDbAllWith2Params, readDbWith4Params, readDbWith3Params, readDbAllWith1Params } = require('../../../bin/database');
-const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermission, noEnabledFunc, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const { errorSendControls, returnPermission, noHavePermission } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
-const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
+const { findByGuildIdWelcome, updateWelcome, createWelcome } = require('../../../bin/service/DatabaseService');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -21,10 +21,10 @@ module.exports = {
 		.setDescription('Use this command to set your welcome messages')
 		.addChannelOption(value =>
 			value
-			.setName('channel')
-			.setDescription('Channel in which to see the message')
-			.addChannelTypes(ChannelType.GuildText)
-			.setRequired(true)
+				.setName('channel')
+				.setDescription('Channel in which to see the message')
+				.addChannelTypes(ChannelType.GuildText)
+				.setRequired(true)
 		)
 		.addNumberOption(value =>
 			value
@@ -38,12 +38,12 @@ module.exports = {
 				.addChoices({
 					name: "Black",
 					value: 1
-				})		
+				})
 		)
 		.addStringOption(value =>
 			value
 				.setName("background")
-				.setDescription('Link .jpg or .png image to use as background')		
+				.setDescription('Link .jpg or .png image to use as background')
 		),
 	async execute(interaction) {
 		const channel = interaction.options.getChannel('channel');
@@ -57,61 +57,64 @@ module.exports = {
 		await returnPermission(interaction, "welcome", async result => {
 			try {
 				if (result) {
-					if (await checkFeaturesIsEnabled(interaction.guild.id, 10)) {
-						//ESISTE GIA
-						const checkAlreadyExist = await readDb('SELECT * FROM welcome WHERE guilds_id = ?', interaction.guild.id);
-						const modal = new ModalBuilder()
-							.setTitle('Welcome Message | Settings')
-							.setCustomId('welcomeMessageSetting');
-						if (checkAlreadyExist) {
-							// DEFINISCO LA DESCRIZIONE
-							let checkText = checkAlreadyExist.text ? checkAlreadyExist.text : "";
-							const descriptionDefine = new TextInputBuilder()
-								.setCustomId('descriptionWelcome')
-								.setLabel(language_result.welcomeModal.descriptionWelcome)
-								.setRequired(false)
-								.setStyle(TextInputStyle.Paragraph)
-								.setValue(checkText)
-							const descriptionRow = new ActionRowBuilder().addComponents(descriptionDefine);
-							// END DESCRIZIONE
+					if (!await allCheckFeatureForCommands(interaction, interaction.guild.id, 10, false, language_result.noPermission.description_embed_no_features_by_system,
+						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature,
+						language_result.noPermission.description_embed_no_features)) return;
+
+					//ESISTE GIA
+					let checkAlreadyExist = await findByGuildIdWelcome(interaction.guild.id);
+					checkAlreadyExist = checkAlreadyExist?.get({ plain: true });
+
+					const modal = new ModalBuilder()
+						.setTitle('Welcome Message | Settings')
+						.setCustomId('welcomeMessageSetting');
+					if (checkAlreadyExist) {
+						// DEFINISCO LA DESCRIZIONE
+						let checkText = checkAlreadyExist.text ? checkAlreadyExist.text : "";
+						const descriptionDefine = new TextInputBuilder()
+							.setCustomId('descriptionWelcome')
+							.setLabel(language_result.welcomeModal.descriptionWelcome)
+							.setRequired(false)
+							.setStyle(TextInputStyle.Paragraph)
+							.setValue(checkText)
+						const descriptionRow = new ActionRowBuilder().addComponents(descriptionDefine);
+						// END DESCRIZIONE
 
 
-							modal.addComponents(descriptionRow);
+						modal.addComponents(descriptionRow);
 
-							// AGGIORNO IL CANALE NEL DATABASE
-							await runDb('UPDATE welcome SET channel_id = ?, color = ? WHERE guilds_id = ?', channel.id, color, interaction.guild.id);
+						// AGGIORNO IL CANALE NEL DATABASE
+						await updateWelcome({ channel_id: channel.id, color: color }, {where: { guild_id: interaction.guild.id }});
 
-							if(background) {
-								await runDb('UPDATE welcome SET background_url = ? WHERE guilds_id = ?', background, interaction.guild.id);
-							}
-
-							await interaction.showModal(modal);
-						} else {
-							// DEFINISCO LA DESCRIZIONE
-							const descriptionDefine = new TextInputBuilder()
-								.setCustomId('descriptionWelcome')
-								.setLabel(language_result.welcomeModal.descriptionWelcome)
-								.setRequired(false)
-								.setStyle(TextInputStyle.Paragraph)
-							const descriptionRow = new ActionRowBuilder().addComponents(descriptionDefine);
-							// END DESCRIZIONE
-
-
-							modal.addComponents(descriptionRow);
-
-							// INSERISCO IL CANALE NEL DATABASE
-							await runDb('INSERT INTO welcome (guilds_id, channel_id, color) VALUES(?,?,?)', interaction.guild.id, channel.id, color);
-
-							if(background) {
-								await runDb('UPDATE welcome SET background_url = ? WHERE guilds_id = ?',background, interaction.guild.id);
-							}
-
-							await interaction.showModal(modal);
+						if (background) {
+							await updateWelcome({ background_url: background }, {where: { guild_id: interaction.guild.id }});
 						}
 
+						await interaction.showModal(modal);
 					} else {
-						await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
+						// DEFINISCO LA DESCRIZIONE
+						const descriptionDefine = new TextInputBuilder()
+							.setCustomId('descriptionWelcome')
+							.setLabel(language_result.welcomeModal.descriptionWelcome)
+							.setRequired(false)
+							.setStyle(TextInputStyle.Paragraph)
+						const descriptionRow = new ActionRowBuilder().addComponents(descriptionDefine);
+						// END DESCRIZIONE
+
+
+						modal.addComponents(descriptionRow);
+
+						// INSERISCO IL CANALE NEL DATABASE
+						await createWelcome(interaction.guild.id, channel.id, color, background, "");
+
+						if (background) {
+							await updateWelcome({ background_url: background }, {where: { guild_id: interaction.guild.id }});
+						}
+
+						await interaction.showModal(modal);
 					}
+
+
 				}
 				else {
 					await noHavePermission(interaction, language_result);

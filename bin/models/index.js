@@ -25,6 +25,7 @@ const { Level } = require('./Level');
 const { LevelsConfig } = require('./LevelsConfig');
 const { LevelsRoles } = require('./LevelsRoles');
 const { ReactionRole } = require('./ReactionRole');
+const { Welcome } = require('./Welcome');
 
 
 
@@ -81,5 +82,6 @@ module.exports = {
   Level,
   LevelsConfig,
   LevelsRoles,
-  ReactionRole
+  ReactionRole,
+  Welcome
 }

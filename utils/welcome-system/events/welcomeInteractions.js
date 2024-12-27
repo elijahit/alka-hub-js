@@ -9,10 +9,11 @@
 const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder, Colors } = require('discord.js');
 const { readFileSync, writeFileSync, unlinkSync } = require('fs');
 const language = require('../../../languages/languages');
-const { readDbAllWith2Params, runDb, readDbWith3Params, readDbWith4Params, readDb } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl, returnPermission, noHavePermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
+const { errorSendControls } = require('../../../bin/HandlingFunctions');
 const emoji = require('../../../bin/data/emoji');
 const color = require('../../../bin/data/colors');
+const { updateWelcome } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 
 module.exports = {
@@ -28,11 +29,12 @@ module.exports = {
       if (interaction.customId == 'welcomeMessageSetting') {
         const text = interaction.fields.getTextInputValue('descriptionWelcome');
 
-        await runDb('UPDATE welcome SET text = ? WHERE guilds_id = ?', text, interaction.guild.id);
+				await updateWelcome({ text: text }, {where: { guild_id: interaction.guild.id }});
+
 
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.welcomeModal.embed_title}`, iconURL: emoji.welcomeSystem.main })
-          .setFooter({ text: `${language_result.welcomeModal.embed_footer}`, iconURL: `${language_result.welcomeModal.embed_icon_url}` })
+          .setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
           .setDescription(language_result.welcomeModal.description)
           .setColor(color.general.danger);
         await interaction.reply({embeds: [embedLog], ephemeral: true});
