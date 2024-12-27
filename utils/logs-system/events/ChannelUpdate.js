@@ -14,7 +14,7 @@ const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFun
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
-const { findStatistics, findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { findByGuildIdAndChannelIdStatistics, findLogsByGuildId } = require('../../../bin/service/DatabaseService');
 const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
 const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
 const Variables = require('../../../bin/classes/GlobalVariables');
@@ -35,7 +35,7 @@ module.exports = {
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channelStatsSystem = await findStatistics(oldChannel.guild.id, oldChannel.id);
+        let channelStatsSystem = await findByGuildIdAndChannelIdStatistics(oldChannel.guild.id, oldChannel.id);
         channelStatsSystem = channelStatsSystem?.get({ plain: true });
         if (channelStatsSystem?.channel_id) return;
         let resultDb = await findLogsByGuildId(oldChannel.guild.id);

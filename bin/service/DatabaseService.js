@@ -62,10 +62,6 @@ const { findByGuildId: findLogsByGuildId,
 // updateLogs -> Permette di aggiornare un record nella tabella logs_system
 // createLogs -> Permette di creare un record nella tabella logs_system
 
-
-const { findByGuildIdAndChannelId: findStatistics } = require('../repository/Statistics');
-// findByGuildIdAndChannelId -> Permette di cercare una configurazione di Statistics nella tabella statistics
-
 const {findByGuildId: findLevelsConfigByGuildId, 
   findAll: findLevelsConfigAll, 
   create: createLevelsConfig, 
@@ -149,6 +145,29 @@ const {
 // createWelcome -> Permette di creare una configurazione di Welcome nella tabella welcome
 // updateWelcome -> Permette di aggiornare una configurazione di Welcome nella tabella welcome
 
+const {
+  findAll: findAllStatistics,
+  findByGuildIdAndChannelId: findByGuildIdAndChannelIdStatistics,
+  create: createStatistics,
+  update: updateStatistics
+} = require('../repository/Statistics');
+// findAllStatistics -> Permette di cercare tutte le configurazioni di Statistics nella tabella statistics
+// findByGuildIdAndChannelIdStatistics -> Permette di cercare una configurazione di Statistics nella tabella statistics tramite guildId e channelId
+// createStatistics -> Permette di creare una configurazione di Statistics nella tabella statistics
+// updateStatistics -> Permette di aggiornare una configurazione di Statistics nella tabella statistics
+
+
+const {
+  findAll: findAllStatisticsCategory,
+  findByGuildIdAndcategoryId: findByGuildIdAndcategoryIdStatisticsCategory,
+  create: createStatisticsCategory,
+  update: updateStatisticsCategory
+} = require('../repository/StatisticsCategory');
+// findAllStatisticsCategory -> Permette di cercare tutte le configurazioni di StatisticsCategory nella tabella statistics_category
+// findByGuildIdAndcategoryIdStatisticsCategory -> Permette di cercare una configurazione di StatisticsCategory nella tabella statistics_category tramite guildId e categoryId
+// createStatisticsCategory -> Permette di creare una configurazione di StatisticsCategory nella tabella statistics_category
+// updateStatisticsCategory -> Permette di aggiornare una configurazione di StatisticsCategory nella tabella statistics_category
+
 
 
 module.exports = {
@@ -180,7 +199,6 @@ module.exports = {
   findLogsByGuildId,
   updateLogs,
   createLogs,
-  findStatistics,
   findLevelsConfigByGuildId,
   findLevelsConfigAll,
   createLevelsConfig,
@@ -211,5 +229,13 @@ module.exports = {
   findByGuildIdAndMessageIdAndEmojiAndRoleReactions,
   findAllReactionsByGuildId,
   findByGuildIdAndMessageIdAndEmojiReactions,
-  removeReactions
+  removeReactions,
+  findAllStatistics,
+  findByGuildIdAndChannelIdStatistics,
+  createStatistics,
+  updateStatistics,
+  findAllStatisticsCategory,
+  findByGuildIdAndcategoryIdStatisticsCategory,
+  createStatisticsCategory,
+  updateStatisticsCategory
 }
