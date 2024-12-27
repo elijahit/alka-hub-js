@@ -10,7 +10,7 @@
   "statisticsCommand": {
     "embed_title": "Stats System",
 
-    "description_embed": "Hai correttamente impostato la categoria per le statistiche del server, puoi ora utilizzare il comando /channelstats per configurare i canali che registreranno le tue statistiche. Per personalizzare ulteriormente i canali, ti consigliamo di consultare la nostra documentazione nel nostro [discord ufficiale](https://discord.gg/DqRcKB75N5)."
+    "description_embed": "Hai correttamente impostato la categoria per le statistiche del server, puoi ora utilizzare il comando /channelstats per configurare i canali che registreranno le tue statistiche. Per personalizzare ulteriormente i canali."
   },
   "setupModal": {
     "embed_title": "Stats System",

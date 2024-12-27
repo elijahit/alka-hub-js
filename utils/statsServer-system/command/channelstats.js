@@ -9,13 +9,11 @@
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits, PermissionsBitField, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
-const { readDb, runDb, readDbAllWith2Params, readDbWith4Params, readDbWith3Params } = require('../../../bin/database');
-const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermission, noEnabledFunc, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const { errorSendControls, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
-const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
-const { findAllStatisticsCategory, findByGuildIdAndcategoryIdStatisticsCategory } = require('../../../bin/service/DatabaseService');
+const {findByGuildIdAndcategoryIdStatisticsCategory } = require('../../../bin/service/DatabaseService');
 const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
