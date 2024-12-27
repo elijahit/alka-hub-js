@@ -6,7 +6,7 @@
  * @description Questo file gestisce il comando per impostare la propria categoria di statistiche!
  */
 
-const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync } = require('fs');
 const { errorSendControls, returnPermission, noHavePermission } = require('../../../bin/HandlingFunctions');
