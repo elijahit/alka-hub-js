@@ -8,12 +8,12 @@
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
-const { readFileSync, read } = require('fs');
-const { readDb, runDb } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
+const { readFileSync } = require('fs');
+const { errorSendControls } = require('../../../bin/HandlingFunctions');
 const axios = require('axios').default;
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 // --- API CONFIG ----
 // Token by https://portal.apexlegendsapi.com/
@@ -134,7 +134,7 @@ module.exports = {
 				const embedLog = new EmbedBuilder()
 					.setAuthor({ name: `${language_result.apexTracker.embed_title}`, iconURL: customEmoji })
 					.addFields(fields)
-					.setFooter({ text: `${language_result.apexTracker.embed_footer}`, iconURL: `${language_result.apexTracker.embed_icon_url}` })
+					.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
 					.setThumbnail(resultApi.data.global.avatar)
 					.setColor(colors.general.danger);
 				await interaction.editReply({ embeds: [embedLog] });
@@ -145,7 +145,7 @@ module.exports = {
 				const embedLog = new EmbedBuilder()
 					.setAuthor({ name: `${language_result.apexTracker.embed_title}`, iconURL: customEmoji })
 					.setDescription(language_result.apexTracker.noResult)
-					.setFooter({ text: `${language_result.apexTracker.embed_footer}`, iconURL: `${language_result.apexTracker.embed_icon_url}` })
+					.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
 					.setColor(0x9e1114);
 				await interaction.editReply({ embeds: [embedLog] });
 				return;
