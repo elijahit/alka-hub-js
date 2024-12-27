@@ -1,17 +1,19 @@
 {
   "noPermission": {
-    "embed_title": "Welcome",
-
+    "embed_title": "Welcome System",
+    "description_limit_premium": "Passa al piano Premium per sbloccare funzionalità illimitati!",
+    "description_premium_feature": "Questa funzionalità è disponibile solo con il piano Premium. Aggiorna subito il tuo piano per sbloccarla!",
     "description_embed": "Non hai il permesso per usare questo comando!",
-    "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
+    "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla.",
+    "description_embed_no_features_by_system": "Questa funzionalità è temporaneamente disabilitata per manutenzione straordinaria. Ti invitiamo a pazientare: sarà nuovamente disponibile a breve."
   },
   "welcomeMessage": {
-    "embed_title": "Welcome",
+    "embed_title": "Welcome System",
 
     "description_embed": "BENVENUTO SU"
   },
   "welcomeModal": {
-    "embed_title": "Welcome",
+    "embed_title": "Welcome System",
 
     "descriptionWelcome": "DESCRIZIONE",
     "description": "Hai configurato con successo il messaggio di benvenuto, adesso quando i nuovi utenti faranno accesso al server sarà inviato il messaggio nel canale selezionato."
