@@ -89,6 +89,20 @@ async function update(objToUpdate, objToCondition) {
   return await ReactionRole.update(objToUpdate, objToCondition);
 }
 
+/**
+ * 
+ * @param {object} objToRemove 
+ * @returns {Promise<number>}
+ */
+async function remove(objToRemove) {
+  return await ReactionRole.destroy({
+    where: {
+      ...objToRemove,
+      config_id: Variables.getConfigId()
+    }
+  });
+}
+
 module.exports = {
   findAll,
   findByGuildId,
@@ -97,5 +111,6 @@ module.exports = {
   findByGuildIdAndMessageIdAndEmoji,
   findAllByGuildId,
   create,
-  update
+  update,
+  remove
 }

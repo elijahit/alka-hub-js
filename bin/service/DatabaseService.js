@@ -123,7 +123,8 @@ const {
   update: updateReaction,
   findByGuildIdAndMessageIdAndEmojiAndRoleId: findByGuildIdAndMessageIdAndEmojiAndRoleReactions,
   findAllByGuildId: findAllReactionsByGuildId,
-  findByGuildIdAndMessageIdAndEmoji: findByGuildIdAndMessageIdAndEmojiReactions
+  findByGuildIdAndMessageIdAndEmoji: findByGuildIdAndMessageIdAndEmojiReactions,
+  remove: removeReactions
 } = require('../repository/ReactionRole');
 // findAllReactions -> Permette di cercare tutte le configurazioni di ReactionRole nella tabella reaction_roles
 // findByGuildIdReactions -> Permette di cercare una configurazione di ReactionRole nella tabella reaction_roles tramite guildId
@@ -133,6 +134,7 @@ const {
 // findByGuildIdAndMessageIdAndEmojiAndRoleReactions -> Permette di cercare una configurazione di ReactionRole nella tabella reaction_roles tramite guildId, messageId, emoji e roleId
 // findAllReactionsByGuildId -> Permette di cercare tutte le configurazioni di ReactionRole nella tabella reaction_roles tramite guildId
 // findByGuildIdAndMessageIdAndEmojiReactions -> Permette di cercare una configurazione di ReactionRole nella tabella reaction_roles tramite guildId, messageId e emoji
+// removeReactions -> Permette di rimuovere una configurazione di ReactionRole nella tabella reaction_roles
 
 
 
@@ -190,5 +192,6 @@ module.exports = {
   updateReaction,
   findByGuildIdAndMessageIdAndEmojiAndRoleReactions,
   findAllReactionsByGuildId,
-  findByGuildIdAndMessageIdAndEmojiReactions
+  findByGuildIdAndMessageIdAndEmojiReactions,
+  removeReactions
 }
