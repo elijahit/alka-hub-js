@@ -9,11 +9,13 @@
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits, PermissionsBitField, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
-const { readDb, runDb, readDbAllWith2Params, readDbWith4Params, readDbWith3Params } = require('../../../bin/database');
-const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermission, noEnabledFunc, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const { errorSendControls, returnPermission, noHavePermission } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findByGuildIdAndChannelIdStatistics } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
+const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -36,46 +38,50 @@ module.exports = {
 		await returnPermission(interaction, "statsServer", async result => {
 			try {
 				if (result) {
-					if (await checkFeaturesIsEnabled(interaction.guild.id, 6)) {
-						const checkChannel = await readDb('SELECT * FROM statistics WHERE guilds_id = ? AND channel_id = ?', interaction.guild.id, channelId);
-						if (checkChannel) {
-							const modal = new ModalBuilder()
-								.setCustomId("statsModalEdit")
-								.setTitle(language_result.setupModal.embed_title);
+					if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 6, false, language_result.noPermission.description_embed_no_features_by_system,
+						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature,
+						language_result.noPermission.description_embed_no_features)) return;
 
-							const channelName = new TextInputBuilder()
-								.setCustomId('statsChannelName')
-								.setLabel(language_result.setupModal.description_embed_title)
-								.setPlaceholder(language_result.setupModal.placeholder)
-								.setMaxLength(40)
-								.setStyle(TextInputStyle.Short);
+					
+					let checkChannel = await findByGuildIdAndChannelIdStatistics(interaction.guild.id, channelId);
+					checkChannel = checkChannel?.get({ plain: true });
 
-							const channelIdText = new TextInputBuilder()
-								.setCustomId('statsChannelId')
-								.setLabel(language_result.setupModal.category_embed)
-								.setStyle(TextInputStyle.Short)
-								.setValue(`${channelId}`);
+					if (checkChannel) {
+						const modal = new ModalBuilder()
+							.setCustomId("statsModalEdit")
+							.setTitle(language_result.setupModal.embed_title);
+
+						const channelName = new TextInputBuilder()
+							.setCustomId('statsChannelName')
+							.setLabel(language_result.setupModal.description_embed_title)
+							.setPlaceholder(language_result.setupModal.placeholder)
+							.setMaxLength(40)
+							.setStyle(TextInputStyle.Short);
+
+						const channelIdText = new TextInputBuilder()
+							.setCustomId('statsChannelId')
+							.setLabel(language_result.setupModal.category_embed)
+							.setStyle(TextInputStyle.Short)
+							.setValue(`${channelId}`);
 
 
-							const channelNameRow = new ActionRowBuilder().addComponents(channelName);
+						const channelNameRow = new ActionRowBuilder().addComponents(channelName);
 
-							const channelIdRow = new ActionRowBuilder().addComponents(channelIdText);
+						const channelIdRow = new ActionRowBuilder().addComponents(channelIdText);
 
-							modal.addComponents(channelNameRow, channelIdRow);
+						modal.addComponents(channelNameRow, channelIdRow);
 
-							await interaction.showModal(modal);
+						await interaction.showModal(modal);
 
-						} else {
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.categoryNotFound.embed_title}`, iconURL: emoji.statsServerSystem.main })
-								.setDescription(language_result.channelNotFound.description_embed)
-								.setFooter({ text: `${language_result.categoryNotFound.embed_footer}`, iconURL: `${language_result.categoryNotFound.embed_icon_url}` })
-								.setColor(colors.general.error);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
-						}
 					} else {
-						await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
+						const embedLog = new EmbedBuilder()
+							.setAuthor({ name: `${language_result.categoryNotFound.embed_title}`, iconURL: emoji.statsServerSystem.main })
+							.setDescription(language_result.channelNotFound.description_embed)
+							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setColor(colors.general.error);
+						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}
+
 				}
 				else {
 					await noHavePermission(interaction, language_result);

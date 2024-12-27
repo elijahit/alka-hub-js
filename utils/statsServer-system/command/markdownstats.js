@@ -8,12 +8,12 @@
 
 const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ChannelType, PermissionFlagsBits, PermissionsBitField } = require('discord.js');
 const language = require('../../../languages/languages');
-const { readFileSync, read } = require('fs');
-const { readDb, runDb, readDbAllWith2Params, readDbWith4Params, readDbWith3Params } = require('../../../bin/database');
-const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermission, noEnabledFunc, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const { readFileSync } = require('fs');
+const { errorSendControls, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
-const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const Variables = require('../../../bin/classes/GlobalVariables');
+const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -28,16 +28,17 @@ module.exports = {
 		await returnPermission(interaction, "statsServer", async result => {
 			try {
 				if (result) {
-					if (await checkFeaturesIsEnabled(interaction.guild.id, 6)) {
-						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.markdownHelp.embed_title}`, iconURL: emoji.statsServerSystem.main })
-							.setDescription(language_result.markdownHelp.description_embed)
-							.setFooter({ text: `${language_result.markdownHelp.embed_footer}`, iconURL: `${language_result.markdownHelp.embed_icon_url}` })
-							.setColor(colors.general.success);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
-					} else {
-						await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
-					}
+					if (!await allCheckFeatureForCommands(interaction, interaction.guild.id, 6, false, language_result.noPermission.description_embed_no_features_by_system,
+						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature,
+						language_result.noPermission.description_embed_no_features)) return;
+
+					const embedLog = new EmbedBuilder()
+						.setAuthor({ name: `${language_result.markdownHelp.embed_title}`, iconURL: emoji.statsServerSystem.main })
+						.setDescription(language_result.markdownHelp.description_embed)
+						.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+						.setColor(colors.general.success);
+					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+
 				}
 				else {
 					await noHavePermission(interaction, language_result);
