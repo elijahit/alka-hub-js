@@ -8,7 +8,7 @@
 
 const { EmbedBuilder } = require('discord.js');
 const { checkPremiumLimitation, checkPremiumFeature } = require('../../bin/functions/checkPremiumFeature');
-const { findAllLevelsRolesByGuildId, findAllAutoVoiceByGuildId, findAllReactionsByGuildId } = require('../../bin/service/DatabaseService');
+const { findAllLevelsRolesByGuildId, findAllAutoVoiceByGuildId, findAllReactionsByGuildId, findAllByGuildIdStatistics } = require('../../bin/service/DatabaseService');
 const { checkFeatureSystemDisabled } = require('../../bin/functions/checkFeatureSystemDisabled');
 const checkFeaturesIsEnabled = require('../../bin/functions/checkFeaturesIsEnabled');
 const { noEnabledFunc } = require('../HandlingFunctions');
@@ -102,6 +102,7 @@ async function getLengthFeature(featureId, guildId) {
         howManyLengthUseForFeature = (await findAllReactionsByGuildId(guildId)).length;
         break;
       case 6:
+        howManyLengthUseForFeature = (await findAllByGuildIdStatistics(guildId)).length;
         break;
       case 7:
         break;

@@ -28,7 +28,7 @@
   "categoryNotFound": {
     "embed_title": "Stats System",
 
-    "description_embed": "La categoria selezionata non è stata trovata nel nostro database, ti invitiamo a riprovare oppure crea la tua categoria con /statistics. Ti raccomandiamo di leggere la nostra documentazione nel nostro [discord ufficiale](https://discord.gg/DqRcKB75N5).\n\n- Il problema può dipendere anche da un valore errato come il **nome canale** o il **tipo di canale**."
+    "description_embed": "La categoria selezionata non è stata trovata nel nostro database, ti invitiamo a riprovare oppure crea la tua categoria con /statistics.\n\n- Il problema può dipendere anche da un valore errato come il **nome canale** o il **tipo di canale**."
   },
   "markdownHelp": {
     "embed_title": "Stats System",
@@ -38,7 +38,7 @@
   "channelNotFound": {
     "embed_title": "Stats System",
 
-    "description_embed": "Il canale selezionato non è stata trovato nel nostro database oppure abbiamo riscontrato un errore durante l'aggiornamento, ti invitiamo a riprovare. Ti raccomandiamo di leggere la nostra documentazione nel nostro [discord ufficiale](https://discord.gg/DqRcKB75N5)."
+    "description_embed": "Il canale selezionato non è stata trovato nel nostro database oppure abbiamo riscontrato un errore durante l'aggiornamento, ti invitiamo a riprovare."
   },
   "channelUpdateCommand": {
     "embed_title": "Stats System",

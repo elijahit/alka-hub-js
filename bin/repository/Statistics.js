@@ -18,6 +18,14 @@ async function findAll() {
   return await Statistics.findAll({where: {config_id: Variables.getConfigId()}});
 }
 
+/**
+ * @params {string} guildId
+ * @returns {Promise<Array<Model>>}
+ */
+async function findAllByGuildId(guildId) {
+  return await Statistics.findAll({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+}
+
 
 /**
  * @param {string} guildId 
@@ -53,6 +61,7 @@ async function update(objToUpdate, objToCondition) {
 
 module.exports = {
   findAll,
+  findAllByGuildId,
   findByGuildIdAndChannelId,
   create,
   update

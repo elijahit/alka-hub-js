@@ -147,6 +147,7 @@ const {
 
 const {
   findAll: findAllStatistics,
+  findAllByGuildId: findAllByGuildIdStatistics,
   findByGuildIdAndChannelId: findByGuildIdAndChannelIdStatistics,
   create: createStatistics,
   update: updateStatistics
@@ -159,6 +160,7 @@ const {
 
 const {
   findAll: findAllStatisticsCategory,
+  findAllByGuildId: findAllByGuildIdStatisticsCategory,
   findByGuildIdAndcategoryId: findByGuildIdAndcategoryIdStatisticsCategory,
   create: createStatisticsCategory,
   update: updateStatisticsCategory
@@ -235,7 +237,9 @@ module.exports = {
   createStatistics,
   updateStatistics,
   findAllStatisticsCategory,
+  findAllByGuildIdStatisticsCategory,
   findByGuildIdAndcategoryIdStatisticsCategory,
   createStatisticsCategory,
-  updateStatisticsCategory
+  updateStatisticsCategory,
+  findAllByGuildIdStatistics
 }

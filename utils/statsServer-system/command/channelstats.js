@@ -14,6 +14,9 @@ const { errorSendControls, getEmoji, returnPermission, noInitGuilds, noHavePermi
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
+const { findAllStatisticsCategory, findByGuildIdAndcategoryIdStatisticsCategory } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -79,53 +82,55 @@ module.exports = {
 		await returnPermission(interaction, "statsServer", async result => {
 			try {
 				if (result) {
-					if (await checkFeaturesIsEnabled(interaction.guild.id, 6)) {
-						const checkCategory = await readDb('SELECT * FROM statistics_category WHERE guilds_id = ? AND category_id = ?', interaction.guild.id, categoryId)
-						if (checkCategory) {
-							const modal = new ModalBuilder()
-								.setCustomId("statsModal")
-								.setTitle(language_result.setupModal.embed_title);
+					if (!await allCheckFeatureForCommands(interaction, interaction.guild.id, 6, true, language_result.noPermission.description_embed_no_features_by_system,
+						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature,
+						language_result.noPermission.description_embed_no_features)) return;
 
-							const channelName = new TextInputBuilder()
-								.setCustomId('statsChannelName')
-								.setLabel(language_result.setupModal.description_embed_title)
-								.setPlaceholder(language_result.setupModal.placeholder)
-								.setMaxLength(40)
-								.setStyle(TextInputStyle.Short);
+					let checkCategory = await findByGuildIdAndcategoryIdStatisticsCategory(interaction.guild.id, categoryId);
+					checkCategory = checkCategory?.get({ plain: true });
+					if (checkCategory) {
+						const modal = new ModalBuilder()
+							.setCustomId("statsModal")
+							.setTitle(language_result.setupModal.embed_title);
 
-							const categoryChannelId = new TextInputBuilder()
-								.setCustomId('statsCategoryId')
-								.setLabel(language_result.setupModal.category_embed)
-								.setStyle(TextInputStyle.Short)
-								.setValue(`${categoryId}`);
+						const channelName = new TextInputBuilder()
+							.setCustomId('statsChannelName')
+							.setLabel(language_result.setupModal.description_embed_title)
+							.setPlaceholder(language_result.setupModal.placeholder)
+							.setMaxLength(40)
+							.setStyle(TextInputStyle.Short);
 
-							const typeChannel = new TextInputBuilder()
-								.setCustomId('statsTypeChannel')
-								.setLabel(language_result.setupModal.type_embed)
-								.setStyle(TextInputStyle.Short)
-								.setValue(`${type}`);
+						const categoryChannelId = new TextInputBuilder()
+							.setCustomId('statsCategoryId')
+							.setLabel(language_result.setupModal.category_embed)
+							.setStyle(TextInputStyle.Short)
+							.setValue(`${categoryId}`);
 
-							const channelNameRow = new ActionRowBuilder().addComponents(channelName);
+						const typeChannel = new TextInputBuilder()
+							.setCustomId('statsTypeChannel')
+							.setLabel(language_result.setupModal.type_embed)
+							.setStyle(TextInputStyle.Short)
+							.setValue(`${type}`);
 
-							const categoryIdRow = new ActionRowBuilder().addComponents(categoryChannelId);
+						const channelNameRow = new ActionRowBuilder().addComponents(channelName);
 
-							const typeChannelRow = new ActionRowBuilder().addComponents(typeChannel);
+						const categoryIdRow = new ActionRowBuilder().addComponents(categoryChannelId);
 
-							modal.addComponents(channelNameRow, categoryIdRow, typeChannelRow);
+						const typeChannelRow = new ActionRowBuilder().addComponents(typeChannel);
 
-							await interaction.showModal(modal);
+						modal.addComponents(channelNameRow, categoryIdRow, typeChannelRow);
 
-						} else {
-							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.categoryNotFound.embed_title}`, iconURL: emoji.statsServerSystem.main })
-								.setDescription(language_result.categoryNotFound.description_embed)
-								.setFooter({ text: `${language_result.categoryNotFound.embed_footer}`, iconURL: `${language_result.categoryNotFound.embed_icon_url}` })
-								.setColor(colors.general.error);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
-						}
+						await interaction.showModal(modal);
+
 					} else {
-						await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
+						const embedLog = new EmbedBuilder()
+							.setAuthor({ name: `${language_result.categoryNotFound.embed_title}`, iconURL: emoji.statsServerSystem.main })
+							.setDescription(language_result.categoryNotFound.description_embed)
+							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setColor(colors.general.error);
+						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}
+
 				}
 				else {
 					await noHavePermission(interaction, language_result);
