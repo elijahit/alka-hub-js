@@ -6,23 +6,28 @@
  * @description Questo file gestisce l'evento per l'interazione con i bottoni di Stats Server!
  */
 
-const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder, PermissionsBitField } = require('discord.js');
-const { readFileSync, writeFileSync, unlinkSync } = require('fs');
+const { Events, ChannelType, EmbedBuilder, PermissionsBitField } = require('discord.js');
+const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
-const { readDbAllWith2Params, runDb, readDbWith3Params, readDbWith4Params, readDb, readDbAll } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl, returnPermission, noHavePermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
+const { errorSendControls } = require('../../../bin/HandlingFunctions');
 const moment = require('moment-timezone');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
-const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
 const { client } = require('../../../bin/client');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const { findByGuildIdAndcategoryIdStatisticsCategory, createStatistics, findByGuildIdAndChannelIdStatistics, updateStatistics, findLevelsConfigByGuildId, findAllStatistics, findGuildById } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 
 module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
     if (!interaction.guild) return;
+    if (!await checkFeatureSystemDisabled(6)) return;
     if (!await checkFeaturesIsEnabled(interaction.guild.id, 6)) return;
+    if (!await checkPremiumFeature(interaction.guild.id, 6)) return;
     try {
       // CONTROLLO LINGUA
       let data = await language.databaseCheck(interaction.guild.id);
@@ -35,7 +40,8 @@ module.exports = {
         let categoryId = interaction.fields.getTextInputValue('statsCategoryId');
         let type = interaction.fields.getTextInputValue('statsTypeChannel');
 
-        const checkCategory = await readDb('SELECT * FROM statistics_category WHERE guilds_id = ? AND category_id = ?', interaction.guild.id, categoryId)
+        let checkCategory = await findByGuildIdAndcategoryIdStatisticsCategory(interaction.guild.id, categoryId);
+        checkCategory = checkCategory?.get({ plain: true });
 
         // CONTROLLI PER IL MARKDOWN DEI CANALI
 
@@ -51,7 +57,7 @@ module.exports = {
 
         //  -----------------------------------------
 
-       if (channelCheck || channelStatusCheck || channelDateCheck || channelHourCheck || channelDateHourCheck) {
+        if (channelCheck || channelStatusCheck || channelDateCheck || channelHourCheck || channelDateHourCheck) {
           const category = await interaction.guild.channels.fetch(categoryId);
           // CREO IL CANALE NELLA CATEGORIA
           const channel = await interaction.guild.channels.create({
@@ -70,17 +76,16 @@ module.exports = {
           const embedLog = new EmbedBuilder()
             .setAuthor({ name: `${language_result.channelStatsCommand.embed_title}`, iconURL: customEmoji })
             .setDescription(language_result.channelStatsCommand.description_embed.replace("{0}", `${channel}`))
-            .setFooter({ text: `${language_result.channelStatsCommand.embed_footer}`, iconURL: `${language_result.channelStatsCommand.embed_icon_url}` })
-            .setColor(0x32a852);
+            .setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+            .setColor(colors.general.success);
           await interaction.reply({ embeds: [embedLog], ephemeral: true });
-          await runDb('INSERT INTO statistics (guilds_id, channel_id, type, channel_name) VALUES (?, ?, ?, ?)', interaction.guild.id, channel.id, parseInt(type), nameChannel);
-          if(!checkCategory) await runDb('INSERT INTO statistics_category (guilds_id, category_id) VALUES (?, ?)', interaction.guild.id, categoryId);
+          await createStatistics(interaction.guild.id, channel.id, nameChannel, parseInt(type));
         } else {
           const embedLog = new EmbedBuilder()
             .setAuthor({ name: `${language_result.categoryNotFound.embed_title}`, iconURL: customEmoji })
             .setDescription(language_result.categoryNotFound.description_embed)
-            .setFooter({ text: `${language_result.categoryNotFound.embed_footer}`, iconURL: `${language_result.categoryNotFound.embed_icon_url}` })
-            .setColor(0xad322a);
+            .setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+            .setColor(colors.general.error);
           await interaction.reply({ embeds: [embedLog], ephemeral: true });
         }
       }
@@ -90,8 +95,8 @@ module.exports = {
         let nameChannel = interaction.fields.getTextInputValue('statsChannelName');
         let channelId = interaction.fields.getTextInputValue('statsChannelId');
 
-        const checkChannel = await readDb('SELECT * FROM statistics WHERE guilds_id = ? AND channel_id = ?', interaction.guild.id, channelId)
-
+        let checkChannel = await findByGuildIdAndChannelIdStatistics(interaction.guild.id, channelId);
+        checkChannel = checkChannel?.get({ plain: true });
         // CONTROLLI PER IL MARKDOWN DEI CANALI
 
         let channelCheck = (checkChannel && checkChannel.type > 3 && checkChannel.type < 9 && nameChannel.includes("{0}")); // Controllo tutti i canali tranne status bar, ora, data e (ora data)
@@ -106,7 +111,7 @@ module.exports = {
 
         //  -----------------------------------------
 
-       if (channelCheck || channelStatusCheck || channelDateCheck || channelHourCheck || channelDateHourCheck) {
+        if (channelCheck || channelStatusCheck || channelDateCheck || channelHourCheck || channelDateHourCheck) {
           const channel = await interaction.guild.channels.fetch(channelId);
           // EDUTI IL CANALE NELLA CATEGORIA
           await channel.edit({
@@ -119,7 +124,7 @@ module.exports = {
             .setFooter({ text: `${language_result.channelUpdateCommand.embed_footer}`, iconURL: `${language_result.channelUpdateCommand.embed_icon_url}` })
             .setColor(0x32a852);
           await interaction.reply({ embeds: [embedLog], ephemeral: true });
-          await runDb('UPDATE statistics SET channel_name = ? WHERE guilds_id = ? AND channel_id = ?', nameChannel, interaction.guild.id, channelId);
+          await updateStatistics({ channel_name: nameChannel }, { where: { guilds_id: interaction.guild.id, channel_id: channelId } });
         } else {
           const embedLog = new EmbedBuilder()
             .setAuthor({ name: `${language_result.channelNotFound.embed_title}`, iconURL: customEmoji })
@@ -133,22 +138,31 @@ module.exports = {
     }
     catch (error) {
       console.log(error)
-      errorSendControls(error, interaction.guild.client, interaction.guild, "\\statsServer-system\\ticketInteraction.js");
+      errorSendControls(error, interaction.guild.client, interaction.guild, "\\statsServer-system\\statsInteraction.js");
     }
   },
 };
 
 async function statisticsUpdate(client) {
   async function timeZoneManage(guild) {
-    config = await readDb('SELECT * FROM guilds WHERE guilds_id = ?', guild.id);
+    let config = await findGuildById(guild.id);
+    config = config?.get({ plain: true });
+    if (!config) return;
     let date = moment(Date.now());
-    return date.tz(config?.time_zone);
+    return date.tz(config.time_zone);
   }
-  const channelsData = await readDbAll("SELECT * FROM statistics");
+  const channelsData = await findAllStatistics();
   for (const data of channelsData) {
-    const guild = await client.guilds.fetch(data.guilds_id);
-    const channel = await guild.channels.fetch(data.channel_id);
-    if(!await checkFeaturesIsEnabled(guild, 6)) return;
+    let guild, channel;
+    try{
+      guild = await client.guilds.fetch(data.guild_id);
+      channel = await guild.channels.fetch(data.channel_id);
+    } catch {
+      return;
+    }
+    if (!await checkFeatureSystemDisabled(6)) return;
+    if (!await checkFeaturesIsEnabled(guild.id, 6)) return;
+    if (!await checkPremiumFeature(guild.id, 6)) return;
     try {
       // DATA TYPE STATS
       if (data.type == 1) {
@@ -172,9 +186,9 @@ async function statisticsUpdate(client) {
 
         await channel.edit({
           name: data.channel_name
-          .replace("{0}", `${day}`)
-          .replace("{1}", `${month}`)
-          .replace("{2}", `${date.year()}`),
+            .replace("{0}", `${day}`)
+            .replace("{1}", `${month}`)
+            .replace("{2}", `${date.year()}`),
         });
       }
       // END DATA TYPE STATS
@@ -201,8 +215,8 @@ async function statisticsUpdate(client) {
         const hourformat = `${hour}:${minute}`
         await channel.edit({
           name: data.channel_name
-          .replace("{0}", `${hour}`)
-          .replace("{1}", `${minute}`),
+            .replace("{0}", `${hour}`)
+            .replace("{1}", `${minute}`),
         });
       }
       // END HOUR TYPE STATS
@@ -244,11 +258,11 @@ async function statisticsUpdate(client) {
 
         await channel.edit({
           name: data.channel_name
-          .replace("{0}", `${day}`)
-          .replace("{1}", `${month}`)
-          .replace("{2}", `${date.year()}`)
-          .replace("{3}", `${hour}`)
-          .replace("{4}", `${minute}`),
+            .replace("{0}", `${day}`)
+            .replace("{1}", `${month}`)
+            .replace("{2}", `${date.year()}`)
+            .replace("{3}", `${hour}`)
+            .replace("{4}", `${minute}`),
         });
 
       }
@@ -352,22 +366,22 @@ async function statisticsUpdate(client) {
         for await (const member of guildMembers) {
           if (member[1].presence?.status == "online") {
             online++;
-          } else if(member[1].presence?.status == "idle") {
+          } else if (member[1].presence?.status == "idle") {
             idle++;
-          } else if(member[1].presence?.status == "dnd") {
+          } else if (member[1].presence?.status == "dnd") {
             dnd++;
-          } 
+          }
         }
         await channel.edit({
           name: data.channel_name
-          .replace("{0}", `${online}`)
-          .replace("{1}", `${dnd}`)
-          .replace("{2}", `${idle}`),
+            .replace("{0}", `${online}`)
+            .replace("{1}", `${dnd}`)
+            .replace("{2}", `${idle}`),
         });
       }
       // END STATUS BAR COUNT
     }
-    catch (error){
+    catch (error) {
       errorSendControls(error, guild.client, guild, "\\statsServer-system\\statsinteraction.js");
     }
 
