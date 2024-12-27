@@ -16,7 +16,7 @@ const Variables = require('./classes/GlobalVariables');
 function errorSendControls(error, client, guild_error, system) {
   console.error(error);
   if (error == "DiscordAPIError[50013]: Missing Permissions") {
-    return guild_error.channels.fetch()
+    guild_error.channels.fetch()
       .then(channels => {
         let MissingMessage = false;
         channels.each(channel => {
@@ -25,7 +25,7 @@ function errorSendControls(error, client, guild_error, system) {
               const embedLog = new EmbedBuilder()
                 .setAuthor({ name: `${Variables.getBotName()} | Missing Permissions` })
                 .setDescription(`You haven't invited ${Variables.getBotName()} correctly and you don't have permission to perform this action. We invite you to invite ${Variables.getBotName()} again or contact our [support discord](https://discord.gg/DqRcKB75N5).`)
-                .setFooter({ text: `${Variables.getBotFooter}`, iconURL: Variables.getBotFooterIcon() })
+                .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: Variables.getBotFooterIcon() })
                 .setColor(colors.general.error);
               channel.send({ embeds: [embedLog] });
               MissingMessage = true;
@@ -66,7 +66,7 @@ function errorSendControls(error, client, guild_error, system) {
   // LA FUNZIONE GESTISCE GLI ERRORI E LI MANDA AL SERVER MAIN
   const guildMain = Variables.getGuildMainId();
   const channelError = Variables.getChannelError();
-  if(!guildMain || !channelError) return;
+  if (!guildMain || !channelError) return;
   client.guilds.fetch(guildMain)
     .then(guild => {
       guild.channels.fetch(channelError)

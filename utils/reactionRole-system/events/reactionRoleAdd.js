@@ -6,46 +6,49 @@
  * @description Questo file gestisce l'evento per l'aggiunta di un ruolo reazione!
  */
 
-const { Events, EmbedBuilder} = require('discord.js');
-const { readFileSync } = require('fs');
+const { Events } = require('discord.js');
 const language = require('../../../languages/languages');
-const { readDb, readDbAllWith1Params, readDbAllWith2Params, readDbWith3Params } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const { errorSendControls } = require('../../../bin/HandlingFunctions');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const { findByGuildIdAndMessageIdAndEmojiReactions } = require('../../../bin/service/DatabaseService');
 
 module.exports = {
   name: Events.MessageReactionAdd,
   async execute(messageReaction, user) {
-    if(!user.bot) {
+    if (!user.bot) {
       const message = messageReaction.message;
       const emoji = messageReaction.emoji;
       const guild = message.guild;
       const member = await guild.members.fetch(user.id);
-  
-  
+
+
       // CONTROLLO SE LA FUNZIONE E' ABILITATA
-      if (!await checkFeaturesIsEnabled(guild, 5)) return;
-  
+      if (!await checkFeatureSystemDisabled(5)) return;
+      if (!await checkFeaturesIsEnabled(messageReaction.message.guild.id, 5)) return;
+      if (!await checkPremiumFeature(messageReaction.message.guild.id, 5)) return;
+
       try {
         let emojiResolve = "";
-        if(emoji.id) {
+        if (emoji.id) {
           emojiResolve = `<:${emoji.name}:${emoji.id}>`;
         } else {
           emojiResolve = emoji.name;
         }
-  
-        const roles = await readDb('SELECT * FROM reaction_roles WHERE message_id = ? AND emoji = ?', message.id, emojiResolve);
-        if(roles) {
+
+        let roles = await findByGuildIdAndMessageIdAndEmojiReactions(messageReaction.message.guild.id, message.id, emojiResolve);
+        roles = roles?.get({ plain: true });
+        if (roles) {
           try {
             const role = await member.guild.roles.fetch(roles.roles_id);
             await member.roles.add(role);
-          }
-          catch (error) {
-            //pass
+          } catch (error) {
+            errorSendControls(error, member.client, guild, "\\autoRole-system\\autoRoleState.js");
           }
         }
-      
-  
+
+
       }
       catch (error) {
         errorSendControls(error, member.client, guild, "\\autoRole-system\\autoRoleState.js");

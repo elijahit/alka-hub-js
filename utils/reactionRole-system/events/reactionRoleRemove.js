@@ -12,6 +12,9 @@ const language = require('../../../languages/languages');
 const { readDb, readDbAllWith1Params, readDbAllWith2Params, readDbWith3Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const { findByGuildIdAndMessageIdAndEmojiReactions } = require('../../../bin/service/DatabaseService');
 
 module.exports = {
   name: Events.MessageReactionRemove,
@@ -24,7 +27,9 @@ module.exports = {
   
   
       // CONTROLLO SE LA FUNZIONE E' ABILITATA
-      if (!await checkFeaturesIsEnabled(guild, 5)) return;
+      if (!await checkFeatureSystemDisabled(5)) return;
+      if (!await checkFeaturesIsEnabled(messageReaction.message.guild.id, 5)) return;
+      if (!await checkPremiumFeature(messageReaction.message.guild.id, 5)) return;
   
       try {
         let emojiResolve = "";
@@ -34,15 +39,14 @@ module.exports = {
           emojiResolve = emoji.name;
         }
   
-        const roles = await readDb('SELECT * FROM reaction_roles WHERE message_id = ? AND emoji = ?', message.id, emojiResolve);
-
+        let roles = await findByGuildIdAndMessageIdAndEmojiReactions(messageReaction.message.guild.id, message.id, emojiResolve);
+        roles = roles?.get({ plain: true });
         if(roles) {
           try {
             const role = await member.guild.roles.fetch(roles.roles_id);
             await member.roles.remove(role);
-          }
-          catch (error) {
-            //pass
+          } catch {
+            errorSendControls(error, member.client, guild, "\\autoRole-system\\autoRoleState.js");
           }
         }
       
