@@ -20,6 +20,17 @@ async function findAll() {
 }
 
 /**
+ * 
+ * @param {string} guildId 
+ * @param {integer} featureId 
+ * @returns {Promise<Model>}
+ */
+async function findByGuildIdAndFeatureId(guildId, featureId) {
+  return await GuildEnabledFeature.findOne({where: {guild_id: guildId, feature_id: featureId, config_id: Variables.getConfigId()}});
+}
+
+
+/**
  * @param {int} id 
  * @returns {Promise<Model>}
  */
@@ -54,5 +65,6 @@ module.exports = {
   findAll,
   findById,
   update,
-  create
+  create,
+  findByGuildIdAndFeatureId
 }

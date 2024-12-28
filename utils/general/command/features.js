@@ -12,7 +12,7 @@ const { readFileSync, read } = require('fs');
 const { errorSendControls, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
-const { findFeatureById, updateEnabledFeature, getFeatureIsEnabled, createEnabledFeature, findGuildById } = require('../../../bin/service/DatabaseService');
+const { findFeatureById, updateEnabledFeature, createEnabledFeature, findGuildById, findByGuildIdAndFeatureIdFeature } = require('../../../bin/service/DatabaseService');
 const Variables = require('../../../bin/classes/GlobalVariables');
 const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
 const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
@@ -85,8 +85,8 @@ module.exports = {
 				checkGuild = checkGuild?.get({plain: true}) ?? false;
 				if(checkGuild) {
 					if (result) {
-						let checkFeature = await getFeatureIsEnabled(interaction.guild.id, featuresChoice);
-						checkFeature = checkFeature?.get({ plain: true }).guilds[0].GuildEnabledFeatures ?? null;
+						let checkFeature = await findByGuildIdAndFeatureIdFeature(interaction.guild.id, featuresChoice);
+						checkFeature = checkFeature?.get({ plain: true });
 						
 						let featureTable = await findFeatureById(featuresChoice);
 						let featureIsDisabled = await checkFeatureSystemDisabled(featuresChoice);

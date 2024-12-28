@@ -37,9 +37,11 @@ const { findByName: findConfigByName } = require('../repository/Config');
 // findByName -> Permette di creare una configurazione nella tabella configs tramite il nome
 
 const { update: updateEnabledFeature, 
-  create: createEnabledFeature } = require('../repository/GuildEnabledFeature');
+  create: createEnabledFeature,
+  findByGuildIdAndFeatureId: findByGuildIdAndFeatureIdFeature } = require('../repository/GuildEnabledFeature');
 // updateEnabledFeature -> Permette di aggiornare la tabella guild_enabled_feature
 // createEnabledFeature -> Permette di aggiungere un record sulla tabella guild_enabled_feature
+// findByGuildIdAndFeatureIdFeature -> Permette di cercare un record sulla tabella guild_enabled_feature tramite guildId e featureId
 
 const { findByChannelId: findAutoVoiceByChannelId, 
   create: createAutoVoice, 
@@ -245,5 +247,6 @@ module.exports = {
   updateStatisticsCategory,
   findAllByGuildIdStatistics,
   removeStatistics,
-  findStatisticsById
+  findStatisticsById,
+  findByGuildIdAndFeatureIdFeature
 }

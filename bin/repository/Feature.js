@@ -22,7 +22,7 @@ async function findAll() {
 
 /**
  * @param {string} guildId 
- * @param {string} featureId 
+ * @param {integer} featureId 
  * @returns {Promise<Model>}
  */
 async function getFeatureIsEnabled(guildId, featureId) {
