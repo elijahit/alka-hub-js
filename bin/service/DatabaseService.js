@@ -150,7 +150,9 @@ const {
   findAllByGuildId: findAllByGuildIdStatistics,
   findByGuildIdAndChannelId: findByGuildIdAndChannelIdStatistics,
   create: createStatistics,
-  update: updateStatistics
+  update: updateStatistics,
+  remove: removeStatistics,
+  findById: findStatisticsById
 } = require('../repository/Statistics');
 // findAllStatistics -> Permette di cercare tutte le configurazioni di Statistics nella tabella statistics
 // findByGuildIdAndChannelIdStatistics -> Permette di cercare una configurazione di Statistics nella tabella statistics tramite guildId e channelId
@@ -241,5 +243,7 @@ module.exports = {
   findByGuildIdAndcategoryIdStatisticsCategory,
   createStatisticsCategory,
   updateStatisticsCategory,
-  findAllByGuildIdStatistics
+  findAllByGuildIdStatistics,
+  removeStatistics,
+  findStatisticsById
 }

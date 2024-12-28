@@ -36,6 +36,17 @@ async function findByGuildIdAndChannelId(guildId, channelId) {
   return await Statistics.findOne({where: {guild_id: guildId, channel_id: channelId, config_id: Variables.getConfigId()}});
 }
 
+
+/**
+ * 
+ * @param {string} guildId 
+ * @param {integer} id 
+ * @returns 
+ */
+async function findById(guildId, id) {
+  return await Statistics.findOne({where: {guild_id: guildId, id: id, config_id: Variables.getConfigId()}});
+}
+
 /**
  * 
  * @param {string} guildId 
@@ -47,6 +58,16 @@ async function findByGuildIdAndChannelId(guildId, channelId) {
 async function create(guildId, channelId, channelName, type) {
   if(await Statistics.findOne({where: {guild_id: guildId, channel_id: channelId, config_id: Variables.getConfigId()}})) return null;
   return await Statistics.create({guild_id: guildId, channel_id: channelId, channel_name: channelName, type: type, config_id: Variables.getConfigId()});
+}
+
+/**
+ * 
+ * @param {string} guildId 
+ * @param {integer} id 
+ * @returns 
+ */
+async function remove(guildId, id) {
+  return await Statistics.destroy({where: {guild_id: guildId, id: id, config_id: Variables.getConfigId()}});
 }
 
 /**
@@ -64,5 +85,7 @@ module.exports = {
   findAllByGuildId,
   findByGuildIdAndChannelId,
   create,
-  update
+  update,
+  remove,
+  findById
 }

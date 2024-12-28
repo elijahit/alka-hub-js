@@ -1,5 +1,5 @@
 {
- "noPermission": {
+  "noPermission": {
     "embed_title": "Stats System",
     "description_limit_premium": "Hai raggiunto il numero massimo di canali di statistiche disponibili nel tuo piano. Passa al piano Premium per sbloccare Canali illimitati!",
     "description_premium_feature": "Questa funzionalità è disponibile solo con il piano Premium. Aggiorna subito il tuo piano per sbloccarla!",
@@ -9,12 +9,10 @@
   },
   "statisticsCommand": {
     "embed_title": "Stats System",
-
     "description_embed": "Hai correttamente impostato la categoria per le statistiche del server, puoi ora utilizzare il comando /channelstats per configurare i canali che registreranno le tue statistiche. Per personalizzare ulteriormente i canali."
   },
   "setupModal": {
     "embed_title": "Stats System",
-
     "description_embed_title": "Nome canale",
     "placeholder": "Inserisci il markdown vedi /markdownstats",
     "category_embed": "ID Categoria",
@@ -22,27 +20,34 @@
   },
   "channelStatsCommand": {
     "embed_title": "Stats System",
-
     "description_embed": "Il canale {0} è stato creato nella categoria selezionata, attendi che Alka Hub completi il caricamento del tuo canale di statistica per vederne il contenuto."
   },
   "categoryNotFound": {
     "embed_title": "Stats System",
-
     "description_embed": "La categoria selezionata non è stata trovata nel nostro database, ti invitiamo a riprovare oppure crea la tua categoria con /statistics.\n\n- Il problema può dipendere anche da un valore errato come il **nome canale** o il **tipo di canale**."
   },
   "markdownHelp": {
     "embed_title": "Stats System",
     "embed_footer": "Alka Hub di alkanetwork.eu",
-"description_embed": "Questa guida ti aiuterà a comprendere i comandi markdown utilizzati nei canali del sistema di statistiche di Alka Hub. Segui attentamente le istruzioni per configurare correttamente le tue statistiche!\n\nMarkdown:\n- **Date**: Mostra la data in un canale vocale e si aggiorna in base all'orario locale impostato durante la configurazione del server.\n> {0}: Giorno\n> {1}: Mese\n> {2}: Anno\n- **Hour**: Mostra l'ora in un canale vocale e si aggiorna in base all'orario locale impostato durante la configurazione del server.\n> {0}: Ore\n> {1}: Minuti\n- **Date / Hour**: Mostra la data e l'ora in un canale vocale e si aggiorna in base all'orario locale impostato durante la configurazione del server.\n> {0}: Giorno\n> {1}: Mese\n> {2}: Anno\n> {3}: Ore\n> {4}: Minuti\n- **Member Count**: Mostra il numero totale di membri sul server Discord.\n> {0}: Contatore membri\n- **Channel Count**: Mostra il numero totale di canali sul server Discord.\n> {0}: Contatore canali\n- **Bot Count**: Mostra il numero totale di bot sul server Discord.\n> {0}: Contatore bot\n- **Role Count**: Mostra il numero totale di membri con un ruolo specifico o più ruoli. (I ruoli devono essere configurati nei permessi del canale con il permesso negato: **Leggere la cronologia dei messaggi**)\n> {0}: Contatore ruoli\n- **Role Count Online**: Mostra il numero totale di membri online con un ruolo specifico o più ruoli. (I ruoli devono essere configurati nei permessi del canale con il permesso negato: **Leggere la cronologia dei messaggi**)\n> {0}: Contatore ruoli\n- **Status Bar**: Mostra il numero di utenti con stato: online, non disturbare o inattivo.\n> {0}: Online\n> {1}: Non disturbare\n> {2}: Inattivo\n\nI canali, insieme ai relativi markdown (facoltativo ma necessario almeno uno per la creazione del canale), possono contenere emoji o altri caratteri speciali."
+    "description_embed": "Questa guida ti aiuterà a comprendere i comandi markdown utilizzati nei canali del sistema di statistiche di Alka Hub. Segui attentamente le istruzioni per configurare correttamente le tue statistiche!\n\nMarkdown:\n- **Date**: Mostra la data in un canale vocale e si aggiorna in base all'orario locale impostato durante la configurazione del server.\n> {0}: Giorno\n> {1}: Mese\n> {2}: Anno\n- **Hour**: Mostra l'ora in un canale vocale e si aggiorna in base all'orario locale impostato durante la configurazione del server.\n> {0}: Ore\n> {1}: Minuti\n- **Date / Hour**: Mostra la data e l'ora in un canale vocale e si aggiorna in base all'orario locale impostato durante la configurazione del server.\n> {0}: Giorno\n> {1}: Mese\n> {2}: Anno\n> {3}: Ore\n> {4}: Minuti\n- **Member Count**: Mostra il numero totale di membri sul server Discord.\n> {0}: Contatore membri\n- **Channel Count**: Mostra il numero totale di canali sul server Discord.\n> {0}: Contatore canali\n- **Bot Count**: Mostra il numero totale di bot sul server Discord.\n> {0}: Contatore bot\n- **Role Count**: Mostra il numero totale di membri con un ruolo specifico o più ruoli. (I ruoli devono essere configurati nei permessi del canale con il permesso negato: **Leggere la cronologia dei messaggi**)\n> {0}: Contatore ruoli\n- **Role Count Online**: Mostra il numero totale di membri online con un ruolo specifico o più ruoli. (I ruoli devono essere configurati nei permessi del canale con il permesso negato: **Leggere la cronologia dei messaggi**)\n> {0}: Contatore ruoli\n- **Status Bar**: Mostra il numero di utenti con stato: online, non disturbare o inattivo.\n> {0}: Online\n> {1}: Non disturbare\n> {2}: Inattivo\n\nI canali, insieme ai relativi markdown (facoltativo ma necessario almeno uno per la creazione del canale), possono contenere emoji o altri caratteri speciali."
   },
   "channelNotFound": {
     "embed_title": "Stats System",
-
     "description_embed": "Il canale selezionato non è stata trovato nel nostro database oppure abbiamo riscontrato un errore durante l'aggiornamento, ti invitiamo a riprovare."
   },
   "channelUpdateCommand": {
     "embed_title": "Stats System",
-
     "description_embed": "Il canale {0} è stato aggiornato con successo, attendi il tick che avverrà in alcuni minuti per vederne la modifica."
+  },
+  "removeCommand": {
+    "embed_title": "Stats System",
+    "description_embed": "Il canale {0} è stato rimosso con successo.",
+    "description_embed_notset": "Il canale non è stato trovato, riprova."
+  },
+  "listCommand": {
+    "embed_title": "Stats System",
+    "description_embed": "Here is the list of all the channels that are currently recording statistics on your server.",
+    "no_channel": "Nessun channel ancora impostato, impostali con /channelstats.",
+    "most_lenght": "... Molti altri"
   }
 }

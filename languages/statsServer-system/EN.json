@@ -9,12 +9,10 @@
   },
   "statisticsCommand": {
     "embed_title": "Stats System",
-
     "description_embed": "You have successfully set up the category for the server statistics. Now, you can use the /channelstats command to configure the channels that will record your statistics. For further channel customizations."
   },
   "setupModal": {
     "embed_title": "Stats System",
-
     "description_embed_title": "Channel Name",
     "placeholder": "Insert the markdown check /markdownstats",
     "category_embed": "Category ID",
@@ -22,27 +20,33 @@
   },
   "channelStatsCommand": {
     "embed_title": "Stats System",
-
     "description_embed": "The channel {0} has been created in the selected category. Please wait for Alka Hub to finish loading your statistics channel to see its contents."
   },
   "categoryNotFound": {
     "embed_title": "Stats System",
-
     "description_embed": "The selected category was not found in our database. Please try again or create your category with /statistics. \n\n- The issue might also be due to an incorrect value such as the **channel name** or the **channel type**."
   },
   "markdownHelp": {
     "embed_title": "Stats System",
-
     "description_embed": "This guide will help you understand the markdown commands used in the channels of Alka Hub's statistics system. Follow the instructions carefully to properly configure your statistics!\n\nMarkdown:\n- **Date**: Displays the date in a voice channel and updates based on the local time set during server configuration.\n> {0}: Day\n> {1}: Month\n> {2}: Year\n- **Hour**: Displays the time in a voice channel and updates based on the local time set during server configuration.\n> {0}: Hours\n> {1}: Minutes\n- **Date / Hour**: Displays the date and time in a voice channel and updates based on the local time set during server configuration.\n> {0}: Day\n> {1}: Month\n> {2}: Year\n> {3}: Hours\n> {4}: Minutes\n- **Member Count**: Shows the total number of members on the Discord server.\n> {0}: Member Count\n- **Channel Count**: Shows the total number of channels on the Discord server.\n> {0}: Channel Count\n- **Bot Count**: Shows the total number of bots on the Discord server.\n> {0}: Bot Count\n- **Role Count**: Shows the total number of members with a specific role or multiple roles. (Roles must be configured in the channel permissions with the permission denied: **Read Message History**)\n> {0}: Role Count\n- **Role Count Online**: Shows the total number of online members with a specific role or multiple roles. (Roles must be configured in the channel permissions with the permission denied: **Read Message History**)\n> {0}: Role Count\n- **Status Bar**: Shows the number of users with status: online, do not disturb, or idle.\n> {0}: Online\n> {1}: Do Not Disturb\n> {2}: Idle\n\nChannels, along with their respective markdown (optional but at least one is necessary for channel creation), can contain emojis or other special characters."
   },
   "channelNotFound": {
     "embed_title": "Stats System",
-
     "description_embed": "The selected channel was not found in our database or we encountered an error during the update, please try again."
   },
   "channelUpdateCommand": {
     "embed_title": "Stats System",
-
     "description_embed": "The channel {0} has been successfully updated, please wait for the tick in a few minutes to see the change."
+  },
+  "removeCommand": {
+    "embed_title": "Stats System",
+    "description_embed": "The channel {0} has been successfully removed.",
+    "description_embed_notset": "The channel was not found, please try again."
+  },
+  "listCommand": {
+    "embed_title": "Stats System",
+    "description_embed": "Here is the list of all the channels that are currently recording statistics on your server.",
+    "no_channel": "No channels set yet, set them up with /channelstats.",
+    "most_lenght": "... Many more"
   }
 }
