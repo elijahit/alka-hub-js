@@ -91,7 +91,7 @@ module.exports = {
       }
 
       if (interaction.customId == 'statsModalEdit') {
-        const customEmoji = await getEmojifromUrl(interaction.client, "stats");
+        const customEmoji = emoji.statsServerSystem.main;
         let nameChannel = interaction.fields.getTextInputValue('statsChannelName');
         let channelId = interaction.fields.getTextInputValue('statsChannelId');
 
