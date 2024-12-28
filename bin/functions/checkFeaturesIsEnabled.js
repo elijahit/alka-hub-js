@@ -6,7 +6,7 @@
  * @description Contiene il metodo {checkFeaturesIsEnabled}
  */
 
-const {getFeatureIsEnabled, findByGuildIdAndFeatureIdFeature} = require('../service/DatabaseService');
+const {findByGuildIdAndFeatureIdFeature} = require('../service/DatabaseService');
 
 
 /**
