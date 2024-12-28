@@ -6,7 +6,7 @@
  * @description Contiene il metodo {checkFeaturesIsEnabled}
  */
 
-const {getFeatureIsEnabled} = require('../service/DatabaseService');
+const {getFeatureIsEnabled, findByGuildIdAndFeatureIdFeature} = require('../service/DatabaseService');
 
 
 /**
@@ -16,11 +16,11 @@ const {getFeatureIsEnabled} = require('../service/DatabaseService');
  * @return {boolean}
  */
 const checkFeaturesIsEnabled = async (guildId, featureId) => {
-  let featureIsEnabled = await getFeatureIsEnabled(guildId, featureId);
+  let featureIsEnabled = await findByGuildIdAndFeatureIdFeature(guildId, featureId);
   if(!featureIsEnabled) return false; 
-  featureIsEnabled = featureIsEnabled?.get({plain: true}).guilds[0].GuildEnabledFeatures.is_enabled ?? false;
-  if(featureIsEnabled == 1) return true;
-  if(featureIsEnabled == 0) return false;
+  featureIsEnabled = featureIsEnabled?.get({plain: true});
+  if(featureIsEnabled?.is_enabled == 1) return true;
+  if(featureIsEnabled?.is_enabled == 0 || featureIsEnabled?.is_enabled == undefined) return false;
 }
 
 module.exports = checkFeaturesIsEnabled;
