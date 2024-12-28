@@ -124,7 +124,7 @@ module.exports = {
             .setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
             .setColor(colors.general.success);
           await interaction.reply({ embeds: [embedLog], ephemeral: true });
-          await updateStatistics({ channel_name: nameChannel }, { where: { guilds_id: interaction.guild.id, channel_id: channelId } });
+          await updateStatistics({ channel_name: nameChannel }, { where: { guild_id: interaction.guild.id, channel_id: channelId } });
         } else {
           const embedLog = new EmbedBuilder()
             .setAuthor({ name: `${language_result.channelNotFound.embed_title}`, iconURL: customEmoji })
