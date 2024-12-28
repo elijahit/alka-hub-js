@@ -29,7 +29,7 @@
   "description": "A bot javascript",
   "main": "app.js",
   "scripts": {
-    "prod": "cross-env NODE_ENV=alka node app.js",
+    "prod": "cross-env NODE_ENV=sparking-zero node app.js",
     "dev": "cross-env NODE_ENV=alka-dev nodemon app.js",
     "commandsDev": "cross-env NODE_ENV=development node ./deploy-commands/all.js",
     "commandsBeta": "cross-env NODE_ENV=beta node ./deploy-commands/all.js",
