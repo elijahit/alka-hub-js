@@ -15,7 +15,7 @@ const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const Variables = require('../../../bin/classes/GlobalVariables');
 const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
-const { findAllAutoVoiceByGuild } = require('../../../bin/service/DatabaseService');
+const { findAllAutoVoiceByGuildId } = require('../../../bin/service/DatabaseService');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -31,7 +31,7 @@ module.exports = {
     await returnPermission(interaction, "autovoice", async result => {
       try {
         if (result) {
-          let autoVoiceTable = await findAllAutoVoiceByGuild(interaction.guild.id);
+          let autoVoiceTable = await findAllAutoVoiceByGuildId(interaction.guild.id);
           checkTable = autoVoiceTable;
           const embedLog = new EmbedBuilder();
           //CONTROLLO SE LA ROW E' PRESENTE NEL DB
