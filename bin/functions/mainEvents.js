@@ -9,6 +9,7 @@
 const { Events, ActivityType } = require('discord.js');
 const executeFolderModule = require('./executeFunctions');
 const Variables = require('../classes/GlobalVariables');
+const LogClasses = require('../classes/LogClasses');
 
 
 const mainEvents = (client) => {
@@ -20,16 +21,20 @@ const mainEvents = (client) => {
 
     if (!command) {
       console.error(`[WARNING] Il comando ${interaction.commandName} lanciato da ${interaction.user.username} non è stato trovato.`);
+      LogClasses.createLog(interaction.guild.id, 'ERRORE', `Il comando ${interaction.commandName} lanciato da ${interaction.user.username} non è stato trovato.`);
       return;
     }
 
     try {
       await command.execute(interaction);
+      LogClasses.createLog(interaction.guild.id, 'COMANDO', `Il comando ${interaction.commandName} è stato eseguito da ${interaction.user.username}`);
     } catch (error) {
       console.error(error);
       if (interaction.replied || interaction.deferred) {
+        LogClasses.createLog(interaction.guild.id, 'ERRORE', `Errore eseguendo il comando ${interaction.commandName} da ${interaction.user.username}`);
         await interaction.followUp({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', ephemeral: true });
       } else {
+        LogClasses.createLog(interaction.guild.id, 'ERRORE', `Errore eseguendo il comando ${interaction.commandName} da ${interaction.user.username}`);
         await interaction.reply({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', ephemeral: true });
       }
     }

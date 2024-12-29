@@ -12,10 +12,12 @@ const { stripIndents } = require('common-tags');
 const colors = require('./data/colors');
 const emoji = require('./data/emoji');
 const Variables = require('./classes/GlobalVariables');
+const LogClasses = require('./classes/LogClasses');
 
 function errorSendControls(error, client, guild_error, system) {
   console.error(error);
   if (error == "DiscordAPIError[50013]: Missing Permissions") {
+    LogClasses.createLog(guild_error.id, 'ERRORE-PERMISSIONS', `Errore: ${error} / ${system}`);
     guild_error.channels.fetch()
       .then(channels => {
         let MissingMessage = false;
@@ -63,26 +65,8 @@ function errorSendControls(error, client, guild_error, system) {
     }
   })
 
-  // LA FUNZIONE GESTISCE GLI ERRORI E LI MANDA AL SERVER MAIN
-  const guildMain = Variables.getGuildMainId();
-  const channelError = Variables.getChannelError();
-  if (!guildMain || !channelError) return;
-  client.guilds.fetch(guildMain)
-    .then(guild => {
-      guild.channels.fetch(channelError)
-        .then(channel => {
-          const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${Variables.getBotName()} - ${Variables.getNameConfiguration()}(${Variables.getConfigId()}) | Controls Error ❌` })
-            .addFields(
-              { name: `Informazioni Guilds`, value: `*Nome Server*\n${guild_error.name}\n*ID Server*\n${guild_error.id}`, inline: true },
-              { name: `Owner Guilds | Members`, value: `*Owner ID*\n${guild_error.ownerId}\n*Membri totali*\n${guild_error.memberCount}`, inline: true },
-              { name: "Errore riscontrato", value: `${error.message}` })
-            .setDescription(`Abbiamo riscontrato un errore in ${system}`)
-            .setColor(colors.general.error)
-            .setImage(`https://cdn.discordapp.com/icons/${guild_error.id}/${guild_error.icon}.png`);
-          channel.send({ embeds: [embedLog] });
-        })
-    })
+  LogClasses.createLog(guild_error.id, 'ERRORE-CONTROLS', `Errore: ${error} / ${system}`);
+
 }
 
 async function checkHavePermissions(interaction, pex) {

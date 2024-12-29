@@ -13,7 +13,7 @@ class LogClasses {
       const Webhook = require('../service/WebhookService');
       const { sendWebhooksEmbedErrorLog, sendWebhooksEmbedLogs } = new Webhook();
       await createLog(guildId, type, reason);
-      if(type === 'ERRORE' || type === 'ERRORE-AVVIO') {
+      if(type === 'ERRORE' || type === 'ERRORE-AVVIO' || type === 'ERRORE-PERMISSIONS' || type === 'ERRORE-CONTROLS') {
         await sendWebhooksEmbedErrorLog(`Errore: ${reason}`, [guildId, type]);
       } else {
         await sendWebhooksEmbedLogs(`Messaggio: ${reason}`, [guildId, type]);
