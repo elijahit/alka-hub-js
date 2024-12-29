@@ -77,7 +77,7 @@ async function checkExp(newState, checkUser) {
         }
       }
     })
-    let checkUser = await findByGuildIdAndUserIdLevel(newState.guild.id, newState.member.id);
+    checkUser = await findByGuildIdAndUserIdLevel(newState.guild.id, newState.member.id);
     checkUser = checkUser?.get({ plain: true });
     if (checkUser.exp >= 75 + (25 * checkUser.level)) {
       return await checkExp(newState, checkUser);
