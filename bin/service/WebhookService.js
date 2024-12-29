@@ -28,7 +28,6 @@ class WebhookService {
 
     } catch (error) {
       console.error('[ERRORE] Errore durante l\'invio del webhook:', error);
-      throw error;
     }
   }
 
@@ -44,7 +43,6 @@ class WebhookService {
       
     } catch (error) {
       console.error('[ERRORE] Errore durante l\'invio del webhook:', error);
-      throw error;
     }
   }
 }
