@@ -41,13 +41,13 @@ function getMinutesBetweenTimestamps(startTimestamp) {
 }
 
 async function checkExp(newState, checkUser) {
-  if (checkUser.exp >= 75 + (25 * checkUser.levels)) {
+  if (checkUser.exp >= 75 + (25 * checkUser.level)) {
     let configLevelsSystem = await findLevelsConfigByGuildId(newState.guild.id);
     configLevelsSystem = configLevelsSystem?.get({ plain: true });
     if (!configLevelsSystem) return;
     await updateLevel({
       level: checkUser.level + 1,
-      exp: checkUser.exp - (75 + (25 * checkUser.levels))
+      exp: checkUser.exp - (75 + (25 * checkUser.level))
     }, { where: { guild_id: newState.guild.id, user_id: newState.member.id, config_id: Variables.getConfigId() } });
 
     const channel = await newState.guild.channels.fetch(configLevelsSystem.log_channel);
@@ -85,7 +85,7 @@ async function checkExp(newState, checkUser) {
     const customEmoji = emoji.levelsSystem.levelsMaker;
     const embedLog = new EmbedBuilder()
       .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-      .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", newState.member).replace("{1}", checkUser.levels))
+      .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", newState.member).replace("{1}", checkUser.level))
       .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser.minute_vocal == null ? 0 : checkUser.minute_vocal).replace("{1}", checkUser.message_count == null ? 0 : checkUser.message_count)}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
       .setColor(colors.general.error);
     await channel.send({ content: `${newState.member}`, embeds: [embedLog] });
