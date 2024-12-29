@@ -18,7 +18,7 @@ class WebhookService {
 
   async sendWebhooksEmbedErrorLog(message, others) {
     try {
-      const webhookClient = new WebhookClient({ url: webhook.error });
+      const webhookClient = new WebhookClient({ url: webhook.log.error });
       const embed = new EmbedBuilder()
       .setTitle(`Alka Webhook | Errore - (${Variables.getConfigId()}) ${Variables.getNameConfiguration()}`) 
       .setColor(color.general.error)
@@ -34,7 +34,7 @@ class WebhookService {
 
   async sendWebhooksEmbedLogs(message, others) {
     try {
-      const webhookClient = new WebhookClient({ url: webhook.general });
+      const webhookClient = new WebhookClient({ url: webhook.log.general });
       const embed = new EmbedBuilder()
       .setTitle(`Alka Webhook | Logs - (${Variables.getConfigId()}) ${Variables.getNameConfiguration()}`) 
       .setColor(color.general.aquamarine)
