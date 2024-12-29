@@ -11,6 +11,7 @@ const { client } = require('./bin/client');
 const Variables = require('./bin/classes/GlobalVariables');
 const mainEvents = require('./bin/functions/mainEvents');
 const {findConfigByName} = require('./bin/service/DatabaseService');
+const LogClasses = require('./bin/classes/LogClasses');
 
 if(process.env.NODE_ENV) {
   findConfigByName(process.env.NODE_ENV).then(v => {
@@ -44,18 +45,22 @@ if(process.env.NODE_ENV) {
         Variables.setConfigId(config.id);
 
         client.login(configObj.token);
+        LogClasses.createLog('NULL', 'AVVIO', `Bot ${configObj.botName} avviato con successo!`);
       } else {
+        LogClasses.createLog('NULL', 'ERRORE-AVVIO', 'Impossibile avviare il bot il suo stato non è attivo.');
         console.error('[ERRORE] Impossibile avviare il bot il suo stato non è attivo.');
         process.exit(0);
       }
     } else {
+      LogClasses.createLog('NULL', 'ERRORE-AVVIO', 'Impossibile avviare il bot nessuna configurazione trovata.');
       console.error('[ERRORE] Impossibile avviare il bot nessuna configurazione trovata.');
       process.exit(0);
     }
   });
 
 } else {
-  console.error('[ERRORE] Impossibile avviare il bot di env assente');
+  LogClasses.createLog('NULL', 'ERRORE-AVVIO', 'Impossibile avviare il bot env assente.');
+  console.error('[ERRORE] Impossibile avviare il bot env assente.');
   process.exit(0);
 }
 

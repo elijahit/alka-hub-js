@@ -175,6 +175,15 @@ const {
 // updateStatisticsCategory -> Permette di aggiornare una configurazione di StatisticsCategory nella tabella statistics_category
 
 
+const {
+  findById: findByIdLog,
+  findAllByGuildId: findAllByGuildIdLog,
+  create: createLog
+} = require('../repository/Log');
+// findByIdLog -> Permette di cercare una riga di Log nella tabella logs
+// findAllByGuildIdLog -> Permette di cercare tutte le righe di Log nella tabella logs tramite guildId
+// createLog -> Permette di creare una riga di Log nella tabella logs
+
 
 module.exports = {
   findAllWelcome,
@@ -248,5 +257,8 @@ module.exports = {
   findAllByGuildIdStatistics,
   removeStatistics,
   findStatisticsById,
-  findByGuildIdAndFeatureIdFeature
+  findByGuildIdAndFeatureIdFeature,
+  findAllByGuildIdLog,
+  findByIdLog,
+  createLog
 }
