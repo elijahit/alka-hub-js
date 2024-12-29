@@ -3,5 +3,5 @@ config.json
 *.db
 utils/twitch-system/tokens.json
 utils_backup
-logs.txt
+logs.log
 package-lock.json

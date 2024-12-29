@@ -41,11 +41,11 @@ function errorSendControls(error, client, guild_error, system) {
     for (const file of files) {
       errorResult = new Error(`${system}`, { cause: error });
 
-      if (file == "logs.txt") {
-        const data = readFileSync('./logs.txt',
+      if (file == "logs.log") {
+        const data = readFileSync('./logs.log',
           { encoding: 'utf8', flag: 'r' });
 
-        writeFile("./logs.txt", stripIndents`${data}\n\
+        writeFile("./logs.log", stripIndents`${data}\n\
           ---- [START LOGS] ----\n\
           [${errorResult.message}]\n\
           ${errorResult.cause.stack}\n\
@@ -55,17 +55,17 @@ function errorSendControls(error, client, guild_error, system) {
           mode: 0o666
         },
           (err) => {
-            if (err)
-              console.log(err);
-            else {
-              console.log("[ERRORE] visualizza logs.txt per capire di che si tratta");
-            }
+        if (err)
+          console.log(err);
+        else {
+          console.log("[ERRORE] visualizza logs.log per capire di che si tratta");
+        }
           });
       }
     }
   })
 
-  LogClasses.createLog(guild_error.id, 'ERRORE-CONTROLS', `Errore: ${error} / ${system}`);
+  LogClasses.createLog(guild_error.id, 'ERRORE-CONTROLS', `${error} | ${system}`);
 
 }
 

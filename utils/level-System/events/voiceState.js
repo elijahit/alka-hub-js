@@ -6,13 +6,10 @@
  * @description Questo file contiene l'evento per il sistema di livelli
  */
 
-const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder, PermissionsBitField } = require('discord.js');
-const { readFileSync, writeFileSync, unlinkSync } = require('fs');
+const { Events, EmbedBuilder } = require('discord.js');
+const { readFileSync} = require('fs');
 const language = require('../../../languages/languages');
-const { runDb, readDb, readDbAll, readDbAllWithParams } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl, returnPermission, noHavePermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
-const { channel } = require('diagnostics_channel');
-const internal = require('stream');
+const { errorSendControls } = require('../../../bin/HandlingFunctions');
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
@@ -44,7 +41,7 @@ function getMinutesBetweenTimestamps(startTimestamp) {
 
 async function checkExp(newState, checkUser) {
   if (checkUser.exp >= 75 + (25 * checkUser.levels)) {
-    let configLevelsSystem = await findLevelsConfigByGuildId(message.guild.id);
+    let configLevelsSystem = await findLevelsConfigByGuildId(newState.guild.id);
     configLevelsSystem = configLevelsSystem?.get({ plain: true });
     if (!configLevelsSystem) return;
     await updateLevel({
