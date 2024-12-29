@@ -16,6 +16,7 @@ const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEn
 const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
 const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
 const { findByGuildIdAndUserIdLevel, addUserGuild, createLevel, updateLevel, findAllLevelsRolesByGuildId, findLevelsConfigByGuildId } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 function getRandomInt(min, max) {
   const minCeiled = Math.ceil(min);
@@ -47,7 +48,7 @@ async function checkExp(newState, checkUser) {
     await updateLevel({
       level: checkUser.level + 1,
       exp: checkUser.exp - (75 + (25 * checkUser.levels))
-    }, { where: { guild_id: newState.guild.id, user_id: newState.member.id } });
+    }, { where: { guild_id: newState.guild.id, user_id: newState.member.id, config_id: Variables.getConfigId() } });
 
     const channel = await newState.guild.channels.fetch(configLevelsSystem.log_channel);
 
@@ -108,7 +109,7 @@ module.exports = {
             if (checkUser) {
               await updateLevel({
                 joined_time: Date.now()
-              }, { where: { guild_id: newState.guild.id, user_id: newState.member.id } });
+              }, { where: { guild_id: newState.guild.id, user_id: newState.member.id, config_id: Variables.getConfigId() } });
             } else {
               await addUserGuild(newState.member.id, newState.guild.id, newState.member.user.username);
               await createLevel(newState.member.id, newState.guild.id, 0, 0, Date.now());
@@ -123,7 +124,7 @@ module.exports = {
               joined_time: null,
               minute_vocal: checkUser.minute_vocal + (getMinutesBetweenTimestamps(+checkUser.joined_time)),
               exp: checkUser.exp + (getMinutesBetweenTimestamps(+checkUser.joined_time) * 3)
-            }, { where: { guild_id: newState.guild.id, user_id: newState.member.id } });
+            }, { where: { guild_id: newState.guild.id, user_id: newState.member.id, config_id: Variables.getConfigId() } });
 
             await checkExp(newState, checkUser);
           }
