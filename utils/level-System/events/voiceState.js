@@ -86,7 +86,7 @@ async function checkExp(newState, checkUser) {
     const embedLog = new EmbedBuilder()
       .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
       .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", newState.member).replace("{1}", checkUser.level))
-      .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser.minute_vocal == null ? 0 : checkUser.minute_vocal).replace("{1}", checkUser.message_count == null ? 0 : checkUser.message_count)}`, iconURL: `${language_result.levelsCommand.embed_icon_url}` })
+      .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser.minute_vocal == null ? 0 : checkUser.minute_vocal).replace("{1}", checkUser.message_count == null ? 0 : checkUser.message_count)}`, iconURL: Variables.getBotFooterIcon() })
       .setColor(colors.general.error);
     await channel.send({ content: `${newState.member}`, embeds: [embedLog] });
 
