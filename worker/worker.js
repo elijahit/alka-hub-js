@@ -9,6 +9,7 @@
 const Redis = require('ioredis');
 const { startBot, stopBot } = require('./botManager');
 const {config} = require('./config');
+const pm2 = require('pm2');
 
 const redis = new Redis({
   host: config.redis.host,
@@ -49,8 +50,28 @@ async function processQueue() {
         switch (command) {
           case 'start':
             if (activeBots.size >= config.worker.maxBot) {
-              console.warn(`[⚠️] Limite massimo di bot (${config.worker.maxBots}) raggiunto.`);
-              continue;
+
+              console.warn(`[⚠️] Limite massimo di bot (${config.worker.maxBot}) raggiunto.`);
+                pm2.connect(function (err) {
+                if (err) {
+                  console.error(err);
+                  return;
+                }
+                
+                pm2.start({
+                  script: './worker.js',
+                  name: `worker-app-${Date.now()}`, // Unique name for each worker
+                  exec_mode: 'fork', // Use fork mode to create a new instance
+                }, function (err, apps) {
+                  pm2.disconnect();  
+                  if (err) {
+                  console.error('[❌] Errore durante la creazione del worker default:', err);
+                  } else {
+                  console.log('[✅] Worker aggiuntivo avviato.');
+                  }
+                });
+                });
+              break;
             }
             await startBot(botConfig);
             activeBots.set(botId, botConfig);
