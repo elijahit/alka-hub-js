@@ -39,7 +39,7 @@ async function startBot(botConfig) {
   try {
 
     let variables = new Variables();
-
+    
     variables.setBotName(botConfig.botName);
     variables.setBotFooter(botConfig.botFooter);
     variables.setBotFooterIcon(botConfig.botFooterIcon);

@@ -48,7 +48,7 @@ async function processQueue() {
 
         switch (command) {
           case 'start':
-            if (activeBots.size >= config.worker.maxBots) {
+            if (activeBots.size >= config.worker.maxBot) {
               console.warn(`[⚠️] Limite massimo di bot (${config.worker.maxBots}) raggiunto.`);
               continue;
             }
