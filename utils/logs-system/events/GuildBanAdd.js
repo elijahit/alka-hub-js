@@ -21,21 +21,21 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.GuildBanAdd,
-  async execute(ban) {
+  async execute(ban, variables) {
     let customEmoji = emoji.logsSystem.banMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if (!await checkFeatureSystemDisabled(1)) return;
-    if (!await checkFeaturesIsEnabled(ban.guild.id, 1)) return;
-    if (!await checkPremiumFeature(ban.guild.id, 1)) return;
+    if (!await checkFeaturesIsEnabled(ban.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(ban.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // CONTROLLO DELLA LINGUA
       if (ban.guild?.id) {
-        let data = await language.databaseCheck(ban.guild.id);
+        let data = await language.databaseCheck(ban.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let resultDb = await findLogsByGuildId(ban.guild.id);
+        let resultDb = await findLogsByGuildId(ban.guild.id, variables);
         resultDb = resultDb?.get({ plain: true });
         if (!resultDb || !resultDb["ban_state_channel"]) return;
 
@@ -62,7 +62,7 @@ module.exports = {
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.guildBanAdd.ban_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setDescription(language_result.guildBanAdd.ban_create)
           .setColor(colors.general.error);
         if (ban.user.avatar) {
@@ -72,7 +72,7 @@ module.exports = {
       }
     }
     catch (error) {
-      errorSendControls(error, ban.client, ban.guild, "\\logs_system\\GuildBanAdd.js");
+      errorSendControls(error, ban.client, ban.guild, "\\logs_system\\GuildBanAdd.js", variables);
     }
   },
 };

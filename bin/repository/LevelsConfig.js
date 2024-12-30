@@ -13,8 +13,8 @@ const {LevelsConfig} = require('../models');
  * 
  * @returns {Promise<Model[]>}
  */
-async function findAll() {
-  return await LevelsConfig.findAll({where: {config_id: Variables.getConfigId()}});
+async function findAll(variables) {
+  return await LevelsConfig.findAll({where: {config_id: variables.getConfigId()}});
 }
 
 
@@ -22,8 +22,8 @@ async function findAll() {
  * @param {string} guildId 
  * @returns {Promise<Model>}
  */
-async function findByGuildId(guildId) {
-  return await LevelsConfig.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findByGuildId(guildId, variables) {
+  return await LevelsConfig.findOne({where: {guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -31,8 +31,8 @@ async function findByGuildId(guildId) {
  * @param {string} channelId
  * @returns {Promise<Model>}
  */
-async function findByGuildIdAndChannelId(guildId, channelId) {
-  return await LevelsConfig.findOne({where: {guild_id: guildId, log_channel: channelId, config_id: Variables.getConfigId()}});
+async function findByGuildIdAndChannelId(guildId, channelId, variables) {
+  return await LevelsConfig.findOne({where: {guild_id: guildId, log_channel: channelId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -42,9 +42,9 @@ async function findByGuildIdAndChannelId(guildId, channelId) {
  * @returns {Promise<LevelsConfig>}
  * @throws {Error}
  */
-async function create(guildId, channelId) {
-  if(await LevelsConfig.findOne({where: {guild_id: guildId, log_channel: channelId, config_id: Variables.getConfigId()}})) return null;
-  return await LevelsConfig.create({guild_id: guildId, log_channel: channelId, config_id: Variables.getConfigId()});
+async function create(guildId, channelId, variables) {
+  if(await LevelsConfig.findOne({where: {guild_id: guildId, log_channel: channelId, config_id: variables.getConfigId()}})) return null;
+  return await LevelsConfig.create({guild_id: guildId, log_channel: channelId, config_id: variables.getConfigId()});
 }
 
 /**

@@ -21,7 +21,7 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.GuildEmojiDelete,
-  async execute(emoji) {
+  async execute(emoji, variables) {
     let customEmoji = emojis.general.deleteMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if (!await checkFeatureSystemDisabled(1)) return;
@@ -31,11 +31,11 @@ module.exports = {
     try {
       // CONTROLLO DELLA LINGUA
       if (emoji.guild?.id) {
-        let data = await language.databaseCheck(emoji.guild.id);
+        let data = await language.databaseCheck(emoji.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let resultDb = await findLogsByGuildId(emoji.guild.id);
+        let resultDb = await findLogsByGuildId(emoji.guild.id, variables);
         resultDb = resultDb?.get({ plain: true });
         if (!resultDb || !resultDb["emoji_state_channel"]) return;
 
@@ -50,14 +50,14 @@ module.exports = {
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.emojiDelete.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setDescription(language_result.emojiDelete.emoji_delete)
           .setColor(colors.general.error);
         channel_logs.send({ embeds: [embedLog] });
       }
     }
     catch (error) {
-      errorSendControls(error, emoji.client, emoji.guild, "\\logs_system\\EmojiDelete.js");
+      errorSendControls(error, emoji.client, emoji.guild, "\\logs_system\\EmojiDelete.js", variables);
     }
   },
 };

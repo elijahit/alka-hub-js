@@ -10,7 +10,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-function executeFolderModule(client, mainDir, variables) {
+async function executeFolderModule(client, mainDir, variables) {
   const foldersPath = path.join(process.cwd(), mainDir);
   const moduleFolder = fs.readdirSync(foldersPath);
 

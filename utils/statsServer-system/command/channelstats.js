@@ -69,11 +69,11 @@ module.exports = {
 					value: 9,
 				})
 		),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		const categoryId = interaction.options.data[0].value;
 		const type = interaction.options.data[1].value;
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/statsServer-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
@@ -131,7 +131,7 @@ module.exports = {
 
 				}
 				else {
-					await noHavePermission(interaction, language_result);
+					await noHavePermission(interaction, language_result, variables);
 				}
 			}
 			catch (error) {

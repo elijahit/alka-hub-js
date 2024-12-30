@@ -6,7 +6,6 @@
  * @description Contiene il metodo {checkPremiumFeature} e {checkPremiumLimitation}
  */
 
-const Variables = require("../classes/GlobalVariables");
 const { findByGuildId } = require("../repository/Guild");
 const { findFeatureById } = require("../service/DatabaseService");
 
@@ -16,11 +15,11 @@ const { findFeatureById } = require("../service/DatabaseService");
  * @param {integer} featureId 
  * @return {boolean}
  */
-async function checkPremiumFeature(guildId, featureId) {
+async function checkPremiumFeature(guildId, featureId, variables) {
   let featureTable = await findFeatureById(featureId);
   let featurePremium = featureTable?.get({plain: true}).is_premium == 0 ?? false ? false : true
   if(featurePremium) {
-    if(Variables.getPremium() == 1) return true;
+    if(variables.getPremium() == 1) return true;
 
     let guildTable = await findByGuildId(guildId);
     guildTable = guildTable?.get({plain: true}).premium == 1 ?? false ? true : false;
@@ -38,11 +37,11 @@ async function checkPremiumFeature(guildId, featureId) {
  * @param {integer} featureId 
  * @return {integer}
  */
-async function checkPremiumLimitation(guildId, featureId) {
+async function checkPremiumLimitation(guildId, featureId, variables) {
   let featureTable = await findFeatureById(featureId);
   let featurePremium = featureTable?.get({plain: true}).is_premium == 0 ?? true ? false : true
   if(!featurePremium){
-    let guildTable = await findByGuildId(guildId);
+    let guildTable = await findByGuildId(guildId, variables);
     guildTable = guildTable?.get({plain: true}).premium == 1 ?? false ? true : false;
     if(guildTable) return -1;
     let featurePremiumLimitation = featureTable?.get({plain: true}).premium_limitation ?? -1;

@@ -71,33 +71,33 @@ module.exports = {
 				.setDescription('Name of the system you want to enable or disable')
 				.setRequired(true)
 		),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		const featuresChoice = interaction.options.data[0].value;
 
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/general/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		await returnPermission(interaction, "features", async result => {
 			try {
-				let checkGuild = await findGuildById(interaction.guild.id);
+				let checkGuild = await findGuildById(interaction.guild.id, variables);
 				checkGuild = checkGuild?.get({plain: true}) ?? false;
 				if(checkGuild) {
 					if (result) {
-						let checkFeature = await findByGuildIdAndFeatureIdFeature(interaction.guild.id, featuresChoice);
+						let checkFeature = await findByGuildIdAndFeatureIdFeature(interaction.guild.id, featuresChoice, variables);
 						checkFeature = checkFeature?.get({ plain: true });
 						
 						let featureTable = await findFeatureById(featuresChoice);
 						let featureIsDisabled = await checkFeatureSystemDisabled(featuresChoice);
 						let featureName = featureTable.get({ plain: true }).feature_name ?? null;
-						let featurePremium = await checkPremiumFeature(interaction.guild.id, featuresChoice);
+						let featurePremium = await checkPremiumFeature(interaction.guild.id, featuresChoice, variables);
 
 						if (!featureIsDisabled) {
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
 								.setDescription(language_result.disabledFeatures.feature_disabled_by_alka)
-								.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+								.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 								.setColor(colors.general.error);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							return;
@@ -107,7 +107,7 @@ module.exports = {
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
 								.setDescription(language_result.disabledFeatures.feature_premium)
-								.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+								.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 								.setColor(colors.general.error);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							return;
@@ -115,19 +115,19 @@ module.exports = {
 	
 						if (checkFeature) {
 							if (checkFeature.is_enabled == 1) {
-								await updateEnabledFeature({ is_enabled: 0 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: Variables.getConfigId() } });
+								await updateEnabledFeature({ is_enabled: 0 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: variables.getConfigId() } });
 								const embedLog = new EmbedBuilder()
 									.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
 									.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", featureName))
-									.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+									.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 									.setColor(colors.general.error);
 								await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							} else {
-								await updateEnabledFeature({ is_enabled: 1 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: Variables.getConfigId() } });
+								await updateEnabledFeature({ is_enabled: 1 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: variables.getConfigId() } });
 								const embedLog = new EmbedBuilder()
 									.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
 									.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", featureName))
-									.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+									.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 									.setColor(colors.general.success);
 								await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							}
@@ -136,20 +136,20 @@ module.exports = {
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
 								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", featureName))
-								.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+								.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 								.setColor(colors.general.success);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}
 					}
 					else {
-						await noHavePermission(interaction, language_result);
+						await noHavePermission(interaction, language_result, variables);
 					}
 				} else {
 					await noInitGuilds(interaction);
 				}
 			}
 			catch (error) {
-				errorSendControls(error, interaction.client, interaction.guild, "\\general\\features.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\general\\features.js", variables);
 			}
 		});
 	},

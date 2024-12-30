@@ -34,12 +34,12 @@ module.exports = {
 				.setDescription('The emoji to which the user must react for the reaction role')
 				.setRequired(true)
 		),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		const message = interaction.options.data[0].value;
 		const emoji = interaction.options.data[1].value;
 
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/reactionRole-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
@@ -48,7 +48,7 @@ module.exports = {
 				if (result) {
 					if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 5, false, language_result.noPermission.description_embed_no_features_by_system, 
 						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
-						language_result.noPermission.description_embed_no_features)) return;
+						language_result.noPermission.description_embed_no_features, variables)) return;
 
 					// CONTROLLO SE IL RUOLO SI TROVA SOTTO AL RUOLO DA IMPOSTARE
 					if (interaction.guild.roles.botRoleFor(interaction.client.user).rawPosition < role.rawPosition) {
@@ -121,7 +121,7 @@ module.exports = {
 
 				}
 				else {
-					await noHavePermission(interaction, language_result);
+					await noHavePermission(interaction, language_result, variables);
 				}
 			}
 			catch (error) {

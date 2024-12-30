@@ -11,8 +11,8 @@ const executeFolderModule = require('./executeFunctions');
 const LogClasses = require('../classes/LogClasses');
 
 
-const mainEvents = (client, variables) => {
-  client.on(Events.InteractionCreate, async interaction => {
+const mainEvents = async (client, variables) => {
+  await client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand()) return;
     if (!interaction.guild) return;
 
@@ -20,35 +20,35 @@ const mainEvents = (client, variables) => {
 
     if (!command) {
       console.error(`[WARNING] Il comando ${interaction.commandName} lanciato da ${interaction.user.username} non è stato trovato.`);
-      LogClasses.createLog(interaction.guild.id, 'ERRORE', `Il comando ${interaction.commandName} lanciato da ${interaction.user.username} non è stato trovato.`);
+      LogClasses.createLog(interaction.guild.id, 'ERRORE', `Il comando ${interaction.commandName} lanciato da ${interaction.user.username} non è stato trovato.`, variables);
       return;
     }
 
     try {
-      await command.execute(interaction);
-      LogClasses.createLog(interaction.guild.id, 'COMANDO', `Il comando ${interaction.commandName} è stato eseguito da ${interaction.user.username}`);
+      await command.execute(interaction, variables);
+      LogClasses.createLog(interaction.guild.id, 'COMANDO', `Il comando ${interaction.commandName} è stato eseguito da ${interaction.user.username}`, variables);
     } catch (error) {
       console.error(error);
       if (interaction.replied || interaction.deferred) {
-        LogClasses.createLog(interaction.guild.id, 'ERRORE', `Errore eseguendo il comando ${interaction.commandName} da ${interaction.user.username}`);
+        LogClasses.createLog(interaction.guild.id, 'ERRORE', `Errore eseguendo il comando ${interaction.commandName} da ${interaction.user.username}`, variables);
         await interaction.followUp({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', ephemeral: true });
       } else {
-        LogClasses.createLog(interaction.guild.id, 'ERRORE', `Errore eseguendo il comando ${interaction.commandName} da ${interaction.user.username}`);
+        LogClasses.createLog(interaction.guild.id, 'ERRORE', `Errore eseguendo il comando ${interaction.commandName} da ${interaction.user.username}`, variables);
         await interaction.reply({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', ephemeral: true });
       }
     }
   });
 
   // ERROR LISTENER
-  client.on(Events.ShardError, error => {
+  await client.on(Events.ShardError, error => {
     console.log(error);
   })
 
   // EVENT LISTNER PER AVVIO DEL BOT
 
-  client.once(Events.ClientReady, async readyClient => {
+  await client.once(Events.ClientReady, async readyClient => {
     // FUNZIONI
-    executeFolderModule(client, 'utils', variables);
+    await executeFolderModule(client, 'utils', variables);
 
     const presenceArray = variables.getPresenceStatus();
     if(presenceArray.length == 1) {

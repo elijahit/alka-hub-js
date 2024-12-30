@@ -15,8 +15,8 @@ const {findByGuildIdAndFeatureIdFeature} = require('../service/DatabaseService')
  * @param {integer} featureId 
  * @return {boolean}
  */
-const checkFeaturesIsEnabled = async (guildId, featureId) => {
-  let featureIsEnabled = await findByGuildIdAndFeatureIdFeature(guildId, featureId);
+const checkFeaturesIsEnabled = async (guildId, featureId, variables) => {
+  let featureIsEnabled = await findByGuildIdAndFeatureIdFeature(guildId, featureId, variables);
   if(!featureIsEnabled) return false; 
   featureIsEnabled = featureIsEnabled?.get({plain: true});
   if(featureIsEnabled?.is_enabled == 1) return true;

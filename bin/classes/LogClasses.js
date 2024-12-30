@@ -7,16 +7,16 @@
 */
 
 class LogClasses {
-  static async createLog(guildId, type, reason) {
+  static async createLog(guildId, type, reason, variables) {
     try {
       const { createLog } = require('../service/DatabaseService'); 
       const Webhook = require('../service/WebhookService');
       const { sendWebhooksEmbedErrorLog, sendWebhooksEmbedLogs } = new Webhook();
-      await createLog(guildId, type, reason);
+      await createLog(guildId, type, reason, variables);
       if(type === 'ERRORE' || type === 'ERRORE-AVVIO' || type === 'ERRORE-PERMISSIONS' || type === 'ERRORE-CONTROLS') {
-        await sendWebhooksEmbedErrorLog(`Errore: ${reason}`, [guildId, type]);
+        await sendWebhooksEmbedErrorLog(`Errore: ${reason}`, [guildId, type], variables);
       } else {
-        await sendWebhooksEmbedLogs(`Messaggio: ${reason}`, [guildId, type]);
+        await sendWebhooksEmbedLogs(`Messaggio: ${reason}`, [guildId, type], variables);
 
       }
     } catch (error) {

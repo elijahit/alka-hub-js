@@ -76,11 +76,11 @@ module.exports = {
 					value: "welcome",
 				})
 		),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		let moduleSelect = await interaction.options.get("module")?.value;
 		// RECUPERO LA LINGUA
 		try {
-			let data = await language.databaseCheck(interaction.guild.id);
+			let data = await language.databaseCheck(interaction.guild.id, variables);
 			const langagues_path = readFileSync(`./languages/general/${data}.json`);
 			const language_result = JSON.parse(langagues_path);
 
@@ -88,22 +88,22 @@ module.exports = {
 			const embedLog = new EmbedBuilder();
 			if (moduleSelect) {
 				fields = [
-					{ name: language_result.helpCommand[`${moduleSelect}_category`], value: language_result.helpCommand[`${moduleSelect}_commands`].replaceAll("{0}", Variables.getBotName()) }
+					{ name: language_result.helpCommand[`${moduleSelect}_category`], value: language_result.helpCommand[`${moduleSelect}_commands`].replaceAll("{0}", variables.getBotName()) }
 				];
 				embedLog.setDescription(language_result.helpCommand.description_embed);
 			} else {
-				fields = [{ name: language_result.helpCommand.noModuleSelectTitle, value: language_result.helpCommand.noModuleSelectEmbed.replaceAll("{0}", Variables.getBotName()) }]
+				fields = [{ name: language_result.helpCommand.noModuleSelectTitle, value: language_result.helpCommand.noModuleSelectEmbed.replaceAll("{0}", variables.getBotName()) }]
 			}
 			const customEmoji = emoji.general.helpMaker;
 			embedLog
 				.setAuthor({ name: `${language_result.helpCommand.embed_title}`, iconURL: customEmoji })
 				.addFields(fields)
-				.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+				.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 				.setColor(colors.general.blue);
 			await interaction.reply({ embeds: [embedLog], ephemeral: true });
 		}
 		catch (error) {
-			errorSendControls(error, interaction.client, interaction.guild, "\\general\\help.js");
+			errorSendControls(error, interaction.client, interaction.guild, "\\general\\help.js", variables);
 		}
 	},
 };

@@ -25,13 +25,13 @@ async function findAll() {
  * @param {integer} featureId 
  * @returns {Promise<Model>}
  */
-async function getFeatureIsEnabled(guildId, featureId) {
+async function getFeatureIsEnabled(guildId, featureId, variables) {
   return await Feature.findOne({
     where: {id: featureId},
     include: [{
       model: Guild,
       required: true,
-      where: {guild_id: guildId, config_id: Variables.getConfigId()},
+      where: {guild_id: guildId, config_id: variables.getConfigId()},
       through: {attributes: ['guild_id', 'feature_id', 'is_enabled', 'config_id']},
     }]
   });

@@ -29,11 +29,11 @@ module.exports = {
 				.addChannelTypes(ChannelType.GuildText)
 				.setRequired(true)
 		),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		const channel = interaction.options.data[0].channel;
 
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/levels-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
@@ -42,44 +42,44 @@ module.exports = {
 				if (result) {
 					if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 11, false, language_result.noPermission.description_embed_no_features_by_system, 
 						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
-						language_result.noPermission.description_embed_no_features)) return;
+						language_result.noPermission.description_embed_no_features, variables)) return;
 
-					let checkChannelIsPresent = await findLevelsConfigByGuildId(interaction.guild.id);
+					let checkChannelIsPresent = await findLevelsConfigByGuildId(interaction.guild.id, variables);
 					checkChannelIsPresent = checkChannelIsPresent?.get({ plain: true });
 					
 
 					const customEmoji = emoji.levelsSystem.levelsMaker;
 
 					if (checkChannelIsPresent) {
-						await removeLevelsConfig({where: { guild_id: interaction.guild.id, config_id: Variables.getConfigId() }});
+						await removeLevelsConfig({where: { guild_id: interaction.guild.id, config_id: variables.getConfigId() }});
 
 						const oldChannel = await interaction.guild.channels.fetch(checkChannelIsPresent.log_channel);
 
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
 							.setDescription(language_result.levelsCommand.description_embed_delete.replace("{0}", oldChannel))
-							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
 					}
-					await createLevelsConfig(interaction.guild.id, channel.id);
+					await createLevelsConfig(interaction.guild.id, channel.id, variables);
 
 					const embedLog = new EmbedBuilder()
 						.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
 						.setDescription(language_result.levelsCommand.description_embed.replace("{0}", channel))
-						.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setColor(colors.general.success);
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 
 				}
 				else {
-					await noHavePermission(interaction, language_result);
+					await noHavePermission(interaction, language_result, variables);
 				}
 			}
 			catch (error) {
 				console.log(error)
-				errorSendControls(error, interaction.client, interaction.guild, "\\levels-system\\levels.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\levels-system\\levels.js", variables);
 			}
 		});
 	},

@@ -58,7 +58,7 @@ async function getBotsForCurrentWorker() {
           if (err) {
             console.error('[❌] Errore durante l’invio del comando a bot_commands_queue:', err);
           } else {
-            console.log('[✅] Comando inviato a bot_commands_queue con successo:', result);
+            console.log('[✅] Comando inviato a bot_commands_queue con successo bot ID:', configBot.id);
           }
         });
       }
@@ -100,7 +100,6 @@ async function processQueue() {
 
         switch (command) {
           case 'start':
-            console.log(botConfig)
             if (botConfig.isActive !== 2) break;
             if (activeBots.size >= config.worker.maxBot) {
 

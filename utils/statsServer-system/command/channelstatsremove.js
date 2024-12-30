@@ -28,11 +28,11 @@ module.exports = {
 				.setDescription('ID to which you want to remove the channel stats')
 				.setRequired(true)
 		),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		const id = interaction.options.data[0].value;
 
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/statsServer-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
@@ -41,7 +41,7 @@ module.exports = {
 				if (result) {
 					if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 6, false, language_result.noPermission.description_embed_no_features_by_system, 
 						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
-						language_result.noPermission.description_embed_no_features)) return;
+						language_result.noPermission.description_embed_no_features, variables)) return;
 				
 					let checkStatistics = await findStatisticsById(interaction.guild.id, id);
 					checkStatistics = checkStatistics?.get({ plain: true });
@@ -67,7 +67,7 @@ module.exports = {
 
 				}
 				else {
-					await noHavePermission(interaction, language_result);
+					await noHavePermission(interaction, language_result, variables);
 				}
 			}
 			catch (error) {

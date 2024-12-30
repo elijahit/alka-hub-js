@@ -4,9 +4,9 @@
 
 const { findGuildById } = require('../bin/service/DatabaseService');
 
-async function databaseCheck (guildId) {
+async function databaseCheck (guildId, variables) {
   try {
-    let result = await findGuildById(guildId);
+    let result = await findGuildById(guildId, variables);
     if(!result) return "EN";
     
     return result.get({plain: true}).language;

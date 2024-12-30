@@ -34,30 +34,30 @@ module.exports = {
 				.setDescription('The level to reach to have the set role')
 				.setRequired(true)
 		),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		const role = interaction.options.data[0].role;
 		const level = interaction.options.data[1].value;
 
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/levels-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		await returnPermission(interaction, "levels", async result => {
 			try {
 				if (result) {
-					let checkLevelsIsPresent = await findByGuildIdAndRoleIdLevelsRoles(interaction.guild.id, role.id);
+					let checkLevelsIsPresent = await findByGuildIdAndRoleIdLevelsRoles(interaction.guild.id, role.id, variables);
 					checkLevelsIsPresent = checkLevelsIsPresent?.get({ plain: true });
 					
 
 					const customEmoji = emoji.levelsSystem.levelsMaker;
 					if (checkLevelsIsPresent) {
-						await removeLevelsRoles({where: { guild_id: interaction.guild.id, role_id: role.id, config_id: Variables.getConfigId() }});
+						await removeLevelsRoles({where: { guild_id: interaction.guild.id, role_id: role.id, config_id: variables.getConfigId() }});
 
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
 							.setDescription(language_result.levelsCommand.description_embed_delrole.replace("{0}", role))
-							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					} else {
@@ -72,18 +72,18 @@ module.exports = {
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
 							.setDescription(language_result.levelsCommand.description_embed_addrole.replace("{0}", role).replace("{1}", level))
-							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(colors.general.success);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}
 				}
 				else {
-					await noHavePermission(interaction, language_result);
+					await noHavePermission(interaction, language_result, variables);
 				}
 			}
 			catch (error) {
 				console.log(error)
-				errorSendControls(error, interaction.client, interaction.guild, "\\levels-system\\levels.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\levels-system\\levels.js", variables);
 			}
 		});
 	},

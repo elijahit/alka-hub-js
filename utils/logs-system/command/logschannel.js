@@ -75,7 +75,7 @@ module.exports = {
 				.setDescription('Select the channel to set as the logs channel')
 				.setRequired(true)
 		),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		let choices, channel, customEmoji;
 		// RECUPERO LE OPZIONI INSERITE
 		await interaction.options._hoistedOptions.forEach(value => {
@@ -88,17 +88,17 @@ module.exports = {
 		});
 
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		await returnPermission(interaction, "logschannel", async result => {
 			if (!await allCheckFeatureForCommands(interaction, interaction.guild.id, 1, true, language_result.noPermission.description_embed_no_features_by_system,
 				language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature,
-				language_result.noPermission.description_embed_no_features)) return;
+				language_result.noPermission.description_embed_no_features, variables)) return;
 			try {
 				if (result) {
-					let logsTable = await findLogsByGuildId(interaction.guild.id);
+					let logsTable = await findLogsByGuildId(interaction.guild.id, variables);
 					checkTable = logsTable?.get({ plain: true });
 					const embedLog = new EmbedBuilder();
 					//CONTROLLO SE LA ROW E' GIA' PRESENTE NEL DB
@@ -126,7 +126,7 @@ module.exports = {
 					}
 					embedLog
 						.setAuthor({ name: `${language_result.commandLogsChannel.embed_title}`, iconURL: customEmoji })
-						.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` });
+						.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` });
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 
 
@@ -136,7 +136,7 @@ module.exports = {
 				}
 			}
 			catch (error) {
-				errorSendControls(error, interaction.client, interaction.guild, "\\logs-system\\logschannel.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\logs-system\\logschannel.js", );
 			}
 		});
 	},

@@ -25,7 +25,7 @@ module.exports = {
 				.setDescription('The role for which you want to set permission')
 				.setRequired(true)
 		),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		let role;
 		// RECUPERO LE OPZIONI INSERITE
 		await interaction.options._hoistedOptions.forEach(value => {
@@ -33,7 +33,7 @@ module.exports = {
 		});
 
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/ranks-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLO SE IL VALORE ESISTE
@@ -72,7 +72,7 @@ module.exports = {
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 				}
 				else {
-					await noHavePermission(interaction, language_result);
+					await noHavePermission(interaction, language_result, variables);
 				}
 			}
 			catch (error) {

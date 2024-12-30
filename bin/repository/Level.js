@@ -14,8 +14,8 @@ const {Level} = require('../models');
  * 
  * @returns {Promise<Model[]>}
  */
-async function findAll() {
-  return await Level.findAll({where: {config_id: Variables.getConfigId()}});
+async function findAll(variables) {
+  return await Level.findAll({where: {config_id: variables.getConfigId()}});
 }
 
 
@@ -23,8 +23,8 @@ async function findAll() {
  * @param {string} guildId 
  * @returns {Promise<Model>}
  */
-async function findByGuildId(guildId) {
-  return await Level.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findByGuildId(guildId, variables) {
+  return await Level.findOne({where: {guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -32,8 +32,8 @@ async function findByGuildId(guildId) {
  * @param {string} userId
  * @returns {Promise<Model>}
  */
-async function findByGuildIdAndUserId(guildId, userId) {
-  return await Level.findOne({where: {guild_id: guildId, user_id: userId, config_id: Variables.getConfigId()}});
+async function findByGuildIdAndUserId(guildId, userId, variables) {
+  return await Level.findOne({where: {guild_id: guildId, user_id: userId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -46,9 +46,9 @@ async function findByGuildIdAndUserId(guildId, userId) {
  * @returns {Promise<Model>}
  * @throws {Error}
  */
-async function create(userId, guildId, messageCount, exp, joinedTime) {
-  if(await Level.findOne({where: {guild_id: guildId, user_id: userId, config_id: Variables.getConfigId()}})) return null;
-  return await Level.create({guild_id: guildId, user_id: userId, exp: exp, minute_vocal: 0, message_count: messageCount, joined_time: joinedTime, level: 1, config_id: Variables.getConfigId()});
+async function create(userId, guildId, messageCount, exp, joinedTime, variables) {
+  if(await Level.findOne({where: {guild_id: guildId, user_id: userId, config_id: variables.getConfigId()}})) return null;
+  return await Level.create({guild_id: guildId, user_id: userId, exp: exp, minute_vocal: 0, message_count: messageCount, joined_time: joinedTime, level: 1, config_id: variables.getConfigId()});
 }
 
 /**

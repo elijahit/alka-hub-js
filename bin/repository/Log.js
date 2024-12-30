@@ -32,8 +32,8 @@ async function findById(id) {
  * @param {string} guildId 
  * @returns {Promise<Array<Model>>}
  */
-async function findAllByGuildId(guildId) {
-  return await Log.findAll({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findAllByGuildId(guildId, variables) {
+  return await Log.findAll({where: {guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -43,8 +43,8 @@ async function findAllByGuildId(guildId) {
  * @param {string} reason 
  * @returns 
  */
-async function create(guildId, type, reason) {
-  return await Log.create({guild_id: guildId, config_id: Variables.getConfigId(), type: type, reason: reason});
+async function create(guildId, type, reason, variables) {
+  return await Log.create({guild_id: guildId, config_id: variables.getConfigId(), type: type, reason: reason});
 }
 
 module.exports = {

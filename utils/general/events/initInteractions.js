@@ -19,12 +19,12 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.InteractionCreate,
-  async execute(interaction) {
+  async execute(interaction, variables) {
     if (!interaction.guild) return;
     if (!interaction.isModalSubmit()) return;
     try {
       // CONTROLLO LINGUA
-      let data = await language.databaseCheck(interaction.guild.id);
+      let data = await language.databaseCheck(interaction.guild.id, variables);
       const langagues_path = readFileSync(`./languages/general/${data}.json`);
       const language_result = JSON.parse(langagues_path);
 
@@ -48,8 +48,8 @@ module.exports = {
 
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: emoji.general.trueMaker })
-          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
-          .setDescription(language_result.initCommand.description_embed.replaceAll("{0}", Variables.getBotName()))
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+          .setDescription(language_result.initCommand.description_embed.replaceAll("{0}", variables.getBotName()))
           .setColor(color.general.success);
         await interaction.reply({ embeds: [embedLog], ephemeral: true });
       }
@@ -57,7 +57,7 @@ module.exports = {
     }
     catch (error) {
       console.log(error)
-      errorSendControls(error, interaction.guild.client, interaction.guild, "\\welcome-system\\welcomeInteractions.js");
+      errorSendControls(error, interaction.guild.client, interaction.guild, "\\welcome-system\\welcomeInteractions.js", variables);
     }
   },
 };

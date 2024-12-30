@@ -28,17 +28,17 @@ function getRandomInt(min, max) {
 
 module.exports = {
   name: Events.MessageCreate,
-  async execute(message) {
+  async execute(message, variables) {
     try {
       if (!message?.member?.user?.bot) {
         if (!await checkFeatureSystemDisabled(11)) return;
-        if (!await checkFeaturesIsEnabled(message.guild.id, 11)) return;
-        if (!await checkPremiumFeature(message.guild.id, 11)) return;
-        let levelsConfig = await findLevelsConfigByGuildId(message.guild.id);
+        if (!await checkFeaturesIsEnabled(message.guild.id, 11, variables)) return;
+        if (!await checkPremiumFeature(message.guild.id, 11, variables)) return;
+        let levelsConfig = await findLevelsConfigByGuildId(message.guild.id, variables);
         levelsConfig = levelsConfig?.get({ plain: true });
         if (!levelsConfig) return;
 
-        let checkUser = await findByGuildIdAndUserIdLevel(message.guild.id, message.member.id);
+        let checkUser = await findByGuildIdAndUserIdLevel(message.guild.id, message.member.id, variables);
         checkUser = checkUser?.get({ plain: true });
         if (checkUser) {
           if (checkUser.exp >= 75 + (25 * checkUser.level)) {
@@ -46,17 +46,17 @@ module.exports = {
               exp: checkUser.exp - (75 + (25 * checkUser.level)) + getRandomInt(5, 10),
               level: checkUser.level + 1,
               message_count: checkUser.message_count + 1
-            }, { where: { guild_id: message.guild.id, user_id: message.member.id, config_id: Variables.getConfigId() } });
+            }, { where: { guild_id: message.guild.id, user_id: message.member.id, config_id: variables.getConfigId() } });
 
             const channel = await message.guild.channels.fetch(levelsConfig.log_channel);
 
-            let data = await language.databaseCheck(message.guild.id);
+            let data = await language.databaseCheck(message.guild.id, variables);
             const langagues_path = readFileSync(`./languages/levels-system/${data}.json`);
             const language_result = JSON.parse(langagues_path);
 
             const customEmoji = emoji.levelsSystem.levelsMaker;
 
-            let checkRoles = await findAllLevelsRolesByGuildId(message.guild.id);
+            let checkRoles = await findAllLevelsRolesByGuildId(message.guild.id, variables);
             checkRoles.map(async value => {
               if ((checkUser.level + 1) >= value.level) {
                 try {
@@ -68,11 +68,11 @@ module.exports = {
                     const embedLog = new EmbedBuilder()
                       .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: emoji.general.errorMarker })
                       .setDescription(language_result.levelsCommand.missing_permissions.replace("{0}", roleResolve).replace("{1}", message.member))
-                      .setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+                      .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
                       .setColor(colors.general.error);
                     await channel.send({ embeds: [embedLog] });
                   } else {
-                    errorSendControls(error, message.guild.client, message.guild, "\\levels-system\\voiceState.js");
+                    errorSendControls(error, message.guild.client, message.guild, "\\levels-system\\voiceState.js", variables);
                   }
 
                 }
@@ -82,23 +82,23 @@ module.exports = {
             const embedLog = new EmbedBuilder()
               .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
               .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", message.member).replace("{1}", checkUser.level + 1))
-              .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser.minute_vocal == null ? 0 : checkUser.minute_vocal).replace("{1}", checkUser.message_count == null ? 0 : checkUser.message_count)}`, iconURL: Variables.getBotFooterIcon() })
+              .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser.minute_vocal == null ? 0 : checkUser.minute_vocal).replace("{1}", checkUser.message_count == null ? 0 : checkUser.message_count)}`, iconURL: variables.getBotFooterIcon() })
               .setColor(colors.general.blue);
             await channel.send({ content: `${message.member}`, embeds: [embedLog] });
           } else {
             await updateLevel({
               exp: checkUser.exp + getRandomInt(5, 10),
               message_count: checkUser.message_count + 1
-            }, { where: { guild_id: message.guild.id, user_id: message.member.id, config_id: Variables.getConfigId() } });
+            }, { where: { guild_id: message.guild.id, user_id: message.member.id, config_id: variables.getConfigId() } });
           }
         } else {
           await addUserGuild(message.member.id, message.guild.id, message.member.user.username);
-          await createLevel(message.member.id, message.guild.id, 1, getRandomInt(5, 10), null);
+          await createLevel(message.member.id, message.guild.id, 1, getRandomInt(5, 10), null, variables);
         }
       }
     }
     catch (error) {
-      errorSendControls(error, message.guild.client, message.guild, "\\levels-system\\voiceState.js");
+      errorSendControls(error, message.guild.client, message.guild, "\\levels-system\\voiceState.js", variables);
     }
   },
 };

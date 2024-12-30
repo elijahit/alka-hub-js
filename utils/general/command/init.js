@@ -20,20 +20,20 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('init')
 		.setDescription('Use this command to initialize the bot on your server'),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/general/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		await returnPermission(interaction, "init", async result => {
 			try {
 				if (result) {
-					let guild = await findByGuildId(interaction.guild.id);
+					let guild = await findByGuildId(interaction.guild.id, variables);
 					guild = guild?.get({plain: true}) ?? null;
 
 					const modal = new ModalBuilder()
-						.setTitle(`${Variables.getBotName()} | Settings`)
+						.setTitle(`${variables.getBotName()} | Settings`)
 						.setCustomId('configModal');
 
 					const languageValue = guild?.language ?? "";
@@ -80,11 +80,11 @@ module.exports = {
 					await interaction.showModal(modal);
 				}
 				else {
-					await noHavePermission(interaction, language_result);
+					await noHavePermission(interaction, language_result, variables);
 				}
 			}
 			catch (error) {
-				errorSendControls(error, interaction.client, interaction.guild, "\\general\\init.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\general\\init.js", variables);
 			}
 		});
 	},

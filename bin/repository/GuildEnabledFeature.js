@@ -25,8 +25,8 @@ async function findAll() {
  * @param {integer} featureId 
  * @returns {Promise<Model>}
  */
-async function findByGuildIdAndFeatureId(guildId, featureId) {
-  return await GuildEnabledFeature.findOne({where: {guild_id: guildId, feature_id: featureId, config_id: Variables.getConfigId()}});
+async function findByGuildIdAndFeatureId(guildId, featureId, variables) {
+  return await GuildEnabledFeature.findOne({where: {guild_id: guildId, feature_id: featureId, config_id: variables.getConfigId()}});
 }
 
 
@@ -55,9 +55,9 @@ async function update(objToUpdate, objToCondition) {
  * @param {tinyint} isEnabled 
  * @returns {Promise<Model>}
  */
-async function create(guildId, featureId, isEnabled) {
-  if(await GuildEnabledFeature.findOne({where: {guild_id: guildId, feature_id: featureId, config_id: Variables.getConfigId()}})) return null;
-  return await GuildEnabledFeature.create({guild_id: guildId, feature_id: featureId, is_enabled: isEnabled, config_id: Variables.getConfigId()});
+async function create(guildId, featureId, isEnabled, variables) {
+  if(await GuildEnabledFeature.findOne({where: {guild_id: guildId, feature_id: featureId, config_id: variables.getConfigId()}})) return null;
+  return await GuildEnabledFeature.create({guild_id: guildId, feature_id: featureId, is_enabled: isEnabled, config_id: variables.getConfigId()});
 }
 
 

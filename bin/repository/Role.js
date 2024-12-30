@@ -14,8 +14,8 @@ const {Role} = require('../models');
  * 
  * @returns {Promise<Array<Model>>}
  */
-async function findAll() {
-  return await Role.findAll({where: {config_id: Variables.getConfigId()}});
+async function findAll(variables) {
+  return await Role.findAll({where: {config_id: variables.getConfigId()}});
 }
 
 
@@ -23,8 +23,8 @@ async function findAll() {
  * @param {string} guildId 
  * @returns {Promise<Model>}
  */
-async function findByGuildId(guildId) {
-  return await Role.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findByGuildId(guildId, variables) {
+  return await Role.findOne({where: {guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -33,9 +33,9 @@ async function findByGuildId(guildId) {
  * @param {string} guildId  
  * @returns {Promise<Model> | null}
  */
-async function create(roleId, guildId) {
-  if(await Role.findOne({where: {guild_id: guildId, role_id: roleId, config_id: Variables.getConfigId()}})) return null;
-  return await Role.create({guild_id: guildId, role_id: roleId, config_id: Variables.getConfigId()});
+async function create(roleId, guildId, variables) {
+  if(await Role.findOne({where: {guild_id: guildId, role_id: roleId, config_id: variables.getConfigId()}})) return null;
+  return await Role.create({guild_id: guildId, role_id: roleId, config_id: variables.getConfigId()});
 }
 
 /**

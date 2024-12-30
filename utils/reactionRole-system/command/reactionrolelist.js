@@ -20,11 +20,11 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('reactionrolelist')
 		.setDescription('Use this command to view the set reaction roles.'),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		let reactionRoleString = "";
 
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/reactionRole-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
@@ -33,7 +33,7 @@ module.exports = {
 				if (result) {
 					if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 5, false, language_result.noPermission.description_embed_no_features_by_system, 
 						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
-						language_result.noPermission.description_embed_no_features)) return;
+						language_result.noPermission.description_embed_no_features, variables)) return;
 
 					let checkReactionAlreadySet = await findAllReactionsByGuildId(interaction.guild.id);
 
@@ -77,7 +77,7 @@ module.exports = {
 
 				}
 				else {
-					await noHavePermission(interaction, language_result);
+					await noHavePermission(interaction, language_result, variables);
 				}
 			}
 			catch (error) {

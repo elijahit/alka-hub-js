@@ -14,7 +14,6 @@ const checkFeaturesIsEnabled = require('../../bin/functions/checkFeaturesIsEnabl
 const { noEnabledFunc } = require('../HandlingFunctions');
 const emoji = require('../data/emoji');
 const colors = require('../data/colors');
-const Variables = require('../classes/GlobalVariables');
 
 
 /**
@@ -31,22 +30,22 @@ const Variables = require('../classes/GlobalVariables');
  * @param {string} languageFeatureIsEnabled (Il messaggio di errore se la feature è disabilitata)
  * @return {boolean} (Ritorna true, se tutto va bene, false se c'è qualche problema e manda di conseguenza una risposta a un interazione)
  */
-async function allCheckFeatureForCommands(interaction, guildId, featureId, featureLimitationControl, languageSystemDisabled, languagePremiumLimitation, languagePremiumFeature, languageFeatureIsEnabled) {
-  if (await checkFeaturesIsEnabled(guildId, featureId)) {
+async function allCheckFeatureForCommands(interaction, guildId, featureId, featureLimitationControl, languageSystemDisabled, languagePremiumLimitation, languagePremiumFeature, languageFeatureIsEnabled, variables) {
+  if (await checkFeaturesIsEnabled(guildId, featureId, variables)) {
     
-    const howManyLengthUseForFeature = await getLengthFeature(featureId, guildId);
+    const howManyLengthUseForFeature = await getLengthFeature(featureId, guildId, variables);
     
-    if (await checkPremiumLimitation(guildId, featureId) == -1 || howManyLengthUseForFeature < await checkPremiumLimitation(guildId, featureId) || featureLimitationControl == false) {
-      if (await checkPremiumFeature(guildId, featureId)) {
+    if (await checkPremiumLimitation(guildId, featureId, variables) == -1 || howManyLengthUseForFeature < await checkPremiumLimitation(guildId, featureId, variables) || featureLimitationControl == false) {
+      if (await checkPremiumFeature(guildId, featureId, variables)) {
         if (await checkFeatureSystemDisabled(featureId)) {
           return true;
         }
         else {
           let customEmoji = emoji.general.errorMarker;
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${Variables.getBotName()} | Feature Controls`, iconURL: customEmoji })
+            .setAuthor({ name: `${variables.getBotName()} | Feature Controls`, iconURL: customEmoji })
             .setDescription(languageSystemDisabled)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           await interaction.reply({ embeds: [embedLog], ephemeral: true });
           return false;
@@ -55,9 +54,9 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, featu
       else {
         let customEmoji = emoji.general.errorMarker;
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${Variables.getBotName()} | Feature Controls`, iconURL: customEmoji })
+          .setAuthor({ name: `${variables.getBotName()} | Feature Controls`, iconURL: customEmoji })
           .setDescription(languagePremiumFeature)
-          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setColor(colors.general.error);
         await interaction.reply({ embeds: [embedLog], ephemeral: true });
         return false;
@@ -66,9 +65,9 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, featu
     else {
       let customEmoji = emoji.general.errorMarker;
       const embedLog = new EmbedBuilder()
-        .setAuthor({ name: `${Variables.getBotName()} | Feature Controls`, iconURL: customEmoji })
+        .setAuthor({ name: `${variables.getBotName()} | Feature Controls`, iconURL: customEmoji })
         .setDescription(languagePremiumLimitation)
-        .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+        .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
         .setColor(colors.general.error);
       await interaction.reply({ embeds: [embedLog], ephemeral: true });
       return false;
@@ -86,7 +85,7 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, featu
  * @param {integer} featureId 
  * @returns {integer}
  */
-async function getLengthFeature(featureId, guildId) {
+async function getLengthFeature(featureId, guildId, variables) {
   let howManyLengthUseForFeature = 0;
     switch(featureId) {
       case 1:
@@ -94,15 +93,15 @@ async function getLengthFeature(featureId, guildId) {
       case 2:
         break;
       case 3:
-        howManyLengthUseForFeature = (await findAllAutoVoiceByGuildId(guildId)).length;
+        howManyLengthUseForFeature = (await findAllAutoVoiceByGuildId(guildId, variables)).length;
         break;
       case 4:
         break;
       case 5:
-        howManyLengthUseForFeature = (await findAllReactionsByGuildId(guildId)).length;
+        howManyLengthUseForFeature = (await findAllReactionsByGuildId(guildId, variables)).length;
         break;
       case 6:
-        howManyLengthUseForFeature = (await findAllByGuildIdStatistics(guildId)).length;
+        howManyLengthUseForFeature = (await findAllByGuildIdStatistics(guildId, variables)).length;
         break;
       case 7:
         break;
@@ -113,7 +112,7 @@ async function getLengthFeature(featureId, guildId) {
       case 10:
         break;
       case 11:
-        howManyLengthUseForFeature = (await findAllLevelsRolesByGuildId(guildId)).length;
+        howManyLengthUseForFeature = (await findAllLevelsRolesByGuildId(guildId, variables)).length;
         break;
     }
     return howManyLengthUseForFeature;

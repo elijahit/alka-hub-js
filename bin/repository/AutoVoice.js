@@ -15,8 +15,8 @@ const { Model } = require('sequelize');
  * 
  * @returns {Promise<Array<Model>>}
  */
-async function findAll() {
-  return await AutoVoice.findAll({where: {config_id: Variables.getConfigId()}});
+async function findAll(variables) {
+  return await AutoVoice.findAll({where: {config_id: variables.getConfigId()}});
 }
 
 /**
@@ -24,8 +24,8 @@ async function findAll() {
  * @param {string} guildId 
  * @returns {Promise<Array<Model>>}
  */
-async function findAllbyGuild(guildId) {
-  return await AutoVoice.findAll({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findAllbyGuild(guildId, variables) {
+  return await AutoVoice.findAll({where: {guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 
@@ -35,8 +35,8 @@ async function findAllbyGuild(guildId) {
  * @param {string} channelId 
  * @returns {Promise<Model>}
  */
-async function findByChannelId(guildId, channelId) {
-  return await AutoVoice.findOne({where: {channel_id: channelId, guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findByChannelId(guildId, channelId, variables) {
+  return await AutoVoice.findOne({where: {channel_id: channelId, guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -44,8 +44,8 @@ async function findByChannelId(guildId, channelId) {
  * @param {integer} id 
  * @returns {Promise<Model>}
  */
-async function findBylId(guildId, id) {
-  return await AutoVoice.findOne({where: {id: id, guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findBylId(guildId, id, variables) {
+  return await AutoVoice.findOne({where: {id: id, guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 
@@ -54,9 +54,9 @@ async function findBylId(guildId, id) {
  * @param {string} roleId 
  * @returns {Promise<Model>}
  */
-async function create(guildId, type, categoryId, nickname) {
-  if(await AutoVoice.findOne({where: {guild_id: guildId, channel_id: categoryId, config_id: Variables.getConfigId()}})) return null;
-  return await AutoVoice.create({guild_id: guildId, type: type, channel_id: categoryId, nickname: nickname, config_id: Variables.getConfigId()});
+async function create(guildId, type, categoryId, nickname, variables) {
+  if(await AutoVoice.findOne({where: {guild_id: guildId, channel_id: categoryId, config_id: variables.getConfigId()}})) return null;
+  return await AutoVoice.create({guild_id: guildId, type: type, channel_id: categoryId, nickname: nickname, config_id: variables.getConfigId()});
 }
 
 /**
@@ -73,11 +73,11 @@ async function update(objToUpdate, objToCondition) {
  * @param {object} objToCondition 
  * @returns {Promise<Model>}
  */
-async function remove(objToCondition) {
+async function remove(objToCondition, variables) {
   return await AutoVoice.destroy({
     where: {
       ...objToCondition,
-      config_id: Variables.getConfigId()
+      config_id: variables.getConfigId()
     }
 });
 }

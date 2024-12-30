@@ -15,8 +15,8 @@ const {LogsSystem} = require('../models');
  * 
  * @returns {Promise<Array<Model>>}
  */
-async function findAll() {
-  return await LogsSystem.findAll({where: {config_id: Variables.getConfigId()}});
+async function findAll(variables) {
+  return await LogsSystem.findAll({where: {config_id: variables.getConfigId()}});
 }
 
 
@@ -24,8 +24,8 @@ async function findAll() {
  * @param {string} guildId 
  * @returns {Promise<Model>}
  */
-async function findByGuildId(guildId) {
-  return await LogsSystem.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findByGuildId(guildId, variables) {
+  return await LogsSystem.findOne({where: {guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -35,9 +35,9 @@ async function findByGuildId(guildId) {
  * @param {string} customValue
  * @returns {Promise<Model>}
  */
-async function create(guildId, customTable, customValue) {
-  if(await LogsSystem.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}})) return null;
-  return await LogsSystem.create({guild_id: guildId, config_id: Variables.getConfigId(), [customTable]: customValue});
+async function create(guildId, customTable, customValue, variables) {
+  if(await LogsSystem.findOne({where: {guild_id: guildId, config_id: variables.getConfigId()}})) return null;
+  return await LogsSystem.create({guild_id: guildId, config_id: variables.getConfigId(), [customTable]: customValue});
 }
 
 /**

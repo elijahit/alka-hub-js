@@ -14,8 +14,8 @@ const {ReactionRole} = require('../models');
  * 
  * @returns {Promise<Array<Model>>}
  */
-async function findAll() {
-  return await ReactionRole.findAll({where: {config_id: Variables.getConfigId()}});
+async function findAll(variables) {
+  return await ReactionRole.findAll({where: {config_id: variables.getConfigId()}});
 }
 
 
@@ -23,36 +23,25 @@ async function findAll() {
  * @param {string} guildId 
  * @returns {Promise<Array<Model>>}
  */
-async function findAllByGuildId(guildId) {
-  return await ReactionRole.findAll({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findAllByGuildId(guildId, variables) {
+  return await ReactionRole.findAll({where: {guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 /**
  * @param {string} guildId 
  * @returns {Promise<Model>}
  */
-async function findByGuildId(guildId) {
-  return await ReactionRole.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
-}
-
-/**
- * @param {string} guildId 
- * @param {string} messageId 
- * @returns {Promise<Model>}
- */
-async function findByGuildIdAndMessageId(guildId, messageId) {
-  return await ReactionRole.findOne({where: {guild_id: guildId, message_id: messageId, config_id: Variables.getConfigId()}});
+async function findByGuildId(guildId, variables) {
+  return await ReactionRole.findOne({where: {guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 /**
  * @param {string} guildId 
  * @param {string} messageId 
- * @param {string} emoji
- * @param {string} roleId
  * @returns {Promise<Model>}
  */
-async function findByGuildIdAndMessageIdAndEmoji(guildId, messageId, emoji) {
-  return await ReactionRole.findOne({where: {guild_id: guildId, message_id: messageId, emoji: emoji, config_id: Variables.getConfigId()}});
+async function findByGuildIdAndMessageId(guildId, messageId, ) {
+  return await ReactionRole.findOne({where: {guild_id: guildId, message_id: messageId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -62,8 +51,19 @@ async function findByGuildIdAndMessageIdAndEmoji(guildId, messageId, emoji) {
  * @param {string} roleId
  * @returns {Promise<Model>}
  */
-async function findByGuildIdAndMessageIdAndEmojiAndRoleId(guildId, messageId, emoji, roleId) {
-  return await ReactionRole.findOne({where: {guild_id: guildId, message_id: messageId, emoji: emoji, role_id: roleId, config_id: Variables.getConfigId()}});
+async function findByGuildIdAndMessageIdAndEmoji(guildId, messageId, emoji, variables) {
+  return await ReactionRole.findOne({where: {guild_id: guildId, message_id: messageId, emoji: emoji, config_id: variables.getConfigId()}});
+}
+
+/**
+ * @param {string} guildId 
+ * @param {string} messageId 
+ * @param {string} emoji
+ * @param {string} roleId
+ * @returns {Promise<Model>}
+ */
+async function findByGuildIdAndMessageIdAndEmojiAndRoleId(guildId, messageId, emoji, roleId, variables) {
+  return await ReactionRole.findOne({where: {guild_id: guildId, message_id: messageId, emoji: emoji, role_id: roleId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -74,9 +74,9 @@ async function findByGuildIdAndMessageIdAndEmojiAndRoleId(guildId, messageId, em
  * @param {string} messageId
  * @returns {Promise<Model> | null}
  */
-async function create(roleId, guildId, emoji, messageId) {
-  if(await ReactionRole.findOne({where: {guild_id: guildId, role_id: roleId, emoji: emoji, message_id: messageId, config_id: Variables.getConfigId()}})) return null;
-  return await ReactionRole.create({guild_id: guildId, role_id: roleId, emoji: emoji, message_id: messageId, config_id: Variables.getConfigId()});
+async function create(roleId, guildId, emoji, messageId, variables) {
+  if(await ReactionRole.findOne({where: {guild_id: guildId, role_id: roleId, emoji: emoji, message_id: messageId, config_id: variables.getConfigId()}})) return null;
+  return await ReactionRole.create({guild_id: guildId, role_id: roleId, emoji: emoji, message_id: messageId, config_id: variables.getConfigId()});
 }
 
 /**
@@ -94,11 +94,11 @@ async function update(objToUpdate, objToCondition) {
  * @param {object} objToRemove 
  * @returns {Promise<number>}
  */
-async function remove(objToRemove) {
+async function remove(objToRemove, variables) {
   return await ReactionRole.destroy({
     where: {
       ...objToRemove,
-      config_id: Variables.getConfigId()
+      config_id: variables.getConfigId()
     }
   });
 }

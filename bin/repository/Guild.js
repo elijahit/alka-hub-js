@@ -14,8 +14,8 @@ const {Guild} = require('../models');
  * 
  * @returns {Promise<Array<Model>>}
  */
-async function findAll() {
-  return await Guild.findAll({where: {config_id: Variables.getConfigId()}});
+async function findAll(variables) {
+  return await Guild.findAll({where: {config_id: variables.getConfigId()}});
 }
 
 
@@ -23,8 +23,8 @@ async function findAll() {
  * @param {string} guildId 
  * @returns {Promise<Model>}
  */
-async function findByGuildId(guildId) {
-  return await Guild.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findByGuildId(guildId, variables) {
+  return await Guild.findOne({where: {guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -34,9 +34,9 @@ async function findByGuildId(guildId) {
  * @param {string} time_zone 
  * @returns {Promise<Model>}
  */
-async function create(guildId, language = "EN", time_zone = "Europe/London") {
-  if(await Guild.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}})) return null;
-  return await Guild.create({guild_id: guildId, language: language, time_zone: time_zone, config_id: Variables.getConfigId()});
+async function create(guildId, language = "EN", time_zone = "Europe/London", variables) {
+  if(await Guild.findOne({where: {guild_id: guildId, config_id: variables.getConfigId()}})) return null;
+  return await Guild.create({guild_id: guildId, language: language, time_zone: time_zone, config_id: variables.getConfigId()});
 }
 
 /**

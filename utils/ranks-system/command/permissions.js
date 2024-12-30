@@ -31,7 +31,7 @@ module.exports = {
 				.setRequired(true)
 		)
 		.setDefaultMemberPermissions(8),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		let role, pex;
 		// RECUPERO LE OPZIONI INSERITE
 		await interaction.options._hoistedOptions.forEach(value => {
@@ -40,7 +40,7 @@ module.exports = {
 		});
 
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/ranks-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 

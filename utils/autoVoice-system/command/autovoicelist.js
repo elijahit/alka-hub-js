@@ -21,17 +21,17 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('autovoicelist')
     .setDescription('Use this commando to view the list of Auto Voice System configurations'),
-  async execute(interaction) {
+  async execute(interaction, variables) {
 
     // RECUPERO LA LINGUA
-    let data = await language.databaseCheck(interaction.guild.id);
+    let data = await language.databaseCheck(interaction.guild.id, variables);
     const langagues_path = fs.readFileSync(`./languages/autoVoice-system/${data}.json`);
     const language_result = JSON.parse(langagues_path);
     // CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
     await returnPermission(interaction, "autovoice", async result => {
       try {
         if (result) {
-          let autoVoiceTable = await findAllAutoVoiceByGuildId(interaction.guild.id);
+          let autoVoiceTable = await findAllAutoVoiceByGuildId(interaction.guild.id, variables);
           checkTable = autoVoiceTable;
           const embedLog = new EmbedBuilder();
           //CONTROLLO SE LA ROW E' PRESENTE NEL DB
@@ -50,15 +50,15 @@ module.exports = {
           }
           embedLog.setTitle(language_result.list.embed_title);
           embedLog.setAuthor({ name: `${language_result.list.embed_title}`, iconURL: customEmoji })
-          embedLog.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` });
+          embedLog.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` });
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
         }
         else {
-          await noHavePermission(interaction, language_result);
+          await noHavePermission(interaction, language_result, variables);
         }
       }
       catch (error) {
-        errorSendControls(error, interaction.client, interaction.guild, "\\autoVoice-system\\autovoice.js");
+        errorSendControls(error, interaction.client, interaction.guild, "\\autoVoice-system\\autovoice.js", variables);
       }
     });
   },

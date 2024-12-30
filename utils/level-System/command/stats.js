@@ -28,20 +28,20 @@ module.exports = {
 				.setDescription('Add a user to see someone else\'s statistics')
 				.setRequired(true)
 		),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		const user = interaction.options.data[0].user;
 
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/levels-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		try {
 			if (!await allCheckFeatureForCommands(interaction, interaction.guild.id, 11, false, language_result.noPermission.description_embed_no_features_by_system,
 				language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature,
-				language_result.noPermission.description_embed_no_features)) return;
+				language_result.noPermission.description_embed_no_features, variables)) return;
 
-			let checkUserIsPresent = await findByGuildIdAndUserIdLevel(interaction.guild.id, user.id);
+			let checkUserIsPresent = await findByGuildIdAndUserIdLevel(interaction.guild.id, user.id, variables);
 			checkUserIsPresent = checkUserIsPresent?.get({ plain: true });
 
 			const customEmoji = emoji.levelsSystem.levelsMaker;
@@ -51,7 +51,7 @@ module.exports = {
 				const embedLog = new EmbedBuilder()
 					.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
 					.setDescription(language_result.levelsCommand.description_embed_stats.replace("{0}", user).replace("{1}", checkUserIsPresent.level).replace("{2}", checkUserIsPresent.exp).replace("{3}", 75 + (25 * checkUserIsPresent.level)))
-					.setFooter({ text: language_result.levelsCommand.newLevel_footer.replace("{0}", checkUserIsPresent.minute_vocal == null ? 0 : checkUserIsPresent.minute_vocal).replace("{1}", checkUserIsPresent.message_count == null ? 0 : checkUserIsPresent.message_count), iconURL: Variables.getBotFooterIcon() })
+					.setFooter({ text: language_result.levelsCommand.newLevel_footer.replace("{0}", checkUserIsPresent.minute_vocal == null ? 0 : checkUserIsPresent.minute_vocal).replace("{1}", checkUserIsPresent.message_count == null ? 0 : checkUserIsPresent.message_count), iconURL: variables.getBotFooterIcon() })
 					.setColor(colors.general.success);
 				await interaction.reply({ embeds: [embedLog] });
 				return;
@@ -60,13 +60,13 @@ module.exports = {
 			const embedLog = new EmbedBuilder()
 				.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
 				.setDescription(language_result.levelsCommand.description_embed_statsNotFound)
-				.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+				.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 				.setColor(colors.general.error);
 			await interaction.reply({ embeds: [embedLog], ephemeral: true });
 		}
 		catch (error) {
 			console.log(error)
-			errorSendControls(error, interaction.client, interaction.guild, "\\levels-system\\stats.js");
+			errorSendControls(error, interaction.client, interaction.guild, "\\levels-system\\stats.js", variables);
 		}
 	},
 };

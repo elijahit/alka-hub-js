@@ -14,8 +14,8 @@ const {StatisticsCategory} = require('../models');
  * 
  * @returns {Promise<Array<Model>>}
  */
-async function findAll() {
-  return await StatisticsCategory.findAll({where: {config_id: Variables.getConfigId()}});
+async function findAll(variables) {
+  return await StatisticsCategory.findAll({where: {config_id: variables.getConfigId()}});
 }
 
 
@@ -23,8 +23,8 @@ async function findAll() {
  * @param {string} guildId 
  * @returns {Promise<Array<Model>>}
  */
-async function findAllByGuildId(guildId) {
-  return await StatisticsCategory.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findAllByGuildId(guildId, variables) {
+  return await StatisticsCategory.findOne({where: {guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 
@@ -33,8 +33,8 @@ async function findAllByGuildId(guildId) {
  * @param {string} categoryId
  * @returns {Promise<Model>}
  */
-async function findByGuildIdAndcategoryId(guildId, categoryId) {
-  return await StatisticsCategory.findOne({where: {guild_id: guildId, category_id: categoryId, config_id: Variables.getConfigId()}});
+async function findByGuildIdAndcategoryId(guildId, categoryId, variables) {
+  return await StatisticsCategory.findOne({where: {guild_id: guildId, category_id: categoryId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -43,9 +43,9 @@ async function findByGuildIdAndcategoryId(guildId, categoryId) {
  * @param {string} categoryId
  * @returns {Promise<Model>}
  */
-async function create(guildId, categoryId) {
-  if(await StatisticsCategory.findOne({where: {guild_id: guildId, category_id: categoryId, config_id: Variables.getConfigId()}})) return null;
-  return await StatisticsCategory.create({guild_id: guildId, category_id: categoryId, config_id: Variables.getConfigId()});
+async function create(guildId, categoryId, variables) {
+  if(await StatisticsCategory.findOne({where: {guild_id: guildId, category_id: categoryId, config_id: variables.getConfigId()}})) return null;
+  return await StatisticsCategory.create({guild_id: guildId, category_id: categoryId, config_id: variables.getConfigId()});
 }
 
 /**

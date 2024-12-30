@@ -18,11 +18,11 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.InteractionCreate,
-  async execute(interaction) {
+  async execute(interaction, variables) {
     if (!interaction.guild) return;
     try {
       // CONTROLLO LINGUA
-      let data = await language.databaseCheck(interaction.guild.id);
+      let data = await language.databaseCheck(interaction.guild.id, variables);
       const langagues_path = readFileSync(`./languages/welcome-system/${data}.json`);
       const language_result = JSON.parse(langagues_path);
 

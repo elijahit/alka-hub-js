@@ -54,9 +54,9 @@ module.exports = {
 				})
 				.setRequired(true)
 		),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/trackerGame-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		const username = interaction.options.data[0].value;

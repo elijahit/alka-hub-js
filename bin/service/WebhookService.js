@@ -16,11 +16,11 @@ class WebhookService {
     // Initialize any required properties here
   }
 
-  async sendWebhooksEmbedErrorLog(message, others) {
+  async sendWebhooksEmbedErrorLog(message, others, variables) {
     try {
       const webhookClient = new WebhookClient({ url: webhook.log.error });
       const embed = new EmbedBuilder()
-      .setTitle(`Alka Webhook | Errore - (${Variables.getConfigId()}) ${Variables.getNameConfiguration()}`) 
+      .setTitle(`Alka Webhook | Errore - (${variables.getConfigId()}) ${variables.getNameConfiguration()}`) 
       .setColor(color.general.error)
       .setDescription(message)
       .setFields({name: 'Guild ID', value: others[0], inline: true}, {name: 'Type', value: others[1], inline: true});
@@ -31,11 +31,11 @@ class WebhookService {
     }
   }
 
-  async sendWebhooksEmbedLogs(message, others) {
+  async sendWebhooksEmbedLogs(message, others, variables) {
     try {
       const webhookClient = new WebhookClient({ url: webhook.log.general });
       const embed = new EmbedBuilder()
-      .setTitle(`Alka Webhook | Logs - (${Variables.getConfigId()}) ${Variables.getNameConfiguration()}`) 
+      .setTitle(`Alka Webhook | Logs - (${variables.getConfigId()}) ${variables.getNameConfiguration()}`) 
       .setColor(color.general.aquamarine)
       .setDescription(message)
       .setFields({name: 'Guild ID', value: others[0], inline: true}, {name: 'Type', value: others[1], inline: true});

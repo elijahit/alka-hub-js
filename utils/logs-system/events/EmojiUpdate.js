@@ -21,21 +21,21 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.GuildEmojiUpdate,
-  async execute(oldEmoji, newEmoji) {
+  async execute(oldEmoji, newEmoji, variables) {
     let customEmoji = emoji.general.updateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if (!await checkFeatureSystemDisabled(1)) return;
-    if (!await checkFeaturesIsEnabled(oldEmoji.guild.id, 1)) return;
-    if (!await checkPremiumFeature(oldEmoji.guild.id, 1)) return;
+    if (!await checkFeaturesIsEnabled(oldEmoji.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(oldEmoji.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // CONTROLLO DELLA LINGUA
       if (oldEmoji.guild?.id) {
-        let data = await language.databaseCheck(oldEmoji.guild.id);
+        let data = await language.databaseCheck(oldEmoji.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let resultDb = await findLogsByGuildId(oldEmoji.guild.id);
+        let resultDb = await findLogsByGuildId(oldEmoji.guild.id, variables);
         resultDb = resultDb?.get({ plain: true });
         if (!resultDb || !resultDb["emoji_state_channel"]) return;
         
@@ -76,7 +76,7 @@ module.exports = {
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.emojiUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setDescription(language_result.emojiUpdate.emoji_update)
           .setColor(colors.general.aquamarine);
         channel_logs.send({ embeds: [embedLog] });
@@ -84,7 +84,7 @@ module.exports = {
     }
     catch (error) {
       console.log(error)
-      errorSendControls(error, oldEmoji.client, oldEmoji.guild, "\\logs_system\\EmojiUpdate.js");
+      errorSendControls(error, oldEmoji.client, oldEmoji.guild, "\\logs_system\\EmojiUpdate.js", variables);
     }
   },
 };

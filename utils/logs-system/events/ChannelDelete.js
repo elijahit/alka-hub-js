@@ -25,24 +25,24 @@ let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 
 module.exports = {
   name: Events.ChannelDelete,
-  async execute(channel) {
+  async execute(channel, variables) {
     let customEmoji = emoji.general.deleteMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if(!await checkFeatureSystemDisabled(1)) return;
-    if(!await checkFeaturesIsEnabled(channel.guild.id, 1)) return;
-    if(!await checkPremiumFeature(channel.guild.id, 1)) return;
+    if(!await checkFeaturesIsEnabled(channel.guild.id, 1, variables)) return;
+    if(!await checkPremiumFeature(channel.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // CONTROLLO DELLA LINGUA
       if (channel.guild?.id) {
-        let data = await language.databaseCheck(channel.guild.id);
+        let data = await language.databaseCheck(channel.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channelStatsSystem = await findByGuildIdAndChannelIdStatistics(channel.guild.id, channel.id);
+        let channelStatsSystem = await findByGuildIdAndChannelIdStatistics(channel.guild.id, channel.id, variables);
         channelStatsSystem = channelStatsSystem?.get({plain: true});
         if (channelStatsSystem?.channel_id) return;
-        let resultDb = await findLogsByGuildId(channel.guild.id);
+        let resultDb = await findLogsByGuildId(channel.guild.id, variables);
         resultDb = resultDb?.get({plain: true});
         if(!resultDb || !resultDb["channel_state_channel"]) return;
 
@@ -61,7 +61,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_channel)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
@@ -79,7 +79,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_channel_voice)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
@@ -91,7 +91,7 @@ module.exports = {
               { name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
               { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true })
             .setDescription(language_result.channelDelete.deleted_category)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -109,7 +109,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_forum)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
@@ -127,7 +127,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_media)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -145,7 +145,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_private_thread)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -163,7 +163,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_public_thread)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -181,7 +181,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_stage)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -199,14 +199,14 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelDelete.deleted_announce)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
       }
     }
     catch (error) {
-      errorSendControls(error, channel.guild.client, channel.guild, "\\logs_system\\ChannelDelete.js");
+      errorSendControls(error, channel.guild.client, channel.guild, "\\logs_system\\ChannelDelete.js", variables);
     }
 
 

@@ -21,22 +21,22 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.GuildMemberAdd,
-  async execute(member) {
+  async execute(member, variables) {
     await addUserGuild(member.id, member.guild.id, member.user.username);
     let customEmoji = emoji.logsSystem.newMemberMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if (!await checkFeatureSystemDisabled(1)) return;
-    if (!await checkFeaturesIsEnabled(member.guild.id, 1)) return;
-    if (!await checkPremiumFeature(member.guild.id, 1)) return;
+    if (!await checkFeaturesIsEnabled(member.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(member.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // CONTROLLO DELLA LINGUA
       if (member.guild?.id) {
-        let data = await language.databaseCheck(member.guild.id);
+        let data = await language.databaseCheck(member.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let resultDb = await findLogsByGuildId(member.guild.id);
+        let resultDb = await findLogsByGuildId(member.guild.id, variables);
         resultDb = resultDb?.get({ plain: true });
         if (!resultDb || !resultDb["join_member_channel"]) return;
 
@@ -57,7 +57,7 @@ module.exports = {
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.guildMemberAdd.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setDescription(language_result.guildMemberAdd.embed_description)
           .setColor(colors.general.success);
         if (member.user.avatar) {
@@ -67,7 +67,7 @@ module.exports = {
       }
     }
     catch (error) {
-      errorSendControls(error, member.client, member.guild, "\\logs_system\\GuildMemberAdd.js");
+      errorSendControls(error, member.client, member.guild, "\\logs_system\\GuildMemberAdd.js", variables);
     }
 
   },

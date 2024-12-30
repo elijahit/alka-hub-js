@@ -21,24 +21,24 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.ChannelUpdate,
-  async execute(oldChannel, newChannel) {
+  async execute(oldChannel, newChannel, variables) {
     let customEmoji = emoji.general.updateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if (!await checkFeatureSystemDisabled(1)) return;
-    if (!await checkFeaturesIsEnabled(oldChannel.guild.id, 1)) return;
-    if (!await checkPremiumFeature(oldChannel.guild.id, 1)) return;
+    if (!await checkFeaturesIsEnabled(oldChannel.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(oldChannel.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // CONTROLLO DELLA LINGUA
       if (oldChannel.guild?.id) {
-        let data = await language.databaseCheck(oldChannel.guild.id);
+        let data = await language.databaseCheck(oldChannel.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channelStatsSystem = await findByGuildIdAndChannelIdStatistics(oldChannel.guild.id, oldChannel.id);
+        let channelStatsSystem = await findByGuildIdAndChannelIdStatistics(oldChannel.guild.id, oldChannel.id, variables);
         channelStatsSystem = channelStatsSystem?.get({ plain: true });
         if (channelStatsSystem?.channel_id) return;
-        let resultDb = await findLogsByGuildId(oldChannel.guild.id);
+        let resultDb = await findLogsByGuildId(oldChannel.guild.id, variables);
         resultDb = resultDb?.get({ plain: true });
         if (!resultDb || !resultDb["channel_state_channel"]) return;
 
@@ -59,7 +59,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.name_change_embed)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -86,7 +86,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.category_change_embed)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -106,7 +106,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.bitrate_change_embed)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -126,7 +126,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.userlimit_change_embed)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -151,7 +151,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.description_change_embed)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -180,7 +180,7 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.ratelimit_change_embed)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -222,14 +222,14 @@ module.exports = {
             .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
             .setDescription(language_result.channelUpdate.permissions_change_embed)
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
       }
     }
     catch (error) {
-      errorSendControls(error, oldChannel.client, oldChannel.guild, "\\logs_system\\ChannelUpdate.js");
+      errorSendControls(error, oldChannel.client, oldChannel.guild, "\\logs_system\\ChannelUpdate.js", variables);
     }
   },
 };

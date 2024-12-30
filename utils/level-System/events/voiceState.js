@@ -40,23 +40,23 @@ function getMinutesBetweenTimestamps(startTimestamp) {
   return differenceMinutes;
 }
 
-async function checkExp(newState, checkUser) {
+async function checkExp(newState, checkUser, variables) {
   if (checkUser.exp >= 75 + (25 * checkUser.level)) {
-    let configLevelsSystem = await findLevelsConfigByGuildId(newState.guild.id);
+    let configLevelsSystem = await findLevelsConfigByGuildId(newState.guild.id, variables);
     configLevelsSystem = configLevelsSystem?.get({ plain: true });
     if (!configLevelsSystem) return;
     await updateLevel({
       level: checkUser.level + 1,
       exp: checkUser.exp - (75 + (25 * checkUser.level))
-    }, { where: { guild_id: newState.guild.id, user_id: newState.member.id, config_id: Variables.getConfigId() } });
+    }, { where: { guild_id: newState.guild.id, user_id: newState.member.id, config_id: variables.getConfigId() } });
 
     const channel = await newState.guild.channels.fetch(configLevelsSystem.log_channel);
 
-    let data = await language.databaseCheck(newState.guild.id);
+    let data = await language.databaseCheck(newState.guild.id, variables);
     const langagues_path = readFileSync(`./languages/levels-system/${data}.json`);
     const language_result = JSON.parse(langagues_path);
 
-    let checkRoles = await findAllLevelsRolesByGuildId(newState.guild.id);
+    let checkRoles = await findAllLevelsRolesByGuildId(newState.guild.id, variables);
     checkRoles.map(async value => {
       if ((checkUser.level + 1) >= value.level) {
         try {
@@ -68,25 +68,25 @@ async function checkExp(newState, checkUser) {
             const embedLog = new EmbedBuilder()
               .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: emoji.general.errorMarker })
               .setDescription(language_result.levelsCommand.missing_permissions.replace("{0}", roleResolve).replace("{1}", message.member))
-              .setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+              .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
               .setColor(colors.general.error);
             await channel.send({ embeds: [embedLog] });
           } else {
-            errorSendControls(error, message.guild.client, message.guild, "\\levels-system\\voiceState.js");
+            errorSendControls(error, message.guild.client, message.guild, "\\levels-system\\voiceState.js", variables);
           }
         }
       }
     })
-    checkUser = await findByGuildIdAndUserIdLevel(newState.guild.id, newState.member.id);
+    checkUser = await findByGuildIdAndUserIdLevel(newState.guild.id, newState.member.id, variables);
     checkUser = checkUser?.get({ plain: true });
     if (checkUser.exp >= 75 + (25 * checkUser.level)) {
-      return await checkExp(newState, checkUser);
+      return await checkExp(newState, checkUser, variables);
     }
     const customEmoji = emoji.levelsSystem.levelsMaker;
     const embedLog = new EmbedBuilder()
       .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
       .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", newState.member).replace("{1}", checkUser.level))
-      .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser.minute_vocal == null ? 0 : checkUser.minute_vocal).replace("{1}", checkUser.message_count == null ? 0 : checkUser.message_count)}`, iconURL: Variables.getBotFooterIcon() })
+      .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser.minute_vocal == null ? 0 : checkUser.minute_vocal).replace("{1}", checkUser.message_count == null ? 0 : checkUser.message_count)}`, iconURL: variables.getBotFooterIcon() })
       .setColor(colors.general.error);
     await channel.send({ content: `${newState.member}`, embeds: [embedLog] });
 
@@ -95,38 +95,38 @@ async function checkExp(newState, checkUser) {
 
 module.exports = {
   name: Events.VoiceStateUpdate,
-  async execute(oldState, newState) {
+  async execute(oldState, newState, variables) {
     try {
       if (!newState.member.user.bot) {
         if (!await checkFeatureSystemDisabled(11)) return;
-        if (!await checkFeaturesIsEnabled(newState.guild.id, 11)) return;
-        if (!await checkPremiumFeature(newState.guild.id, 11)) return;
+        if (!await checkFeaturesIsEnabled(newState.guild.id, 11, variables)) return;
+        if (!await checkPremiumFeature(newState.guild.id, 11, variables)) return;
 
         if ((oldState.channel == null || oldState.guild.afkChannel?.id == oldState.channel?.id) && newState.channel != null) {
           if (newState.guild.afkChannel?.id != newState.channel?.id) {
-            let checkUser = await findByGuildIdAndUserIdLevel(newState.guild.id, newState.member.id);
+            let checkUser = await findByGuildIdAndUserIdLevel(newState.guild.id, newState.member.id, variables);
             checkUser = checkUser?.get({ plain: true });
             if (checkUser) {
               await updateLevel({
                 joined_time: Date.now()
-              }, { where: { guild_id: newState.guild.id, user_id: newState.member.id, config_id: Variables.getConfigId() } });
+              }, { where: { guild_id: newState.guild.id, user_id: newState.member.id, config_id: variables.getConfigId() } });
             } else {
               await addUserGuild(newState.member.id, newState.guild.id, newState.member.user.username);
-              await createLevel(newState.member.id, newState.guild.id, 0, 0, Date.now());
+              await createLevel(newState.member.id, newState.guild.id, 0, 0, Date.now(), variables);
             }
           }
 
         } else if (!newState.channel || newState.guild.afkChannel?.id == newState.channel?.id) {
-          let checkUser = await findByGuildIdAndUserIdLevel(newState.guild.id, newState.member.id);
+          let checkUser = await findByGuildIdAndUserIdLevel(newState.guild.id, newState.member.id, variables);
           checkUser = checkUser?.get({ plain: true });
           if (checkUser && (checkUser.joined_time != null && checkUser.joined_time > 0)) {
             await updateLevel({
               joined_time: null,
               minute_vocal: checkUser.minute_vocal + (getMinutesBetweenTimestamps(+checkUser.joined_time)),
               exp: checkUser.exp + (getMinutesBetweenTimestamps(+checkUser.joined_time) * 3)
-            }, { where: { guild_id: newState.guild.id, user_id: newState.member.id, config_id: Variables.getConfigId() } });
+            }, { where: { guild_id: newState.guild.id, user_id: newState.member.id, config_id: variables.getConfigId() } });
 
-            await checkExp(newState, checkUser);
+            await checkExp(newState, checkUser, variables);
           }
         }
 
@@ -134,7 +134,7 @@ module.exports = {
     }
     catch (error) {
       console.log(error)
-      errorSendControls(error, newState.guild.client, newState.guild, "\\levels-system\\voiceState.js");
+      errorSendControls(error, newState.guild.client, newState.guild, "\\levels-system\\voiceState.js", variables);
     }
   },
 };

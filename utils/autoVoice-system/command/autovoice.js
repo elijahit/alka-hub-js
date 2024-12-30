@@ -20,16 +20,16 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('autovoice')
 		.setDescription(' Use this command to initialize the Auto Voice System'),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = fs.readFileSync(`./languages/autoVoice-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		// CONTROLLA SE L'UTENTE HA IL PERMESSO PER QUESTO COMANDO
 		await returnPermission(interaction, "autovoice", async result => {
 			if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 3, true, language_result.noPermission.description_embed_no_features_by_system, 
 				language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
-				language_result.noPermission.description_embed_no_features)) return;
+				language_result.noPermission.description_embed_no_features, variables)) return;
 			try {
 				if (result) {
 					const filePath = `./utils/autoVoice-system/${interaction.guild.id}_${interaction.user.id}.json`;
@@ -68,7 +68,7 @@ module.exports = {
 					const embedLog = new EmbedBuilder()
 						.setAuthor({ name: `${language_result.selectSetup.embed_title}`, iconURL: customEmoji })
 						.setDescription(language_result.selectSetup.description_embed)
-						.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+						.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 						.setColor(0x9ba832);
 
 					// CREO IL CANALE TEMPORANEO DI SETUP
@@ -90,7 +90,7 @@ module.exports = {
 					const embedLogTwo = new EmbedBuilder()
 						.setAuthor({ name: `${language_result.selectSetup.embed_title}`, iconURL: customEmoji })
 						.setDescription(language_result.selectSetup.description_embed_two.replace("{0}", initChannel))
-						.setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+						.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 						.setColor(0x03cffc);
 
 					await interaction.reply({ embeds: [embedLogTwo], ephemeral: true });
@@ -102,11 +102,11 @@ module.exports = {
 			}`, 'utf8');
 				}
 				else {
-					await noHavePermission(interaction, language_result);
+					await noHavePermission(interaction, language_result, variables);
 				}
 			}
 			catch (error) {
-				errorSendControls(error, interaction.client, interaction.guild, "\\autoVoice-system\\autovoice.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\autoVoice-system\\autovoice.js", variables);
 			}
 		});
 	},

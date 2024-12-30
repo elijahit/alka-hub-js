@@ -53,8 +53,8 @@ async function startBot(botConfig) {
     variables.setConfigId(botConfig.id);
 
     client.commands = new Collection();
-    mainEvents(client, variables);
-    client.login(botConfig.token);
+    await mainEvents(client, variables);
+    await client.login(botConfig.token);
     console.log(`[✅] Bot ${botConfig.botName} (${botConfig.id}) avviato con successo.`);
   } catch (error) {
     console.error(`[❌] Errore nell'avvio del bot ${botConfig.botName}:`, error);

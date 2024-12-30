@@ -14,8 +14,8 @@ const {Welcome} = require('../models');
  * 
  * @returns {Promise<Array<Model>>}
  */
-async function findAll() {
-  return await Welcome.findAll({where: {config_id: Variables.getConfigId()}});
+async function findAll(variables) {
+  return await Welcome.findAll({where: {config_id: variables.getConfigId()}});
 }
 
 
@@ -24,16 +24,16 @@ async function findAll() {
  * @param {string} channelId
  * @returns {Promise<Model>}
  */
-async function findByGuildIdAndChannelId(guildId, channelId) {
-  return await Welcome.findOne({where: {guild_id: guildId, channel_id: channelId, config_id: Variables.getConfigId()}});
+async function findByGuildIdAndChannelId(guildId, channelId, variables) {
+  return await Welcome.findOne({where: {guild_id: guildId, channel_id: channelId, config_id: variables.getConfigId()}});
 }
 
 /**
  * @param {string} guildId 
  * @returns {Promise<Model>}
  */
-async function findByGuildId(guildId) {
-  return await Welcome.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findByGuildId(guildId, variables) {
+  return await Welcome.findOne({where: {guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -44,9 +44,9 @@ async function findByGuildId(guildId) {
  * @param {integer} type
  * @returns {Promise<Model>}
  */
-async function create(guildId, channelId, color, backgroundUrl, text) {
-  if(await Welcome.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}})) return null;
-  return await Welcome.create({guild_id: guildId, channel_id: channelId, color: color, background_url: backgroundUrl, text: text, config_id: Variables.getConfigId()});
+async function create(guildId, channelId, color, backgroundUrl, text, variables) {
+  if(await Welcome.findOne({where: {guild_id: guildId, config_id: variables.getConfigId()}})) return null;
+  return await Welcome.create({guild_id: guildId, channel_id: channelId, color: color, background_url: backgroundUrl, text: text, config_id: variables.getConfigId()});
 }
 
 /**

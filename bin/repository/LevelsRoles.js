@@ -13,16 +13,16 @@ const {LevelsRoles} = require('../models');
  * 
  * @returns {Promise<Model[]>}
  */
-async function findAll() {
-  return await LevelsRoles.findAll({where: {config_id: Variables.getConfigId()}});
+async function findAll(variables) {
+  return await LevelsRoles.findAll({where: {config_id: variables.getConfigId()}});
 }
 
 /**
  * @param {string} guildId
  * @returns {Promise<Model[]>}
  */
-async function findAllByGuildId(guildId) {
-  return await LevelsRoles.findAll({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findAllByGuildId(guildId, variables) {
+  return await LevelsRoles.findAll({where: {guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 
@@ -30,8 +30,8 @@ async function findAllByGuildId(guildId) {
  * @param {string} guildId 
  * @returns {Promise<Model>}
  */
-async function findByGuildId(guildId) {
-  return await LevelsRoles.findOne({where: {guild_id: guildId, config_id: Variables.getConfigId()}});
+async function findByGuildId(guildId, variables) {
+  return await LevelsRoles.findOne({where: {guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -39,8 +39,8 @@ async function findByGuildId(guildId) {
  * @param {string} roleId
  * @returns {Promise<Model>}
  */
-async function findByGuildIdAndRoleId(guildId, roleId) {
-  return await LevelsRoles.findOne({where: {guild_id: guildId, role_id: roleId, config_id: Variables.getConfigId()}});
+async function findByGuildIdAndRoleId(guildId, roleId, variables) {
+  return await LevelsRoles.findOne({where: {guild_id: guildId, role_id: roleId, config_id: variables.getConfigId()}});
 }
 
 /**
@@ -51,9 +51,9 @@ async function findByGuildIdAndRoleId(guildId, roleId) {
  * @returns {Promise<Model>}
  * @throws {Error}
  */
-async function create(guildId, roleId, level) {
-  if(await LevelsRoles.findOne({where: {guild_id: guildId, role_id: roleId, config_id: Variables.getConfigId()}})) return null;
-  return await LevelsRoles.create({guild_id: guildId, role_id: roleId, level: level, config_id: Variables.getConfigId()});
+async function create(guildId, roleId, level, variables) {
+  if(await LevelsRoles.findOne({where: {guild_id: guildId, role_id: roleId, config_id: variables.getConfigId()}})) return null;
+  return await LevelsRoles.create({guild_id: guildId, role_id: roleId, level: level, config_id: variables.getConfigId()});
 }
 
 /**
