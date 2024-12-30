@@ -6,62 +6,83 @@
  * @description Questo file gestisce l'avvio del bot!
  */
 
-const { Collection } = require('discord.js');
-const { client } = require('./bin/client');
-const Variables = require('./bin/classes/GlobalVariables');
+const { Collection, Client, GatewayIntentBits, Partials } = require('discord.js');
 const mainEvents = require('./bin/functions/mainEvents');
 const { findConfigByName } = require('./bin/service/DatabaseService');
 const LogClasses = require('./bin/classes/LogClasses');
+const Redis = require('ioredis');
+const Variables = require('./bin/classes/GlobalVariables');
+const redis = new Redis('redis://alkanetwork.eu:6379', { password: 'Aarontosto20!' });
 
-if (process.env.NODE_ENV) {
-  findConfigByName(process.env.NODE_ENV).then(v => {
-    if (v) {
-      const config = v.get({ plain: true });
 
-      const configObj = JSON.parse(config.json);
-      if (configObj?.botName == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro botName assente');
-      if (configObj?.botFooter == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro botFooter assente');
-      if (configObj?.token == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro token assente');
-      if (configObj?.clientId == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro clientId assente');
-      if (configObj?.guildMainId == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro guildMainId assente');
-      if (configObj?.channelError == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro channelError assente');
-      if (configObj?.presenceStatus == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro presenceStatus assente');
-      if (configObj?.botFooterIcon == undefined) return console.error('[ERRORE] Configurazione JSON non esatta parametro presenceStatus assente');
+async function processBotQueue() {
+  const runtimeConsole = process.env.NODE_ENV;
+  console.clear();
+  console.log('\x1b[34m%s\x1b[0m', '   __    __    _  _    __      ____  _____  ____ ');
+  console.log('\x1b[34m%s\x1b[0m', '  /__\\  (  )  ( )/ )  /__\\    (  _ \\(  _  )(_  _)');
+  console.log('\x1b[34m%s\x1b[0m', ' /(__)\\  )(__  )  (  /(__)\\    ) _ < )(_)(   )(  ');
+  console.log('\x1b[34m%s\x1b[0m', '(__)(__)(____)(_)\_) (__)(__)  (____/(_____) (__) ');
+  console.log('\x1b[36m%s\x1b[0m', 'ALKA HUB BOT v2.0.0 - ALKA NETWORK - WHITE LABEL');
+  console.log('\x1b[32m%s\x1b[0m', 'Author: Elijah (Gabriele Mario Tosto) <g.tosto@flazio.com>');
+  console.log('\x1b[32m%s\x1b[0m', 'Since: 02/2024');
+  console.log('\x1b[32m%s\x1b[0m', `Runtime: ${runtimeConsole}`);
+  console.log('\x1b[32m%s\x1b[0m', 'Technology: JavaScript - Node - Discord.js');
+  console.log('\x1b[32m%s\x1b[0m', 'Powered by alkanetwork.eu');
+  console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
+  console.log('\x1b[34m%s\x1b[0m', 'Manager Bot is now online and ready to use!');
+  console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
+
+  while (true) {
+    const botData = await redis.rpop('bot_start_queue');
+    if (botData) {
+      const botConfig = JSON.parse(botData);
+
+      const client = new Client({ intents: [
+        GatewayIntentBits.Guilds, 
+        GatewayIntentBits.GuildVoiceStates, 
+        GatewayIntentBits.GuildModeration, 
+        GatewayIntentBits.GuildEmojisAndStickers, 
+        GatewayIntentBits.GuildMembers, 
+        GatewayIntentBits.GuildInvites,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMessageReactions,
+        GatewayIntentBits.GuildPresences,
+      ],
+      partials: [Partials.Reaction,
+        Partials.User,
+        Partials.Message,
+        Partials.Channel
+      ]});
+
+      let variables = new Variables();
+      
+      variables.setBotName(botConfig.botName);
+      variables.setBotFooter(botConfig.botFooter);
+      variables.setBotFooterIcon(botConfig.botFooterIcon);
+      variables.setIsActive(botConfig.isActive);
+      variables.setPremium(botConfig.premium);
+      variables.setToken(botConfig.token);
+      variables.setClientId(botConfig.clientId);
+      variables.setGuildMainId(botConfig.guildMainId);
+      variables.setChannelError(botConfig.channelError);
+      variables.setPresenceStatus(botConfig.presenceStatus);
+      variables.setConfigId(botConfig.id);
+      
       client.commands = new Collection();
       mainEvents(client);
+      client.login(botConfig.token);
 
-      // Imposto le variabili globali
-      Variables.setNameConfiguration(process.env.NODE_ENV);
-      Variables.setBotName(configObj.botName);
-      Variables.setBotFooter(configObj.botFooter);
-      Variables.setBotFooterIcon(configObj.botFooterIcon);
-      Variables.setIsActive(config.isActive);
-      Variables.setPremium(config.premium);
-      Variables.setToken(configObj.token);
-      Variables.setClientId(configObj.clientId);
-      Variables.setGuildMainId(configObj.guildMainId);
-      Variables.setChannelError(configObj.channelError);
-      Variables.setPresenceStatus(configObj.presenceStatus);
-      Variables.setConfigId(config.id);
-      if (Variables.getIsActive() == 1) {
-        client.login(configObj.token);
-        LogClasses.createLog('NULL', 'AVVIO', `Bot ${configObj.botName} avviato con successo!`);
-      } else {
-        (async () => {
-          await LogClasses.createLog('NULL', 'ERRORE-AVVIO', 'Impossibile avviare il bot il suo stato non è attivo.');
-          console.error('[ERRORE] Impossibile avviare il bot il suo stato non è attivo.');
-          process.exit(0);
-        })();
-      }
+      await redis.hmset(botConfig.id, botConfig);
+      LogClasses.createLog('NULL', 'INFO', 'Avvio del bot in corso');
     } else {
-      console.error('[ERRORE] Impossibile avviare il bot nessuna configurazione trovata.');
-      process.exit(0);
+      console.log('[INFO] Nessun bot da avviare, attesa...');
+      await new Promise(resolve => setTimeout(resolve, 2000));
     }
-  });
-
-} else {
-  console.error('[ERRORE] Impossibile avviare il bot env assente.');
-  process.exit(0);
+  }
 }
+
+processBotQueue();
+
 
 

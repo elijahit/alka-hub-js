@@ -48,24 +48,6 @@ const mainEvents = (client) => {
   // EVENT LISTNER PER AVVIO DEL BOT
 
   client.once(Events.ClientReady, async readyClient => {
-    const runtimeConsole = process.env.NODE_ENV;
-    console.clear();
-    console.log('\x1b[34m%s\x1b[0m', '   __    __    _  _    __      ____  _____  ____ ');
-    console.log('\x1b[34m%s\x1b[0m', '  /__\\  (  )  ( )/ )  /__\\    (  _ \\(  _  )(_  _)');
-    console.log('\x1b[34m%s\x1b[0m', ' /(__)\\  )(__  )  (  /(__)\\    ) _ < )(_)(   )(  ');
-    console.log('\x1b[34m%s\x1b[0m', '(__)(__)(____)(_)\_) (__)(__)  (____/(_____) (__) ');
-    console.log('\x1b[36m%s\x1b[0m', 'ALKA HUB BOT v2.0.0 - ALKA NETWORK - WHITE LABEL');
-    console.log('\x1b[32m%s\x1b[0m', 'Author: Elijah (Gabriele Mario Tosto) <g.tosto@flazio.com>');
-    console.log('\x1b[32m%s\x1b[0m', 'Since: 02/2024');
-    console.log('\x1b[32m%s\x1b[0m', `Runtime: ${runtimeConsole}`);
-    console.log('\x1b[32m%s\x1b[0m', `Config: ${Variables.getBotName()}(${Variables.getConfigId()})`);
-    console.log('\x1b[32m%s\x1b[0m', `Piano: ${Variables.getPremium() == 0 ? "Free" : "Premium"}`);
-    console.log('\x1b[32m%s\x1b[0m', `ClientId: ${Variables.getClientId()}`);
-    console.log('\x1b[32m%s\x1b[0m', 'Technology: JavaScript - Node - Discord.js');
-    console.log('\x1b[32m%s\x1b[0m', 'Powered by alkanetwork.eu');
-    console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
-    console.log('\x1b[34m%s\x1b[0m', 'Bot is now online and ready to use!');
-    console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
     // FUNZIONI
     executeFolderModule(client, 'utils');
 

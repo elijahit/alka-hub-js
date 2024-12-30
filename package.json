@@ -14,6 +14,7 @@
     "fastify": "^4.27.0",
     "ffmpeg-static": "^5.2.0",
     "googleapis": "^137.1.0",
+    "ioredis": "^5.4.2",
     "jimp": "^1.6.0",
     "moment-timezone": "^0.5.45",
     "mysql2": "^3.11.5",
@@ -29,8 +30,9 @@
   "description": "A bot javascript",
   "main": "app.js",
   "scripts": {
-    "prod": "cross-env NODE_ENV=sparking-zero node app.js",
-    "dev": "cross-env NODE_ENV=alka-dev nodemon app.js",
+    "prod": "cross-env NODE_ENV=prod node app.js",
+    "dev": "cross-env NODE_ENV=test nodemon app.js",
+    "deployQueue": "cross-env NODE_ENV=test node appLoadQueueBot.js",
     "commandsDev": "cross-env NODE_ENV=development node ./deploy-commands/all.js",
     "commandsBeta": "cross-env NODE_ENV=beta node ./deploy-commands/all.js",
     "commandProd": "cross-env NODE_ENV=production node ./deploy-commands/all.js"

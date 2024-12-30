@@ -7,123 +7,124 @@
 */
 
 class Variables {
-    // Variabili statiche
-    static nameConfiguration;
-    static botName;
-    static botFooter;
-    static botFooterIcon;
-    static isActive;
-    static premium;
-    static token;
-    static clientId;
-    static guildMainId;
-    static channelError;
-    static presenceStatus;
-    static configId;
-    static presenceCounter = 0;
+    constructor() {
+        this.nameConfiguration = null;
+        this.botName = null;
+        this.botFooter = null;
+        this.botFooterIcon = null;
+        this.isActive = null;
+        this.premium = null;
+        this.token = null;
+        this.clientId = null;
+        this.guildMainId = null;
+        this.channelError = null;
+        this.presenceStatus = null;
+        this.configId = null;
+        this.presenceCounter = 0;
+    }
 
-    // Getter e Setter per ogni variabile statica
-    static getBotName() {
+    // Getter e Setter per ogni variabile
+    getBotName() {
         return this.botName;
     }
 
-    static setBotName(value) {
+    setBotName(value) {
         this.botName = value;
     }
 
-    static getConfigId() {
+    getConfigId() {
         return this.configId;
     }
 
-    static setConfigId(value) {
+    setConfigId(value) {
         this.configId = value;
     }
 
-    static getBotFooter() {
+    getBotFooter() {
         return this.botFooter;
     }
 
-    static setBotFooterIcon(value) {
+    setBotFooterIcon(value) {
         this.botFooterIcon = value;
     }
 
-    static getBotFooterIcon() {
+    getBotFooterIcon() {
         return this.botFooterIcon;
     }
 
-    static setBotFooter(value) {
+    setBotFooter(value) {
         this.botFooter = value;
     }
 
-    static getNameConfiguration() {
+    getNameConfiguration() {
         return this.nameConfiguration;
     }
 
-    static setNameConfiguration(value) {
+    setNameConfiguration(value) {
         this.nameConfiguration = value;
     }
 
-    static getIsActive() {
+    getIsActive() {
         return this.isActive;
     }
 
-    static setIsActive(value) {
+    setIsActive(value) {
         this.isActive = value;
     }
 
-    static getPremium() {
+    getPremium() {
         return this.premium;
     }
 
-    static setPremium(value) {
+    setPremium(value) {
         this.premium = value;
     }
 
-    static getToken() {
+    getToken() {
         return this.token;
     }
 
-    static setToken(value) {
+    setToken(value) {
         this.token = value;
     }
 
-    static getClientId() {
+    getClientId() {
         return this.clientId;
     }
 
-    static setClientId(value) {
+    setClientId(value) {
         this.clientId = value;
     }
 
-    static getGuildMainId() {
+    getGuildMainId() {
         return this.guildMainId;
     }
 
-    static setGuildMainId(value) {
+    setGuildMainId(value) {
         this.guildMainId = value;
     }
 
-    static getChannelError() {
+    getChannelError() {
         return this.channelError;
     }
 
-    static setChannelError(value) {
+    setChannelError(value) {
         this.channelError = value;
     }
 
-    static getPresenceStatus() {
+    getPresenceStatus() {
         return this.presenceStatus;
     }
 
-    static setPresenceStatus(value) {
+    setPresenceStatus(value) {
         this.presenceStatus = value;
     }
 
-    static getPresenceCounter() {
+    getPresenceCounter() {
         return this.presenceCounter;
     }
 
-    static setPresenceCounter(value) {
+    setPresenceCounter(value) {
         this.presenceCounter = value;
     }
 }

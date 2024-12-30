@@ -33,7 +33,7 @@ const { getFeatureIsEnabled,
   findById: findFeatureById } = require('../repository/Feature');
 // autoRolesFindByRoleId -> Permette di cercare un ruolo nella tabella AutoRoles
 
-const { findByName: findConfigByName } = require('../repository/Config');
+const { findByName: findConfigByName, findAll: findAllConfig } = require('../repository/Config');
 // findByName -> Permette di creare una configurazione nella tabella configs tramite il nome
 
 const { update: updateEnabledFeature, 
@@ -200,6 +200,7 @@ module.exports = {
   autoRolesFindByRoleId,
   getFeatureIsEnabled,
   findConfigByName,
+  findAllConfig,
   findFeatureById,
   updateEnabledFeature,
   createEnabledFeature,
