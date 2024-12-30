@@ -27,7 +27,16 @@ async function findByName(name) {
   return await Config.findOne({where: {name: name}});
 }
 
+/**
+ * @param {string} id 
+ * @returns {Promise<Model>}
+ */
+async function findById(id) {
+  return await Config.findOne({where: {id: id}});
+}
+
 module.exports = {
   findByName,
-  findAll
+  findAll,
+  findById
 }

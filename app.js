@@ -17,7 +17,6 @@ pm2.connect(function (err) {
     console.error(err);
     process.exit(2);
   }
-
   pm2.delete('all', (err) => {
     if (err) {
       console.error('[❌] Errore durante l’eliminazione dei processi:', err);
@@ -26,7 +25,7 @@ pm2.connect(function (err) {
     }
     pm2.start({
       script: './worker/worker.js',
-      name: `worker-app-${Date.now()}`,
+      name: `0`,
       exec_mode: '',
     }, function (err, apps) {
       pm2.disconnect();   // Disconnects from PM2
@@ -43,17 +42,18 @@ pm2.connect(function (err) {
 findAllConfig().then((configs) => {
 
   configs.forEach((config) => {
+    const configJson = JSON.parse(config.json)
     const botConfig = {
-      botName: config.botName,
-      botFooter: config.botFooter,
-      botFooterIcon: config.botFooterIcon,
+      botName: configJson.botName,
+      botFooter: configJson.botFooter,
+      botFooterIcon: configJson.botFooterIcon,
       isActive: config.isActive,
       premium: config.premium,
-      token: config.token,
-      clientId: config.clientId,
-      guildMainId: config.guildMainId,
-      channelError: config.channelError,
-      presenceStatus: config.presenceStatus,
+      token: configJson.token,
+      clientId: configJson.clientId,
+      guildMainId: configJson.guildMainId,
+      channelError: configJson.channelError,
+      presenceStatus: configJson.presenceStatus,
       id: config.id,
     };
 
