@@ -16,10 +16,6 @@ const { dispatchStopBot } = require('./dispatcher');
  * Avvia un bot Discord.
  */
 async function startBot(botConfig) {
-  if (activeBots.has(botConfig.id)) {
-    console.log(`[INFO] Bot ${botConfig.id} è già attivo.`);
-    return;
-  }
   const client = new Client({
     intents: [
       GatewayIntentBits.Guilds,
