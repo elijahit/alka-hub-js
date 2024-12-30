@@ -59,9 +59,9 @@ async function processQueue() {
                 }
                 
                 pm2.start({
-                  script: './worker.js',
-                  name: `worker-app-${Date.now()}`, // Unique name for each worker
-                  exec_mode: 'fork', // Use fork mode to create a new instance
+                  script: './worker/worker.js',
+                  name: `worker-app-${Date.now()}`,
+                  exec_mode: 'fork',
                 }, function (err, apps) {
                   pm2.disconnect();  
                   if (err) {
