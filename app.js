@@ -70,7 +70,7 @@ async function processBotQueue() {
       variables.setConfigId(botConfig.id);
       
       client.commands = new Collection();
-      mainEvents(client);
+      mainEvents(client, variables);
       client.login(botConfig.token);
 
       await redis.hmset(botConfig.id, botConfig);

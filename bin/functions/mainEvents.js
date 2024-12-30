@@ -8,11 +8,10 @@
 
 const { Events, ActivityType } = require('discord.js');
 const executeFolderModule = require('./executeFunctions');
-const Variables = require('../classes/GlobalVariables');
 const LogClasses = require('../classes/LogClasses');
 
 
-const mainEvents = (client) => {
+const mainEvents = (client, variables) => {
   client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand()) return;
     if (!interaction.guild) return;
@@ -49,9 +48,9 @@ const mainEvents = (client) => {
 
   client.once(Events.ClientReady, async readyClient => {
     // FUNZIONI
-    executeFolderModule(client, 'utils');
+    executeFolderModule(client, 'utils', variables);
 
-    const presenceArray = Variables.getPresenceStatus();
+    const presenceArray = variables.getPresenceStatus();
     if(presenceArray.length == 1) {
       await client.user.setPresence({
         activities: [{ name: presenceArray[count], state: presenceArray[count], type: ActivityType.Custom }],
@@ -59,14 +58,14 @@ const mainEvents = (client) => {
       });
     } else {
       setInterval(async () => {
-        const count = Variables.getPresenceCounter();
+        const count = variables.getPresenceCounter();
         await client.user.setPresence({
           activities: [{ name: presenceArray[count], state: presenceArray[count], type: ActivityType.Custom }],
           status: 'online'
         });
-        Variables.setPresenceCounter(count + 1)
+        variables.setPresenceCounter(count + 1)
         if (count == presenceArray.length-1) {
-          Variables.setPresenceCounter(0);
+          variables.setPresenceCounter(0);
         }
       }, 5000);
     }
