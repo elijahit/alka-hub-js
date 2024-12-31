@@ -279,7 +279,7 @@ module.exports = {
 
         // CONTROLLO SE LA CATEGORIA ESISTE GIA'
         
-        let checkCategory = await findAutoVoiceByChannelId(interaction.guild.id, interaction.values[0]);
+        let checkCategory = await findAutoVoiceByChannelId(interaction.guild.id, interaction.values[0], variables);
         checkCategory = checkCategory?.get({plain: true}) ?? false;
         if (checkCategory) {
           await interaction.channel.delete();
