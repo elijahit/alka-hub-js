@@ -25,7 +25,7 @@ function errorSendControls(error, client, guild_error, system, variables) {
             if (channel.type == 0) {
               const embedLog = new EmbedBuilder()
                 .setAuthor({ name: `${variables.getBotName()} | Missing Permissions` })
-                .setDescription(`You haven't invited ${variables.getBotName()} correctly and you don't have permission to perform this action. We invite you to invite ${variables.getBotName()} again or contact our [support discord](https://discord.gg/DqRcKB75N5).`)
+                .setDescription(`You haven't invited ${variables.getBotName()} correctly and you don't have permission to perform this action. We invite you to invite ${variables.getBotName()} again or contact our support.`)
                 .setFooter({ text: `${variables.getBotFooter()}`, iconURL: variables.getBotFooterIcon() })
                 .setColor(colors.general.error);
               channel.send({ embeds: [embedLog] });
