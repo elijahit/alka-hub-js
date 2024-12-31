@@ -41,9 +41,9 @@ module.exports = {
         if (!['IT', 'EN'].includes(languageValue)) return;
 
 
-        let guild = await findGuildById(interaction.guild.id);
+        let guild = await findGuildById(interaction.guild.id, variables);
         guild = guild?.get({ plain: true }) ?? false;
-        if (guild) await updateGuild({ language: languageValue, time_zone: timeZoneValue[0][1] }, { where: { guild_id: interaction.guild.id } });
+        if (guild) await updateGuild({ language: languageValue, time_zone: timeZoneValue[0][1] }, { where: { guild_id: interaction.guild.id, config_id: variables.getConfigId() } });
         if (!guild) await createGuild(interaction.guild.id, languageValue, timeZoneValue[0][1]);
 
         const embedLog = new EmbedBuilder()
