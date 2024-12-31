@@ -34,7 +34,7 @@ module.exports = {
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let resultDb = await findLogsByGuildId(message.guild.id);
+        let resultDb = await findLogsByGuildId(message.guild.id, variables);
         resultDb = resultDb?.get({ plain: true });
         if (!resultDb || !resultDb["message_state_channel"]) return;
 
