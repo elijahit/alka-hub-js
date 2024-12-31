@@ -6,7 +6,7 @@
  * @description Contiene i metodi per avviare e fermare un bot Discord.
  */
 
-const { Collection, Client, GatewayIntentBits, Partials } = require('discord.js');
+const { Collection, Client, GatewayIntentBits, Partials, ActivityType } = require('discord.js');
 const mainEvents = require('../bin/functions/mainEvents');
 const Variables = require('../bin/classes/GlobalVariables');
 const { dispatchStopBot } = require('./dispatcher');
@@ -39,7 +39,7 @@ async function startBot(botConfig) {
   try {
 
     let variables = new Variables();
-    
+
     variables.setBotName(botConfig.botName);
     variables.setBotFooter(botConfig.botFooter);
     variables.setBotFooterIcon(botConfig.botFooterIcon);
@@ -51,11 +51,16 @@ async function startBot(botConfig) {
     variables.setChannelError(botConfig.channelError);
     variables.setPresenceStatus(botConfig.presenceStatus);
     variables.setConfigId(botConfig.id);
+    variables.setNameConfiguration(botConfig.botName);
 
     client.commands = new Collection();
     await mainEvents(client, variables);
     await client.login(botConfig.token);
-    console.log(`[✅] Bot ${botConfig.botName} (${botConfig.id}) avviato con successo.`);
+    client.user.setPresence({
+      activities: [{ name: "Loading...", state: "Loading...", type: ActivityType.Custom }],
+      status: 'idle'
+    });
+    console.log(`[⚠] Bot ${botConfig.botName} (${botConfig.id}) avvio in corso...`);
   } catch (error) {
     console.error(`[❌] Errore nell'avvio del bot ${botConfig.botName}:`, error);
   }
