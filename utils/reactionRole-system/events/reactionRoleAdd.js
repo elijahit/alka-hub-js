@@ -16,7 +16,7 @@ const { findByGuildIdAndMessageIdAndEmojiReactions } = require('../../../bin/ser
 
 module.exports = {
   name: Events.MessageReactionAdd,
-  async execute(messageReaction, user) {
+  async execute(messageReaction, user, variables) {
     if (!user.bot) {
       const message = messageReaction.message;
       const emoji = messageReaction.emoji;
@@ -26,8 +26,8 @@ module.exports = {
 
       // CONTROLLO SE LA FUNZIONE E' ABILITATA
       if (!await checkFeatureSystemDisabled(5)) return;
-      if (!await checkFeaturesIsEnabled(messageReaction.message.guild.id, 5)) return;
-      if (!await checkPremiumFeature(messageReaction.message.guild.id, 5)) return;
+      if (!await checkFeaturesIsEnabled(messageReaction.message.guild.id, 5, variables)) return;
+      if (!await checkPremiumFeature(messageReaction.message.guild.id, 5, variables)) return;
 
       try {
         let emojiResolve = "";
@@ -37,21 +37,21 @@ module.exports = {
           emojiResolve = emoji.name;
         }
 
-        let roles = await findByGuildIdAndMessageIdAndEmojiReactions(messageReaction.message.guild.id, message.id, emojiResolve);
+        let roles = await findByGuildIdAndMessageIdAndEmojiReactions(messageReaction.message.guild.id, message.id, emojiResolve, variables);
         roles = roles?.get({ plain: true });
         if (roles) {
           try {
             const role = await member.guild.roles.fetch(roles.roles_id);
             await member.roles.add(role);
           } catch (error) {
-            errorSendControls(error, member.client, guild, "\\autoRole-system\\autoRoleState.js");
+            errorSendControls(error, member.client, guild, "\\autoRole-system\\autoRoleState.js", variables);
           }
         }
 
 
       }
       catch (error) {
-        errorSendControls(error, member.client, guild, "\\autoRole-system\\autoRoleState.js");
+        errorSendControls(error, member.client, guild, "\\autoRole-system\\autoRoleState.js", variables);
       }
     }
   },

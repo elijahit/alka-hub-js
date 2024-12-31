@@ -110,7 +110,7 @@ module.exports = {
 						return;
 					}
 
-					await removeReactions({guild_id: interaction.guild.id, message_id: message, emoji: emoji });
+					await removeReactions({guild_id: interaction.guild.id, message_id: message, emoji: emoji, config_id: variables.getConfigId() });
 
 					const embedLog = new EmbedBuilder()
 						.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
