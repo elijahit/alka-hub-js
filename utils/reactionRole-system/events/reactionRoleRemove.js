@@ -43,7 +43,7 @@ module.exports = {
         roles = roles?.get({ plain: true });
         if(roles) {
           try {
-            const role = await member.guild.roles.fetch(roles.roles_id);
+            const role = await member.guild.roles.fetch(roles.role_id);
             await member.roles.remove(role);
           } catch {
             errorSendControls(error, member.client, guild, "\\autoRole-system\\autoRoleState.js", variables);
