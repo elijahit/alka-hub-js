@@ -132,7 +132,7 @@ module.exports = {
 								await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							}
 						} else {
-							await createEnabledFeature(interaction.guild.id, featuresChoice, 1);
+							await createEnabledFeature(interaction.guild.id, featuresChoice, 1, variables);
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
 								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", featureName))
