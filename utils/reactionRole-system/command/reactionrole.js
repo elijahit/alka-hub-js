@@ -105,7 +105,7 @@ module.exports = {
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
 					}
-					await createRole(roleId, interaction.guild.id);
+					await createRole(roleId, interaction.guild.id, variables);
 					await createReaction(roleId, interaction.guild.id, emoji, message, variables);
 
 					const embedLog = new EmbedBuilder()
