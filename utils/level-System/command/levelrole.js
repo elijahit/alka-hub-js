@@ -65,7 +65,7 @@ module.exports = {
 						// SOLO PER LA CREAZIONE DEL RUOLO NEL SISTEMA DI LIVELLI (FEATURE 11)
 						if(!await allCheckFeatureForCommands(interaction, interaction.guild.id, 11, true, language_result.noPermission.description_embed_no_features_by_system, 
 							language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
-							language_result.noPermission.description_embed_no_features)) return;
+							language_result.noPermission.description_embed_no_features, variables)) return;
 
 						await createLevelsRoles(interaction.guild.id, role.id, level, variables);
 	
