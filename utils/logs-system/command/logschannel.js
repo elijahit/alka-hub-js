@@ -118,7 +118,7 @@ module.exports = {
 
 					} else {
 						customEmoji = emoji.general.trueMaker
-						await createLogs(interaction.guild.id, choices, channel);
+						await createLogs(interaction.guild.id, choices, channel, variables);
 
 						embedLog
 							.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
@@ -132,11 +132,11 @@ module.exports = {
 
 				}
 				else {
-					await noHavePermission(interaction, language_result);
+					await noHavePermission(interaction, language_result, variables);
 				}
 			}
 			catch (error) {
-				errorSendControls(error, interaction.client, interaction.guild, "\\logs-system\\logschannel.js", );
+				errorSendControls(error, interaction.client, interaction.guild, "\\logs-system\\logschannel.js", variables);
 			}
 		});
 	},
