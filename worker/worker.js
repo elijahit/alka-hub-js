@@ -18,6 +18,7 @@ const redis = new Redis({
   password: config.redis.password,
 });
 const activeBots = new Map();
+let workerUpdated = false;
 
 
 
@@ -93,7 +94,6 @@ async function processQueue() {
   console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
   console.log('\x1b[34m%s\x1b[0m', `Worker ${await getWorkerId()} avviato. In ascolto sulla coda principale...`);
   console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
-  let workerUpdated = false;
   while (true) {
     try {
       // Comandi generici dalla coda globale
@@ -113,6 +113,7 @@ async function processQueue() {
             if (activeBots.size >= config.worker.maxBot && !workerUpdated) {
 
               console.warn(`[⚠️] Limite massimo di bot (${config.worker.maxBot}) raggiunto.`);
+              workerUpdated = true;
               redis.rpush('bot_commands_queue', data, (err, result) => {
                 if (err) {
                   console.error('[❌] Errore durante l’invio del comando a bot_commands_queue:', err);
@@ -138,9 +139,7 @@ async function processQueue() {
                     console.log('[✅] Worker aggiuntivo avviato.');
                     redis.hset(`pm2_worker_pid:${apps[apps.length - 1].pm2_env.pm_id}`, {
                       worker_id: config.worker.workerId,
-                    });
-                    workerUpdated = true;
-                    
+                    });     
                   }
                 });
               });
