@@ -67,7 +67,7 @@ module.exports = {
 							language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
 							language_result.noPermission.description_embed_no_features)) return;
 
-						await createLevelsRoles(interaction.guild.id, role.id, level);
+						await createLevelsRoles(interaction.guild.id, role.id, level, variables);
 	
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
