@@ -25,7 +25,7 @@ pm2.connect(function (err) {
     }
     pm2.start({
       script: './worker/worker.js',
-      name: `0`,
+      name: `${config.worker.workerId}`,
       exec_mode: '',
     }, function (err, apps) {
       pm2.disconnect();   // Disconnects from PM2

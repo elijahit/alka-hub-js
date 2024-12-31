@@ -82,7 +82,7 @@ async function processQueue() {
   console.log('\x1b[32m%s\x1b[0m', 'Technology: JavaScript - Node - Discord.js');
   console.log('\x1b[32m%s\x1b[0m', 'Powered by alkanetwork.eu');
   console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
-  console.log('\x1b[34m%s\x1b[0m', `Worker ${processName} avviato. In ascolto sulla coda principale...`);
+  console.log('\x1b[34m%s\x1b[0m', `Worker ${config.worker.workerId} avviato. In ascolto sulla coda principale...`);
   console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
   let whileStop = false;
   while (!whileStop) {
@@ -91,7 +91,7 @@ async function processQueue() {
       const commandData = await redis.rpop('bot_commands_queue');
 
       // Comandi specifici per questo Worker
-      const specificCommand = await redis.rpop(`worker_commands_queue:${processName}`);
+      const specificCommand = await redis.rpop(`worker_commands_queue:${config.worker.workerId}`);
 
       const data = commandData || specificCommand;
 
@@ -120,7 +120,7 @@ async function processQueue() {
 
                 pm2.start({
                   script: './worker/worker.js',
-                  name: `${processName}`,
+                  name: `${config.worker.workerId}`,
                   exec_mode: 'fork',
                 }, function (err, apps) {
                   pm2.disconnect();
@@ -139,7 +139,7 @@ async function processQueue() {
             await redis.hset(`bot_status:${botId}`, {
               status: 'running',
               botId: botId,
-              worker: processName,
+              worker: config.worker.workerId,
               uptime: new Date().toISOString(),
             });
             break;
@@ -166,7 +166,7 @@ async function processQueue() {
 
 async function monitorWorkerHealth() {
   setInterval(async () => {
-    await redis.hset(`worker_status:${processName}`, {
+    await redis.hset(`worker_status:${config.worker.workerId}`, {
       status: 'running',
       uptime: new Date().toISOString(),
       botCount: activeBots.size,
