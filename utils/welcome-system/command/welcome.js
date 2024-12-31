@@ -59,10 +59,10 @@ module.exports = {
 				if (result) {
 					if (!await allCheckFeatureForCommands(interaction, interaction.guild.id, 10, false, language_result.noPermission.description_embed_no_features_by_system,
 						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature,
-						language_result.noPermission.description_embed_no_features)) return;
+						language_result.noPermission.description_embed_no_features, variables)) return;
 
 					//ESISTE GIA
-					let checkAlreadyExist = await findByGuildIdWelcome(interaction.guild.id);
+					let checkAlreadyExist = await findByGuildIdWelcome(interaction.guild.id, variables);
 					checkAlreadyExist = checkAlreadyExist?.get({ plain: true });
 
 					const modal = new ModalBuilder()
@@ -84,10 +84,10 @@ module.exports = {
 						modal.addComponents(descriptionRow);
 
 						// AGGIORNO IL CANALE NEL DATABASE
-						await updateWelcome({ channel_id: channel.id, color: color }, {where: { guild_id: interaction.guild.id }});
+						await updateWelcome({ channel_id: channel.id, color: color }, {where: { guild_id: interaction.guild.id, config_id: variables.getConfigId() }});
 
 						if (background) {
-							await updateWelcome({ background_url: background }, {where: { guild_id: interaction.guild.id }});
+							await updateWelcome({ background_url: background }, {where: { guild_id: interaction.guild.id, config_id: variables.getConfigId() }});
 						}
 
 						await interaction.showModal(modal);
@@ -121,7 +121,7 @@ module.exports = {
 				}
 			}
 			catch (error) {
-				errorSendControls(error, interaction.client, interaction.guild, "\\welcome-system\\welcome.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\welcome-system\\welcome.js", variables);
 			}
 		});
 	},
