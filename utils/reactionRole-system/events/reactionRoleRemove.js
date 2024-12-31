@@ -18,7 +18,7 @@ const { findByGuildIdAndMessageIdAndEmojiReactions } = require('../../../bin/ser
 
 module.exports = {
   name: Events.MessageReactionRemove,
-  async execute(messageReaction, user, variables) {
+  async execute(messageReaction, user, burst, variables) {
     if(!user.bot) {
       const message = messageReaction.message;
       const emoji = messageReaction.emoji;
