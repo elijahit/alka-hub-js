@@ -21,21 +21,21 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.GuildUpdate,
-  async execute(oldGuild, newGuild) {
+  async execute(oldGuild, newGuild, variables) {
     let customEmoji = emoji.logsSystem.guildUpdateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if (!await checkFeatureSystemDisabled(1)) return;
-    if (!await checkFeaturesIsEnabled(oldGuild.id, 1)) return;
-    if (!await checkPremiumFeature(oldGuild.id, 1)) return;
+    if (!await checkFeaturesIsEnabled(oldGuild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(oldGuild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // CONTROLLO DELLA LINGUA
       if (oldGuild?.id) {
-        let data = await language.databaseCheck(oldGuild.id);
+        let data = await language.databaseCheck(oldGuild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let resultDb = await findLogsByGuildId(oldGuild.id);
+        let resultDb = await findLogsByGuildId(oldGuild.id, variables);
         resultDb = resultDb?.get({ plain: true });
         if (!resultDb || !resultDb["guild_state_channel"]) return;
 
@@ -140,13 +140,13 @@ module.exports = {
         embedLog
           .setAuthor({ name: `${language_result.guildUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setColor(colors.general.blue);
         channel_logs.send({ embeds: [embedLog] });
       }
     }
     catch (error) {
-      errorSendControls(error, oldGuild.client, oldGuild, "\\logs_system\\GuildUpdate.js");
+      errorSendControls(error, oldGuild.client, oldGuild, "\\logs_system\\GuildUpdate.js", variables);
     }
   },
 };

@@ -21,16 +21,16 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.MessageDelete,
-  async execute(message) {
+  async execute(message, variables) {
     let customEmoji = emoji.general.deleteMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if (!await checkFeatureSystemDisabled(1)) return;
-    if (!await checkFeaturesIsEnabled(message.guild.id, 1)) return;
-    if (!await checkPremiumFeature(message.guild.id, 1)) return;
+    if (!await checkFeaturesIsEnabled(message.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(message.guild.id, 1, variables)) return;
     try {
       // CONTROLLO DELLA LINGUA
       if (message.guild?.id) {
-        let data = await language.databaseCheck(message.guild.id);
+        let data = await language.databaseCheck(message.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
@@ -65,13 +65,13 @@ module.exports = {
         embedLog
           .setAuthor({ name: `${language_result.messageDelete.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setColor(colors.general.error);
         channel_logs.send({ embeds: [embedLog] });
       }
     }
     catch (error) {
-      errorSendControls(error, message.client, message.guild, "\\logs_system\\MessageDelete.js");
+      errorSendControls(error, message.client, message.guild, "\\logs_system\\MessageDelete.js", variables);
     }
   },
 };

@@ -21,21 +21,21 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.VoiceStateUpdate,
-  async execute(oldState, newState) {
+  async execute(oldState, newState, variables) {
     let customEmoji = emoji.general.voiceMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if (!await checkFeatureSystemDisabled(1)) return;
-    if (!await checkFeaturesIsEnabled(oldState.guild.id, 1)) return;
-    if (!await checkPremiumFeature(oldState.guild.id, 1)) return;
+    if (!await checkFeaturesIsEnabled(oldState.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(oldState.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // CONTROLLO DELLA LINGUA
       if (oldState.guild?.id) {
-        let data = await language.databaseCheck(oldState.guild.id);
+        let data = await language.databaseCheck(oldState.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let resultDb = await findLogsByGuildId(oldState.guild.id);
+        let resultDb = await findLogsByGuildId(oldState.guild.id, variables);
         resultDb = resultDb?.get({ plain: true });
         if (!resultDb || !resultDb["voice_state_channel"]) return;
 
@@ -49,7 +49,7 @@ module.exports = {
               { name: `${language_result.voiceState.old_channel}`, value: `${oldState.channel}`, inline: true },
               { name: `${language_result.voiceState.new_channel}`, value: `${newState.channel}`, inline: true })
             .setDescription(language_result.voiceState.move_to.replace("{1}", oldState.member.user))
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.aquamarine);
           channel.send({ embeds: [embedLog] });
 
@@ -63,7 +63,7 @@ module.exports = {
             .setDescription(language_result.voiceState.join_now
               .replace("{1}", newState.member.user)
               .replace("{2}", newState.channel))
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.success);
           channel.send({ embeds: [embedLog] });
 
@@ -77,14 +77,14 @@ module.exports = {
             .setDescription(language_result.voiceState.left_now
               .replace("{1}", oldState.member.user)
               .replace("{2}", oldState.channel))
-            .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           channel.send({ embeds: [embedLog] });
         }
       }
     }
     catch (error) {
-      errorSendControls(error, oldState.client, oldState.guild, "\\logs_system\\VoiceState.js");
+      errorSendControls(error, oldState.client, oldState.guild, "\\logs_system\\VoiceState.js", variables);
     }
   },
 };

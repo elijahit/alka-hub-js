@@ -29,12 +29,12 @@ module.exports = {
       if (interaction.customId == 'welcomeMessageSetting') {
         const text = interaction.fields.getTextInputValue('descriptionWelcome');
 
-				await updateWelcome({ text: text }, {where: { guild_id: interaction.guild.id }});
+				await updateWelcome({ text: text }, {where: { guild_id: interaction.guild.id, config_id: variables.getConfigId() }});
 
 
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.welcomeModal.embed_title}`, iconURL: emoji.welcomeSystem.main })
-          .setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+          .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
           .setDescription(language_result.welcomeModal.description)
           .setColor(color.general.danger);
         await interaction.reply({embeds: [embedLog], ephemeral: true});
@@ -43,7 +43,7 @@ module.exports = {
     }
     catch (error) {
       console.log(error)
-      errorSendControls(error, interaction.guild.client, interaction.guild, "\\welcome-system\\welcomeInteractions.js");
+      errorSendControls(error, interaction.guild.client, interaction.guild, "\\welcome-system\\welcomeInteractions.js", variables);
     }
   },
 };

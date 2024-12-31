@@ -22,12 +22,12 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.GuildMemberAdd,
-  async execute(member) {
+  async execute(member, variables) {
     if (!await checkFeatureSystemDisabled(10)) return;
-    if (!await checkFeaturesIsEnabled(member.guild.id, 10)) return;
-    if (!await checkPremiumFeature(member.guild.id, 10)) return;
+    if (!await checkFeaturesIsEnabled(member.guild.id, 10, variables)) return;
+    if (!await checkPremiumFeature(member.guild.id, 10, variables)) return;
     try {
-      let check = await findByGuildIdWelcome(member.guild.id);
+      let check = await findByGuildIdWelcome(member.guild.id, variables);
       check = check?.get({ plain: true });
       if (check) {
         let channel;
@@ -41,7 +41,7 @@ module.exports = {
 
           // GENERO IL MESSAGGIO
           // RECUPERO LA LINGUA
-          let data = await language.databaseCheck(member.guild.id);
+          let data = await language.databaseCheck(member.guild.id, variables);
           const langagues_path = readFileSync(`./languages/welcome-system/${data}.json`);
           const language_result = JSON.parse(langagues_path);
 
@@ -52,7 +52,7 @@ module.exports = {
           })
           const embedLog = new EmbedBuilder()
             .setAuthor({ name: `${language_result.welcomeMessage.embed_title}`, iconURL: emoji.welcomeSystem.main })
-            .setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+            .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
             .setImage("attachment://welcome.jpg")
             .setColor(colors.general.danger);
 
@@ -68,7 +68,7 @@ module.exports = {
       }
     }
     catch (error) {
-      errorSendControls(error, member.client, member.guild, "\\welcome-system\\welcomeEvents.js");
+      errorSendControls(error, member.client, member.guild, "\\welcome-system\\welcomeEvents.js", variables);
     }
 
   },

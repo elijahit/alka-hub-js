@@ -21,22 +21,22 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.MessageUpdate,
-  async execute(oldMessage, newMessage) {
+  async execute(oldMessage, newMessage, variables) {
     let customEmoji = emoji.general.updateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if (!await checkFeatureSystemDisabled(1)) return;
-    if (!await checkFeaturesIsEnabled(oldMessage.guild.id, 1)) return;
-    if (!await checkPremiumFeature(oldMessage.guild.id, 1)) return;
+    if (!await checkFeaturesIsEnabled(oldMessage.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(oldMessage.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       if(oldMessage.author.id == oldMessage.client.user.id) return;
       // CONTROLLO DELLA LINGUA
       if (oldMessage.guild?.id) {
-        let data = await language.databaseCheck(oldMessage.guild.id);
+        let data = await language.databaseCheck(oldMessage.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let resultDb = await findLogsByGuildId(oldMessage.guild.id);
+        let resultDb = await findLogsByGuildId(oldMessage.guild.id, variables);
         resultDb = resultDb?.get({ plain: true });
         if (!resultDb || !resultDb["message_state_channel"]) return;
 
@@ -76,13 +76,13 @@ module.exports = {
         embedLog
           .setAuthor({ name: `${language_result.messageUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setColor(colors.general.danger);
         channel_logs.send({ embeds: [embedLog] });
       }
     }
     catch (error) {
-      errorSendControls(error, oldMessage.client, oldMessage.guild, "\\logs_system\\MessageUpdate.js");
+      errorSendControls(error, oldMessage.client, oldMessage.guild, "\\logs_system\\MessageUpdate.js", variables);
     }
   },
 };

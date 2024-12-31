@@ -43,14 +43,14 @@ module.exports = {
 						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
 						language_result.noPermission.description_embed_no_features, variables)) return;
 				
-					let checkStatistics = await findStatisticsById(interaction.guild.id, id);
+					let checkStatistics = await findStatisticsById(interaction.guild.id, id, variables);
 					checkStatistics = checkStatistics?.get({ plain: true });
 
 					if (!checkStatistics) {
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.statsServerSystem.main })
 							.setDescription(language_result.removeCommand.description_embed_notset)
-							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
@@ -61,7 +61,7 @@ module.exports = {
 					const embedLog = new EmbedBuilder()
 						.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.statsServerSystem.main })
 						.setDescription(language_result.removeCommand.description_embed.replace("{0}", id))
-						.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setColor(colors.general.danger);
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 
@@ -72,7 +72,7 @@ module.exports = {
 			}
 			catch (error) {
 				console.log(error)
-				errorSendControls(error, interaction.client, interaction.guild, "\\statsServer-system\\chgannelstatsremove.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\statsServer-system\\chgannelstatsremove.js", variables);
 			}
 		});
 	},

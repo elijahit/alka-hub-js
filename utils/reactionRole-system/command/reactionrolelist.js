@@ -35,7 +35,7 @@ module.exports = {
 						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
 						language_result.noPermission.description_embed_no_features, variables)) return;
 
-					let checkReactionAlreadySet = await findAllReactionsByGuildId(interaction.guild.id);
+					let checkReactionAlreadySet = await findAllReactionsByGuildId(interaction.guild.id, variables);
 
 					reactionRoleString += `${language_result.listCommand.description_embed.replace("{0}", interaction.user)}\n\n`;
 					if (checkReactionAlreadySet.length > 0) {
@@ -70,7 +70,7 @@ module.exports = {
 					}
 					embedLog
 						.setAuthor({ name: `${language_result.listCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-						.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setColor(colors.general.blue);
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 
@@ -82,7 +82,7 @@ module.exports = {
 			}
 			catch (error) {
 				console.log(error)
-				errorSendControls(error, interaction.client, interaction.guild, "\\reactionRole-system\\reactionrolelist.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\reactionRole-system\\reactionrolelist.js", variables);
 			}
 		});
 	},

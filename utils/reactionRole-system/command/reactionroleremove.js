@@ -55,7 +55,7 @@ module.exports = {
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
 							.setDescription(language_result.removeCommand.description_embed_missingpermissions.replace("{0}", `${interaction.guild.roles.botRoleFor(interaction.client.user)}`))
-							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
@@ -69,20 +69,20 @@ module.exports = {
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
 							.setDescription(language_result.removeCommand.description_embed_channelnotfound)
-							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(color.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
 					}
 
-					let checkReactionAlreadySet = await findByGuildIdAndMessageIdAndEmojiReactions(interaction.guild.id, message, emoji);
+					let checkReactionAlreadySet = await findByGuildIdAndMessageIdAndEmojiReactions(interaction.guild.id, message, emoji, variables);
 					checkReactionAlreadySet = checkReactionAlreadySet?.get({ plain: true });
 
 					if (!checkReactionAlreadySet) {
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
 							.setDescription(language_result.removeCommand.description_embed_notset)
-							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
@@ -104,7 +104,7 @@ module.exports = {
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
 							.setDescription(language_result.removeCommand.description_embed_emojinotfound)
-							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(color.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
@@ -115,7 +115,7 @@ module.exports = {
 					const embedLog = new EmbedBuilder()
 						.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
 						.setDescription(language_result.removeCommand.description_embed.replace("{0}", role))
-						.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setColor(colors.general.danger);
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 
@@ -126,7 +126,7 @@ module.exports = {
 			}
 			catch (error) {
 				console.log(error)
-				errorSendControls(error, interaction.client, interaction.guild, "\\reactionRole-system\\reactionroleremove.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\reactionRole-system\\reactionroleremove.js", variables);
 			}
 		});
 	},

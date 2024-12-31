@@ -21,22 +21,22 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.MessageReactionRemoveAll,
-  async execute(message, reactions) {
+  async execute(message, reactions, variables) {
     console.log(message.guild.id)
     let customEmoji = emoji.general.deleteMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if (!await checkFeatureSystemDisabled(1)) return;
-    if (!await checkFeaturesIsEnabled(message.guild.id, 1)) return;
-    if (!await checkPremiumFeature(message.guild.id, 1)) return;
+    if (!await checkFeaturesIsEnabled(message.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(message.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // CONTROLLO DELLA LINGUA
       if (message.guild?.id) {
-        let data = await language.databaseCheck(message.guild.id);
+        let data = await language.databaseCheck(message.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let resultDb = await findLogsByGuildId(message.guild.id);
+        let resultDb = await findLogsByGuildId(message.guild.id, variables);
         resultDb = resultDb?.get({ plain: true });
         if (!resultDb || !resultDb["message_state_channel"]) return;
 
@@ -63,13 +63,13 @@ module.exports = {
           .setAuthor({ name: `${language_result.messageReactionRemoveAll.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setDescription(language_result.messageReactionRemoveAll.embed_description)
-          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setColor(colors.general.error);
         channel_logs.send({ embeds: [embedLog] });
       }
     }
     catch (error) {
-      errorSendControls(error, message.client, message.guild, "\\logs_system\\MessageReactionRemoveAll.js");
+      errorSendControls(error, message.client, message.guild, "\\logs_system\\MessageReactionRemoveAll.js", variables);
     }
   },
 };

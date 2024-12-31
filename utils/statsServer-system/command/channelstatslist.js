@@ -35,7 +35,7 @@ module.exports = {
 						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature, 
 						language_result.noPermission.description_embed_no_features, variables)) return;
 
-					let statsListCheckArray = await findAllByGuildIdStatistics(interaction.guild.id);
+					let statsListCheckArray = await findAllByGuildIdStatistics(interaction.guild.id, variables);
 
 					statsList += `${language_result.listCommand.description_embed.replace("{0}", interaction.user)}\n\n`;
 					if (statsListCheckArray.length > 0) {
@@ -74,7 +74,7 @@ module.exports = {
 					}
 					embedLog
 						.setAuthor({ name: `${language_result.listCommand.embed_title}`, iconURL: emojis.statsServerSystem.main })
-						.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setColor(colors.general.blue);
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 
@@ -86,7 +86,7 @@ module.exports = {
 			}
 			catch (error) {
 				console.log(error)
-				errorSendControls(error, interaction.client, interaction.guild, "\\statsServer-system\\channelstatslist.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\statsServer-system\\channelstatslist.js", variables);
 			}
 		});
 	},

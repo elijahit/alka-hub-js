@@ -81,13 +81,13 @@ module.exports = {
 						return;
 					}
 
-					let checkReactionAlreadySet = await findByGuildIdAndMessageIdAndEmojiReactions(interaction.guild.id, message, emoji);
+					let checkReactionAlreadySet = await findByGuildIdAndMessageIdAndEmojiReactions(interaction.guild.id, message, emoji, variables);
 					checkReactionAlreadySet = checkReactionAlreadySet?.get({ plain: true });
 					if (checkReactionAlreadySet) {
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
 							.setDescription(language_result.addCommand.description_embed_alreadyset)
-							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
@@ -106,12 +106,12 @@ module.exports = {
 						return;
 					}
 					await createRole(roleId, interaction.guild.id);
-					await createReaction(roleId, interaction.guild.id, emoji, message);
+					await createReaction(roleId, interaction.guild.id, emoji, message, variables);
 
 					const embedLog = new EmbedBuilder()
 						.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
 						.setDescription(language_result.addCommand.description_embed.replace("{0}", role))
-						.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setColor(colors.general.success);
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 
@@ -121,7 +121,7 @@ module.exports = {
 				}
 			}
 			catch (error) {
-				errorSendControls(error, interaction.client, interaction.guild, "\\reactionRole-system\\reactionrole.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\reactionRole-system\\reactionrole.js", variables);
 			}
 		});
 	},

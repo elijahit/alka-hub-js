@@ -134,7 +134,7 @@ module.exports = {
 				const embedLog = new EmbedBuilder()
 					.setAuthor({ name: `${language_result.apexTracker.embed_title}`, iconURL: customEmoji })
 					.addFields(fields)
-					.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+					.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 					.setThumbnail(resultApi.data.global.avatar)
 					.setColor(colors.general.danger);
 				await interaction.editReply({ embeds: [embedLog] });
@@ -145,12 +145,12 @@ module.exports = {
 				const embedLog = new EmbedBuilder()
 					.setAuthor({ name: `${language_result.apexTracker.embed_title}`, iconURL: customEmoji })
 					.setDescription(language_result.apexTracker.noResult)
-					.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+					.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 					.setColor(0x9e1114);
 				await interaction.editReply({ embeds: [embedLog] });
 				return;
 			}
-			errorSendControls(error, interaction.client, interaction.guild, "\\trackerGame-system\\apex.js");
+			errorSendControls(error, interaction.client, interaction.guild, "\\trackerGame-system\\apex.js", variables);
 		}
 	},
 };

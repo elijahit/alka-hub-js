@@ -82,9 +82,9 @@ module.exports = {
 				if (result) {
 					if (!await allCheckFeatureForCommands(interaction, interaction.guild.id, 6, true, language_result.noPermission.description_embed_no_features_by_system,
 						language_result.noPermission.description_limit_premium, language_result.noPermission.description_premium_feature,
-						language_result.noPermission.description_embed_no_features)) return;
+						language_result.noPermission.description_embed_no_features, variables)) return;
 
-					let checkCategory = await findByGuildIdAndcategoryIdStatisticsCategory(interaction.guild.id, categoryId);
+					let checkCategory = await findByGuildIdAndcategoryIdStatisticsCategory(interaction.guild.id, categoryId, variables);
 					checkCategory = checkCategory?.get({ plain: true });
 					if (checkCategory) {
 						const modal = new ModalBuilder()
@@ -124,7 +124,7 @@ module.exports = {
 						const embedLog = new EmbedBuilder()
 							.setAuthor({ name: `${language_result.categoryNotFound.embed_title}`, iconURL: emoji.statsServerSystem.main })
 							.setDescription(language_result.categoryNotFound.description_embed)
-							.setFooter({ text: Variables.getBotFooter(), iconURL: Variables.getBotFooterIcon() })
+							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}
@@ -135,7 +135,7 @@ module.exports = {
 				}
 			}
 			catch (error) {
-				errorSendControls(error, interaction.client, interaction.guild, "\\statsServer-system\\channelstats.js");
+				errorSendControls(error, interaction.client, interaction.guild, "\\statsServer-system\\channelstats.js", variables);
 			}
 		});
 	},

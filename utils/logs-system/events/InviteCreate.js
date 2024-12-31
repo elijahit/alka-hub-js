@@ -21,13 +21,13 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.InviteCreate,
-  async execute(invite) {
+  async execute(invite, variables) {
     let customEmoji = emoji.logsSystem.newInviteMarker;
 
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if (!await checkFeatureSystemDisabled(1)) return;
-    if (!await checkFeaturesIsEnabled(invite.guild.id, 1)) return;
-    if (!await checkPremiumFeature(invite.guild.id, 1)) return;
+    if (!await checkFeaturesIsEnabled(invite.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(invite.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
     try {
       // CONTROLLO DELLA LINGUA
@@ -36,7 +36,7 @@ module.exports = {
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let resultDb = await findLogsByGuildId(invite.guild.id);
+        let resultDb = await findLogsByGuildId(invite.guild.id, variables);
         resultDb = resultDb?.get({ plain: true });
         if (!resultDb || !resultDb["invite_state_channel"]) return;
 
@@ -80,14 +80,14 @@ module.exports = {
         embedLog
           .setAuthor({ name: `${language_result.inviteCreate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${Variables.getBotFooter()}`, iconURL: `${Variables.getBotFooterIcon()}` })
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setDescription(language_result.inviteCreate.embed_description)
           .setColor(colors.general.success);
         channel_logs.send({ embeds: [embedLog] })
       }
     }
     catch (error) {
-      errorSendControls(error, invite.client, invite.guild, "\\logs_system\\InviteCreate.js");
+      errorSendControls(error, invite.client, invite.guild, "\\logs_system\\InviteCreate.js", variables);
     }
   },
 };
