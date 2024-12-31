@@ -13,7 +13,7 @@ const config = {
     password: 'Aarontosto20!', 
   },
   worker: {
-    maxBot: 1,
+    maxBot: 2,
     retryDelay: 5000,
     workerId: Math.floor(Math.random() * 10000),
   }
