@@ -145,7 +145,7 @@ module.exports = {
 						await noHavePermission(interaction, language_result, variables);
 					}
 				} else {
-					await noInitGuilds(interaction);
+					await noInitGuilds(interaction, variables);
 				}
 			}
 			catch (error) {
