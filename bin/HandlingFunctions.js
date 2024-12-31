@@ -16,7 +16,7 @@ const LogClasses = require('./classes/LogClasses');
 function errorSendControls(error, client, guild_error, system, variables) {
   console.error(error);
   if (error == "DiscordAPIError[50013]: Missing Permissions") {
-    LogClasses.createLog(guild_error.id, 'ERRORE-PERMISSIONS', `Errore: ${error} / ${system}`);
+    LogClasses.createLog(guild_error.id, 'ERRORE-PERMISSIONS', `Errore: ${error} / ${system}`, variables);
     guild_error.channels.fetch()
       .then(channels => {
         let MissingMessage = false;
