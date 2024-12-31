@@ -18,7 +18,8 @@ const redis = new Redis({
   password: config.redis.password,
 });
 const activeBots = new Map();
-let workerUpdated = false;
+let workerStartAllow = true;
+let generatedWorker = false;
 
 
 
@@ -97,7 +98,8 @@ async function processQueue() {
   while (true) {
     try {
       // Comandi generici dalla coda globale
-      const commandData = await redis.rpop('bot_commands_queue');
+      let commandData
+      if(workerStartAllow) commandData = await redis.rpop('bot_commands_queue');
 
       // Comandi specifici per questo Worker
       const specificCommand = await redis.rpop(`worker_commands_queue:${await getWorkerId()}`);
@@ -110,10 +112,11 @@ async function processQueue() {
           case 'start':
             // 0 = Inattivo, 1 = Attivo, 2 = Test Bot
             if (botConfig.isActive == 0 || botConfig.isActive == 2) break;
-            if (activeBots.size >= config.worker.maxBot && !workerUpdated) {
+            if (activeBots.size >= config.worker.maxBot && generatedWorker === false) {
 
               console.warn(`[⚠️] Limite massimo di bot (${config.worker.maxBot}) raggiunto.`);
-              workerUpdated = true;
+              workerStartAllow = false;
+              generatedWorker = true;
               redis.rpush('bot_commands_queue', data, (err, result) => {
                 if (err) {
                   console.error('[❌] Errore durante l’invio del comando a bot_commands_queue:', err);
@@ -144,20 +147,25 @@ async function processQueue() {
                 });
               });
               break;
+            } 
+
+            if (workerStartAllow) {
+              await startBot(botConfig);
+              activeBots.set(botId, botConfig);
+              await redis.hset(`bot_status:${botId}`, {
+                status: 'running',
+                botId: botId,
+                worker: await getWorkerId(),
+                uptime: new Date().toISOString(),
+              });
+              break;
             }
-            await startBot(botConfig);
-            activeBots.set(botId, botConfig);
-            await redis.hset(`bot_status:${botId}`, {
-              status: 'running',
-              botId: botId,
-              worker: await getWorkerId(),
-              uptime: new Date().toISOString(),
-            });
             break;
 
           case 'stop':
             await stopBot(botId);
             activeBots.delete(botId);
+            workerStartAllow = true;
             await redis.hdel(`bot_status:${botId}`);
             break;
 
