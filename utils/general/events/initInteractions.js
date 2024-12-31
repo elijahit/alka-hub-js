@@ -44,7 +44,7 @@ module.exports = {
         let guild = await findGuildById(interaction.guild.id, variables);
         guild = guild?.get({ plain: true }) ?? false;
         if (guild) await updateGuild({ language: languageValue, time_zone: timeZoneValue[0][1] }, { where: { guild_id: interaction.guild.id, config_id: variables.getConfigId() } });
-        if (!guild) await createGuild(interaction.guild.id, languageValue, timeZoneValue[0][1]);
+        if (!guild) await createGuild(interaction.guild.id, languageValue, timeZoneValue[0][1], variables);
 
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: emoji.general.trueMaker })
