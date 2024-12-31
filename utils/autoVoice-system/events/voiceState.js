@@ -18,9 +18,9 @@ const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeat
 
 // FUNCTION
 
-async function createChannel(oldState, newState) {
+async function createChannel(oldState, newState, variables) {
 
-  let check = await findAutoVoiceByChannelId(newState.guild.id, newState.channel.parentId);
+  let check = await findAutoVoiceByChannelId(newState.guild.id, newState.channel.parentId, variables);
   check = check?.get({ plain: true }) ?? false;
 
   if(check) {
@@ -58,8 +58,8 @@ async function createChannel(oldState, newState) {
 
 }
 
-async function deleteChannel(oldState) {
-  let check = await findAutoVoiceByChannelId(oldState.guild.id, oldState.channel.parentId);
+async function deleteChannel(oldState, variables) {
+  let check = await findAutoVoiceByChannelId(oldState.guild.id, oldState.channel.parentId, variables);
   check = check?.get({ plain: true }) ?? false;
 
   if (check) {
@@ -120,38 +120,38 @@ async function deleteChannel(oldState) {
 
 module.exports = {
   name: Events.VoiceStateUpdate,
-  async execute(oldState, newState) {
+  async execute(oldState, newState, variables) {
     if(!await checkFeatureSystemDisabled(3)) return;
-    if(!await checkFeaturesIsEnabled(newState.guild.id, 3)) return;
-    if(!await checkPremiumFeature(newState.guild.id, 3)) return;
+    if(!await checkFeaturesIsEnabled(newState.guild.id, 3, variables)) return;
+    if(!await checkPremiumFeature(newState.guild.id, 3, variables)) return;
 
     try {
       // CONTROLLO DELLA LINGUA
       if (oldState.guild?.id) {
-        let data = await language.databaseCheck(oldState.guild.id);
+        let data = await language.databaseCheck(oldState.guild.id, variables);
         const langagues_path = readFileSync(`./languages/autoVoice-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         // UN UTENTE SI E' SPOSTATO DA UN CANALE A UN ALTRO
         if (oldState.channel?.id && newState.channel?.id && oldState.channel?.id != newState.channel?.id) {
-          await deleteChannel(oldState);
-          await createChannel(oldState, newState);
+          await deleteChannel(oldState, variables);
+          await createChannel(oldState, newState, variables);
         }
 
         // UN UTENTE HA EFFETTUATO L'ACCESSO IN UN NUOVO CANALE
         if (!oldState.channel?.id && newState.channel?.id) {
-          await createChannel(oldState, newState);
+          await createChannel(oldState, newState, variables);
         }
 
         // UN UTENTE SI E' DISCONNESSO DAI CANALI VOCALI
         if (oldState.channel?.id && !newState.channel?.id) {
-          await deleteChannel(oldState);
+          await deleteChannel(oldState, variables);
         }
 
       }
     }
     catch (error) {
-      errorSendControls(error, oldState.client, oldState.guild, "\\autoVoice-system\\voiceState.js");
+      errorSendControls(error, oldState.client, oldState.guild, "\\autoVoice-system\\voiceState.js", variables);
     }
   },
 };

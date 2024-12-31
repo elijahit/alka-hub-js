@@ -18,8 +18,17 @@ const redis = new Redis({
   password: config.redis.password,
 });
 const activeBots = new Map();
-const processName = process.env.pm_id || 'unknown';
 
+
+
+async function getWorkerId() {
+  try {
+    const workerPid = await redis.hget(`pm2_worker_pid:${process.env.pm_id}`, 'worker_id');
+    return workerPid;
+  } catch (error) {
+    console.error('Errore durante il recupero del PID del worker:', error);
+  }
+}
 
 
 async function getBotsForCurrentWorker() {
@@ -29,7 +38,7 @@ async function getBotsForCurrentWorker() {
 
     for (const key of keys) {
       const botStatus = await redis.hgetall(key);
-      if (botStatus.worker === processName) {
+      if (botStatus.worker === await getWorkerId()) {
         let configBot = await findConfigById(botStatus.botId);
         configBot = configBot?.get({ plain: true });
         if (!configBot) {
@@ -54,11 +63,11 @@ async function getBotsForCurrentWorker() {
 
         const commandData = JSON.stringify({ command: "start", botId: botConfig.id, botConfig: botConfig });
 
-        redis.rpush('bot_commands_queue', commandData, (err, result) => {
+        redis.rpush(`worker_commands_queue:${await getWorkerId()}`, commandData, async (err, result) => {
           if (err) {
-            console.error('[❌] Errore durante l’invio del comando a bot_commands_queue:', err);
+            console.error(`[❌] Errore durante l’invio del comando a worker_commands_queue:${await getWorkerId()}:`, err);
           } else {
-            console.log('[✅] Comando inviato a bot_commands_queue con successo bot ID:', configBot.id);
+            console.log(`[✅] Comando inviato a worker_commands_queue:${await getWorkerId()} con successo bot ID:`, configBot.id);
           }
         });
       }
@@ -82,19 +91,18 @@ async function processQueue() {
   console.log('\x1b[32m%s\x1b[0m', 'Technology: JavaScript - Node - Discord.js');
   console.log('\x1b[32m%s\x1b[0m', 'Powered by alkanetwork.eu');
   console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
-  console.log('\x1b[34m%s\x1b[0m', `Worker ${config.worker.workerId} avviato. In ascolto sulla coda principale...`);
+  console.log('\x1b[34m%s\x1b[0m', `Worker ${await getWorkerId()} avviato. In ascolto sulla coda principale...`);
   console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
-  let whileStop = false;
-  while (!whileStop) {
+  let workerUpdated = false;
+  while (true) {
     try {
       // Comandi generici dalla coda globale
       const commandData = await redis.rpop('bot_commands_queue');
 
       // Comandi specifici per questo Worker
-      const specificCommand = await redis.rpop(`worker_commands_queue:${config.worker.workerId}`);
+      const specificCommand = await redis.rpop(`worker_commands_queue:${await getWorkerId()}`);
 
       const data = commandData || specificCommand;
-
       if (data) {
         const { command, botId, botConfig } = JSON.parse(data);
 
@@ -102,7 +110,7 @@ async function processQueue() {
           case 'start':
             // 0 = Inattivo, 1 = Attivo, 2 = Test Bot
             if (botConfig.isActive == 0 || botConfig.isActive == 2) break;
-            if (activeBots.size >= config.worker.maxBot) {
+            if (activeBots.size >= config.worker.maxBot && !workerUpdated) {
 
               console.warn(`[⚠️] Limite massimo di bot (${config.worker.maxBot}) raggiunto.`);
               redis.rpush('bot_commands_queue', data, (err, result) => {
@@ -128,10 +136,14 @@ async function processQueue() {
                     console.error('[❌] Errore durante la creazione del worker default:', err);
                   } else {
                     console.log('[✅] Worker aggiuntivo avviato.');
+                    redis.hset(`pm2_worker_pid:${apps[apps.length - 1].pm2_env.pm_id}`, {
+                      worker_id: config.worker.workerId,
+                    });
+                    workerUpdated = true;
+                    
                   }
                 });
               });
-              whileStop = true;
               break;
             }
             await startBot(botConfig);
@@ -139,7 +151,7 @@ async function processQueue() {
             await redis.hset(`bot_status:${botId}`, {
               status: 'running',
               botId: botId,
-              worker: config.worker.workerId,
+              worker: await getWorkerId(),
               uptime: new Date().toISOString(),
             });
             break;
@@ -166,7 +178,7 @@ async function processQueue() {
 
 async function monitorWorkerHealth() {
   setInterval(async () => {
-    await redis.hset(`worker_status:${config.worker.workerId}`, {
+    await redis.hset(`worker_status:${await getWorkerId()}`, {
       status: 'running',
       uptime: new Date().toISOString(),
       botCount: activeBots.size,
