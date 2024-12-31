@@ -69,7 +69,7 @@ module.exports = {
 						.setAuthor({ name: `${language_result.selectSetup.embed_title}`, iconURL: customEmoji })
 						.setDescription(language_result.selectSetup.description_embed)
 						.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
-						.setColor(0x9ba832);
+						.setColor(colors.general.danger);
 
 					// CREO IL CANALE TEMPORANEO DI SETUP
 					const initChannel = await interaction.guild.channels.create({
@@ -91,7 +91,7 @@ module.exports = {
 						.setAuthor({ name: `${language_result.selectSetup.embed_title}`, iconURL: customEmoji })
 						.setDescription(language_result.selectSetup.description_embed_two.replace("{0}", initChannel))
 						.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
-						.setColor(0x03cffc);
+						.setColor(colors.general.aquamarine);
 
 					await interaction.reply({ embeds: [embedLogTwo], ephemeral: true });
 					await initChannel.send({ embeds: [embedLog], components: [row] });

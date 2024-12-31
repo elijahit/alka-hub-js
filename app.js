@@ -12,6 +12,20 @@ const redis = new Redis({
 
 redis.flushall();
 
+console.clear();
+console.log('\x1b[34m%s\x1b[0m', '   __    __    _  _    __      ____  _____  ____ ');
+console.log('\x1b[34m%s\x1b[0m', '  /__\\  (  )  ( )/ )  /__\\    (  _ \\(  _  )(_  _)');
+console.log('\x1b[34m%s\x1b[0m', ' /(__)\\  )(__  )  (  /(__)\\    ) _ < )(_)(   )(  ');
+console.log('\x1b[34m%s\x1b[0m', '(__)(__)(____)(_)\_) (__)(__)  (____/(_____) (__) ');
+console.log('\x1b[36m%s\x1b[0m', 'ALKA HUB BOT v2.0.0 - ALKA NETWORK - WHITE LABEL');
+console.log('\x1b[32m%s\x1b[0m', 'Author: Elijah (Gabriele Mario Tosto) <g.tosto@flazio.com>');
+console.log('\x1b[32m%s\x1b[0m', 'Since: 02/2024');
+console.log('\x1b[32m%s\x1b[0m', 'Technology: JavaScript - Node - Discord.js');
+console.log('\x1b[32m%s\x1b[0m', 'Powered by alkanetwork.eu');
+console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
+console.log('\x1b[34m%s\x1b[0m', `App in avvio... Creazione Woker principale.`);
+console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
+
 pm2.connect(function (err) {
   if (err) {
     console.error(err);
@@ -19,7 +33,7 @@ pm2.connect(function (err) {
   }
   pm2.delete('all', (err) => {
     if (err) {
-      console.error('[❌] Errore durante l’eliminazione dei processi:', err);
+      console.error('[❌] Errore durante l’eliminazione dei processi');
     } else {
       console.log('[✅] Tutti i processi PM2 sono stati eliminati con successo.');
     }

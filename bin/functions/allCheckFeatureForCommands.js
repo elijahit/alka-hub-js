@@ -74,7 +74,7 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, featu
     }
 
   } else {
-    await noEnabledFunc(interaction, languageFeatureIsEnabled);  
+    await noEnabledFunc(interaction, languageFeatureIsEnabled, variables);  
     return false;
   }
 }
