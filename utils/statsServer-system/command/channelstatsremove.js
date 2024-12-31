@@ -56,7 +56,7 @@ module.exports = {
 						return;
 					}
 					// RIMUOVO LA REACTION ALTRIMENTI ANNULLO TUTTO
-					await removeStatistics(interaction.guild.id, id);
+					await removeStatistics(interaction.guild.id, id, variables);
 
 					const embedLog = new EmbedBuilder()
 						.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.statsServerSystem.main })
