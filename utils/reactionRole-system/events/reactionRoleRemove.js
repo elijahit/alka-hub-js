@@ -27,6 +27,7 @@ module.exports = {
   
   
       // CONTROLLO SE LA FUNZIONE E' ABILITATA
+      console.log(variables)
       if (!await checkFeatureSystemDisabled(5)) return;
       if (!await checkFeaturesIsEnabled(messageReaction.message.guild.id, 5, variables)) return;
       if (!await checkPremiumFeature(messageReaction.message.guild.id, 5, variables)) return;
