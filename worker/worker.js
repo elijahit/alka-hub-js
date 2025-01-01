@@ -40,7 +40,7 @@ async function getBotsForCurrentWorker() {
 
     for (const key of keys) {
       const botStatus = await redis.hgetall(key);
-      if (botStatus.worker === await getWorkerId()) {
+      if (botStatus.worker === await getWorkerId() && botStatus.status === 'running') {
         let configBot = await findConfigById(botStatus.botId);
         configBot = configBot?.get({ plain: true });
         if (!configBot) {
