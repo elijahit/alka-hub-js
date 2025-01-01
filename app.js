@@ -17,7 +17,7 @@ if (!envStart) {
   process.exit(1);
 }
 
-if(envStart === "prod") redis.flushall();
+if (envStart === "prod") redis.flushall();
 
 console.clear();
 console.log('\x1b[34m%s\x1b[0m', '   __    __    _  _    __      ____  _____  ____ ');
@@ -65,33 +65,43 @@ pm2.connect(function (err) {
 
 
 findAllConfig().then((configs) => {
-  configs.forEach((config) => {
-    const start = envStart === 'prod' ? config.isActive == 1 : config.isActive == 2;
-    if(start) {
-      const configJson = JSON.parse(config.json)
+  configs.forEach((configBot) => {
+    const start = envStart === 'prod' ? configBot.isActive == 1 : configBot.isActive == 2;
+    if (start) {
+      const configJson = JSON.parse(configBot.json)
       const botConfig = {
         botName: configJson.botName,
         botFooter: configJson.botFooter,
         botFooterIcon: configJson.botFooterIcon,
-        isActive: config.isActive,
-        premium: config.premium,
+        isActive: configBot.isActive,
+        premium: configBot.premium,
         token: configJson.token,
         clientId: configJson.clientId,
         guildMainId: configJson.guildMainId,
         channelError: configJson.channelError,
         presenceStatus: configJson.presenceStatus,
-        id: config.id,
+        id: configBot.id,
       };
-  
+
       const commandData = JSON.stringify({ command: "start", botId: botConfig.id, botConfig: botConfig });
-  
-      redis.rpush('bot_commands_queue', commandData, (err, result) => {
-        if (err) {
-          console.error('[❌] Errore durante l’invio del comando a bot_commands_queue:', err);
-        } else {
-          console.log('[✅] Comando inviato a bot_commands_queue con successo config:', config.id);
-        }
-      });
+
+      if (envStart === "prod") {
+        redis.rpush('bot_commands_queue', commandData, (err, result) => {
+          if (err) {
+            console.error('[❌] Errore durante l’invio del comando a bot_commands_queue:', err);
+          } else {
+            console.log('[✅] Comando inviato a bot_commands_queue con successo config:', configBot.id);
+          }
+        });
+      } else {
+        redis.rpush(`worker_commands_queue:${config.worker.workerId}`, commandData, (err, result) => {
+          if (err) {
+            console.error('[❌] Errore durante l’invio del comando a worker_commands_queue:', err);
+          } else {
+            console.log('[✅] Comando inviato a worker_commands_queue con successo config:', configBot.id);
+          }
+        });
+      }
     }
   });
 });    
