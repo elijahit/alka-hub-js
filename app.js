@@ -10,6 +10,13 @@ const redis = new Redis({
   password: config.redis.password,
 });
 
+const envStart = process.env.START || false;
+
+if (!envStart) {
+  console.error('[❌] Errore: START non definito. Usa npm run prod (per la produzione) o npm run dev (per il test)');
+  process.exit(1);
+}
+
 redis.flushall();
 
 console.clear();
@@ -22,6 +29,7 @@ console.log('\x1b[32m%s\x1b[0m', 'Author: Elijah (Gabriele Mario Tosto) <g.tosto
 console.log('\x1b[32m%s\x1b[0m', 'Since: 02/2024');
 console.log('\x1b[32m%s\x1b[0m', 'Technology: JavaScript - Node - Discord.js');
 console.log('\x1b[32m%s\x1b[0m', 'Powered by alkanetwork.eu');
+console.log('\x1b[32m%s\x1b[0m', 'Environment:', envStart === 'prod' ? 'Produzione' : 'Test');
 console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
 console.log('\x1b[34m%s\x1b[0m', `App in avvio... Creazione Woker principale.`);
 console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
@@ -57,31 +65,33 @@ pm2.connect(function (err) {
 
 
 findAllConfig().then((configs) => {
-
   configs.forEach((config) => {
-    const configJson = JSON.parse(config.json)
-    const botConfig = {
-      botName: configJson.botName,
-      botFooter: configJson.botFooter,
-      botFooterIcon: configJson.botFooterIcon,
-      isActive: config.isActive,
-      premium: config.premium,
-      token: configJson.token,
-      clientId: configJson.clientId,
-      guildMainId: configJson.guildMainId,
-      channelError: configJson.channelError,
-      presenceStatus: configJson.presenceStatus,
-      id: config.id,
-    };
-
-    const commandData = JSON.stringify({ command: "start", botId: botConfig.id, botConfig: botConfig });
-
-    redis.rpush('bot_commands_queue', commandData, (err, result) => {
-      if (err) {
-        console.error('[❌] Errore durante l’invio del comando a bot_commands_queue:', err);
-      } else {
-        console.log('[✅] Comando inviato a bot_commands_queue con successo:', result);
-      }
-    });
+    envStart === 'prod' ? config.isActive = 1 : config.isActive = 2;
+    if(envStart) {
+      const configJson = JSON.parse(config.json)
+      const botConfig = {
+        botName: configJson.botName,
+        botFooter: configJson.botFooter,
+        botFooterIcon: configJson.botFooterIcon,
+        isActive: config.isActive,
+        premium: config.premium,
+        token: configJson.token,
+        clientId: configJson.clientId,
+        guildMainId: configJson.guildMainId,
+        channelError: configJson.channelError,
+        presenceStatus: configJson.presenceStatus,
+        id: config.id,
+      };
+  
+      const commandData = JSON.stringify({ command: "start", botId: botConfig.id, botConfig: botConfig });
+  
+      redis.rpush('bot_commands_queue', commandData, (err, result) => {
+        if (err) {
+          console.error('[❌] Errore durante l’invio del comando a bot_commands_queue:', err);
+        } else {
+          console.log('[✅] Comando inviato a bot_commands_queue con successo:', result);
+        }
+      });
+    }
   });
 });    
