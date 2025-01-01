@@ -93,7 +93,7 @@ findAllConfig().then((configs) => {
             console.log('[✅] Comando inviato a bot_commands_queue con successo config:', configBot.id);
           }
         });
-      } else {
+      } else if(envStart === "test") {
         redis.rpush(`worker_commands_queue:${config.worker.workerId}`, commandData, (err, result) => {
           if (err) {
             console.error('[❌] Errore durante l’invio del comando a worker_commands_queue:', err);
