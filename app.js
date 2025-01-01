@@ -89,7 +89,7 @@ findAllConfig().then((configs) => {
         if (err) {
           console.error('[❌] Errore durante l’invio del comando a bot_commands_queue:', err);
         } else {
-          console.log('[✅] Comando inviato a bot_commands_queue con successo:', result);
+          console.log('[✅] Comando inviato a bot_commands_queue con successo config:', config.id);
         }
       });
     }
