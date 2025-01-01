@@ -52,9 +52,9 @@ const mainEvents = async (client, variables) => {
     await executeFolderModule(client, 'utils', variables);
     statisticsUpdate(client, variables);
     console.log(`[✅] Bot ${variables.getBotName()} (${variables.getConfigId()}) avviato con successo!`);
-    new LogClasses.createLog("NULL", 'AVVIO', `Bot ${variables.getBotName()} (${variables.getConfigId()}) avviato con successo!`, variables);
+    new LogClasses.createLog("NON DEFINITO", 'AVVIO', `Bot ${variables.getBotName()} (${variables.getConfigId()}) avviato con successo!`, variables);
 
-    
+
     const presenceArray = variables.getPresenceStatus();
     if(presenceArray.length == 1) {
       await client.user.setPresence({
