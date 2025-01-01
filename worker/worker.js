@@ -153,7 +153,7 @@ async function processQueue() {
             } 
 
             if (workerStartAllow) {
-              await startBot(botConfig);
+              startBot(botConfig);
               activeBots.set(botId, botConfig);
               await redis.hset(`bot_status:${botId}`, {
                 status: 'running',
@@ -166,7 +166,7 @@ async function processQueue() {
             break;
 
           case 'stop':
-            await stopBot(botId);
+            stopBot(botId);
             activeBots.delete(botId);
             workerStartAllow = true;
             await redis.hdel(`bot_status:${botId}`);
