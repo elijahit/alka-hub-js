@@ -17,7 +17,7 @@ if (!envStart) {
   process.exit(1);
 }
 
-redis.flushall();
+if(envStart === "prod") redis.flushall();
 
 console.clear();
 console.log('\x1b[34m%s\x1b[0m', '   __    __    _  _    __      ____  _____  ____ ');
