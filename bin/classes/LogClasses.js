@@ -7,7 +7,7 @@
 */
 
 class LogClasses {
-  static async createLog(guildId, type, reason, variables) {
+  async createLog(guildId, type, reason, variables) {
     try {
       const { createLog } = require('../service/DatabaseService'); 
       const Webhook = require('../service/WebhookService');
