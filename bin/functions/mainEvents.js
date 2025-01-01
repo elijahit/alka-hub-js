@@ -9,6 +9,7 @@
 const { Events, ActivityType } = require('discord.js');
 const executeFolderModule = require('./executeFunctions');
 const LogClasses = require('../classes/LogClasses');
+const { statisticsUpdate } = require('../../utils/statsServer-system/functions/statisticsUpdate');
 
 
 const mainEvents = async (client, variables) => {
@@ -49,6 +50,7 @@ const mainEvents = async (client, variables) => {
   await client.once(Events.ClientReady, async readyClient => {
     // FUNZIONI
     await executeFolderModule(client, 'utils', variables);
+    await statisticsUpdate(client, variables);
     console.log(`[✅] Bot ${variables.getBotName()} (${variables.getConfigId()}) avviato con successo!`);
     LogClasses.createLog(variables.getGuildMainId(), 'AVVIO', `Bot ${variables.getBotName()} (${variables.getConfigId()}) avviato con successo!`, variables);
 
