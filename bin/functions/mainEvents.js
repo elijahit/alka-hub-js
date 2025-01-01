@@ -50,7 +50,7 @@ const mainEvents = async (client, variables) => {
   await client.once(Events.ClientReady, async readyClient => {
     // FUNZIONI
     await executeFolderModule(client, 'utils', variables);
-    await statisticsUpdate(client, variables);
+    statisticsUpdate(client, variables);
     console.log(`[✅] Bot ${variables.getBotName()} (${variables.getConfigId()}) avviato con successo!`);
     LogClasses.createLog(variables.getGuildMainId(), 'AVVIO', `Bot ${variables.getBotName()} (${variables.getConfigId()}) avviato con successo!`, variables);
 
