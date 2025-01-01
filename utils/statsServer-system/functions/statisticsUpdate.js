@@ -22,19 +22,9 @@ async function statisticsUpdate(client, variables) {
       } catch {
         continue;
       }
-      if (!await checkFeatureSystemDisabled(6)) {
-        await new Promise((resolve) => setTimeout(resolve, 600000));
-        continue;
-      };
-      if (!await checkFeaturesIsEnabled(guild.id, 6, variables)) {
-        await new Promise((resolve) => setTimeout(resolve, 600000));
-        continue;
-      };
-      if (!await checkPremiumFeature(guild.id, 6, variables)) {
-        await new Promise((resolve) => setTimeout(resolve, 600000));
-        continue;
-      };
-      try {
+      if (!await checkFeatureSystemDisabled(6)) continue;
+      if (!await checkFeaturesIsEnabled(guild.id, 6, variables)) continue;
+      if (!await checkPremiumFeature(guild.id, 6, variables)) continue;
         // DATA TYPE STATS
         if (data.type == 1) {
           let date = await timeZoneManage(guild, variables);
