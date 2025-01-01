@@ -25,6 +25,7 @@ async function statisticsUpdate(client, variables) {
       if (!await checkFeatureSystemDisabled(6)) continue;
       if (!await checkFeaturesIsEnabled(guild.id, 6, variables)) continue;
       if (!await checkPremiumFeature(guild.id, 6, variables)) continue;
+      try {
         // DATA TYPE STATS
         if (data.type == 1) {
           let date = await timeZoneManage(guild, variables);
@@ -244,6 +245,7 @@ async function statisticsUpdate(client, variables) {
       }
       catch (error) {
         errorSendControls(error, guild.client, guild, "\\statsServer-system\\statsinteraction.js", variables);
+        continue;
       }
 
     }
