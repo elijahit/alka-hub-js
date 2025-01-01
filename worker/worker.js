@@ -100,7 +100,6 @@ async function processQueue() {
       if(workerStartAllow) commandData = await redis.rpop('bot_commands_queue');
 
       // Comandi specifici per questo Worker
-      console.log(workerId);
       const specificCommand = await redis.rpop(`worker_commands_queue:${workerId}`);
 
       const data = commandData || specificCommand;
