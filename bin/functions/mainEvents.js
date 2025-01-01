@@ -54,6 +54,7 @@ const mainEvents = async (client, variables) => {
     console.log(`[✅] Bot ${variables.getBotName()} (${variables.getConfigId()}) avviato con successo!`);
     new LogClasses.createLog("NULL", 'AVVIO', `Bot ${variables.getBotName()} (${variables.getConfigId()}) avviato con successo!`, variables);
 
+    
     const presenceArray = variables.getPresenceStatus();
     if(presenceArray.length == 1) {
       await client.user.setPresence({
