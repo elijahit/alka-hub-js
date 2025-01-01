@@ -66,8 +66,8 @@ pm2.connect(function (err) {
 
 findAllConfig().then((configs) => {
   configs.forEach((config) => {
-    envStart === 'prod' ? config.isActive == 1 : config.isActive == 2;
-    if(envStart) {
+    const start = envStart === 'prod' ? config.isActive == 1 : config.isActive == 2;
+    if(start) {
       const configJson = JSON.parse(config.json)
       const botConfig = {
         botName: configJson.botName,
