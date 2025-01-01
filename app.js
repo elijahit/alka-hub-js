@@ -49,14 +49,12 @@ pm2.connect(function (err) {
       script: './worker/worker.js',
       name: `${config.worker.workerId}`,
       exec_mode: '',
+      env: {WORKER_ID: config.worker.workerId }
     }, function (err, apps) {
       pm2.disconnect();   // Disconnects from PM2
       if (err) {
         console.error('[❌] Errore durante la creazione del worker default:', err);
       } else {
-        redis.hset(`pm2_worker_pid:${apps[apps.length - 1].pm2_env.pm_id}`, {
-          worker_id: config.worker.workerId,
-        });
         console.log('[✅] Worker default avviato.');
       }
     });
