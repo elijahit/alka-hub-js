@@ -112,8 +112,15 @@ async function processQueue() {
           case 'start':
             // 0 = Inattivo, 1 = Attivo, 2 = Test Bot
             if (botConfig.isActive == 0) break;
-            if (activeBots.size >= config.worker.maxBot && generatedWorker === false) {
 
+            const status = await redis.hget(`bot_status:${botId}`, 'status');
+            if (status === 'running') {
+              console.warn(`[⚠️] Il bot ${botId} è già in esecuzione.`);
+              break;
+            }
+
+
+            if (activeBots.size >= config.worker.maxBot && generatedWorker === false) {
               console.warn(`[⚠️] Limite massimo di bot (${config.worker.maxBot}) raggiunto.`);
               workerStartAllow = false;
               generatedWorker = true;
