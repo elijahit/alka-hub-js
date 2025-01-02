@@ -186,6 +186,12 @@ const {
 // findAllByGuildIdLog -> Permette di cercare tutte le righe di Log nella tabella logs tramite guildId
 // createLog -> Permette di creare una riga di Log nella tabella logs
 
+const {
+  findById: findCommandsById,
+  findAll: findAllCommands,
+  findByName: findCommandsByName
+} = require('../repository/Commands');
+
 
 module.exports = {
   findAllWelcome,
@@ -264,5 +270,8 @@ module.exports = {
   findAllByGuildIdLog,
   findByIdLog,
   createLog,
-  findConfigById
+  findConfigById,
+  findCommandsById,
+  findAllCommands,
+  findCommandsByName
 }

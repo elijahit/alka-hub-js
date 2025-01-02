@@ -28,6 +28,7 @@ const { ReactionRole } = require('./ReactionRole');
 const { Welcome } = require('./Welcome');
 const { StatisticsCategory } = require('./StatisticsCategory');
 const { Log } = require('./Log');
+const { Commands } = require('./Commands');
 
 
 
@@ -87,5 +88,6 @@ module.exports = {
   ReactionRole,
   Welcome,
   StatisticsCategory,
-  Log
+  Log,
+  Commands
 }
