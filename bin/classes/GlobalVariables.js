@@ -21,6 +21,7 @@ class Variables {
         this.presenceStatus = null;
         this.configId = null;
         this.presenceCounter = 0;
+        this.commandDeploy = null;
     }
 
     // Getter e Setter per ogni variabile
@@ -62,6 +63,14 @@ class Variables {
 
     setNameConfiguration(value) {
         this.nameConfiguration = value;
+    }
+
+    setCommandDeploy(value) {
+        this.commandDeploy = value;
+    }
+
+    getCommandDeploy() {
+        return this.commandDeploy;
     }
 
     getIsActive() {

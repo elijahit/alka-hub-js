@@ -52,6 +52,7 @@ async function startBot(botConfig) {
     variables.setPresenceStatus(botConfig.presenceStatus);
     variables.setConfigId(botConfig.id);
     variables.setNameConfiguration(botConfig.botName);
+    variables.setCommandDeploy(botConfig.commandDeploy);
 
     client.commands = new Collection();
     await mainEvents(client, variables);

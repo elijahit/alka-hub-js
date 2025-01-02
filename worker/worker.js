@@ -59,6 +59,7 @@ async function getBotsForCurrentWorker() {
           channelError: configJson.channelError,
           presenceStatus: configJson.presenceStatus,
           id: configBot.id,
+          commandDeploy: configBot.command_deploy,
         };
 
         const commandData = JSON.stringify({ command: "start", botId: botConfig.id, botConfig: botConfig });

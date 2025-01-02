@@ -34,9 +34,19 @@ async function findByName(name) {
 async function findById(id) {
   return await Config.findOne({where: {id: id}});
 }
+/**
+ * 
+ * @param {object} objToUpdate 
+ * @param {object} objWhere 
+ * @returns 
+ */
+async function update(objToUpdate, objWhere) {
+  return await Config.update(objToUpdate, {where: objWhere});
+}
 
 module.exports = {
   findByName,
   findAll,
-  findById
+  findById,
+  update
 }

@@ -10,9 +10,13 @@ const { Events, ActivityType } = require('discord.js');
 const executeFolderModule = require('./executeFunctions');
 const LogClasses = require('../classes/LogClasses');
 const { statisticsUpdate } = require('../../utils/statsServer-system/functions/statisticsUpdate');
+const CommandsDeploy = require('../classes/CommandsDeploy');
 
 
 const mainEvents = async (client, variables) => {
+  const commands = new CommandsDeploy();
+  await commands.deploy(variables);
+  
   await client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand()) return;
     if (!interaction.guild) return;

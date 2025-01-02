@@ -78,6 +78,7 @@ findAllConfig().then((configs) => {
         guildMainId: configJson.guildMainId,
         channelError: configJson.channelError,
         presenceStatus: configJson.presenceStatus,
+        commandDeploy: configBot.command_deploy,
         id: configBot.id,
       };
 
