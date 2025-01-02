@@ -48,11 +48,12 @@ class CommandsDeploy {
     }
     if (commandsCreate.length > 0) {
       try{
-        console.log(commandsCreate)
-        await rest.post(
-          Routes.applicationCommands(clientIdBot),
-          { body: commandsCreate }
-        );
+        for (const command of commandsCreate) {
+          await rest.post(
+            Routes.applicationCommands(clientIdBot),
+            { body: command }
+          );
+        }
         console.log('Create... commands completed');
       } catch (error) {
         console.error(error);
@@ -62,7 +63,7 @@ class CommandsDeploy {
 
     if (commandsUpdate.length > 0) {
       try {
-        await rest.put(
+        await rest.patch(
           Routes.applicationCommands(clientIdBot),
           { body: commandsUpdate }
         );
