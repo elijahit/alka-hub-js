@@ -48,6 +48,7 @@ class CommandsDeploy {
     }
     if (commandsCreate.length > 0) {
       try{
+        console.log(commandsCreate)
         await rest.post(
           Routes.applicationCommands(clientIdBot),
           { body: commandsCreate }
