@@ -1,4 +1,5 @@
 const { findCommandsByName, updateConfig } = require('../service/DatabaseService');
+const LogClasses = require('./LogClasses');
 
 class CommandsDeploy {
   constructor() {
@@ -36,6 +37,7 @@ class CommandsDeploy {
               Routes.applicationCommands(clientIdBot)
             )
             if (checkCommand.find(c => c.name === command.data.name)) {
+              command.data.id = checkCommand.find(c => c.name === command.data.name).id;
               commandsUpdate.push(command.data.toJSON());
             } else {
               commandsCreate.push(command.data.toJSON());
@@ -58,6 +60,8 @@ class CommandsDeploy {
         console.log('Create... commands completed');
       } catch (error) {
         console.error(error);
+        LogClasses.createLog("NULL", 'ERRORE-DEPLOY-COMMANDS', `Errore durante l'aggiornamento dei comandi`, config);
+        return;
       }
     }
 
@@ -66,13 +70,15 @@ class CommandsDeploy {
       try {
         for (const command of commandsUpdate) {
           await rest.patch(
-            Routes.applicationCommands(clientIdBot),
+            Routes.applicationCommand(clientIdBot, command.id),
             { body: command }
           );
         }
         console.log('Update... commands completed');
       } catch (error) {
+        LogClasses.createLog("NULL", 'ERRORE-DEPLOY-COMMANDS', `Errore durante l'aggiornamento dei comandi`, config);
         console.error(error);
+        return;
       }
     }
 
