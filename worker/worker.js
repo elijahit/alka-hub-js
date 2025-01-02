@@ -112,7 +112,7 @@ async function processQueue() {
             if (botConfig.isActive == 0) break;
 
             const status = await redis.hget(`bot_status:${botId}`, 'status');
-            if (status === 'running' && botConfig.isActive !== 2) {
+            if (status === 'running' && botConfig.isActive !== 2 && !specificCommand) {
               console.warn(`[⚠️] Il bot ${botId} è già in esecuzione.`);
               break;
             }
