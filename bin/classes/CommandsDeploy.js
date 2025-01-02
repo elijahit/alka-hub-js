@@ -48,6 +48,7 @@ class CommandsDeploy {
     }
     if (commandsCreate.length > 0) {
       try{
+        console.log('Create... commands start');
         for (const command of commandsCreate) {
           await rest.post(
             Routes.applicationCommands(clientIdBot),
@@ -58,15 +59,17 @@ class CommandsDeploy {
       } catch (error) {
         console.error(error);
       }
-      return;
     }
 
     if (commandsUpdate.length > 0) {
+      console.log('Update... commands start');
       try {
-        await rest.patch(
-          Routes.applicationCommands(clientIdBot),
-          { body: commandsUpdate }
-        );
+        for (const command of commandsUpdate) {
+          await rest.patch(
+            Routes.applicationCommands(clientIdBot),
+            { body: command }
+          );
+        }
         console.log('Update... commands completed');
       } catch (error) {
         console.error(error);
