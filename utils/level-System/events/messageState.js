@@ -37,7 +37,7 @@ module.exports = {
         let levelsConfig = await findLevelsConfigByGuildId(message.guild.id, variables);
         levelsConfig = levelsConfig?.get({ plain: true });
         if (!levelsConfig) return;
-
+        if(!message?.guild?.id || !message?.member?.id) return;  
         let checkUser = await findByGuildIdAndUserIdLevel(message.guild.id, message.member.id, variables);
         checkUser = checkUser?.get({ plain: true });
         if (checkUser) {

@@ -14,7 +14,8 @@ const Config = database.define('configs', {
   owner_discord_id: { type: Sequelize.STRING },
   json: { type: Sequelize.STRING },
   isActive: { type: Sequelize.INTEGER },
-  premium: { type: Sequelize.INTEGER }
+  premium: { type: Sequelize.INTEGER },
+  command_deploy: { type: Sequelize.INTEGER },
 });
 
 module.exports = {
