@@ -30,6 +30,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('apex')
 		.setDescription('Displays the information of an Apex Legends user')
+		.setDescriptionLocalization("it", "Vedi le informazioni di un utente di Apex Legends")
 		.addStringOption(value =>
 			value
 				.setName('username')

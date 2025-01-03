@@ -22,10 +22,12 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('stats')
 		.setDescription('Use this command to show statistics.')
+		.setDescriptionLocalization("it", "Usa questo comando per visualizzare le statistiche")
 		.addUserOption(user =>
 			user
 				.setName('user')
 				.setDescription('Add a user to see someone else\'s statistics')
+				.setDescriptionLocalization("it", "Aggiungi un utente per vedere le statistiche di qualcun altro")
 				.setRequired(true)
 		),
 	async execute(interaction, variables) {

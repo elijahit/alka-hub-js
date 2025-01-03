@@ -22,6 +22,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('logschannel')
 		.setDescription('Use this command to set up the Logs System channels')
+		.setDescriptionLocalization("it", "Usa questo comando per impostare i canali del sistema di Logs")
 		.addStringOption(option =>
 			option
 				.addChoices({
@@ -66,6 +67,7 @@ module.exports = {
 				})
 				.setName('state_event')
 				.setDescription('Select an event to set the channel for')
+				.setDescriptionLocalization("it", "Seleziona un evento per impostare il canale")
 				.setRequired(true)
 		)
 		.addChannelOption(option =>
@@ -73,6 +75,7 @@ module.exports = {
 				.addChannelTypes(ChannelType.GuildText)
 				.setName('channel_logs')
 				.setDescription('Select the channel to set as the logs channel')
+				.setDescriptionLocalization("it", "Seleziona il canale da impostare come canale di logs")
 				.setRequired(true)
 		),
 	async execute(interaction, variables) {

@@ -22,10 +22,12 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('channelstatsremove')
 		.setDescription('Use this command to remove your channel stats')
+		.setDescriptionLocalization("it", "Usa questo comando per rimuovere le tue statistiche del canale")
 		.addIntegerOption(id =>
 			id
 				.setName('id')
 				.setDescription('ID to which you want to remove the channel stats')
+				.setDescriptionLocalization("it", "ID a cui vuoi rimuovere le statistiche del canale")
 				.setRequired(true)
 		),
 	async execute(interaction, variables) {

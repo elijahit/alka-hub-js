@@ -19,10 +19,12 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('permissionlist')
 		.setDescription('Use this command to view the permissions assigned to a role!')
+		.setDescriptionLocalization("it", "Usa questo comando per visualizzare i permessi assegnati ad un ruolo!")
 		.addRoleOption(option =>
 			option
 				.setName('role')
 				.setDescription('The role for which you want to set permission')
+				.setDescriptionLocalization("it", "Il ruolo per il quale vuoi impostare i permessi")
 				.setRequired(true)
 		),
 	async execute(interaction, variables) {

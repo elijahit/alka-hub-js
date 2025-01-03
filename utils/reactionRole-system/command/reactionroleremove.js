@@ -22,16 +22,19 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('reactionroleremove')
 		.setDescription('Use this command to remove your reaction roles')
+		.setDescriptionLocalization("it", "Usa questo comando per rimuovere i tuoi ruoli reazione")
 		.addStringOption(message =>
 			message
 				.setName('message')
 				.setDescription('The message ID to which you want to remove the reaction role')
+				.setDescriptionLocalization("it", "L'ID del messaggio a cui vuoi rimuovere il ruolo reazione")
 				.setRequired(true)
 		)
 		.addStringOption(emoji =>
 			emoji
 				.setName('emoji')
-				.setDescription('The emoji to which the user must react for the reaction role')
+				.setDescription('The emoji for remove the reaction role')
+				.setDescriptionLocalization("it", "L'emoji per rimuovere il ruolo reazione")
 				.setRequired(true)
 		),
 	async execute(interaction, variables) {

@@ -22,10 +22,12 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('levels')
 		.setDescription('Use this command to set your levels system.')
+		.setDescriptionLocalization("it", "Usa questo comando per impostare il tuo sistema di livelli")
 		.addChannelOption(channel =>
 			channel
 				.setName('channel')
 				.setDescription('The channel in which level notifications are sent')
+				.setDescriptionLocalization("it", "Il canale in cui vengono inviate le notifiche di livello")
 				.addChannelTypes(ChannelType.GuildText)
 				.setRequired(true)
 		),

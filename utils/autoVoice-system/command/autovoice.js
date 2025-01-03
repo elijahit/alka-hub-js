@@ -19,7 +19,8 @@ const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckF
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('autovoice')
-		.setDescription(' Use this command to initialize the Auto Voice System'),
+		.setDescription(' Use this command to initialize the Auto Voice System')
+		.setDescriptionLocalization("it", "Usa questo comando per inizializzare il sistema di auto voice"),
 	async execute(interaction, variables) {
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id, variables);

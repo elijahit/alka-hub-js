@@ -22,16 +22,19 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('levelrole')
 		.setDescription('Use this command to set your role in the level system.')
+		.setDescriptionLocalization("it", "Usa questo comando per impostare il tuo ruolo nel sistema di livelli")
 		.addRoleOption(role =>
 			role
 				.setName('role')
 				.setDescription('The role to set when reaching a certain level')
+				.setDescriptionLocalization("it", "Il ruolo da impostare quando si raggiunge un certo livello")
 				.setRequired(true)
 		)
 		.addNumberOption(level =>
 			level
 				.setName('level')
 				.setDescription('The level to reach to have the set role')
+				.setDescriptionLocalization("it", "Il livello da raggiungere per avere il ruolo impostato")
 				.setRequired(true)
 		),
 	async execute(interaction, variables) {

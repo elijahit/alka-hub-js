@@ -19,6 +19,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
 		.setDescription('Command to view the complete list of commands in the server')
+		.setDescriptionLocalization("it", "Comando per visualizzare la lista completa dei comandi nel server")
 		.addStringOption(value =>
 			value
 				.setName('module')

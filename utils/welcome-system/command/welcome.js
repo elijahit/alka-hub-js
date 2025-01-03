@@ -19,10 +19,12 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('welcome')
 		.setDescription('Use this command to set your welcome messages')
+		.setDescriptionLocalization("it", "Usa questo comando per impostare i messaggi di benvenuto")
 		.addChannelOption(value =>
 			value
 				.setName('channel')
 				.setDescription('Channel in which to see the message')
+				.setDescriptionLocalization("it", "Canale in cui vedere il messaggio")
 				.addChannelTypes(ChannelType.GuildText)
 				.setRequired(true)
 		)
@@ -31,6 +33,7 @@ module.exports = {
 				.setName('color')
 				.setRequired(true)
 				.setDescription('Color of your font')
+				.setDescriptionLocalization("it", "Colore del tuo font")
 				.addChoices({
 					name: "White",
 					value: 0
@@ -43,7 +46,8 @@ module.exports = {
 		.addStringOption(value =>
 			value
 				.setName("background")
-				.setDescription('Link .jpg or .png image to use as background')
+				.setDescription('Link .jpg or .png image to use as background include https://')
+				.setDescriptionLocalization("it", "Link immagine .jpg o .png da usare come sfondo includi https://")
 		),
 	async execute(interaction, variables) {
 		const channel = interaction.options.getChannel('channel');

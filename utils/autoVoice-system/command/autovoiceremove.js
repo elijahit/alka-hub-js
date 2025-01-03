@@ -21,7 +21,8 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('autovoiceremove')
     .setDescription('Use this command to delete an Auto Voice System configuration')
-    .addIntegerOption(option => option.setName('autovoice_id').setDescription('Insert ID the Auto Voice System configuration to delete').setRequired(true)),
+    .setDescriptionLocalization("it", "Usa questo comando per eliminare una configurazione del sistema di auto voice")
+    .addIntegerOption(option => option.setName('autovoice_id').setDescription('Insert ID the Auto Voice System configuration to delete').setRequired(true).setDescriptionLocalization("it", "Inserisci l'ID della configurazione del sistema di auto voice da eliminare")),
   async execute(interaction, variables) {
     const autoVoiceId = interaction.options.getInteger('autovoice_id');
 

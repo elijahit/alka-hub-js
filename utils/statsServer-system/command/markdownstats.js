@@ -18,7 +18,8 @@ const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckF
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('markdownstats')
-		.setDescription('Use this command to display help for the markdown of Stats Server'),
+		.setDescription('Use this command to display help for the markdown of Stats Server')
+		.setDescriptionLocalization("it", "Usa questo comando per visualizzare l'aiuto per il markdown di Stats Server"),
 	async execute(interaction, variables) {
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id, variables);

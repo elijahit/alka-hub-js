@@ -20,7 +20,8 @@ const { findAllAutoVoiceByGuildId } = require('../../../bin/service/DatabaseServ
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('autovoicelist')
-    .setDescription('Use this commando to view the list of Auto Voice System configurations'),
+    .setDescription('Use this commando to view the list of Auto Voice System configurations')
+    .setDescriptionLocalization("it", "Usa questo comando per visualizzare la lista delle configurazioni del sistema di auto voice"),
   async execute(interaction, variables) {
 
     // RECUPERO LA LINGUA

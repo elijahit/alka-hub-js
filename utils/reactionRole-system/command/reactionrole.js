@@ -21,21 +21,25 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('reactionrole')
 		.setDescription('Use this command to set your reaction roles')
+		.setDescriptionLocalization("it", "Usa questo comando per impostare i tuoi reaction roles")
 		.addStringOption(message =>
 			message
 				.setName('message')
 				.setDescription('The message ID to which you want to assign the reaction role')
+				.setDescriptionLocalization("it", "L'ID del messaggio a cui vuoi assegnare il reaction role")
 				.setRequired(true)
 		)
 		.addStringOption(emoji =>
 			emoji
 				.setName('emoji')
 				.setDescription('The emoji to which the user must react for the reaction role')
+				.setDescriptionLocalization("it", "L'emoji a cui l'utente deve reagire per il reaction role")
 				.setRequired(true))
 		.addRoleOption(role =>
 			role
 				.setName('role')
 				.setDescription('The role to be assigned with the reaction role')
+				.setDescriptionLocalization("it", "Il ruolo da assegnare con il reaction role")
 				.setRequired(true)
 		),
 	async execute(interaction, variables) {

@@ -19,7 +19,8 @@ const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckF
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('channelstatslist')
-		.setDescription('Use this command to view the set channels stats.'),
+		.setDescription('Use this command to view the set channels stats.')
+		.setDescriptionLocalization("it", "Usa questo comando per visualizzare la lista statistiche dei canali impostati."),
 	async execute(interaction, variables) {
 		let statsList = "";
 

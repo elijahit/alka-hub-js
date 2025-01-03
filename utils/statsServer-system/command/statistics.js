@@ -19,7 +19,8 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('statistics')
-		.setDescription('Use this command to setup your statistics category'),
+		.setDescription('Use this command to setup your statistics category')
+		.setDescriptionLocalization("it", "Usa questo comando per impostare la tua categoria di statistiche"),
 	async execute(interaction, variables) {
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id, variables);

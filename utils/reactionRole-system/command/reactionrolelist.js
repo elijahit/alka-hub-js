@@ -19,7 +19,8 @@ const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckF
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('reactionrolelist')
-		.setDescription('Use this command to view the set reaction roles.'),
+		.setDescription('Use this command to view the set reaction roles.')
+		.setDescriptionLocalization("it", "Usa questo comando per visualizzare la lista dei ruoli reazione impostati."),
 	async execute(interaction, variables) {
 		let reactionRoleString = "";
 

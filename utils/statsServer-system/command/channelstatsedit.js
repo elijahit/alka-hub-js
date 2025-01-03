@@ -21,10 +21,12 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('channelstatsedit')
 		.setDescription('Use this command to edit name your statistics channel')
+		.setDescriptionLocalization("it", "Usa questo comando per modificare il nome del tuo canale di statistiche")
 		.addChannelOption(channel =>
 			channel
 				.setName('channel')
 				.setDescription('Select a channel statistics')
+				.setDescriptionLocalization("it", "Seleziona un canale di statistiche")
 				.addChannelTypes(ChannelType.GuildVoice)
 				.setRequired(true)
 		),

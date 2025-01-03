@@ -21,6 +21,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('features')
 		.setDescription('Use this command to enable or disable the features')
+		.setDescriptionLocalization("it", "Usa questo comando per abilitare o disabilitare le features")
 		.addIntegerOption(option =>
 			option
 				.addChoices({
@@ -69,6 +70,7 @@ module.exports = {
 				})
 				.setName('choices')
 				.setDescription('Name of the system you want to enable or disable')
+				.setDescriptionLocalization("it", "Nome del sistema che vuoi abilitare o disabilitare")
 				.setRequired(true)
 		),
 	async execute(interaction, variables) {

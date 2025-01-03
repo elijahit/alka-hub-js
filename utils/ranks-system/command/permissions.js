@@ -18,16 +18,19 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('permissions')
 		.setDescription('Use the following command to set or remove role-based access levels!')
+		.setDescriptionLocalization("it", "Usa il seguente comando per assegnare o rimuovere livelli di accesso basati sui ruoli!")
 		.addRoleOption(option =>
 			option
 				.setName('role')
 				.setDescription('The role for which you want to set permission')
+				.setDescriptionLocalization("it", "Il ruolo per il quale vuoi impostare i permessi")
 				.setRequired(true)
 		)
 		.addStringOption(option =>
 			option
 				.setName('pex')
 				.setDescription('Hash of the command to assign permissions to')
+				.setDescriptionLocalization("it", "Hash del comando a cui assegnare i permessi")
 				.setRequired(true)
 		)
 		.setDefaultMemberPermissions(8),

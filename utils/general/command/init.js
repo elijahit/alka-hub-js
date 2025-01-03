@@ -19,7 +19,8 @@ const { findByGuildId } = require('../../../bin/repository/Guild');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('init')
-		.setDescription('Use this command to initialize the bot on your server'),
+		.setDescription('Use this command to initialize/modify the bot on your server')
+		.setDescriptionLocalization("it", "Usa questo comando per inizializzare/modificare il bot sul tuo server"),
 	async execute(interaction, variables) {
 		// RECUPERO LA LINGUA
 		let data = await language.databaseCheck(interaction.guild.id, variables);
