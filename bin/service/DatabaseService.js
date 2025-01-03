@@ -83,7 +83,7 @@ const { findAll: findAllLevels,
   findByGuildId: findByGuildIdLevel, 
   findByGuildIdAndUserId: findByGuildIdAndUserIdLevel, 
   create: createLevel, 
-  update: updateLevel } = require('../repository/Level');
+  update: updateLevel, } = require('../repository/Level');
 // findAllLevels -> Permette di cercare tutte le configurazioni di Level nella tabella levels
 // findByGuildIdLevel -> Permette di cercare una configurazione di Level nella tabella levels tramite guildId
 // findByGuildIdAndUserIdLevel -> Permette di cercare una configurazione di Level nella tabella levels tramite guildId e userId
@@ -96,7 +96,8 @@ const { findAll: findAllLevelsRoles,
   findAllByGuildId: findAllLevelsRolesByGuildId,
   create: createLevelsRoles,
   update: updateLevelsRoles,
-  remove: removeLevelsRoles } = require('../repository/LevelsRoles');
+  remove: removeLevelsRoles,
+  findByGuildIdAndId: findByGuildIdAndIdLevel } = require('../repository/LevelsRoles');
 // findAllLevelsRoles -> Permette di cercare tutte le configurazioni di LevelsRoles nella tabella levels_roles
 // findByGuildIdLevelsRoles -> Permette di cercare una configurazione di LevelsRoles nella tabella levels_roles tramite guildId
 // findByGuildIdAndRoleIdLevelsRoles -> Permette di cercare una configurazione di LevelsRoles nella tabella levels_roles tramite guildId e roleId
@@ -274,5 +275,6 @@ module.exports = {
   findCommandsById,
   findAllCommands,
   findCommandsByName,
-  updateConfig
+  updateConfig,
+  findByGuildIdAndIdLevel,
 }

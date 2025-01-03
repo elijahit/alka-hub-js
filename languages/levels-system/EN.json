@@ -18,6 +18,13 @@
     "description_embed_addrole": "You have successfully added the role {0} and it will now be set to members with level {1}",
     "description_embed_stats": "Member {0} is level **{1}**\n**Experience**: {2}/{3}",
     "description_embed_statsNotFound": "The user has no statistics available yet, please try again later",
-    "missing_permissions": "The role {0} was not assigned to the user {1} because the bot does not have the necessary permissions. Ensure that the bot has the appropriate permissions to assign roles and that its highest role is above the role to be assigned. If the problem persists, contact an administrator."
+    "missing_permissions": "The role {0} was not assigned to the user {1} because the bot does not have the necessary permissions. Ensure that the bot has the appropriate permissions to assign roles and that its highest role is above the role to be assigned. If the problem persists, contact an administrator.",
+    "description_embed_no_role": "This role was not found in the database, please try again or view them with /levellist."
+  },
+  "listCommand": {
+    "embed_title": "Levels System",
+    "description_embed": "Here is the list of all the role that are currently recording levels on your server.",
+    "no_channel": "No roles set yet, set them up with /levelrole.",
+    "most_lenght": "... Many more"
   }
 }

@@ -44,6 +44,15 @@ async function findByGuildIdAndRoleId(guildId, roleId, variables) {
 }
 
 /**
+ * @param {string} guildId 
+ * @param {string} roleId
+ * @returns {Promise<Model>}
+ */
+async function findByGuildIdAndId(guildId, id, variables) {
+  return await LevelsRoles.findOne({where: {guild_id: guildId, id: id, config_id: variables.getConfigId()}});
+}
+
+/**
  * 
  * @param {string} guildId
  * @param {string} roleId
@@ -75,6 +84,7 @@ module.exports = {
   findAllByGuildId,
   findByGuildId,
   findByGuildIdAndRoleId,
+  findByGuildIdAndId,
   create,
   update,
   remove
