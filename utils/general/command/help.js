@@ -24,6 +24,7 @@ module.exports = {
 			value
 				.setName('module')
 				.setDescription('Select a module to view its help page')
+				.setDescriptionLocalization("it", "Seleziona un modulo per visualizzare la sua pagina di aiuto")
 				.addChoices({
 					name: "General Command",
 					value: "general",
