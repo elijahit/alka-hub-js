@@ -51,7 +51,7 @@ class CommandsDeploy {
       const command = require(filePath);
 
       if ('data' in command && 'execute' in command) {
-        if (guildId == null && featureId == 0 && config.getCommandDeploy() == 0) {
+        if (guildId == null && featureId == 0 && config.getCommandDeploy() == 0 && file.next_update != 0) {
           const checkCommand = await rest.get(
             Routes.applicationCommands(clientIdBot)
           )
