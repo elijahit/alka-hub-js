@@ -50,6 +50,7 @@ class CommandsDeploy {
       console.log(`Processing... ${file.name}`);
       const command = require(filePath);
 
+      console.log((file.feature_id == featureId && featureId != 0) && remove == false && guildId != null)
       if ('data' in command && 'execute' in command) {
         if (guildId == null && featureId == 0 && config.getCommandDeploy() == 0 && file.next_update != 0) {
           const checkCommand = await rest.get(
@@ -74,7 +75,6 @@ class CommandsDeploy {
             LogClasses.createLog(guildId, 'ERRORE-DEPLOY-COMMANDS', `Errore durante l'eliminazione del comando ${file.feature_folder}/${file.name}`, config);
             return;
           }
-          console.log((file.feature_id == featureId && featureId != 0) && remove == false && guildId != null)
         } else if ((file.feature_id == featureId && featureId != 0) && remove == false && guildId != null) {
           try {
             await rest.post(
