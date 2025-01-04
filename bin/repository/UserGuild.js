@@ -18,10 +18,10 @@ const { Model } = require('sequelize');
  * @param {string} username 
  * @returns {Promise<void>}
  */
-async function addUser(userId, guildId, username) {
+async function addUser(userId, guildId, username, variables) {
   try {
     const user = await User.findByUserId(userId);
-    const guild = await Guild.findByGuildId(guildId);
+    const guild = await Guild.findByGuildId(guildId, variables);
 
     if (!user) {
       await User.create(userId, username);

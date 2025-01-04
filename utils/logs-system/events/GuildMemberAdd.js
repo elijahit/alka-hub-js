@@ -22,7 +22,7 @@ const Variables = require('../../../bin/classes/GlobalVariables');
 module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member, variables) {
-    await addUserGuild(member.id, member.guild.id, member.user.username);
+    await addUserGuild(member.id, member.guild.id, member.user.username, variables);
     let customEmoji = emoji.logsSystem.newMemberMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if (!await checkFeatureSystemDisabled(1)) return;
