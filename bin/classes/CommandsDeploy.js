@@ -40,6 +40,7 @@ class CommandsDeploy {
 
     let fileDb = await findAllCommandsByFeatureId(featureId);
     if (fileDb == null) throw new Error(`Nessun comando trovato con questo feature_id: ${featureId}`);
+    console.log(fileDb)
     
     
     for (const file of fileDb) {
@@ -62,17 +63,29 @@ class CommandsDeploy {
             commandsCreate.push(command.data.toJSON());
           }
         } else if (remove == true && guildId != null) {
-          const checkCommand = await rest.get(
-            Routes.applicationGuildCommands(clientIdBot, guildId)
-          )
-          if (checkCommand.find(c => c.name === command.data.name)) {
-            await rest.delete(Routes.applicationGuildCommand(clientIdBot, guildId, checkCommand.find(c => c.name === command.data.name).id));
+          try {
+            const checkCommand = await rest.get(
+              Routes.applicationGuildCommands(clientIdBot, guildId)
+            )
+            if (checkCommand.find(c => c.name === command.data.name)) {
+              await rest.delete(Routes.applicationGuildCommand(clientIdBot, guildId, checkCommand.find(c => c.name === command.data.name).id));
+            }
+          } catch (error) {
+            console.error(error);
+            LogClasses.createLog(guildId, 'ERRORE-DEPLOY-COMMANDS', `Errore durante l'eliminazione del comando ${file.feature_folder}/${file.name}`, config);
+            return;
           }
         } else if ((file.feature_id == featureId && featureId != 0) && remove == false && guildId != null) {
-          await rest.post(
-            Routes.applicationGuildCommands(clientIdBot, guildId),
-            { body: command.data.toJSON() }
-          );
+          try {
+            await rest.post(
+              Routes.applicationGuildCommands(clientIdBot, guildId),
+              { body: command.data.toJSON() }
+            );
+          } catch (error) {
+            console.error(error);
+            LogClasses.createLog(guildId, 'ERRORE-DEPLOY-COMMANDS', `Errore durante l'aggiornamento del comando ${file.feature_folder}/${file.name}`, config);
+            return;
+          }
         }
       } else {
         console.log(`[WARNING] Il comando ${filePath} non contiene una delle due proprietà "data" o "execute".`);
