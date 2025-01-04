@@ -119,7 +119,7 @@ module.exports = {
 						if (checkFeature) {
 							if (checkFeature.is_enabled == 1) {
 								await updateEnabledFeature({ is_enabled: 0 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: variables.getConfigId() } });
-								await new CommandsDeploy().deploy(variables, interaction.guild.id, featuresChoice, true);
+								new CommandsDeploy().deploy(variables, interaction.guild.id, featuresChoice, true);
 								const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
 								.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", featureName))
@@ -128,7 +128,7 @@ module.exports = {
 								await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							} else {
 								await new CommandsDeploy().deploy(variables, interaction.guild.id, featuresChoice);
-								await updateEnabledFeature({ is_enabled: 1 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: variables.getConfigId() } });
+								updateEnabledFeature({ is_enabled: 1 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: variables.getConfigId() } });
 								const embedLog = new EmbedBuilder()
 									.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
 									.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", featureName))
@@ -138,6 +138,7 @@ module.exports = {
 							}
 						} else {
 							await createEnabledFeature(interaction.guild.id, featuresChoice, 1, variables);
+							new CommandsDeploy().deploy(variables, interaction.guild.id, featuresChoice);
 							const embedLog = new EmbedBuilder()
 								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
 								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", featureName))
