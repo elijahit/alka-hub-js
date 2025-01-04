@@ -127,7 +127,7 @@ module.exports = {
 								.setColor(colors.general.error);
 								await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							} else {
-								await new CommandsDeploy().deploy(variables, interaction.guild.id, featuresChoice);
+								new CommandsDeploy().deploy(variables, interaction.guild.id, featuresChoice);
 								updateEnabledFeature({ is_enabled: 1 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: variables.getConfigId() } });
 								const embedLog = new EmbedBuilder()
 									.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
