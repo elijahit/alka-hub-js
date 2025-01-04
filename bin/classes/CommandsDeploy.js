@@ -41,7 +41,7 @@ class CommandsDeploy {
     let fileDb = await findAllCommandsByFeatureId(featureId);
     if (fileDb == null) throw new Error(`Nessun comando trovato con questo feature_id: ${featureId}`);
     
-    console.log(`Deploying... commands for feature_id: ${featureId}`);
+    console.log(`Deploying... commands for feature_id: ${featureId}/${guildId}  -  Remove: ${remove}`);
     for (const file of fileDb) {
       const commandsPath = path.join(foldersPath, file.feature_folder);
       const commandsPathResolve = `${commandsPath}//command`;
