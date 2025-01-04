@@ -46,6 +46,7 @@ class CommandsDeploy {
       const commandsPath = path.join(foldersPath, file.feature_folder);
       const commandsPathResolve = `${commandsPath}//command`;
       const filePath = path.join(commandsPathResolve, file.name + '.js');
+      console.log("ESISTE? " + fs.existsSync(filePath))
       if (fs.existsSync(filePath) == false) continue;
       const command = require(filePath);
 
