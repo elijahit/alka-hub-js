@@ -190,7 +190,8 @@ const {
 const {
   findById: findCommandsById,
   findAll: findAllCommands,
-  findByName: findCommandsByName
+  findByName: findCommandsByName,
+  findAllByFeatureId: findAllCommandsByFeatureId
 } = require('../repository/Commands');
 
 
@@ -277,4 +278,5 @@ module.exports = {
   findCommandsByName,
   updateConfig,
   findByGuildIdAndIdLevel,
+  findAllCommandsByFeatureId
 }

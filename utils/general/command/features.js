@@ -16,6 +16,7 @@ const { findFeatureById, updateEnabledFeature, createEnabledFeature, findGuildBy
 const Variables = require('../../../bin/classes/GlobalVariables');
 const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
 const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const CommandsDeploy = require('../../../bin/classes/CommandsDeploy');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -118,13 +119,15 @@ module.exports = {
 						if (checkFeature) {
 							if (checkFeature.is_enabled == 1) {
 								await updateEnabledFeature({ is_enabled: 0 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: variables.getConfigId() } });
+								await new CommandsDeploy().deploy(variables, interaction.guild.id, featuresChoice, true);
 								const embedLog = new EmbedBuilder()
-									.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
-									.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", featureName))
-									.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
-									.setColor(colors.general.error);
+								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
+								.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", featureName))
+								.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+								.setColor(colors.general.error);
 								await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							} else {
+								await new CommandsDeploy().deploy(variables, interaction.guild.id, featuresChoice);
 								await updateEnabledFeature({ is_enabled: 1 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: variables.getConfigId() } });
 								const embedLog = new EmbedBuilder()
 									.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })

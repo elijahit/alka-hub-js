@@ -1,4 +1,12 @@
-const { findCommandsByName, updateConfig } = require('../service/DatabaseService');
+// Code: bin/classes/CommandsDeploy.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2025/26
+/**
+ * @file CommandsDeploy.js
+ * @module CommandsDeploy
+ * @description Questa classe si occupa di gestire il deploy dei comandi nel server
+*/
+
+const { updateConfig, findAllCommandsByFeatureId } = require('../service/DatabaseService');
 const LogClasses = require('./LogClasses');
 
 class CommandsDeploy {
@@ -7,49 +15,72 @@ class CommandsDeploy {
   }
 
 
-  async deploy(config) {
+  /**
+   * @description Deploy the commands in the server
+   * @param {Object} config
+   * @param {string} guildId
+   * @param {int} featureId
+   * @param {boolean} remove
+   * @returns {Promise<void>}
+   * @memberof CommandsDeploy
+   * @example
+   * CommandsDeploy.deploy(config, guildId, featureId, remove);
+   */
+  async deploy(config, guildId = null, featureId = 0, remove = false) {
     const { REST, Routes } = require('discord.js');
     const fs = require('node:fs');
     const path = require('node:path');
     console.log('Deploying... commands');
     const foldersPath = path.join(__dirname, '../../utils');
-    const commandFolders = fs.readdirSync(foldersPath);
     const tokenBot = config.getToken();
     const clientIdBot = config.getClientId();
     const commandsUpdate = [];
     const commandsCreate = [];
     const rest = new REST().setToken(tokenBot);
 
-    for (const folder of commandFolders) {
-      const commandsPath = path.join(foldersPath, folder);
+    let fileDb = await findAllCommandsByFeatureId(featureId);
+    if (fileDb == null) throw new Error(`Nessun comando trovato con questo feature_id: ${featureId}`);
+    
+    
+    for (const file of fileDb) {
+      const commandsPath = path.join(foldersPath, file.feature_folder);
       const commandsPathResolve = `${commandsPath}//command`;
-      const commandFiles = fs.readdirSync(commandsPathResolve).filter(file => file.endsWith('.js'));
+      const filePath = path.join(commandsPathResolve, file.name + '.js');
+      if (fs.existsSync(filePath) == false) continue;
+      console.log(`Processing... ${file.name}`);
+      const command = require(filePath);
 
-      for (const file of commandFiles) {
-        let fileDb = await findCommandsByName(file.replace('.js', ''));
-        fileDb = fileDb?.get({ plain: true });
-
-        if (fileDb.next_update == 1 || config.getCommandDeploy() == 0) {
-          const filePath = path.join(commandsPathResolve, file);
-          const command = require(filePath);
-          if ('data' in command && 'execute' in command) {
-            const checkCommand = await rest.get(
-              Routes.applicationCommands(clientIdBot)
-            )
-            if (checkCommand.find(c => c.name === command.data.name)) {
-              command.data.id = checkCommand.find(c => c.name === command.data.name).id;
-              commandsUpdate.push(command.data.toJSON());
-            } else {
-              commandsCreate.push(command.data.toJSON());
-            }
+      if ('data' in command && 'execute' in command) {
+        if (guildId == null && featureId == 0 && config.getCommandDeploy() == 0) {
+          const checkCommand = await rest.get(
+            Routes.applicationCommands(clientIdBot)
+          )
+          if (checkCommand.find(c => c.name === command.data.name)) {
+            command.data.id = checkCommand.find(c => c.name === command.data.name).id;
+            commandsUpdate.push(command.data.toJSON());
           } else {
-            console.log(`[WARNING] Il comando ${filePath} non contiene una delle due proprietà "data" o "execute".`);
+            commandsCreate.push(command.data.toJSON());
           }
+        } else if (remove == true && guildId != null) {
+          const checkCommand = await rest.get(
+            Routes.applicationGuildCommands(clientIdBot, guildId)
+          )
+          if (checkCommand.find(c => c.name === command.data.name)) {
+            await rest.delete(Routes.applicationGuildCommand(clientIdBot, guildId, checkCommand.find(c => c.name === command.data.name).id));
+          }
+        } else if ((fileDb.feature_id == featureId && featureId != 0) && remove == false && guildId != null) {
+          await rest.post(
+            Routes.applicationGuildCommands(clientIdBot, guildId),
+            { body: command.data.toJSON() }
+          );
         }
+      } else {
+        console.log(`[WARNING] Il comando ${filePath} non contiene una delle due proprietà "data" o "execute".`);
       }
     }
+
     if (commandsCreate.length > 0) {
-      try{
+      try {
         console.log('Create... commands start');
         for (const command of commandsCreate) {
           await rest.post(
@@ -81,9 +112,12 @@ class CommandsDeploy {
         return;
       }
     }
-
-    if (config.getCommandDeploy() == 0) await updateConfig({ command_deploy: 1 }, { id: config.getConfigId() });
     console.log('Deploying... commands completed');
+
+    if (config.getCommandDeploy() == 0) {
+      config.setCommandDeploy(1);
+      await updateConfig({ command_deploy: 1 }, { id: config.getConfigId() });
+    }
   }
 }
 module.exports = CommandsDeploy;

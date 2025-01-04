@@ -28,6 +28,14 @@ async function findByName(name) {
 }
 
 /**
+ * @param {int} featureId
+ * @returns {Promise<Model>}
+ */
+async function findAllByFeatureId(featureId) {
+  return await Commands.findAll({where: {feature_id: featureId}});
+}
+
+/**
  * @param {string} id 
  * @returns {Promise<Model>}
  */
@@ -38,5 +46,6 @@ async function findById(id) {
 module.exports = {
   findByName,
   findAll,
-  findById
+  findById,
+  findAllByFeatureId
 }
