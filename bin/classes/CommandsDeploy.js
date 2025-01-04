@@ -68,7 +68,7 @@ class CommandsDeploy {
           if (checkCommand.find(c => c.name === command.data.name)) {
             await rest.delete(Routes.applicationGuildCommand(clientIdBot, guildId, checkCommand.find(c => c.name === command.data.name).id));
           }
-        } else if ((fileDb.feature_id == featureId && featureId != 0) && remove == false && guildId != null) {
+        } else if ((file.feature_id == featureId && featureId != 0) && remove == false && guildId != null) {
           await rest.post(
             Routes.applicationGuildCommands(clientIdBot, guildId),
             { body: command.data.toJSON() }
