@@ -41,18 +41,18 @@ class CommandsDeploy {
     let fileDb = await findAllCommandsByFeatureId(featureId);
     if (fileDb == null) throw new Error(`Nessun comando trovato con questo feature_id: ${featureId}`);
     
-    
+    console.log(`Deploying... commands for feature_id: ${featureId}`);
     for (const file of fileDb) {
       const commandsPath = path.join(foldersPath, file.feature_folder);
       const commandsPathResolve = `${commandsPath}//command`;
       const filePath = path.join(commandsPathResolve, file.name + '.js');
       if (fs.existsSync(filePath) == false) continue;
-      console.log(`Processing... ${file.name}`);
       const command = require(filePath);
 
-      console.log((file.feature_id == featureId && featureId != 0), remove == false, guildId != null)
       if ('data' in command && 'execute' in command) {
+        console.log(`Processing... ${file.name}`);
         if (guildId == null && featureId == 0 && config.getCommandDeploy() == 0 && file.next_update != 0) {
+          console.log(`Next update for ${file.name} is ${file.next_update}`);
           const checkCommand = await rest.get(
             Routes.applicationCommands(clientIdBot)
           )
@@ -63,6 +63,7 @@ class CommandsDeploy {
             commandsCreate.push(command.data.toJSON());
           }
         } else if (remove == true && guildId != null) {
+          console.log(`Removing... ${file.name}`);
           try {
             const checkCommand = await rest.get(
               Routes.applicationGuildCommands(clientIdBot, guildId)
@@ -76,6 +77,7 @@ class CommandsDeploy {
             return;
           }
         } else if ((file.feature_id == featureId && featureId != 0) && remove == false && guildId != null) {
+          console.log(`Deploying... ${file.name}`);
           try {
             await rest.post(
               Routes.applicationGuildCommands(clientIdBot, guildId),
