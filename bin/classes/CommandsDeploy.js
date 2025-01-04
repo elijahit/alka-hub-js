@@ -40,7 +40,6 @@ class CommandsDeploy {
 
     let fileDb = await findAllCommandsByFeatureId(featureId);
     if (fileDb == null) throw new Error(`Nessun comando trovato con questo feature_id: ${featureId}`);
-    console.log(fileDb)
     
     
     for (const file of fileDb) {
@@ -75,6 +74,7 @@ class CommandsDeploy {
             LogClasses.createLog(guildId, 'ERRORE-DEPLOY-COMMANDS', `Errore durante l'eliminazione del comando ${file.feature_folder}/${file.name}`, config);
             return;
           }
+          console.log((file.feature_id == featureId && featureId != 0) && remove == false && guildId != null)
         } else if ((file.feature_id == featureId && featureId != 0) && remove == false && guildId != null) {
           try {
             await rest.post(
