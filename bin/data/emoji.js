@@ -49,7 +49,10 @@ const emoji = {
   autoVoiceSystem: {
     private: "https://cdn.discordapp.com/emojis/1302748999543029834.webp?size=32&quality=lossless",
     free: "https://cdn.discordapp.com/emojis/1302749231853076490.webp?size=32&quality=lossless"
-  }
+  },
+  translateSystem: {
+    main: "https://cdn.discordapp.com/emojis/1325553228678565999.webp?size=32&quality=lossless"
+  },
 }
 
 module.exports = emoji;

@@ -69,6 +69,10 @@ module.exports = {
 					name: "Levels System",
 					value: 11,
 				})
+				.addChoices({
+					name: "Translate System",
+					value: 12,
+				})
 				.setName('choices')
 				.setDescription('Name of the system you want to enable or disable')
 				.setDescriptionLocalization("it", "Nome del sistema che vuoi abilitare o disabilitare")

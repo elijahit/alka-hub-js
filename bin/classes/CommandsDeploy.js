@@ -51,7 +51,7 @@ class CommandsDeploy {
 
       if ('data' in command && 'execute' in command) {
         console.log(`Processing... ${file.name}`);
-        if (guildId == null && featureId == 0 && config.getCommandDeploy() == 0) {
+        if (guildId == null && featureId == 0 && config.getCommandDeploy() == 0 ||  guildId == null && featureId == 0 && file.next_update == 1) {
           console.log(`Next update for ${file.name} is ${file.next_update}`);
           const checkCommand = await rest.get(
             Routes.applicationCommands(clientIdBot)
