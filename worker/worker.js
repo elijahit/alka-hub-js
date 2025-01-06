@@ -108,7 +108,7 @@ async function processQueue() {
 
         switch (command) {
           case 'dispatcher':
-            const bot = await redis.keys(`bot_status:${botId}`);
+            const bot = await redis.hgetall(`bot_status:${botId}`);
             if (!bot) {
               console.log(`[❌] Nessuna informazione trovata per il bot con ID ${botId}`);
               return;
