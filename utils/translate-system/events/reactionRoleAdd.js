@@ -154,7 +154,7 @@ module.exports = {
           translatedText += element[0] + " "; 
         });
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `Translate System`, iconURL: emojis.general.translate })
+          .setAuthor({ name: `Translate System`, iconURL: emojis.translateSystem.main })
           .setDescription(`${translatedText}`)
           .setColor(color.general.blue)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` });
