@@ -95,10 +95,9 @@ async function sendMessageBot(configId, client, message) {
       client.guilds.fetch(config.main_discord_id).then(async guild => {
         if (guild.publicUpdatesChannel) {
           const embed = new EmbedBuilder();
-          embed.setAuthor({ name: "System Message", iconURL: emoji.general.appIcon });
           embed.setDescription(message);
           embed.setFooter({ text: "Alka Hub - System Message", iconURL: emoji.general.appIcon });
-          embed.setColor(color.general.danger);
+          embed.setColor(color.general.err);
           await guild.publicUpdatesChannel.send({ content: "@everyone", embeds: [embed] });
         }
       }).catch(err => {
