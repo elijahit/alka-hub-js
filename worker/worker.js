@@ -189,6 +189,7 @@ async function processQueue() {
 
           case 'send_message':
             console.log(botId)
+            console.log(activeBots)
             console.log(activeBots.get(botId));
             sendMessageBot(botId, activeBots.get(botId), data);
             break;
