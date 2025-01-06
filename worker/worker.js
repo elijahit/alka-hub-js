@@ -113,6 +113,7 @@ async function processQueue() {
               console.log(`[❌] Nessuna informazione trovata per il bot con ID ${botId}`);
               return;
             }
+            console.log(bot)
             const workerIdDispatcher = bot.worker;
             console.log(`[🔄] Inoltro comando ${dispatcherCommand} al Worker: ${workerIdDispatcher} per il bot: ${botId}`)
             await redis.lpush(`worker_commands_queue:${workerIdDispatcher}`, JSON.stringify({
