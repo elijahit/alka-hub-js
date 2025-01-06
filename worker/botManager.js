@@ -9,7 +9,7 @@
 const { Collection, Client, GatewayIntentBits, Partials, ActivityType } = require('discord.js');
 const mainEvents = require('../bin/functions/mainEvents');
 const Variables = require('../bin/classes/GlobalVariables');
-const { dispatchStopBot } = require('./dispatcher');
+const { findConfigById } = require('../bin/service/DatabaseService');
 
 
 /**
@@ -78,4 +78,25 @@ async function stopBot(botId) {
   }
 }
 
-module.exports = { startBot, stopBot };
+/**
+ * 
+ * Invia un messaggio dal bot al server più vecchio (Dovrebbe essere il primo), tramite il Worker corretto.
+ */
+async function sendMessageBot(configId, client, message) {
+  try {
+    let config = await findConfigById(configId);
+    config = config.get({ plain: true });
+    if(config) {
+      client.guilds.fetch(config.main_discord_id).then(async guild => { 
+      await guild.publicUpdatesChannel.send(message);
+      }).catch(err => {
+        console.error(`[❌] Errore durante l'invio del messaggio al server:`, err);
+      });
+
+    } else { return false; };
+  } catch (error) {
+    console.error(`[❌] Errore nel dispatching del comando di send message:`, error);
+  }
+}
+
+module.exports = { startBot, stopBot, sendMessageBot };

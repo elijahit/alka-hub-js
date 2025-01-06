@@ -7,7 +7,7 @@
  */
 
 const Redis = require('ioredis');
-const { startBot, stopBot } = require('./botManager');
+const { startBot, stopBot, sendMessageBot } = require('./botManager');
 const { config } = require('./config');
 const pm2 = require('pm2');
 const { findConfigById } = require('../bin/service/DatabaseService');
@@ -79,7 +79,6 @@ async function getBotsForCurrentWorker() {
   }
 }
 
-
 async function processQueue() {
   console.clear();
   console.log('\x1b[34m%s\x1b[0m', '   __    __    _  _    __      ____  _____  ____ ');
@@ -105,9 +104,23 @@ async function processQueue() {
 
       const data = commandData || specificCommand;
       if (data) {
-        const { command, botId, botConfig } = JSON.parse(data);
+        const { command, botId, botConfig, dispatcherCommand, data } = JSON.parse(data);
 
         switch (command) {
+          case 'dispatcher':
+            const bot = await redis.keys(`bot_status:${botId}`);
+            if (!bot) {
+              console.log(`[❌] Nessuna informazione trovata per il bot con ID ${botId}`);
+              return;
+            }
+            const workerId = bot.worker;
+            console.log(`[🔄] Inoltro comando ${dispatcher.command} al Worker: ${workerId} per il bot: ${botId}`)
+            await redis.lpush(`worker_commands_queue:${workerId}`, JSON.stringify({
+              command: dispatcherCommand,
+              data: data,
+              botId: botId,
+            }));
+            break;
           case 'start':
             // 0 = Inattivo, 1 = Attivo, 2 = Test Bot
             if (botConfig.isActive == 0) break;
@@ -172,7 +185,9 @@ async function processQueue() {
             workerStartAllow = true;
             await redis.hdel(`bot_status:${botId}`);
             break;
-
+          case 'send_message':
+            sendMessageBot(botId, activeBots.get(botId), data);
+            break;
           default:
             console.log(`[❓] Comando sconosciuto: ${command}`);
         }
