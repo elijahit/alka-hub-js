@@ -117,7 +117,7 @@ async function processQueue() {
             console.log(`[🔄] Inoltro comando ${dispatcherCommand} al Worker: ${workerIdDispatcher} per il bot: ${botId}`)
             await redis.lpush(`worker_commands_queue:${workerIdDispatcher}`, JSON.stringify({
               command: dispatcherCommand,
-              data: dataCommand,
+              dataCommand: dataCommand,
               botId: +botId,
             }));
             break;
@@ -188,7 +188,7 @@ async function processQueue() {
             break;
 
           case 'send_message':
-            sendMessageBot(botId, activeBots.get(botId), dataCommand.data);
+            sendMessageBot(botId, activeBots.get(botId), dataCommand);
             break;
           default:
             console.log(`[❓] Comando sconosciuto: ${command}`);
