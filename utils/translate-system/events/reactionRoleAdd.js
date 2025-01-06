@@ -35,6 +35,8 @@ module.exports = {
       if (!await checkPremiumFeature(messageReaction.message.guild.id, 12, variables)) return;
 
       const flagEmojis = [
+        { emoji: '🇦🇱', code: 'al' }, // Albania
+        { emoji: '🇷🇴', code: 'ro' }, // Romania
         { emoji: '🇮🇹', code: 'it' }, // Italy
         { emoji: '🇺🇸', code: 'us' }, // United States
         { emoji: '🇬🇧', code: 'gb' }, // United Kingdom
@@ -139,6 +141,30 @@ module.exports = {
         { emoji: '🇩🇯', code: 'dj' }, // Djibouti
         { emoji: '🇸🇴', code: 'so' }, // Somaliland
         { emoji: '🇪🇭', code: 'eh' }, // Western Sahara
+        { emoji: '🇦🇲', code: 'am' }, // Armenia
+        { emoji: '🇦🇿', code: 'az' }, // Azerbaijan
+        { emoji: '🇧🇾', code: 'by' }, // Belarus
+        { emoji: '🇧🇬', code: 'bg' }, // Bulgaria
+        { emoji: '🇭🇷', code: 'hr' }, // Croatia
+        { emoji: '🇨🇾', code: 'cy' }, // Cyprus
+        { emoji: '🇨🇿', code: 'cz' }, // Czech Republic
+        { emoji: '🇪🇪', code: 'ee' }, // Estonia
+        { emoji: '🇬🇪', code: 'ge' }, // Georgia
+        { emoji: '🇭🇺', code: 'hu' }, // Hungary
+        { emoji: '🇮🇸', code: 'is' }, // Iceland
+        { emoji: '🇽🇰', code: 'xk' }, // Kosovo
+        { emoji: '🇱🇻', code: 'lv' }, // Latvia
+        { emoji: '🇱🇹', code: 'lt' }, // Lithuania
+        { emoji: '🇲🇩', code: 'md' }, // Moldova
+        { emoji: '🇲🇪', code: 'me' }, // Montenegro
+        { emoji: '🇲🇰', code: 'mk' }, // North Macedonia
+        { emoji: '🇵🇱', code: 'pl' }, // Poland
+        { emoji: '🇷🇸', code: 'rs' }, // Serbia
+        { emoji: '🇸🇰', code: 'sk' }, // Slovakia
+        { emoji: '🇸🇮', code: 'si' }, // Slovenia
+        { emoji: '🇺🇦', code: 'ua' }, // Ukraine
+        { emoji: '🇻🇦', code: 'va' }, // Vatican City
+        { emoji: '🇵🇸', code: 'ps' }, // Palestine
       ];
       const found = flagEmojis.find(flag => flag.emoji === emoji.name);
       if (!found) return;
