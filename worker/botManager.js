@@ -90,7 +90,6 @@ async function sendMessageBot(configId, client, message) {
     let config = await findConfigById(configId);
     config = config.get({ plain: true });
     if(config) {
-      console.log(client);
       client.guilds.fetch(config.main_discord_id).then(async guild => { 
       const embed = new EmbedBuilder();
       embed.setAuthor({ name: "System Message", iconURL: emoji.general.appIcon });
