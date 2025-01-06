@@ -6,10 +6,12 @@
  * @description Contiene i metodi per avviare e fermare un bot Discord.
  */
 
-const { Collection, Client, GatewayIntentBits, Partials, ActivityType } = require('discord.js');
+const { Collection, Client, GatewayIntentBits, Partials, ActivityType, EmbedBuilder } = require('discord.js');
 const mainEvents = require('../bin/functions/mainEvents');
 const Variables = require('../bin/classes/GlobalVariables');
 const { findConfigById } = require('../bin/service/DatabaseService');
+const emoji = require('../bin/data/emoji');
+const color = require('../bin/data/colors');
 
 
 /**
@@ -90,7 +92,13 @@ async function sendMessageBot(configId, client, message) {
     if(config) {
       console.log(client);
       client.guilds.fetch(config.main_discord_id).then(async guild => { 
-      await guild.publicUpdatesChannel.send(message);
+      const embed = new EmbedBuilder();
+      embed.setAuthor({ name: "System Message", iconURL: emoji.general.appIcon });
+      embed.setDescription(message);
+      embed.setFooter({ text: "Alka Hub System Message", iconURL: emoji.general.appIcon });
+      embed.setColor(color.general.danger);
+      await guild.publicUpdatesChannel.send({content: "@everyone", embeds: [embed] });
+
       }).catch(err => {
         console.error(`[❌] Errore durante l'invio del messaggio al server:`, err);
       });
