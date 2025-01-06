@@ -114,7 +114,7 @@ async function processQueue() {
               return;
             }
             const workerIdDispatcher = bot.worker;
-            console.log(`[🔄] Inoltro comando ${dispatcher.command} al Worker: ${workerIdDispatcher} per il bot: ${botId}`)
+            console.log(`[🔄] Inoltro comando ${dispatcherCommand} al Worker: ${workerIdDispatcher} per il bot: ${botId}`)
             await redis.lpush(`worker_commands_queue:${workerIdDispatcher}`, JSON.stringify({
               command: dispatcherCommand,
               data: dataCommand,
