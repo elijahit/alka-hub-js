@@ -104,7 +104,7 @@ async function processQueue() {
 
       const data = commandData || specificCommand;
       if (data) {
-        const { command, botId, botConfig, dispatcherCommand, data } = JSON.parse(data);
+        const { command, botId, botConfig, dispatcherCommand, dataCommand } = JSON.parse(data);
 
         switch (command) {
           case 'dispatcher':
@@ -117,7 +117,7 @@ async function processQueue() {
             console.log(`[🔄] Inoltro comando ${dispatcher.command} al Worker: ${workerId} per il bot: ${botId}`)
             await redis.lpush(`worker_commands_queue:${workerId}`, JSON.stringify({
               command: dispatcherCommand,
-              data: data,
+              data: dataCommand,
               botId: botId,
             }));
             break;
