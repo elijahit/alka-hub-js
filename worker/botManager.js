@@ -86,6 +86,8 @@ async function stopBot(botId) {
  * Invia un messaggio dal bot al server più vecchio (Dovrebbe essere il primo), tramite il Worker corretto.
  */
 async function sendMessageBot(configId, client, message) {
+  // USAGE TEST
+  // RPUSH bot_commands_queue '{"command": "dispatcher", "botId": 3, "dataCommand": "Ciao proprietario del server, ti informiamo che il tuo piano premium ▒ in scadenza tutti i benefici saranno rimossi alla scadenza, ti invitiamo a rinnovare il tuo abbonamento!", "dispatcherCommand": "send_message" }'
   try {
     let config = await findConfigById(configId);
     config = config.get({ plain: true });
