@@ -12,5 +12,10 @@
     "description_embed": "Here is the text translated into **{0}**:\n\n*{1}*",
     "description_embed_same_lang": "The text is already in the selected language. Select another language to translate it.",
     "description_embed_error": "An error occurred while translating the text. Please try again later."
+  },
+  "translateSettingCommand": {
+    "embed_title": "Translate System",
+    "description_embed": "The translation system has been successfully configured.",
+    "description_embed_remove": "The translation system has been successfully removed."
   }
 }
