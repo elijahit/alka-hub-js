@@ -89,15 +89,16 @@ async function sendMessageBot(configId, client, message) {
   try {
     let config = await findConfigById(configId);
     config = config.get({ plain: true });
-    if(config) {
-      client.guilds.fetch(config.main_discord_id).then(async guild => { 
-      const embed = new EmbedBuilder();
-      embed.setAuthor({ name: "System Message", iconURL: emoji.general.appIcon });
-      embed.setDescription(message);
-      embed.setFooter({ text: "Alka Hub System Message", iconURL: emoji.general.appIcon });
-      embed.setColor(color.general.danger);
-      await guild.publicUpdatesChannel.send({content: "@everyone", embeds: [embed] });
-
+    if (config) {
+      client.guilds.fetch(config.main_discord_id).then(async guild => {
+        if (guild.publicUpdatesChannel) {
+          const embed = new EmbedBuilder();
+          embed.setAuthor({ name: "System Message", iconURL: emoji.general.appIcon });
+          embed.setDescription(message);
+          embed.setFooter({ text: "Alka Hub System Message", iconURL: emoji.general.appIcon });
+          embed.setColor(color.general.danger);
+          await guild.publicUpdatesChannel.send({ content: "@everyone", embeds: [embed] });
+        }
       }).catch(err => {
         console.error(`[❌] Errore durante l'invio del messaggio al server:`, err);
       });
