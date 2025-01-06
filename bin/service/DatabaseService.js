@@ -193,6 +193,24 @@ const {
   findByName: findCommandsByName,
   findAllByFeatureId: findAllCommandsByFeatureId
 } = require('../repository/Commands');
+// findCommandsById -> Permette di cercare un comando nella tabella commands tramite l'id
+// findAllCommands -> Permette di cercare tutti i comandi nella tabella commands
+// findCommandsByName -> Permette di cercare un comando nella tabella commands tramite il nome
+// findAllCommandsByFeatureId -> Permette di cercare tutti i comandi nella tabella commands tramite featureId
+
+const {
+  findAll: findAllByGuildIdTranslate,
+  findByGuildId: findByGuildIdTranslate,
+  create: createTranslate,
+  deleteByGuildId: deleteByGuildIdTranslate,
+  update: updateTranslate
+} = require('../repository/Translate');
+// findAllByGuildIdTranslate -> Permette di cercare tutte le configurazioni di Translate nella tabella translates tramite guildId
+// findByGuildIdTranslate -> Permette di cercare una configurazione di Translate nella tabella translates tramite guildId
+// createTranslate -> Permette di creare una configurazione di Translate nella tabella translates
+// deleteByGuildIdTranslate -> Permette di rimuovere una configurazione di Translate nella tabella translates tramite guildId
+// updateTranslate -> Permette di aggiornare una configurazione di Translate nella tabella translates
+
 
 
 module.exports = {
@@ -278,5 +296,10 @@ module.exports = {
   findCommandsByName,
   updateConfig,
   findByGuildIdAndIdLevel,
-  findAllCommandsByFeatureId
+  findAllCommandsByFeatureId,
+  findAllByGuildIdTranslate,
+  findByGuildIdTranslate,
+  createTranslate,
+  deleteByGuildIdTranslate,
+  updateTranslate
 }

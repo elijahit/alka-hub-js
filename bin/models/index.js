@@ -29,6 +29,7 @@ const { Welcome } = require('./Welcome');
 const { StatisticsCategory } = require('./StatisticsCategory');
 const { Log } = require('./Log');
 const { Commands } = require('./Commands');
+const { Translate } = require('./Translate');
 
 
 
@@ -89,5 +90,6 @@ module.exports = {
   Welcome,
   StatisticsCategory,
   Log,
-  Commands
+  Commands,
+  Translate
 }
