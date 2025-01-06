@@ -25,7 +25,7 @@ module.exports = {
       const guild = message.guild;
       const member = await guild.members.fetch(user.id);
 
-
+      if (messageReaction.message.content === "" || messageReaction.message.content === null) return;
       // CONTROLLO SE LA FUNZIONE E' ABILITATA
       let checkTranslateSetting = await findByGuildIdTranslate(guild.id, variables)
       checkTranslateSetting = checkTranslateSetting?.get({ plain: true });
