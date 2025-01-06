@@ -35,7 +35,7 @@ module.exports = {
       if (!await checkPremiumFeature(messageReaction.message.guild.id, 12, variables)) return;
 
       const flagEmojis = [
-        { emoji: '🇦🇱', code: 'al' }, // Albania
+        { emoji: '🇦🇱', code: 'sq' }, // Albania
         { emoji: '🇷🇴', code: 'ro' }, // Romania
         { emoji: '🇮🇹', code: 'it' }, // Italy
         { emoji: '🇺🇸', code: 'us' }, // United States
