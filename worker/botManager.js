@@ -65,6 +65,7 @@ async function startBot(botConfig) {
   } catch (error) {
     console.error(`[❌] Errore nell'avvio del bot ${botConfig.botName}:`, error);
   }
+  return client;
 }
 
 /**

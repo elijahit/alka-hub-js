@@ -168,8 +168,7 @@ async function processQueue() {
             } 
 
             if (workerStartAllow) {
-              startBot(botConfig);
-              activeBots.set(botId, botConfig);
+              activeBots.set(botId, startBot(botConfig));
               await redis.hset(`bot_status:${botId}`, {
                 status: 'running',
                 botId: botId,
@@ -186,7 +185,7 @@ async function processQueue() {
             workerStartAllow = true;
             await redis.hdel(`bot_status:${botId}`);
             break;
-            
+
           case 'send_message':
             sendMessageBot(botId, activeBots.get(botId), data);
             break;
