@@ -118,7 +118,7 @@ async function processQueue() {
             await redis.lpush(`worker_commands_queue:${workerIdDispatcher}`, JSON.stringify({
               command: dispatcherCommand,
               data: dataCommand,
-              botId: botId,
+              botId: +botId,
             }));
             break;
 
@@ -188,9 +188,6 @@ async function processQueue() {
             break;
 
           case 'send_message':
-            console.log(botId)
-            console.log(activeBots)
-            console.log(activeBots.get(botId));
             sendMessageBot(botId, activeBots.get(botId), data);
             break;
           default:
