@@ -14,6 +14,7 @@ const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeat
 const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
 const { findByGuildIdAndMessageIdAndEmojiReactions, findByGuildIdTranslate } = require('../../../bin/service/DatabaseService');
 const emojis = require('../../../bin/data/emoji');
+const color = require('../../../bin/data/colors');
 
 module.exports = {
   name: Events.MessageReactionAdd,
@@ -155,7 +156,7 @@ module.exports = {
         const embedLog = new EmbedBuilder()
           .setAuthor({ name: `Translate System`, iconURL: emojis.general.translate })
           .setDescription(`${translatedText}`)
-          .setColor(colors.general.blue)
+          .setColor(color.general.blue)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` });
         if(checkTranslateSetting.mode == 0) await messageReaction.message.reply({ embeds: [embedLog] });
         if(checkTranslateSetting.mode == 1) await messageReaction.message.reply({ embeds: [embedLog], ephemeral: true });
