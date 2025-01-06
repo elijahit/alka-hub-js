@@ -27,15 +27,15 @@ module.exports = {
         .setName('mode')
         .setDescription('Insert the translation mode with reaction')
         .setDescriptionLocalization("it", "Inserisci la modalità di traduzione con reaction")
-        .setRequired(true))
-    .addChoices({
-      name: "Public",
-      value: "0",
-    })
-    .addChoices({
-      name: "Private",
-      value: "1",
-    }),
+        .setRequired(true)
+        .addChoices({
+          name: "Public",
+          value: "0",
+        })
+        .addChoices({
+          name: "Private",
+          value: "1",
+        })),
   async execute(interaction, variables) {
     let mode = await interaction.options.get("mode")?.value;
     // RECUPERO LA LINGUA
@@ -60,7 +60,6 @@ module.exports = {
             embedLog
               .setAuthor({ name: `${language_result.translateSettingCommand.embed_title}`, iconURL: customEmoji })
               .setDescription(`${language_result.translateSettingCommand.description_embed_remove}`)
-              .addFields(fields)
               .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
               .setColor(colors.general.blue);
             await interaction.reply({ embeds: [embedLog], ephemeral: true });
@@ -69,7 +68,6 @@ module.exports = {
             embedLog
               .setAuthor({ name: `${language_result.translateSettingCommand.embed_title}`, iconURL: customEmoji })
               .setDescription(`${language_result.translateSettingCommand.description_embed}`)
-              .addFields(fields)
               .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
               .setColor(colors.general.blue);
             await interaction.reply({ embeds: [embedLog], ephemeral: true });
