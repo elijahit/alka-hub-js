@@ -169,7 +169,6 @@ async function processQueue() {
 
             if (workerStartAllow) {
               const client = await startBot(botConfig);
-              console.log("CLIENT", client)
               activeBots.set(botId, client);
               await redis.hset(`bot_status:${botId}`, {
                 status: 'running',
@@ -189,6 +188,7 @@ async function processQueue() {
             break;
 
           case 'send_message':
+            console.log(activeBots.get(botId));
             sendMessageBot(botId, activeBots.get(botId), data);
             break;
           default:
