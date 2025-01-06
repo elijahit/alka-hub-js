@@ -113,7 +113,6 @@ async function processQueue() {
               console.log(`[❌] Nessuna informazione trovata per il bot con ID ${botId}`);
               return;
             }
-            console.log(bot)
             const workerIdDispatcher = bot.worker;
             console.log(`[🔄] Inoltro comando ${dispatcherCommand} al Worker: ${workerIdDispatcher} per il bot: ${botId}`)
             await redis.lpush(`worker_commands_queue:${workerIdDispatcher}`, JSON.stringify({
@@ -122,6 +121,7 @@ async function processQueue() {
               botId: botId,
             }));
             break;
+
           case 'start':
             // 0 = Inattivo, 1 = Attivo, 2 = Test Bot
             if (botConfig.isActive == 0) break;
@@ -186,6 +186,7 @@ async function processQueue() {
             workerStartAllow = true;
             await redis.hdel(`bot_status:${botId}`);
             break;
+            
           case 'send_message':
             sendMessageBot(botId, activeBots.get(botId), data);
             break;
