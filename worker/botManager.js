@@ -96,7 +96,7 @@ async function sendMessageBot(configId, client, message) {
         if (guild.publicUpdatesChannel) {
           const embed = new EmbedBuilder();
           embed.setDescription(message);
-          embed.setThumbnail({ url: emoji.general.appIcon });
+          embed.setThumbnail(emoji.general.appIcon);
           embed.setFooter({ text: "Alka Hub - System Message" });
           embed.setColor(color.general.error);
           await guild.publicUpdatesChannel.send({ content: "@everyone", embeds: [embed] });
