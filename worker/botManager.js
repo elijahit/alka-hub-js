@@ -101,7 +101,7 @@ async function sendMessageBot(configId, client, message) {
         const language = guildTable.language || "en";
         console.log(language);
         console.log(message);
-        const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${language}&dt=t&q=${message}`, {
+        const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=CIAO COME STAI?`, {
           method: "GET",
           headers: { "Content-Type": "application/json" }
         });
