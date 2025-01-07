@@ -1,11 +1,11 @@
 {
   "noPermission": {
-    "embed_title": "Auto Voice System",
-    "description_limit_premium": "You have reached the maximum number of AutoVoices available in your plan. Upgrade to the Premium plan to unlock unlimited AutoVoices!",
-    "description_premium_feature": "This feature is only available with the Premium plan. Upgrade your plan now to unlock it!",
-    "description_embed": "You do not have permission to use this command!",
-    "description_embed_no_features": "The feature is currently disabled. An administrator needs to enable it for it to be usable.",
-    "description_embed_no_features_by_system": "This feature is temporarily disabled for extraordinary maintenance. Please be patient: it will be available again shortly."
+    "embed_title": "Logs System",
+    "description_limit_premium": "Hai raggiunto il numero massimo di canali Logs disponibili nel tuo piano. Passa al piano Premium per sbloccare canali Logs illimitati!",
+    "description_premium_feature": "Questa funzione è disponibile solo con il piano Premium. Aggiorna il tuo piano ora per sbloccarla!",
+    "description_embed": "Non hai il permesso di usare questo comando!",
+    "description_embed_no_features": "La funzione è attualmente disabilitata. Un amministratore deve abilitarla per renderla utilizzabile.",
+    "description_embed_no_features_by_system": "Questa funzione è temporaneamente disabilitata per manutenzione straordinaria. Si prega di essere pazienti: sarà di nuovo disponibile a breve."
   },
   "voiceState": {
     "embed_title": "Logs System",
