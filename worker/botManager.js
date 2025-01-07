@@ -9,7 +9,7 @@
 const { Collection, Client, GatewayIntentBits, Partials, ActivityType, EmbedBuilder } = require('discord.js');
 const mainEvents = require('../bin/functions/mainEvents');
 const Variables = require('../bin/classes/GlobalVariables');
-const { findConfigById } = require('../bin/service/DatabaseService');
+const { findConfigById, findGuildById } = require('../bin/service/DatabaseService');
 const emoji = require('../bin/data/emoji');
 const color = require('../bin/data/colors');
 
@@ -91,11 +91,28 @@ async function sendMessageBot(configId, client, message) {
   try {
     let config = await findConfigById(configId);
     config = config.get({ plain: true });
-    if (config) {
+    
+    // Se è presente un main_discord_id e non è -1
+    if (config && config.main_discord_id !== null && config.main_discord_id !== -1) {
       client.guilds.fetch(config.main_discord_id).then(async guild => {
+        let guildTable = await findGuildById(config.main_discord_id);
+        guildTable = guildTable?.get({ plain: true });
+        const language = guildTable.language || "en";
+
+        const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${language}&dt=t&q=${message}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+        });
+
+        const json = await res.json();
+        let translatedText = "";
+        json[0].forEach((element) => {
+          translatedText += element[0] + " "; 
+        });
+
         if (guild.publicUpdatesChannel) {
           const embed = new EmbedBuilder();
-          embed.setDescription(message);
+          embed.setDescription(translatedText);
           embed.setThumbnail(emoji.general.appIcon);
           embed.setFooter({ text: "Alka Hub - System Message" });
           embed.setColor(color.general.error);
