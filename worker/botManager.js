@@ -112,7 +112,7 @@ async function sendMessageBot(configId, client, message) {
 
         if (guild.publicUpdatesChannel) {
           const embed = new EmbedBuilder();
-          embed.setDescription("## System Message\n" + translatedText);
+          embed.setDescription("## System Message ⚙\n" + translatedText);
           embed.setThumbnail(emoji.general.appIcon);
           embed.setFooter({ text: "Alka Hub - System Message" });
           embed.setColor(color.general.error);
