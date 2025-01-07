@@ -107,9 +107,9 @@ async function sendMessageBot(configId, client, message) {
 
         const json = await res.json();
         let translatedText = "";
-        json[0].forEach((element) => {
-          translatedText += element[0] + " "; 
-        });
+        for (const element of json[0]) {
+          translatedText += element[0] + " ";
+        }
 
         if (guild.publicUpdatesChannel) {
           const embed = new EmbedBuilder();
