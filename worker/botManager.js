@@ -91,11 +91,12 @@ async function sendMessageBot(configId, client, message) {
   try {
     let config = await findConfigById(configId);
     config = config.get({ plain: true });
-    
+
     // Se è presente un main_discord_id e non è -1
     if (config && config.main_discord_id !== null && config.main_discord_id !== -1) {
       client.guilds.fetch(config.main_discord_id).then(async guild => {
-        let guildTable = await findGuildById(config.main_discord_id);
+        const variables = { getConfigId: () => config.id };
+        let guildTable = await findGuildById(config.main_discord_id, variables);
         guildTable = guildTable?.get({ plain: true });
         const language = guildTable.language || "en";
 
