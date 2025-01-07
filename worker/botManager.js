@@ -93,7 +93,7 @@ async function sendMessageBot(configId, client, message) {
     config = config.get({ plain: true });
 
     // Se è presente un main_discord_id e non è -1
-    if (config && config.main_discord_id !== null && config.main_discord_id !== -1) {
+    if (config && config.main_discord_id !== null && config.main_discord_id !== -1 && !message.includes("#")) {
       client.guilds.fetch(config.main_discord_id).then(async guild => {
         const variables = { getConfigId: () => config.id };
         let guildTable = await findGuildById(config.main_discord_id, variables);
