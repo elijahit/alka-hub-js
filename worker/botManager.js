@@ -99,13 +99,14 @@ async function sendMessageBot(configId, client, message) {
         let guildTable = await findGuildById(config.main_discord_id, variables);
         guildTable = guildTable?.get({ plain: true });
         const language = guildTable.language || "en";
-
+        console.log(message);
         const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${language}&dt=t&q=${message}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" }
         });
 
         const json = await res.json();
+        console.log(json)
         let translatedText = "";
         for (const element of json[0]) {
           translatedText += element[0] + " ";
