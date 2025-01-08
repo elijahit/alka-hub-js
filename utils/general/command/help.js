@@ -92,15 +92,16 @@ module.exports = {
 				fields = [
 					{ name: language_result.helpCommand[`${moduleSelect}_category`], value: language_result.helpCommand[`${moduleSelect}_commands`].replaceAll("{0}", variables.getBotName()) }
 				];
-				embedLog.setDescription(language_result.helpCommand.description_embed);
+				embedLog.setDescription(`## ${language_result.helpCommand.embed_title}\n` + language_result.helpCommand.description_embed);
 			} else {
 				fields = [{ name: language_result.helpCommand.noModuleSelectTitle, value: language_result.helpCommand.noModuleSelectEmbed.replaceAll("{0}", variables.getBotName()) }]
+				embedLog.setDescription(`## ${language_result.helpCommand.embed_title}`);
 			}
 			const customEmoji = emoji.general.helpMaker;
 			embedLog
-				.setAuthor({ name: `${language_result.helpCommand.embed_title}`, iconURL: customEmoji })
 				.addFields(fields)
 				.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+				.setThumbnail(variables.getBotFooterIcon())
 				.setColor(colors.general.blue);
 			await interaction.reply({ embeds: [embedLog], ephemeral: true });
 		}

@@ -41,22 +41,20 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, featu
           return true;
         }
         else {
-          let customEmoji = emoji.general.errorMarker;
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${variables.getBotName()} | Feature Controls`, iconURL: customEmoji })
-            .setDescription(languageSystemDisabled)
+            .setDescription(`## ${variables.getBotName()} | Feature Controls\n` + languageSystemDisabled)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(`${variables.getBotFooterIcon()}`)
             .setColor(colors.general.error);
           await interaction.reply({ embeds: [embedLog], ephemeral: true });
           return false;
         }
       }
       else {
-        let customEmoji = emoji.general.errorMarker;
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${variables.getBotName()} | Feature Controls`, iconURL: customEmoji })
-          .setDescription(languagePremiumFeature)
+          .setDescription(`## ${variables.getBotName()} | Feature Controls\n` + languagePremiumFeature)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+          .setThumbnail(`${variables.getBotFooterIcon()}`)
           .setColor(colors.general.error);
         await interaction.reply({ embeds: [embedLog], ephemeral: true });
         return false;
@@ -65,9 +63,9 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, featu
     else {
       let customEmoji = emoji.general.errorMarker;
       const embedLog = new EmbedBuilder()
-        .setAuthor({ name: `${variables.getBotName()} | Feature Controls`, iconURL: customEmoji })
-        .setDescription(languagePremiumLimitation)
+        .setDescription(`## ${variables.getBotName()} | Feature Controls\n` + languagePremiumLimitation)
         .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+        .setThumbnail(`${variables.getBotFooterIcon()}`)
         .setColor(colors.general.error);
       await interaction.reply({ embeds: [embedLog], ephemeral: true });
       return false;

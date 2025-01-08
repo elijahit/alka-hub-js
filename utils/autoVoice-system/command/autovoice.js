@@ -65,11 +65,10 @@ module.exports = {
 					const row = new ActionRowBuilder()
 						.addComponents(selectSetup);
 
-					const customEmoji = emoji.general.utility
 					const embedLog = new EmbedBuilder()
-						.setAuthor({ name: `${language_result.selectSetup.embed_title}`, iconURL: customEmoji })
-						.setDescription(language_result.selectSetup.description_embed)
+						.setDescription(`## ${language_result.selectSetup.embed_title}\n` + language_result.selectSetup.description_embed)
 						.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+						.setThumbnail(variables.getBotFooterIcon())
 						.setColor(colors.general.danger);
 
 					// CREO IL CANALE TEMPORANEO DI SETUP
@@ -89,9 +88,9 @@ module.exports = {
 					})
 
 					const embedLogTwo = new EmbedBuilder()
-						.setAuthor({ name: `${language_result.selectSetup.embed_title}`, iconURL: customEmoji })
-						.setDescription(language_result.selectSetup.description_embed_two.replace("{0}", initChannel))
+						.setDescription(`## ${language_result.selectSetup.embed_title}\n` + language_result.selectSetup.description_embed_two.replace("{0}", initChannel))
 						.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+						.setThumbnail(variables.getBotFooterIcon())
 						.setColor(colors.general.aquamarine);
 
 					await interaction.reply({ embeds: [embedLogTwo], ephemeral: true });

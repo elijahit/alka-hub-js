@@ -50,17 +50,15 @@ module.exports = {
 					checkChannelIsPresent = checkChannelIsPresent?.get({ plain: true });
 					
 
-					const customEmoji = emoji.levelsSystem.levelsMaker;
-
 					if (checkChannelIsPresent) {
 						await removeLevelsConfig({where: { guild_id: interaction.guild.id, config_id: variables.getConfigId() }});
 
 						const oldChannel = await interaction.guild.channels.fetch(checkChannelIsPresent.log_channel);
 
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-							.setDescription(language_result.levelsCommand.description_embed_delete.replace("{0}", oldChannel))
+							.setDescription(`## ${language_result.levelsCommand.embed_title}\n` + language_result.levelsCommand.description_embed_delete.replace("{0}", oldChannel))
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
@@ -68,9 +66,9 @@ module.exports = {
 					await createLevelsConfig(interaction.guild.id, channel.id, variables);
 
 					const embedLog = new EmbedBuilder()
-						.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-						.setDescription(language_result.levelsCommand.description_embed.replace("{0}", channel))
+						.setDescription(`## ${language_result.levelsCommand.embed_title}\n` + language_result.levelsCommand.description_embed.replace("{0}", channel))
 						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+						.setThumbnail(variables.getBotFooterIcon())
 						.setColor(colors.general.success);
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 

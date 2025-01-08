@@ -102,9 +102,9 @@ module.exports = {
 
 						if (!featureIsDisabled) {
 							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
-								.setDescription(language_result.disabledFeatures.feature_disabled_by_alka)
+								.setDescription(`## ${language_result.disabledFeatures.embed_title}\n` + language_result.disabledFeatures.feature_disabled_by_alka)
 								.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+								.setThumbnail(variables.getBotFooterIcon())
 								.setColor(colors.general.error);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							return;
@@ -112,9 +112,9 @@ module.exports = {
 
 						if (!featurePremium) {
 							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
-								.setDescription(language_result.disabledFeatures.feature_premium)
+								.setDescription(`## ${language_result.disabledFeatures.embed_title}\n` + language_result.disabledFeatures.feature_premium)
 								.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+								.setThumbnail(variables.getBotFooterIcon())
 								.setColor(colors.general.error);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							return;
@@ -125,18 +125,18 @@ module.exports = {
 								await updateEnabledFeature({ is_enabled: 0 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: variables.getConfigId() } });
 								new CommandsDeploy().deploy(variables, interaction.guild.id, featuresChoice, true);
 								const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.disabledFeatures.embed_title}`, iconURL: emoji.general.falseMaker })
-								.setDescription(language_result.disabledFeatures.description_embed.replace("{0}", featureName))
+								.setDescription(`## ${language_result.disabledFeatures.embed_title}\n` + language_result.disabledFeatures.description_embed.replace("{0}", featureName))
 								.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+								.setThumbnail(variables.getBotFooterIcon())
 								.setColor(colors.general.error);
 								await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							} else {
 								new CommandsDeploy().deploy(variables, interaction.guild.id, featuresChoice);
 								updateEnabledFeature({ is_enabled: 1 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: variables.getConfigId() } });
 								const embedLog = new EmbedBuilder()
-									.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
-									.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", featureName))
+									.setDescription(`## ${language_result.enabledFeatures.embed_title}\n` + language_result.enabledFeatures.description_embed.replace("{0}", featureName))
 									.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+									.setThumbnail(variables.getBotFooterIcon())
 									.setColor(colors.general.success);
 								await interaction.reply({ embeds: [embedLog], ephemeral: true });
 							}
@@ -144,9 +144,9 @@ module.exports = {
 							await createEnabledFeature(interaction.guild.id, featuresChoice, 1, variables);
 							new CommandsDeploy().deploy(variables, interaction.guild.id, featuresChoice);
 							const embedLog = new EmbedBuilder()
-								.setAuthor({ name: `${language_result.enabledFeatures.embed_title}`, iconURL: emoji.general.trueMaker })
-								.setDescription(language_result.enabledFeatures.description_embed.replace("{0}", featureName))
+								.setDescription(`## ${language_result.enabledFeatures.embed_title}\n` + language_result.enabledFeatures.description_embed.replace("{0}", featureName))
 								.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+								.setThumbnail(variables.getBotFooterIcon())
 								.setColor(colors.general.success);
 							await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						}

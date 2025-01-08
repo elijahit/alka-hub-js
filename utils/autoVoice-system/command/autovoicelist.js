@@ -38,20 +38,18 @@ module.exports = {
           //CONTROLLO SE LA ROW E' PRESENTE NEL DB
           if (checkTable.length > 0) {
             // SE E' PRESENTE NEL DB LA ELIMINA E MOSTRA UN MESSAGGIO DI SUCCESSO
-            customEmoji = emoji.general.trueMaker
             embedLog.setColor(colors.general.olive);
-            embedLog.setDescription(language_result.list.description_embed);
+            embedLog.setDescription(`## ${language_result.list.embed_title}\n` + language_result.list.description_embed);
             embedLog.addFields({ name: "Auto Voice List", value: checkTable.map((value, index) => { return `**ID:** ${value.id} - **Channel:** <#${value.channel_id}>`}).join("\n") });
 
           } else {
             // SE NON E' PRESENTE NEL DB MOSTRA UN ERRORE
-            customEmoji = emoji.general.errorMarker
             embedLog.setColor(colors.general.error);
-            embedLog.setDescription(language_result.list.description_embed_empty);
+            embedLog.setDescription(`## ${language_result.list.embed_title}\n` + language_result.list.description_embed_empty);
           }
           embedLog.setTitle(language_result.list.embed_title);
-          embedLog.setAuthor({ name: `${language_result.list.embed_title}`, iconURL: customEmoji })
           embedLog.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` });
+          embedLog.setThumbnail(variables.getBotFooterIcon());
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
         }
         else {

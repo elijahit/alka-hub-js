@@ -47,10 +47,10 @@ module.exports = {
         if (!guild) await createGuild(interaction.guild.id, languageValue, timeZoneValue[0][1], variables);
 
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.initCommand.embed_title}`, iconURL: emoji.general.trueMaker })
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
-          .setDescription(language_result.initCommand.description_embed.replaceAll("{0}", variables.getBotName()))
-          .setColor(color.general.success);
+          .setDescription(`## ${language_result.initCommand.embed_title}\n` + language_result.initCommand.description_embed.replaceAll("{0}", variables.getBotName()))
+          .setColor(color.general.success)
+          .setThumbnail(variables.getBotFooterIcon());
         await interaction.reply({ embeds: [embedLog], ephemeral: true });
       }
 

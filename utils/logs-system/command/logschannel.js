@@ -107,29 +107,26 @@ module.exports = {
 					//CONTROLLO SE LA ROW E' GIA' PRESENTE NEL DB
 					if (checkTable) {
 						if (checkTable[choices]) {
-							customEmoji = emoji.general.falseMaker;
 							await updateLogs({ [choices]: null }, { where: { id: checkTable.id } });
-							embedLog.setDescription(language_result.commandLogsChannel.description_embed_removed.replace("{0}", choices.split("_")[0]))
+							embedLog.setDescription(`## ${language_result.commandLogsChannel.embed_title}\n` + language_result.commandLogsChannel.description_embed_removed.replace("{0}", choices.split("_")[0]))
 								.setColor(colors.general.error);
 						} else {
-							customEmoji = emoji.general.trueMaker
 							await updateLogs({ [choices]: channel }, { where: { id: checkTable.id } });
 							embedLog
-								.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
+								.setDescription(`## ${language_result.commandLogsChannel.embed_title}\n` + language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
 								.setColor(colors.general.success);
 						}
 
 					} else {
-						customEmoji = emoji.general.trueMaker
 						await createLogs(interaction.guild.id, choices, channel, variables);
 
 						embedLog
-							.setDescription(language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
+							.setDescription(`## ${language_result.commandLogsChannel.embed_title}\n` + language_result.commandLogsChannel.description_embed.replace("{0}", choices.split("_")[0]))
 							.setColor(colors.general.success);
 					}
 					embedLog
-						.setAuthor({ name: `${language_result.commandLogsChannel.embed_title}`, iconURL: customEmoji })
-						.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` });
+						.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+						.setThumbnail(variables.getBotFooterIcon());
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 
 

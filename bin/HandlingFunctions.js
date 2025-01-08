@@ -24,9 +24,9 @@ function errorSendControls(error, client, guild_error, system, variables) {
           if (!MissingMessage) {
             if (channel.type == 0) {
               const embedLog = new EmbedBuilder()
-                .setAuthor({ name: `${variables.getBotName()} | Missing Permissions` })
-                .setDescription(`You haven't invited ${variables.getBotName()} correctly and you don't have permission to perform this action. We invite you to invite ${variables.getBotName()} again or contact our support.`)
+                .setDescription(`## ${variables.getBotName()} | Missing Permissions\nYou haven't invited ${variables.getBotName()} correctly and you don't have permission to perform this action. We invite you to invite ${variables.getBotName()} again or contact our support.`)
                 .setFooter({ text: `${variables.getBotFooter()}`, iconURL: variables.getBotFooterIcon() })
+                .setThumbnail(variables.getBotFooterIcon())
                 .setColor(colors.general.error);
               channel.send({ embeds: [embedLog] });
               MissingMessage = true;
@@ -105,31 +105,28 @@ async function returnPermission(interaction, pex, fn) {
 }
 
 async function noInitGuilds(interaction, variables) {
-  let customEmoji = emoji.general.errorMarker;
   const embedLog = new EmbedBuilder()
-    .setAuthor({ name: `${variables.getBotName()} | Init Controls`, iconURL: customEmoji })
-    .setDescription("You can't execute this command at the moment. You need to initialize bot first with **/init**")
+    .setDescription(`## ${variables.getBotName()} | Init Controls\nYou can't execute this command at the moment. You need to initialize bot first with **/init**`)
     .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+    .setThumbnail(variables.getBotFooterIcon())
     .setColor(colors.general.error);
   return await interaction.reply({ embeds: [embedLog], ephemeral: true });
 }
 
 async function noEnabledFunc(interaction, language, variables) {
-  let customEmoji = emoji.general.errorMarker;
   const embedLog = new EmbedBuilder()
-    .setAuthor({ name: `${variables.getBotName()} | Features Controls`, iconURL: customEmoji })
-    .setDescription(language)
+    .setDescription(`## ${variables.getBotName()} | Features Controls\n` + language)
     .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+    .setThumbnail(variables.getBotFooterIcon())
     .setColor(colors.general.error);
   return await interaction.reply({ embeds: [embedLog], ephemeral: true });
 }
 
 async function noHavePermission(interaction, language, variables) {
-  let customEmoji = emoji.general.errorMarker;
   const embedLog = new EmbedBuilder()
-    .setAuthor({ name: `${variables.getBotName()} | Missing Permissions`, iconURL: customEmoji })
-    .setDescription(language.noPermission.description_embed)
+    .setDescription(`## ${variables.getBotName()} | Missing Permissions\n` + language.noPermission.description_embed)
     .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+    .setThumbnail(variables.getBotFooterIcon())
     .setColor(colors.general.error);
 
   await interaction.reply({ embeds: [embedLog], ephemeral: true });

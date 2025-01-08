@@ -46,23 +46,22 @@ module.exports = {
 			let checkUserIsPresent = await findByGuildIdAndUserIdLevel(interaction.guild.id, user.id, variables);
 			checkUserIsPresent = checkUserIsPresent?.get({ plain: true });
 
-			const customEmoji = emoji.levelsSystem.levelsMaker;
 
 			if (checkUserIsPresent) {
 
 				const embedLog = new EmbedBuilder()
-					.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-					.setDescription(language_result.levelsCommand.description_embed_stats.replace("{0}", user).replace("{1}", checkUserIsPresent.level).replace("{2}", checkUserIsPresent.exp).replace("{3}", 75 + (25 * checkUserIsPresent.level)))
+					.setDescription(`## ${language_result.levelsCommand.embed_title}\n` + language_result.levelsCommand.description_embed_stats.replace("{0}", user).replace("{1}", checkUserIsPresent.level).replace("{2}", checkUserIsPresent.exp).replace("{3}", 75 + (25 * checkUserIsPresent.level)))
 					.setFooter({ text: language_result.levelsCommand.newLevel_footer.replace("{0}", checkUserIsPresent.minute_vocal == null ? 0 : checkUserIsPresent.minute_vocal).replace("{1}", checkUserIsPresent.message_count == null ? 0 : checkUserIsPresent.message_count), iconURL: variables.getBotFooterIcon() })
-					.setColor(colors.general.success);
+					.setColor(colors.general.success)
+					.setThumbnail(variables.getBotFooterIcon());
 				await interaction.reply({ embeds: [embedLog] });
 				return;
 			}
 
 			const embedLog = new EmbedBuilder()
-				.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-				.setDescription(language_result.levelsCommand.description_embed_statsNotFound)
+				.setDescription(`## ${language_result.levelsCommand.embed_title}\n` + language_result.levelsCommand.description_embed_statsNotFound)
 				.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+				.setThumbnail(variables.getBotFooterIcon())
 				.setColor(colors.general.error);
 			await interaction.reply({ embeds: [embedLog], ephemeral: true });
 		}

@@ -40,19 +40,17 @@ module.exports = {
           //CONTROLLO SE LA ROW E' PRESENTE NEL DB
           if (checkTable) {
             // SE E' PRESENTE NEL DB LA ELIMINA E MOSTRA UN MESSAGGIO DI SUCCESSO
-            customEmoji = emoji.general.trueMaker
             embedLog.setColor(colors.general.success);
-            embedLog.setDescription(language_result.remove.success_description.replace("{0}", autoVoiceId));
+            embedLog.setDescription(`## ${language_result.remove.embed_title}\n` + language_result.remove.success_description.replace("{0}", autoVoiceId));
             await removeAutoVoiceById({ id: checkTable.id, guild_id: interaction.guild.id }, variables);
 
           } else {
             // SE NON E' PRESENTE NEL DB MOSTRA UN ERRORE
-            customEmoji = emoji.general.errorMarker
             embedLog.setColor(colors.general.error);
-            embedLog.setDescription(language_result.remove.error_description);
+            embedLog.setDescription(`## ${language_result.remove.embed_title}\n` + language_result.remove.error_description);
           }
           embedLog.setTitle(language_result.remove.embed_title);
-          embedLog.setAuthor({ name: `${language_result.remove.embed_title}`, iconURL: customEmoji })
+          embedLog.setThumbnail(variables.getBotFooterIcon());
           embedLog.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` });
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
         }

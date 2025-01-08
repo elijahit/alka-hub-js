@@ -68,13 +68,13 @@ module.exports = {
 							}
 						}
 						levelListResolve += `\n${language_result.listCommand.most_lenght}`;
-						embedLog.setDescription(levelListResolve);
+						embedLog.setDescription(`## ${language_result.listCommand.embed_title}\n` + levelListResolve);
 					} else {
-						embedLog.setDescription(levelList);
+						embedLog.setDescription(`## ${language_result.listCommand.embed_title}\n` + levelList);
 					}
 					embedLog
-						.setAuthor({ name: `${language_result.listCommand.embed_title}`, iconURL: emojis.statsServerSystem.main })
 						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+						.setThumbnail(variables.getBotFooterIcon())
 						.setColor(colors.general.blue);
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 

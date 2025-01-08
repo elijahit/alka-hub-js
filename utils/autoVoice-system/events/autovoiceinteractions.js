@@ -55,11 +55,10 @@ async function endSetup(language_result, interaction, variables) {
   const setupChannel = await interaction.guild.channels.fetch(jsonData.channel_start);
   fs.unlinkSync(`./utils/autoVoice-system/${interaction.guild.id}_${interaction.user.id}.json`);
 
-  const customEmoji = emoji.general.utility
   const embedLog = new EmbedBuilder()
-    .setAuthor({ name: `${language_result.endSetup_message.embed_title}`, iconURL: customEmoji })
-    .setDescription(language_result.endSetup_message.description_embed)
+    .setDescription(`## ${language_result.endSetup_message.embed_title}\n` + language_result.endSetup_message.description_embed)
     .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+    .setThumbnail(variables.getBotFooterIcon())
     .setColor(color.general.olive);
   await setupChannel.send({ embeds: [embedLog] });
 }
@@ -131,11 +130,10 @@ module.exports = {
         const row = new ActionRowBuilder()
           .addComponents(selectSetup_Creator);
 
-        const customEmoji = emoji.general.utility
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.selectSetup_Creator.embed_title}`, iconURL: customEmoji })
-          .setDescription(language_result.selectSetup_Creator.description_embed)
+          .setDescription(`## ${language_result.selectSetup_Creator.embed_title}\n` + language_result.selectSetup_Creator.description_embed)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(color.general.olive);
         await interaction.message.delete();
         await interaction.reply({ embeds: [embedLog], components: [row] });
@@ -202,11 +200,10 @@ module.exports = {
         const row = new ActionRowBuilder()
           .addComponents(selectSetup_TypeAccess);
 
-        const customEmoji = emoji.general.utility
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.selectSetup_TypeAccess.embed_title}`, iconURL: customEmoji })
-          .setDescription(language_result.selectSetup_TypeAccess.description_embed)
+          .setDescription(`## ${language_result.selectSetup_TypeAccess.embed_title}\n` + language_result.selectSetup_TypeAccess.description_embed)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(color.general.olive);
         await interaction.message.delete();
         await interaction.reply({ embeds: [embedLog], components: [row] });
@@ -261,11 +258,10 @@ module.exports = {
         const row = new ActionRowBuilder()
           .addComponents(selectSetup_Creator);
 
-        const customEmoji = emoji.general.utility
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.select_category.embed_title}`, iconURL: customEmoji })
-          .setDescription(language_result.select_category.description_embed)
+          .setDescription(`## ${language_result.select_category.embed_title}\n` + language_result.select_category.description_embed)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(color.general.olive);
         await interaction.message.delete();
         await interaction.reply({ embeds: [embedLog], components: [row] });
@@ -285,11 +281,10 @@ module.exports = {
           await interaction.channel.delete();
           const setupChannel = await interaction.guild.channels.fetch(jsonData.channel_start);
 
-          const customEmoji = emoji.general.errorMarker;
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.endSetup_message.embed_title}`, iconURL: customEmoji })
-            .setDescription(language_result.endSetup_message.description_embed_errorcategory)
+            .setDescription(`## ${language_result.endSetup_message.embed_title}\n` + language_result.endSetup_message.description_embed_errorcategory)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
             .setColor(color.general.error);
           await setupChannel.send({ embeds: [embedLog] });
           fs.unlinkSync(`./utils/autoVoice-system/${interaction.guild.id}_${interaction.user.id}.json`);

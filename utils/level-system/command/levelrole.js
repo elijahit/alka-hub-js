@@ -53,14 +53,13 @@ module.exports = {
 					checkLevelsIsPresent = checkLevelsIsPresent?.get({ plain: true });
 					
 
-					const customEmoji = emoji.levelsSystem.levelsMaker;
 					if (checkLevelsIsPresent) {
 						await removeLevelsRoles({where: { guild_id: interaction.guild.id, role_id: role.id, config_id: variables.getConfigId() }});
 
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-							.setDescription(language_result.levelsCommand.description_embed_delrole.replace("{0}", role))
+							.setDescription(`## ${language_result.levelsCommand.embed_title}\n` + language_result.levelsCommand.description_embed_delrole.replace("{0}", role))
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					} else {
@@ -73,9 +72,9 @@ module.exports = {
 						await createLevelsRoles(interaction.guild.id, role.id, level, variables);
 	
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-							.setDescription(language_result.levelsCommand.description_embed_addrole.replace("{0}", role).replace("{1}", level))
+							.setDescription(`## ${language_result.levelsCommand.embed_title}\n` + language_result.levelsCommand.description_embed_addrole.replace("{0}", role).replace("{1}", level))
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(colors.general.success);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 					}

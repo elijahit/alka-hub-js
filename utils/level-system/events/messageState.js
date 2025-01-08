@@ -54,7 +54,6 @@ module.exports = {
             const langagues_path = readFileSync(`./languages/levels-system/${data}.json`);
             const language_result = JSON.parse(langagues_path);
 
-            const customEmoji = emoji.levelsSystem.levelsMaker;
 
             let checkRoles = await findAllLevelsRolesByGuildId(message.guild.id, variables);
             checkRoles.map(async value => {
@@ -66,9 +65,9 @@ module.exports = {
                   if (error == "DiscordAPIError[50013]: Missing Permissions") {
                     let roleResolve = await message.guild.roles.fetch(value.role_id)
                     const embedLog = new EmbedBuilder()
-                      .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: emoji.general.errorMarker })
-                      .setDescription(language_result.levelsCommand.missing_permissions.replace("{0}", roleResolve).replace("{1}", message.member))
+                      .setDescription(`## ${language_result.levelsCommand.embed_title}\n` + language_result.levelsCommand.missing_permissions.replace("{0}", roleResolve).replace("{1}", message.member))
                       .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+                      .setThumbnail(variables.getBotFooterIcon())
                       .setColor(colors.general.error);
                     await channel.send({ embeds: [embedLog] });
                   } else {
@@ -80,9 +79,9 @@ module.exports = {
             })
 
             const embedLog = new EmbedBuilder()
-              .setAuthor({ name: `${language_result.levelsCommand.embed_title}`, iconURL: customEmoji })
-              .setDescription(language_result.levelsCommand.newLevel_embed.replace("{0}", message.member).replace("{1}", checkUser.level + 1))
+              .setDescription(`## ${language_result.levelsCommand.embed_title}\n` + language_result.levelsCommand.newLevel_embed.replace("{0}", message.member).replace("{1}", checkUser.level + 1))
               .setFooter({ text: `${language_result.levelsCommand.newLevel_footer.replace("{0}", checkUser.minute_vocal == null ? 0 : checkUser.minute_vocal).replace("{1}", checkUser.message_count == null ? 0 : checkUser.message_count)}`, iconURL: variables.getBotFooterIcon() })
+              .setThumbnail(variables.getBotFooterIcon())
               .setColor(colors.general.blue);
             await channel.send({ content: `${message.member}`, embeds: [embedLog] });
           } else {
