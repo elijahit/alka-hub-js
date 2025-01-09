@@ -48,8 +48,8 @@ module.exports = {
 					});
 					await category.setPosition(0); // Imposto la posizione del canale in cima.
 					const embedLog = new EmbedBuilder()
-						.setAuthor({ name: `${language_result.statisticsCommand.embed_title}`, iconURL: emoji.statsServerSystem.main })
-						.setDescription(language_result.statisticsCommand.description_embed)
+						.setDescription(`## ${language_result.statisticsCommand.embed_title}\n` + language_result.statisticsCommand.description_embed)
+						.setThumbnail(variables.getBotFooterIcon())
 						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setColor(colors.general.success);
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });

@@ -56,9 +56,9 @@ module.exports = {
 					// CONTROLLO SE IL RUOLO SI TROVA SOTTO AL RUOLO DA IMPOSTARE
 					if (interaction.guild.roles.botRoleFor(interaction.client.user).rawPosition < role.rawPosition) {
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-							.setDescription(language_result.removeCommand.description_embed_missingpermissions.replace("{0}", `${interaction.guild.roles.botRoleFor(interaction.client.user)}`))
+							.setDescription(`## ${language_result.removeCommand.embed_title}\n` + language_result.removeCommand.description_embed_missingpermissions.replace("{0}", `${interaction.guild.roles.botRoleFor(interaction.client.user)}`))
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
@@ -70,9 +70,9 @@ module.exports = {
 					}
 					catch {
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-							.setDescription(language_result.removeCommand.description_embed_channelnotfound)
+							.setDescription(`## ${language_result.removeCommand.embed_title}\n` + language_result.removeCommand.description_embed_channelnotfound)
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(color.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
@@ -83,9 +83,9 @@ module.exports = {
 
 					if (!checkReactionAlreadySet) {
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-							.setDescription(language_result.removeCommand.description_embed_notset)
+							.setDescription(`## ${language_result.removeCommand.embed_title}\n` + language_result.removeCommand.description_embed_notset)
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(colors.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
@@ -105,9 +105,9 @@ module.exports = {
 					}
 					catch {
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-							.setDescription(language_result.removeCommand.description_embed_emojinotfound)
+							.setDescription(`## ${language_result.removeCommand.embed_title}\n` + language_result.removeCommand.description_embed_emojinotfound)
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(color.general.error);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 						return;
@@ -116,9 +116,9 @@ module.exports = {
 					await removeReactions({guild_id: interaction.guild.id, message_id: message, emoji: emoji}, variables);
 
 					const embedLog = new EmbedBuilder()
-						.setAuthor({ name: `${language_result.removeCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-						.setDescription(language_result.removeCommand.description_embed.replace("{0}", role))
+						.setDescription(`## ${language_result.removeCommand.embed_title}\n` + language_result.removeCommand.description_embed.replace("{0}", role))
 						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+						.setThumbnail(variables.getBotFooterIcon())
 						.setColor(colors.general.danger);
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });
 

@@ -33,9 +33,9 @@ module.exports = {
 
 
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.welcomeModal.embed_title}`, iconURL: emoji.welcomeSystem.main })
           .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
-          .setDescription(language_result.welcomeModal.description)
+          .setDescription(`## ${language_result.welcomeModal.embed_title}\n` + language_result.welcomeModal.description)
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(color.general.danger);
         await interaction.reply({embeds: [embedLog], ephemeral: true});
       }

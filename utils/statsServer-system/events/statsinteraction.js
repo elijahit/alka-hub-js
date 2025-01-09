@@ -74,16 +74,16 @@ module.exports = {
             name: "Loading (few minutes)...",
           });
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelStatsCommand.embed_title}`, iconURL: customEmoji })
-            .setDescription(language_result.channelStatsCommand.description_embed.replace("{0}", `${channel}`))
+            .setDescription(`## ${language_result.channelStatsCommand.embed_title}\n` + language_result.channelStatsCommand.description_embed.replace("{0}", `${channel}`))
             .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+            .setThumbnail(variables.getBotFooterIcon())
             .setColor(colors.general.success);
           await interaction.reply({ embeds: [embedLog], ephemeral: true });
           await createStatistics(interaction.guild.id, channel.id, nameChannel, parseInt(type), variables);
         } else {
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.categoryNotFound.embed_title}`, iconURL: customEmoji })
-            .setDescription(language_result.categoryNotFound.description_embed)
+            .setDescription(`## ${language_result.categoryNotFound.embed_title}\n` + language_result.categoryNotFound.description_embed)
+            .setThumbnail(variables.getBotFooterIcon())
             .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
             .setColor(colors.general.error);
           await interaction.reply({ embeds: [embedLog], ephemeral: true });
@@ -119,16 +119,16 @@ module.exports = {
           });
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdateCommand.embed_title}`, iconURL: customEmoji })
-            .setDescription(language_result.channelUpdateCommand.description_embed.replace("{0}", `${channel}`))
+            .setDescription(`## ${language_result.channelUpdateCommand.embed_title}\n` + language_result.channelUpdateCommand.description_embed.replace("{0}", `${channel}`))
+            .setThumbnail(variables.getBotFooterIcon())
             .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
             .setColor(colors.general.success);
           await interaction.reply({ embeds: [embedLog], ephemeral: true });
           await updateStatistics({ channel_name: nameChannel }, { where: { guild_id: interaction.guild.id, channel_id: channelId, config_id: variables.getConfigId() } });
         } else {
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelNotFound.embed_title}`, iconURL: customEmoji })
-            .setDescription(language_result.channelNotFound.description_embed)
+            .setDescription(`## ${language_result.channelNotFound.embed_title}\n` + language_result.channelNotFound.description_embed)
+            .setThumbnail(variables.getBotFooterIcon())
             .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
             .setColor(colors.general.error);
           await interaction.reply({ embeds: [embedLog], ephemeral: true });

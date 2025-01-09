@@ -34,8 +34,8 @@ module.exports = {
 						language_result.noPermission.description_embed_no_features, variables)) return;
 
 					const embedLog = new EmbedBuilder()
-						.setAuthor({ name: `${language_result.markdownHelp.embed_title}`, iconURL: emoji.statsServerSystem.main })
-						.setDescription(language_result.markdownHelp.description_embed)
+						.setDescription(`## ${language_result.markdownHelp.embed_title}\n` + language_result.markdownHelp.description_embed)
+						.setThumbnail(variables.getBotFooterIcon())
 						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setColor(colors.general.success);
 					await interaction.reply({ embeds: [embedLog], ephemeral: true });

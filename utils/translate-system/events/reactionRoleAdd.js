@@ -180,8 +180,7 @@ module.exports = {
           translatedText += element[0] + " "; 
         });
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `Translate System`, iconURL: emojis.translateSystem.main })
-          .setDescription(`${translatedText}`)
+          .setDescription(`## Translate System\n` + `${translatedText}`)
           .setColor(color.general.blue)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` });
         if(checkTranslateSetting.mode == 0) await messageReaction.message.reply({ embeds: [embedLog] });

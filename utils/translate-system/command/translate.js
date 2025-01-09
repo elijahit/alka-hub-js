@@ -58,9 +58,9 @@ module.exports = {
       const embedLog = new EmbedBuilder();
       if (fromLang === toLang) {
         embedLog
-          .setAuthor({ name: `${language_result.translateCommand.embed_title}`, iconURL: customEmoji })
-          .setDescription(`${language_result.translateCommand.description_embed_same_lang}`)
+          .setDescription(`## ${language_result.translateCommand.embed_title}\n` + `${language_result.translateCommand.description_embed_same_lang}`)
           .addFields(fields)
+          .setThumbnail(variables.getBotFooterIcon())
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setColor(colors.general.blue);
         await interaction.reply({ embeds: [embedLog], ephemeral: true });
@@ -77,16 +77,16 @@ module.exports = {
           });
   
           embedLog
-            .setAuthor({ name: `${language_result.translateCommand.embed_title}`, iconURL: customEmoji })
-            .setDescription(`${language_result.translateCommand.description_embed.replace("{0}", toLang).replace("{1}", translatedText)}`)
+            .setDescription(`## ${language_result.translateCommand.embed_title}\n` + `${language_result.translateCommand.description_embed.replace("{0}", toLang).replace("{1}", translatedText)}`)
+            .setThumbnail(variables.getBotFooterIcon())
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.blue);
           await interaction.reply({ embeds: [embedLog] });
         } catch (error) {
           errorSendControls(error, interaction.client, interaction.guild, "\\translate-system\\translate.js", variables);
           embedLog
-            .setAuthor({ name: `${language_result.translateCommand.embed_title}`, iconURL: customEmoji })
-            .setDescription(`${language_result.translateCommand.description_embed_error}`)
+            .setDescription(`## ${language_result.translateCommand.embed_title}\n` + `${language_result.translateCommand.description_embed_error}`)
+            .setThumbnail(variables.getBotFooterIcon())
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.error);
           await interaction.reply({ embeds: [embedLog], ephemeral: true });

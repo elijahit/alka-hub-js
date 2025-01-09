@@ -133,8 +133,8 @@ module.exports = {
 					{ name: language_result.apexTracker.rank, value: `${resultApi.data.global.rank.rankName} (${resultApi.data.global.rank.rankScore})` }
 				];
 				const embedLog = new EmbedBuilder()
-					.setAuthor({ name: `${language_result.apexTracker.embed_title}`, iconURL: customEmoji })
 					.addFields(fields)
+					.setDescription(`## ${language_result.apexTracker.embed_title}\n`)
 					.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 					.setThumbnail(resultApi.data.global.avatar)
 					.setColor(colors.general.danger);
@@ -144,10 +144,10 @@ module.exports = {
 		catch (error) {
 			if (error == "AxiosError: Request failed with status code 404") {
 				const embedLog = new EmbedBuilder()
-					.setAuthor({ name: `${language_result.apexTracker.embed_title}`, iconURL: customEmoji })
-					.setDescription(language_result.apexTracker.noResult)
+					.setDescription(`## ${language_result.apexTracker.embed_title}\n` + language_result.apexTracker.noResult)
 					.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
-					.setColor(0x9e1114);
+					.setThumbnail(variables.getBotFooterIcon())
+					.setColor(colors.general.error);
 				await interaction.editReply({ embeds: [embedLog] });
 				return;
 			}

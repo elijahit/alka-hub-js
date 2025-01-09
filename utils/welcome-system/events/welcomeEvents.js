@@ -51,13 +51,14 @@ module.exports = {
             name: "welcome.jpg"
           })
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.welcomeMessage.embed_title}`, iconURL: emoji.welcomeSystem.main })
             .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
             .setImage("attachment://welcome.jpg")
+            .setDescription(`## ${language_result.welcomeMessage.embed_title}\n`)
+            .setThumbnail(variables.getBotFooterIcon())
             .setColor(colors.general.danger);
 
           if(check.text && check.text?.length > 0) {
-            embedLog.setDescription(check.text);
+            embedLog.setDescription(`## ${language_result.welcomeMessage.embed_title}\n` + check.text);
           }
 
           await channel.send({ content: `${member}`, files: [file], embeds: [embedLog] })
