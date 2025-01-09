@@ -53,10 +53,10 @@ module.exports = {
         }
 
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.guildMemberRemove.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
-          .setDescription(language_result.guildMemberRemove.embed_description)
+          .setDescription(`## ${language_result.guildMemberRemove.embed_title}\n` + language_result.guildMemberRemove.embed_description)
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(colors.general.error);
         if (member.user.avatar) {
           embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${member.id}/${member.user.avatar}.png`);

@@ -55,13 +55,13 @@ module.exports = {
         const embedLog = new EmbedBuilder();
         if (oldMessage.content && !newMessage.content) {
           embedLog
-            .setDescription(`**${language_result.messageUpdate.embed_description}:**\n${oldMessage.content}`);
+            .setDescription(`## ${language_result.messageUpdate.embed_title}\n` + `**${language_result.messageUpdate.embed_description}:**\n${oldMessage.content}`);
         } else if (!oldMessage.content && newMessage.content) {
           embedLog
-            .setDescription(`**${language_result.messageUpdate.embed_description_new}:**\n${newMessage.content}`);
+            .setDescription(`## ${language_result.messageUpdate.embed_title}\n` + `**${language_result.messageUpdate.embed_description_new}:**\n${newMessage.content}`);
         } else if (oldMessage.content && newMessage.content) {
           embedLog
-            .setDescription(`**${language_result.messageUpdate.embed_description}:**\n${oldMessage.content}\n**${language_result.messageUpdate.embed_description_new}:**\n${newMessage.content}`);
+            .setDescription(`## ${language_result.messageUpdate.embed_title}\n` + `**${language_result.messageUpdate.embed_description}:**\n${oldMessage.content}\n**${language_result.messageUpdate.embed_description_new}:**\n${newMessage.content}`);
         }
 
         if (oldMessage.attachments.size > 0) {
@@ -74,9 +74,9 @@ module.exports = {
         fields.push({ name: `${language_result.messageUpdate.go_message}`, value: `${oldMessage.url}` })
 
         embedLog
-          .setAuthor({ name: `${language_result.messageUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(colors.general.danger);
         channel_logs.send({ embeds: [embedLog] });
       }

@@ -63,10 +63,10 @@ module.exports = {
 			// SE IL RANK NON ESISTE
 			if (!result) {
 				const embedLog = new EmbedBuilder()
-					.setAuthor({ name: `${language_result.permissions.embed_title}`, iconURL: emoji.general.errorMarker })
-					.setDescription(language_result.permissions.hash_not_found
+					.setDescription(`## ${language_result.permissions.embed_title}\n` + language_result.permissions.hash_not_found
 						.replace("{0}", `${pex}`))
 					.setFooter({ text: `${language_result.permissions.embed_footer}`, iconURL: `${language_result.permissions.embed_icon_url}` })
+					.setThumbnail(variables.getBotFooterIcon())
 					.setColor(colors.general.error);
 				await interaction.reply({ embeds: [embedLog], ephemeral: true });
 				return;
@@ -78,11 +78,11 @@ module.exports = {
 				await runDb(deleteSql,  result.hash_id, result.roles_id);
 
 				const embedLog = new EmbedBuilder()
-					.setAuthor({ name: `${language_result.permissions.embed_title}`, iconURL: emoji.general.falseMaker })
-					.setDescription(language_result.permissions.remove_hash
+					.setDescription(`## ${language_result.permissions.embed_title}\n` + language_result.permissions.remove_hash
 						.replace("{0}", `${pex}`)
 						.replace("{1}", `${role}`))
 					.setFooter({ text: `${language_result.permissions.embed_footer}`, iconURL: `${language_result.permissions.embed_icon_url}` })
+					.setThumbnail(variables.getBotFooterIcon())
 					.setColor(colors.general.error);
 				await interaction.reply({ embeds: [embedLog], ephemeral: true });
 			} else { // SE UN RUOLO NON ESISTE LO AGGIUNGE ->
@@ -91,11 +91,11 @@ module.exports = {
 				await runDb(insertSql, role.id, result.hash_id);
 				// let customEmoji = await getEmojifromUrl(interaction.client, "pexadd");
 				const embedLog = new EmbedBuilder()
-					.setAuthor({ name: `${language_result.permissions.embed_title}`, iconURL: emoji.general.trueMaker })
-					.setDescription(language_result.permissions.added_hash
+					.setDescription(`## ${language_result.permissions.embed_title}\n` + language_result.permissions.added_hash
 						.replace("{0}", `${pex}`)
 						.replace("{1}", `${role}`))
 					.setFooter({ text: `${language_result.permissions.embed_footer}`, iconURL: `${language_result.permissions.embed_icon_url}` })
+					.setThumbnail(variables.getBotFooterIcon())
 					.setColor(colors.general.success);
 				await interaction.reply({ embeds: [embedLog], ephemeral: true });
 			}

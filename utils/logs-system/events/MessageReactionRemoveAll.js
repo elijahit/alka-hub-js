@@ -60,10 +60,10 @@ module.exports = {
 
         const embedLog = new EmbedBuilder();
         embedLog
-          .setAuthor({ name: `${language_result.messageReactionRemoveAll.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setDescription(language_result.messageReactionRemoveAll.embed_description)
+          .setDescription(`## ${language_result.messageReactionRemoveAll.embed_title}\n` + language_result.messageReactionRemoveAll.embed_description)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(colors.general.error);
         channel_logs.send({ embeds: [embedLog] });
       }

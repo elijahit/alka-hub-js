@@ -78,10 +78,10 @@ module.exports = {
 
 
         embedLog
-          .setAuthor({ name: `${language_result.inviteCreate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
-          .setDescription(language_result.inviteCreate.embed_description)
+          .setDescription(`## ${language_result.inviteCreate.embed_title}\n` + language_result.inviteCreate.embed_description)
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(colors.general.success);
         channel_logs.send({ embeds: [embedLog] })
       }

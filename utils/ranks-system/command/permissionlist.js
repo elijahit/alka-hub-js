@@ -65,11 +65,11 @@ module.exports = {
 						}
 	
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.permissionList.embed_title}`, iconURL: emoji.permissions.list })
-							.setDescription(language_result.permissionList.permissions_embed
+							.setDescription(`## ${language_result.permissionList.embed_title}\n` + language_result.permissionList.permissions_embed
 								.replace("{0}", `${role}`))
 							.setFields(fields)
 							.setFooter({ text: `${language_result.permissionList.embed_footer}`, iconURL: `${language_result.permissionList.embed_icon_url}` })
+							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(colors.general.blue);
 						await interaction.reply({ embeds: [embedLog], ephemeral: true });
 				}
