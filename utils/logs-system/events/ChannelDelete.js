@@ -58,10 +58,10 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_channel)
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_channel)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(Variables.getBotFooterIcon())
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
@@ -76,22 +76,22 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_channel_voice)
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_channel_voice)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(Variables.getBotFooterIcon())
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
         // SE VIENE CREATA UNA CATEGORIA
         else if (channel.type == 4) {
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(
               { name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
               { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true })
-            .setDescription(language_result.channelDelete.deleted_category)
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_category)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(Variables.getBotFooterIcon())
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -106,10 +106,10 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_forum)
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_forum)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(Variables.getBotFooterIcon())
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
@@ -124,10 +124,10 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_media)
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_media)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(Variables.getBotFooterIcon())
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -142,10 +142,10 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_private_thread)
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_private_thread)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(Variables.getBotFooterIcon())
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -160,10 +160,10 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_public_thread)
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_public_thread)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(Variables.getBotFooterIcon())
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -178,10 +178,10 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_stage)
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_stage)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(Variables.getBotFooterIcon())
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -196,10 +196,10 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_announce)
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_announce)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(Variables.getBotFooterIcon())
             .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
