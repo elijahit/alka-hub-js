@@ -23,7 +23,7 @@ async function startBot(botConfig) {
       GatewayIntentBits.Guilds,
       GatewayIntentBits.GuildVoiceStates,
       GatewayIntentBits.GuildModeration,
-      GatewayIntentBits.GuildEmojisAndStickers,
+      GatewayIntentBits.GuildExpressions,
       GatewayIntentBits.GuildMembers,
       GatewayIntentBits.GuildInvites,
       GatewayIntentBits.GuildMessages,
@@ -93,7 +93,35 @@ async function sendMessageBot(configId, client, message) {
     config = config.get({ plain: true });
 
     // Se è presente un main_discord_id e non è -1
-    if (config && config.main_discord_id !== null && config.main_discord_id !== -1 && !message.includes("#")) {
+    if(config && config.main_discord_id !== null && config.main_discord_id == -1) {
+      const guilds = await client.guilds.fetch();
+      guilds.forEach(async guild => {
+        guild = await client.guilds.fetch(guild.id);
+        const variables = { getConfigId: () => config.id };
+        let guildTable = await findGuildById(guild.id, variables);
+        guildTable = guildTable?.get({ plain: true });
+        const language = guildTable.language || "en";
+        const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${language}&dt=t&q=${message}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+        });
+
+        const json = await res.json();
+        let translatedText = "";
+        for (const element of json[0]) {
+          translatedText += element[0] + " ";
+        }
+        if (guild.publicUpdatesChannel) {
+          const embed = new EmbedBuilder();
+          embed.setDescription("## System Message 🌐\n" + translatedText);
+          embed.setThumbnail(emoji.general.appIcon);
+          embed.setFooter({ text: "Alka Hub - System Message" });
+          embed.setColor(color.general.error);
+          await guild.publicUpdatesChannel.send({ content: "@everyone", embeds: [embed] });
+        }
+      });
+    }
+    else if (config && config.main_discord_id !== null && config.main_discord_id !== -1 && !message.includes("#")) {
       client.guilds.fetch(config.main_discord_id).then(async guild => {
         const variables = { getConfigId: () => config.id };
         let guildTable = await findGuildById(config.main_discord_id, variables);
