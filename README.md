@@ -1,6 +1,4 @@
-Ecco un nuovo file `README.md` aggiornato in base al tuo file `package.json`:
 
-```markdown
 # Alka Hub 🌐  
 
 Benvenuto nel repository ufficiale di **Alka Hub**, una piattaforma scalabile e multi-lingua per la creazione di bot white-label su Discord.
@@ -108,5 +106,3 @@ Per segnalare un problema, utilizza la sezione [Issues](https://github.com/elija
 3. **Setup**: Ho aggiunto istruzioni dettagliate per il setup del progetto.
 4. **Avvio**: Spiegazioni chiare sulle modalità di sviluppo e produzione.
 5. **Link Utili**: Aggiunti per una facile navigazione.
-
-Se hai bisogno di ulteriori modifiche o aggiustamenti, fammi sapere! 😊
