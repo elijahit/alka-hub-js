@@ -108,5 +108,3 @@ Per segnalare un problema, utilizza la sezione [Issues](https://github.com/elija
 ## 🌐 Link Utili  
 - [Repository](https://github.com/elijahit/alka-hub-js)  
 - [Homepage](https://github.com/elijahit/alka-hub-js#readme)  
-
-```
