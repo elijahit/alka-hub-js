@@ -54,7 +54,7 @@ Benvenuto nel repository ufficiale di **Alka Hub**, una piattaforma scalabile e 
    - Importa il file `alka_bot.sql` per inizializzare la struttura del database.
 
 4. Configura i token e le credenziali:  
-   - Utilizza la tabella ```configs``` per gestire le tue configurazioni e token:
+   Utilizza la tabella ```configs``` per gestire le tue configurazioni e token:
    ```name```(TEXT): Inserisci il nome della configurazione, ti aiuterà a visualizzare logs o errori.
    ```main_discord_id```(TEXT): L'id del discord in cui saranno inviate eventuali comunicazioni con REDIS/Dashboard (-1 invierà la comunicazione a tutti i discord in cui il BOT è presente).
    ```json```(TEXT): La configrazione in formato JSON effettiva del bot come segue ```json { "botName": "Nome Bot", "botFooter": "Bot Footer", "botFooterIcon": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png", "token": "TOKEN_HERE", "clientId": "ID_APPLICAZIONE", "presenceStatus": ["PRESENCE 1", "PRESENCE 2", "PRESENCE 3", ...] }```
