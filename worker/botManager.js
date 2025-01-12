@@ -92,7 +92,7 @@ async function sendMessageBot(configId, client, message) {
     let config = await findConfigById(configId);
     config = config.get({ plain: true });
 
-    // Se è presente un main_discord_id e non è -1
+    // Invio di messaggi a tutte le guilds in cui il bot fa parte per main_discord_id = -1
     if(config && config.main_discord_id !== null && config.main_discord_id == -1) {
       const guilds = await client.guilds.fetch();
       guilds.forEach(async guild => {
@@ -121,6 +121,7 @@ async function sendMessageBot(configId, client, message) {
         }
       });
     }
+    // Invio di messaggi solo alla guild impostata in main_discord_id
     else if (config && config.main_discord_id !== null && config.main_discord_id !== -1 && !message.includes("#")) {
       client.guilds.fetch(config.main_discord_id).then(async guild => {
         const variables = { getConfigId: () => config.id };
