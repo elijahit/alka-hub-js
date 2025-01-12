@@ -55,13 +55,13 @@ Benvenuto nel repository ufficiale di **Alka Hub**, una piattaforma scalabile e 
 
 4. Configura i token e le credenziali:  
    Utilizza la tabella ```configs``` per gestire le tue configurazioni e token:
-   ```name```(TEXT): Inserisci il nome della configurazione, ti aiuterà a visualizzare logs o errori.
-   ```main_discord_id```(TEXT): L'id del discord in cui saranno inviate eventuali comunicazioni con REDIS/Dashboard (-1 invierà la comunicazione a tutti i discord in cui il BOT è presente).
-   ```json```(TEXT): La configrazione in formato JSON effettiva del bot come segue ```json { "botName": "Nome Bot", "botFooter": "Bot Footer", "botFooterIcon": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png", "token": "TOKEN_HERE", "clientId": "ID_APPLICAZIONE", "presenceStatus": ["PRESENCE 1", "PRESENCE 2", "PRESENCE 3", ...] }```
-   ```IsActive```(INT): 0 = Non attiva, 1 = Attivo, 2 = Testing (Avviabile con npm run dev).
-   ```server_max```(INT): Il numero di server in cui può essere presente il bot (-1 = illimitato).
-   ```premium```(INT): 0 = Free, 1 = Premium (se impostato a 1 tutte le guild in cui il bot è presente saranno trattate come premium).
-   ```command_deploy```(INT): 0 = Da deployare, 1 = Deployati (Se impostato a 0 al avvio del worker tutti i comandi default saranno registrati).
+   - ```name```(TEXT): Inserisci il nome della configurazione, ti aiuterà a visualizzare logs o errori.
+   - ```main_discord_id```(TEXT): L'id del discord in cui saranno inviate eventuali comunicazioni con REDIS/Dashboard (-1 invierà la comunicazione a tutti i discord in cui il BOT è presente).
+   - ```json```(TEXT): La configrazione in formato JSON effettiva del bot come segue ```json { "botName": "Nome Bot", "botFooter": "Bot Footer", "botFooterIcon": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png", "token": "TOKEN_HERE", "clientId": "ID_APPLICAZIONE", "presenceStatus": ["PRESENCE 1", "PRESENCE 2", "PRESENCE 3", ...] }```
+   - ```IsActive```(INT): 0 = Non attiva, 1 = Attivo, 2 = Testing (Avviabile con npm run dev).
+   - ```server_max```(INT): Il numero di server in cui può essere presente il bot (-1 = illimitato).
+   - ```premium```(INT): 0 = Free, 1 = Premium (se impostato a 1 tutte le guild in cui il bot è presente saranno trattate come premium).
+   - ```command_deploy```(INT): 0 = Da deployare, 1 = Deployati (Se impostato a 0 al avvio del worker tutti i comandi default saranno registrati).
    
 
 ---
