@@ -127,7 +127,7 @@ module.exports = {
 					embedLog
 						.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 						.setThumbnail(variables.getBotFooterIcon());
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					await interaction.reply({ embeds: [embedLog], flags: 64 });
 
 
 				}

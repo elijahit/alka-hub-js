@@ -36,10 +36,10 @@ const mainEvents = async (client, variables) => {
       console.error(error);
       if (interaction.replied || interaction.deferred) {
         LogClasses.createLog(interaction.guild.id, 'ERRORE', `Errore eseguendo il comando ${interaction.commandName} da ${interaction.user.username}`, variables);
-        await interaction.followUp({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', ephemeral: true });
+        await interaction.followUp({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', flags: 64 });
       } else {
         LogClasses.createLog(interaction.guild.id, 'ERRORE', `Errore eseguendo il comando ${interaction.commandName} da ${interaction.user.username}`, variables);
-        await interaction.reply({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', ephemeral: true });
+        await interaction.reply({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', flags: 64 });
       }
     }
   });

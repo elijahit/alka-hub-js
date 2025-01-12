@@ -51,7 +51,7 @@ module.exports = {
           .setDescription(`## ${language_result.initCommand.embed_title}\n` + language_result.initCommand.description_embed.replaceAll("{0}", variables.getBotName()))
           .setColor(color.general.success)
           .setThumbnail(variables.getBotFooterIcon());
-        await interaction.reply({ embeds: [embedLog], ephemeral: true });
+        await interaction.reply({ embeds: [embedLog], flags: 64 });
       }
 
     }

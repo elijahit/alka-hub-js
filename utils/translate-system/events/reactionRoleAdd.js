@@ -184,7 +184,7 @@ module.exports = {
           .setColor(color.general.blue)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` });
         if(checkTranslateSetting.mode == 0) await messageReaction.message.reply({ embeds: [embedLog] });
-        if(checkTranslateSetting.mode == 1) await messageReaction.message.reply({ embeds: [embedLog], ephemeral: true });
+        if(checkTranslateSetting.mode == 1) await messageReaction.message.reply({ embeds: [embedLog], flags: 64 });
         await messageReaction.remove();
 
 

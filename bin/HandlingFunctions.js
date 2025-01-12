@@ -110,7 +110,7 @@ async function noInitGuilds(interaction, variables) {
     .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
     .setThumbnail(variables.getBotFooterIcon())
     .setColor(colors.general.error);
-  return await interaction.reply({ embeds: [embedLog], ephemeral: true });
+  return await interaction.reply({ embeds: [embedLog], flags: 64 });
 }
 
 async function noEnabledFunc(interaction, language, variables) {
@@ -119,7 +119,7 @@ async function noEnabledFunc(interaction, language, variables) {
     .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
     .setThumbnail(variables.getBotFooterIcon())
     .setColor(colors.general.error);
-  return await interaction.reply({ embeds: [embedLog], ephemeral: true });
+  return await interaction.reply({ embeds: [embedLog], flags: 64 });
 }
 
 async function noHavePermission(interaction, language, variables) {
@@ -129,7 +129,7 @@ async function noHavePermission(interaction, language, variables) {
     .setThumbnail(variables.getBotFooterIcon())
     .setColor(colors.general.error);
 
-  await interaction.reply({ embeds: [embedLog], ephemeral: true });
+  await interaction.reply({ embeds: [embedLog], flags: 64 });
 }
 
 

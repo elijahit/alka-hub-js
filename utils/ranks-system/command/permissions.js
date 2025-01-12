@@ -68,7 +68,7 @@ module.exports = {
 					.setFooter({ text: `${language_result.permissions.embed_footer}`, iconURL: `${language_result.permissions.embed_icon_url}` })
 					.setThumbnail(variables.getBotFooterIcon())
 					.setColor(colors.general.error);
-				await interaction.reply({ embeds: [embedLog], ephemeral: true });
+				await interaction.reply({ embeds: [embedLog], flags: 64 });
 				return;
 			}
 
@@ -84,7 +84,7 @@ module.exports = {
 					.setFooter({ text: `${language_result.permissions.embed_footer}`, iconURL: `${language_result.permissions.embed_icon_url}` })
 					.setThumbnail(variables.getBotFooterIcon())
 					.setColor(colors.general.error);
-				await interaction.reply({ embeds: [embedLog], ephemeral: true });
+				await interaction.reply({ embeds: [embedLog], flags: 64 });
 			} else { // SE UN RUOLO NON ESISTE LO AGGIUNGE ->
 				//checkRolesRelation(role.id, interaction.guild.id);
 				let insertSql = `INSERT INTO roles_hash(roles_id, hash_id) VALUES(?, ?)`;
@@ -97,7 +97,7 @@ module.exports = {
 					.setFooter({ text: `${language_result.permissions.embed_footer}`, iconURL: `${language_result.permissions.embed_icon_url}` })
 					.setThumbnail(variables.getBotFooterIcon())
 					.setColor(colors.general.success);
-				await interaction.reply({ embeds: [embedLog], ephemeral: true });
+				await interaction.reply({ embeds: [embedLog], flags: 64 });
 			}
 		}
 		catch (error) {

@@ -76,7 +76,7 @@ module.exports = {
 						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setThumbnail(variables.getBotFooterIcon())
 						.setColor(colors.general.blue);
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					await interaction.reply({ embeds: [embedLog], flags: 64 });
 
 
 				}

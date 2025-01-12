@@ -62,7 +62,7 @@ module.exports = {
               .setThumbnail(variables.getBotFooterIcon())
               .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
               .setColor(colors.general.blue);
-            await interaction.reply({ embeds: [embedLog], ephemeral: true });
+            await interaction.reply({ embeds: [embedLog], flags: 64 });
           } else {
             await createTranslate(interaction.guild.id, mode, variables);
             embedLog
@@ -70,7 +70,7 @@ module.exports = {
               .setThumbnail(variables.getBotFooterIcon())
               .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
               .setColor(colors.general.blue);
-            await interaction.reply({ embeds: [embedLog], ephemeral: true });
+            await interaction.reply({ embeds: [embedLog], flags: 64 });
           }
         }
       });

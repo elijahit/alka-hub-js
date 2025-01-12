@@ -60,7 +60,7 @@ module.exports = {
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 					// CONTROLLO SE IL MESSAGGIO SI TROVA NELLO STESSO CANALE DI DOVE VIENE FATTA L'INTERAZIONE
@@ -74,7 +74,7 @@ module.exports = {
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(color.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 
@@ -87,7 +87,7 @@ module.exports = {
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 					// RIMUOVO LA REACTION ALTRIMENTI ANNULLO TUTTO
@@ -109,7 +109,7 @@ module.exports = {
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(color.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 
@@ -120,7 +120,7 @@ module.exports = {
 						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setThumbnail(variables.getBotFooterIcon())
 						.setColor(colors.general.danger);
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					await interaction.reply({ embeds: [embedLog], flags: 64 });
 
 				}
 				else {

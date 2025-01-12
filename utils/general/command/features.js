@@ -106,7 +106,7 @@ module.exports = {
 								.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 								.setThumbnail(variables.getBotFooterIcon())
 								.setColor(colors.general.error);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
+							await interaction.reply({ embeds: [embedLog], flags: 64 });
 							return;
 						}
 
@@ -116,7 +116,7 @@ module.exports = {
 								.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 								.setThumbnail(variables.getBotFooterIcon())
 								.setColor(colors.general.error);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
+							await interaction.reply({ embeds: [embedLog], flags: 64 });
 							return;
 						}
 	
@@ -129,7 +129,7 @@ module.exports = {
 								.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 								.setThumbnail(variables.getBotFooterIcon())
 								.setColor(colors.general.error);
-								await interaction.reply({ embeds: [embedLog], ephemeral: true });
+								await interaction.reply({ embeds: [embedLog], flags: 64 });
 							} else {
 								new CommandsDeploy().deploy(variables, interaction.guild.id, featuresChoice);
 								updateEnabledFeature({ is_enabled: 1 }, { where: { guild_id: interaction.guild.id, feature_id: featuresChoice, config_id: variables.getConfigId() } });
@@ -138,7 +138,7 @@ module.exports = {
 									.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 									.setThumbnail(variables.getBotFooterIcon())
 									.setColor(colors.general.success);
-								await interaction.reply({ embeds: [embedLog], ephemeral: true });
+								await interaction.reply({ embeds: [embedLog], flags: 64 });
 							}
 						} else {
 							await createEnabledFeature(interaction.guild.id, featuresChoice, 1, variables);
@@ -148,7 +148,7 @@ module.exports = {
 								.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 								.setThumbnail(variables.getBotFooterIcon())
 								.setColor(colors.general.success);
-							await interaction.reply({ embeds: [embedLog], ephemeral: true });
+							await interaction.reply({ embeds: [embedLog], flags: 64 });
 						}
 					}
 					else {

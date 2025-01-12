@@ -81,7 +81,7 @@ module.exports = {
 							.setThumbnail(variables.getBotFooterIcon())
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 					}
 
 				}

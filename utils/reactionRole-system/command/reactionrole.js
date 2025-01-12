@@ -67,7 +67,7 @@ module.exports = {
 							.setThumbnail(variables.getBotFooterIcon())
 							.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 					// CONTROLLO SE IL MESSAGGIO SI TROVA NELLO STESSO CANALE DI DOVE VIENE FATTA L'INTERAZIONE
@@ -81,7 +81,7 @@ module.exports = {
 							.setThumbnail(variables.getBotFooterIcon())
 							.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 
@@ -93,7 +93,7 @@ module.exports = {
 							.setThumbnail(variables.getBotFooterIcon())
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 					// IMPOSTO LA REACTION ALTRIMENTI ANNULLO TUTTO
@@ -106,7 +106,7 @@ module.exports = {
 							.setThumbnail(variables.getBotFooterIcon())
 							.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 					await createRole(roleId, interaction.guild.id, variables);
@@ -117,7 +117,7 @@ module.exports = {
 						.setThumbnail(variables.getBotFooterIcon())
 						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setColor(colors.general.success);
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					await interaction.reply({ embeds: [embedLog], flags: 64 });
 
 				}
 				else {

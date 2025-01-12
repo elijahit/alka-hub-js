@@ -78,7 +78,7 @@ module.exports = {
             .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
             .setThumbnail(variables.getBotFooterIcon())
             .setColor(colors.general.success);
-          await interaction.reply({ embeds: [embedLog], ephemeral: true });
+          await interaction.reply({ embeds: [embedLog], flags: 64 });
           await createStatistics(interaction.guild.id, channel.id, nameChannel, parseInt(type), variables);
         } else {
           const embedLog = new EmbedBuilder()
@@ -86,7 +86,7 @@ module.exports = {
             .setThumbnail(variables.getBotFooterIcon())
             .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
             .setColor(colors.general.error);
-          await interaction.reply({ embeds: [embedLog], ephemeral: true });
+          await interaction.reply({ embeds: [embedLog], flags: 64 });
         }
       }
 
@@ -123,7 +123,7 @@ module.exports = {
             .setThumbnail(variables.getBotFooterIcon())
             .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
             .setColor(colors.general.success);
-          await interaction.reply({ embeds: [embedLog], ephemeral: true });
+          await interaction.reply({ embeds: [embedLog], flags: 64 });
           await updateStatistics({ channel_name: nameChannel }, { where: { guild_id: interaction.guild.id, channel_id: channelId, config_id: variables.getConfigId() } });
         } else {
           const embedLog = new EmbedBuilder()
@@ -131,7 +131,7 @@ module.exports = {
             .setThumbnail(variables.getBotFooterIcon())
             .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
             .setColor(colors.general.error);
-          await interaction.reply({ embeds: [embedLog], ephemeral: true });
+          await interaction.reply({ embeds: [embedLog], flags: 64 });
         }
       }
 

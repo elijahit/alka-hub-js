@@ -54,7 +54,7 @@ module.exports = {
 							.setThumbnail(variables.getBotFooterIcon())
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 					// RIMUOVO LA REACTION ALTRIMENTI ANNULLO TUTTO
@@ -65,7 +65,7 @@ module.exports = {
 						.setThumbnail(variables.getBotFooterIcon())
 						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setColor(colors.general.danger);
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					await interaction.reply({ embeds: [embedLog], flags: 64 });
 
 				}
 				else {

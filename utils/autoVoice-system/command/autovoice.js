@@ -93,7 +93,7 @@ module.exports = {
 						.setThumbnail(variables.getBotFooterIcon())
 						.setColor(colors.general.aquamarine);
 
-					await interaction.reply({ embeds: [embedLogTwo], ephemeral: true });
+					await interaction.reply({ embeds: [embedLogTwo], flags: 64 });
 					await initChannel.send({ embeds: [embedLog], components: [row] });
 					fs.appendFileSync(filePath, `"guild_id": "${interaction.guild.id}",
 			"author_id": "${interaction.user.id}",

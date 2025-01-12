@@ -52,7 +52,7 @@ module.exports = {
           embedLog.setTitle(language_result.remove.embed_title);
           embedLog.setThumbnail(variables.getBotFooterIcon());
           embedLog.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` });
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					await interaction.reply({ embeds: [embedLog], flags: 64 });
         }
         else {
           await noHavePermission(interaction, language_result, variables);

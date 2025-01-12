@@ -37,7 +37,7 @@ module.exports = {
           .setDescription(`## ${language_result.welcomeModal.embed_title}\n` + language_result.welcomeModal.description)
           .setThumbnail(variables.getBotFooterIcon())
           .setColor(color.general.danger);
-        await interaction.reply({embeds: [embedLog], ephemeral: true});
+        await interaction.reply({embeds: [embedLog], flags: 64});
       }
 
     }
