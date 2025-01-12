@@ -58,19 +58,19 @@ module.exports = {
           if (translateCheck) {
             await deleteByGuildIdTranslate(interaction.guild.id, variables);
             embedLog
-              .setAuthor({ name: `${language_result.translateSettingCommand.embed_title}`, iconURL: customEmoji })
-              .setDescription(`${language_result.translateSettingCommand.description_embed_remove}`)
+              .setDescription(`## ${language_result.translateSettingCommand.embed_title}\n` + `${language_result.translateSettingCommand.description_embed_remove}`)
+              .setThumbnail(variables.getBotFooterIcon())
               .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
               .setColor(colors.general.blue);
-            await interaction.reply({ embeds: [embedLog], ephemeral: true });
+            await interaction.reply({ embeds: [embedLog], flags: 64 });
           } else {
             await createTranslate(interaction.guild.id, mode, variables);
             embedLog
-              .setAuthor({ name: `${language_result.translateSettingCommand.embed_title}`, iconURL: customEmoji })
-              .setDescription(`${language_result.translateSettingCommand.description_embed}`)
+              .setDescription(`## ${language_result.translateSettingCommand.embed_title}\n` + `${language_result.translateSettingCommand.description_embed}`)
+              .setThumbnail(variables.getBotFooterIcon())
               .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
               .setColor(colors.general.blue);
-            await interaction.reply({ embeds: [embedLog], ephemeral: true });
+            await interaction.reply({ embeds: [embedLog], flags: 64 });
           }
         }
       });

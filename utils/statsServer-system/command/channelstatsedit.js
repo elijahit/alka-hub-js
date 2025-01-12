@@ -77,11 +77,11 @@ module.exports = {
 
 					} else {
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.categoryNotFound.embed_title}`, iconURL: emoji.statsServerSystem.main })
-							.setDescription(language_result.channelNotFound.description_embed)
+							.setDescription(`## ${language_result.categoryNotFound.embed_title}\n` + language_result.channelNotFound.description_embed)
+							.setThumbnail(variables.getBotFooterIcon())
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 					}
 
 				}

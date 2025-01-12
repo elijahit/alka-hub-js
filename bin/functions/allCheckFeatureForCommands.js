@@ -46,7 +46,7 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, featu
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setThumbnail(`${variables.getBotFooterIcon()}`)
             .setColor(colors.general.error);
-          await interaction.reply({ embeds: [embedLog], ephemeral: true });
+          await interaction.reply({ embeds: [embedLog], flags: 64 });
           return false;
         }
       }
@@ -56,7 +56,7 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, featu
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setThumbnail(`${variables.getBotFooterIcon()}`)
           .setColor(colors.general.error);
-        await interaction.reply({ embeds: [embedLog], ephemeral: true });
+        await interaction.reply({ embeds: [embedLog], flags: 64 });
         return false;
       }
     }
@@ -67,7 +67,7 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, featu
         .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
         .setThumbnail(`${variables.getBotFooterIcon()}`)
         .setColor(colors.general.error);
-      await interaction.reply({ embeds: [embedLog], ephemeral: true });
+      await interaction.reply({ embeds: [embedLog], flags: 64 });
       return false;
     }
 

@@ -61,7 +61,7 @@ module.exports = {
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 					} else {
 						// CONTROLLA SE L'UTENTE HA LE FUNZIONI ABILITATE PER QUESTO COMANDO E SE HA LIMITAZIONI PREMIUM RAGGIUNTE
 						// SOLO PER LA CREAZIONE DEL RUOLO NEL SISTEMA DI LIVELLI (FEATURE 11)
@@ -76,7 +76,7 @@ module.exports = {
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(colors.general.success);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 					}
 				}
 				else {

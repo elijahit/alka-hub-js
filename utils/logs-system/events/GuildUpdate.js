@@ -91,6 +91,8 @@ module.exports = {
             { name: " ", value: `${language_result.guildUpdate.embed_icon}` });
           if (newGuild.icon) {
             embedLog.setThumbnail(`https://cdn.discordapp.com/icons/${newGuild.id}/${newGuild.icon}.png`)
+          } else {
+            embedLog.setThumbnail(variables.getBotFooterIcon());
           }
         }
 
@@ -138,8 +140,8 @@ module.exports = {
 
         if (!changeCheck) return;
         embedLog
-          .setAuthor({ name: `${language_result.guildUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
+          .setDescription(`## ${language_result.guildUpdate.embed_title}\n`)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setColor(colors.general.blue);
         channel_logs.send({ embeds: [embedLog] });

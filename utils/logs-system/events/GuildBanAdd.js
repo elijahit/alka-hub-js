@@ -60,10 +60,10 @@ module.exports = {
         }
 
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.guildBanAdd.ban_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
-          .setDescription(language_result.guildBanAdd.ban_create)
+          .setDescription(`## ${language_result.guildBanAdd.ban_title}\n` + language_result.guildBanAdd.ban_create)
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(colors.general.error);
         if (ban.user.avatar) {
           embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${ban.user.id}/${ban.user.avatar}.png`);

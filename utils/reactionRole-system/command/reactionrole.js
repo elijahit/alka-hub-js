@@ -63,11 +63,11 @@ module.exports = {
 					// CONTROLLO SE IL RUOLO SI TROVA SOTTO AL RUOLO DA IMPOSTARE
 					if (interaction.guild.roles.botRoleFor(interaction.client.user).rawPosition < role.rawPosition) {
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-							.setDescription(language_result.addCommand.description_embed_missingpermissions.replace("{0}", `${interaction.guild.roles.botRoleFor(interaction.client.user)}`))
+							.setDescription(`## ${language_result.addCommand.embed_title}\n` + language_result.addCommand.description_embed_missingpermissions.replace("{0}", `${interaction.guild.roles.botRoleFor(interaction.client.user)}`))
+							.setThumbnail(variables.getBotFooterIcon())
 							.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 					// CONTROLLO SE IL MESSAGGIO SI TROVA NELLO STESSO CANALE DI DOVE VIENE FATTA L'INTERAZIONE
@@ -77,11 +77,11 @@ module.exports = {
 					}
 					catch {
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-							.setDescription(language_result.addCommand.description_embed_channelnotfound)
+							.setDescription(`## ${language_result.addCommand.embed_title}\n` + language_result.addCommand.description_embed_channelnotfound)
+							.setThumbnail(variables.getBotFooterIcon())
 							.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 
@@ -89,11 +89,11 @@ module.exports = {
 					checkReactionAlreadySet = checkReactionAlreadySet?.get({ plain: true });
 					if (checkReactionAlreadySet) {
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-							.setDescription(language_result.addCommand.description_embed_alreadyset)
+							.setDescription(`## ${language_result.addCommand.embed_title}\n` + language_result.addCommand.description_embed_alreadyset)
+							.setThumbnail(variables.getBotFooterIcon())
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 					// IMPOSTO LA REACTION ALTRIMENTI ANNULLO TUTTO
@@ -102,22 +102,22 @@ module.exports = {
 					}
 					catch {
 						const embedLog = new EmbedBuilder()
-							.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-							.setDescription(language_result.addCommand.description_embed_emojinotfound)
+							.setDescription(`## ${language_result.addCommand.embed_title}\n` + language_result.addCommand.description_embed_emojinotfound)
+							.setThumbnail(variables.getBotFooterIcon())
 							.setFooter({ text: `${language_result.addCommand.embed_footer}`, iconURL: `${language_result.addCommand.embed_icon_url}` })
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 					await createRole(roleId, interaction.guild.id, variables);
 					await createReaction(roleId, interaction.guild.id, emoji, message, variables);
 
 					const embedLog = new EmbedBuilder()
-						.setAuthor({ name: `${language_result.addCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
-						.setDescription(language_result.addCommand.description_embed.replace("{0}", role))
+						.setDescription(`## ${language_result.addCommand.embed_title}\n` + language_result.addCommand.description_embed.replace("{0}", role))
+						.setThumbnail(variables.getBotFooterIcon())
 						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setColor(colors.general.success);
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					await interaction.reply({ embeds: [embedLog], flags: 64 });
 
 				}
 				else {

@@ -65,15 +65,16 @@ module.exports = {
 							}
 						}
 						reactionRoleStringResolve += `\n${language_result.listCommand.most_lenght}`;
-						embedLog.setDescription(reactionRoleStringResolve);
+						embedLog.setDescription(`## ${language_result.listCommand.embed_title}\n` + reactionRoleStringResolve);
 					} else {
-						embedLog.setDescription(reactionRoleString);
+						embedLog.setDescription(`## ${language_result.listCommand.embed_title}\n` + reactionRoleString);
 					}
 					embedLog
-						.setAuthor({ name: `${language_result.listCommand.embed_title}`, iconURL: emojis.reactionRoleSystem.main })
 						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+						.setThumbnail(variables.getBotFooterIcon())
 						.setColor(colors.general.blue);
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+				
+					await interaction.reply({ embeds: [embedLog], flags: 64 });
 
 
 				}

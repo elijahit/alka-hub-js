@@ -56,10 +56,10 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.name_change_embed)
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.name_change_embed)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -83,10 +83,10 @@ module.exports = {
             { name: `${language_result.channelUpdate.go_channel}`, value: `${newChannel.url}`, inline: true })
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.category_change_embed)
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.category_change_embed)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -103,10 +103,10 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.bitrate_change_embed)
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.bitrate_change_embed)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -123,10 +123,10 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.userlimit_change_embed)
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.userlimit_change_embed)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -148,10 +148,10 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.description_change_embed)
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.description_change_embed)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -177,10 +177,10 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.ratelimit_change_embed)
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.ratelimit_change_embed)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
@@ -219,10 +219,10 @@ module.exports = {
             fields.push({ name: `${language_result.channelUpdate.category_channel}`, value: `${newChannel.parent.name}`, inline: true });
           }
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.permissions_change_embed)
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.permissions_change_embed)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
             .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }

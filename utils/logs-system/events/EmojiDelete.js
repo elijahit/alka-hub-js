@@ -48,10 +48,10 @@ module.exports = {
         );
 
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.emojiDelete.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
-          .setDescription(language_result.emojiDelete.emoji_delete)
+          .setDescription(`## ${language_result.emojiDelete.embed_title}\n` + language_result.emojiDelete.emoji_delete)
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(colors.general.error);
         channel_logs.send({ embeds: [embedLog] });
       }

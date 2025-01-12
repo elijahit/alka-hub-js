@@ -58,14 +58,14 @@ module.exports = {
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(colors.general.success);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 					} else {
 						const embedLog = new EmbedBuilder()
 							.setDescription(`## ${language_result.levelsCommand.embed_title}\n` + language_result.levelsCommand.description_embed_no_role)
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 					}
 
 				}

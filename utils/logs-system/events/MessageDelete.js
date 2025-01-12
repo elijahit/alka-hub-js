@@ -52,7 +52,7 @@ module.exports = {
         const embedLog = new EmbedBuilder();
         if (message.content) {
           embedLog
-            .setDescription(`**${language_result.messageDelete.embed_description}:**\n${message.content}`);
+            .setDescription(`## ${language_result.messageDelete.embed_title}\n` + `**${language_result.messageDelete.embed_description}:**\n${message.content}`);
         }
 
         if (message.attachments.size > 0) {
@@ -63,9 +63,9 @@ module.exports = {
           fields.push({ name: `${language_result.messageDelete.attachments_message}`, value: `${attachmentsContainer}` });
         }
         embedLog
-          .setAuthor({ name: `${language_result.messageDelete.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(colors.general.error);
         channel_logs.send({ embeds: [embedLog] });
       }

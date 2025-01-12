@@ -101,10 +101,10 @@ module.exports = {
         }
         if (!changeCheck) return;
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.guildMemberUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
-          .setDescription(language_result.guildMemberUpdate.embed_description)
+          .setDescription(`## ${language_result.guildMemberUpdate.embed_title}\n` + language_result.guildMemberUpdate.embed_description)
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(colors.general.blue);
         if (oldMember.user.avatar) {
           embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${oldMember.id}/${oldMember.user.avatar}.png`);

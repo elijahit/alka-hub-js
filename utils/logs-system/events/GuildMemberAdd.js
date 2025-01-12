@@ -55,10 +55,10 @@ module.exports = {
         }
 
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.guildMemberAdd.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
-          .setDescription(language_result.guildMemberAdd.embed_description)
+          .setDescription(`## ${language_result.guildMemberAdd.embed_title}\n` + language_result.guildMemberAdd.embed_description)
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(colors.general.success);
         if (member.user.avatar) {
           embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${member.id}/${member.user.avatar}.png`);

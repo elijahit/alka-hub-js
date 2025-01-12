@@ -69,15 +69,15 @@ module.exports = {
 							}
 						}
 						statsListResolve += `\n${language_result.listCommand.most_lenght}`;
-						embedLog.setDescription(statsListResolve);
+						embedLog.setDescription(`## ${language_result.listCommand.embed_title}\n` + statsListResolve);
 					} else {
-						embedLog.setDescription(statsList);
+						embedLog.setDescription(`## ${language_result.listCommand.embed_title}\n` + statsList);
 					}
 					embedLog
-						.setAuthor({ name: `${language_result.listCommand.embed_title}`, iconURL: emojis.statsServerSystem.main })
 						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+						.setThumbnail(variables.getBotFooterIcon())
 						.setColor(colors.general.blue);
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					await interaction.reply({ embeds: [embedLog], flags: 64 });
 
 
 				}

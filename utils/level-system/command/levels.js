@@ -60,7 +60,7 @@ module.exports = {
 							.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 							.setThumbnail(variables.getBotFooterIcon())
 							.setColor(colors.general.error);
-						await interaction.reply({ embeds: [embedLog], ephemeral: true });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 						return;
 					}
 					await createLevelsConfig(interaction.guild.id, channel.id, variables);
@@ -70,7 +70,7 @@ module.exports = {
 						.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 						.setThumbnail(variables.getBotFooterIcon())
 						.setColor(colors.general.success);
-					await interaction.reply({ embeds: [embedLog], ephemeral: true });
+					await interaction.reply({ embeds: [embedLog], flags: 64 });
 
 				}
 				else {

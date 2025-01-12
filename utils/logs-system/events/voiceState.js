@@ -44,11 +44,11 @@ module.exports = {
           let channel = await newState.guild.channels.fetch(resultDb["voice_state_channel"]);
           // CREO IL MESSAGGIO EMBED DA MANDARE
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.voiceState.embed_title}`, iconURL: customEmoji })
             .addFields(
               { name: `${language_result.voiceState.old_channel}`, value: `${oldState.channel}`, inline: true },
               { name: `${language_result.voiceState.new_channel}`, value: `${newState.channel}`, inline: true })
-            .setDescription(language_result.voiceState.move_to.replace("{1}", oldState.member.user))
+            .setDescription(`## ${language_result.voiceState.embed_title}\n` + language_result.voiceState.move_to.replace("{1}", oldState.member.user))
+            .setThumbnail(variables.getBotFooterIcon())
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(colors.general.aquamarine);
           channel.send({ embeds: [embedLog] });
@@ -59,11 +59,11 @@ module.exports = {
           let channel = await newState.guild.channels.fetch(resultDb["voice_state_channel"])
           // CREO IL MESSAGGIO EMBED DA MANDARE
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.voiceState.embed_title}`, iconURL: customEmoji })
-            .setDescription(language_result.voiceState.join_now
+            .setDescription(`## ${language_result.voiceState.embed_title}\n` + language_result.voiceState.join_now
               .replace("{1}", newState.member.user)
               .replace("{2}", newState.channel))
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
             .setColor(colors.general.success);
           channel.send({ embeds: [embedLog] });
 
@@ -73,11 +73,11 @@ module.exports = {
           let channel = await newState.guild.channels.fetch(resultDb["voice_state_channel"])
           // CREO IL MESSAGGIO EMBED DA MANDARE
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.voiceState.embed_title}`, iconURL: customEmoji })
-            .setDescription(language_result.voiceState.left_now
+            .setDescription(`## ${language_result.voiceState.embed_title}\n` + language_result.voiceState.left_now
               .replace("{1}", oldState.member.user)
               .replace("{2}", oldState.channel))
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
             .setColor(colors.general.error);
           channel.send({ embeds: [embedLog] });
         }

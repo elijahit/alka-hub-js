@@ -54,10 +54,10 @@ module.exports = {
         );
 
         embedLog
-          .setAuthor({ name: `${language_result.inviteDelete.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
-          .setDescription(language_result.inviteDelete.embed_description)
+          .setDescription(`## ${language_result.inviteDelete.embed_title}\n` + language_result.inviteDelete.embed_description)
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(colors.general.error);
         channel_logs.send({ embeds: [embedLog] })
       }

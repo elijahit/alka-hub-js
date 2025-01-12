@@ -73,10 +73,10 @@ module.exports = {
         fields.push({ name: " ", value: `${language_result.emojiCreate.emoji_rappresentative}: ${emojis}` });
 
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.emojiCreate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
-          .setDescription(language_result.emojiCreate.emoji_create)
+          .setDescription(`## ${language_result.emojiCreate.embed_title}\n` + language_result.emojiCreate.emoji_create)
+          .setThumbnail(variables.getBotFooterIcon())
           .setColor(colors.general.danger);
         channel_logs.send({ embeds: [embedLog] });
       }
