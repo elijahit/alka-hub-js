@@ -55,8 +55,6 @@ async function getBotsForCurrentWorker() {
           premium: configBot.premium,
           token: configJson.token,
           clientId: configJson.clientId,
-          guildMainId: configJson.guildMainId,
-          channelError: configJson.channelError,
           presenceStatus: configJson.presenceStatus,
           id: configBot.id,
           commandDeploy: configBot.command_deploy,

@@ -8,6 +8,7 @@
     "ioredis": "^5.4.2",
     "jimp": "^1.6.0",
     "moment-timezone": "^0.5.45",
+    "mysql2": "^3.12.0",
     "pm2": "^5.4.3",
     "sequelize": "^6.37.5"
   },

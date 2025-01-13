@@ -23,7 +23,7 @@ async function startBot(botConfig) {
       GatewayIntentBits.Guilds,
       GatewayIntentBits.GuildVoiceStates,
       GatewayIntentBits.GuildModeration,
-      GatewayIntentBits.GuildExpressions,
+      GatewayIntentBits.GuildExpresions,
       GatewayIntentBits.GuildMembers,
       GatewayIntentBits.GuildInvites,
       GatewayIntentBits.GuildMessages,
@@ -49,8 +49,6 @@ async function startBot(botConfig) {
     variables.setPremium(botConfig.premium);
     variables.setToken(botConfig.token);
     variables.setClientId(botConfig.clientId);
-    variables.setGuildMainId(botConfig.guildMainId);
-    variables.setChannelError(botConfig.channelError);
     variables.setPresenceStatus(botConfig.presenceStatus);
     variables.setConfigId(botConfig.id);
     variables.setNameConfiguration(botConfig.botName);
