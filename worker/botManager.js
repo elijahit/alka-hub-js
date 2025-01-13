@@ -23,7 +23,7 @@ async function startBot(botConfig) {
       GatewayIntentBits.Guilds,
       GatewayIntentBits.GuildVoiceStates,
       GatewayIntentBits.GuildModeration,
-      GatewayIntentBits.GuildExpresions,
+      GatewayIntentBits.GuildEmojisAndStickers,
       GatewayIntentBits.GuildMembers,
       GatewayIntentBits.GuildInvites,
       GatewayIntentBits.GuildMessages,
