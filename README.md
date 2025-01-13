@@ -25,6 +25,7 @@ Benvenuto nel repository ufficiale di **Alka Hub**, una piattaforma scalabile e 
 - **[ioredis](https://github.com/luin/ioredis)**: Client Redis per caching avanzato.  
 - **[jimp](https://github.com/oliver-moran/jimp)**: Manipolazione di immagini.  
 - **[moment-timezone](https://momentjs.com/timezone/)**: Gestione dei fusi orari.  
+- **[mysql2](https://www.npmjs.com/package/mysql2)**: Connessione al database mysql.  
 
 ### Database  
 - **MySQL**: Per la gestione dei dati.  
