@@ -16,8 +16,6 @@ class Variables {
         this.premium = null;
         this.token = null;
         this.clientId = null;
-        this.guildMainId = null;
-        this.channelError = null;
         this.presenceStatus = null;
         this.configId = null;
         this.presenceCounter = 0;
@@ -103,22 +101,6 @@ class Variables {
 
     setClientId(value) {
         this.clientId = value;
-    }
-
-    getGuildMainId() {
-        return this.guildMainId;
-    }
-
-    setGuildMainId(value) {
-        this.guildMainId = value;
-    }
-
-    getChannelError() {
-        return this.channelError;
-    }
-
-    setChannelError(value) {
-        this.channelError = value;
     }
 
     getPresenceStatus() {
