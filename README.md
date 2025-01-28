@@ -93,7 +93,7 @@ You can modify the maximum bot limit configured in the file:
 
 ## 📄 License
 
-This project is licensed under the Apache License, Version 2.0. See the [LICENSE](../LICENSE) file for details.
+This project is licensed under the Apache License, Version 2.0. See the [LICENSE](/LICENSE) file for details.
 
 [![Apache License](https://www.apache.org/img/asf_logo.png)](http://www.apache.org/licenses/LICENSE-2.0)
 
