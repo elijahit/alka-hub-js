@@ -1,35 +1,46 @@
+// Code: utils/logs-system/events/InviteCreate.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file InviteCreate.js
+ * @module InviteCreate
+ * @description Questo file contiene l'evento per il sistema di Logs
+ */
+
 const { Events, EmbedBuilder, TextChannel } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
-
-// QUERY DEFINITION
-let sqlChannelId_log = `SELECT inviteState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
-// ------------ //
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.InviteCreate,
-  async execute(invite) {
-    let customEmoji = await getEmojifromUrl(invite.client, "new_invite");
+  async execute(invite, variables) {
+    let customEmoji = emoji.logsSystem.newInviteMarker;
 
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, invite.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(invite.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(invite.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, invite.guild.id);
     try {
-      if (!result?.inviteState_channel) return;
-      if (result.inviteState_channel?.length < 5) return;
       // CONTROLLO DELLA LINGUA
       if (invite.guild?.id) {
         let data = await language.databaseCheck(invite.guild.id);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await invite.guild.channels.fetch(result.inviteState_channel);
+        let resultDb = await findLogsByGuildId(invite.guild.id, variables);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["invite_state_channel"]) return;
+
+        let channel_logs = await invite.guild.channels.fetch(resultDb["invite_state_channel"]);
         const fields = [];
         const embedLog = new EmbedBuilder();
 
@@ -67,16 +78,16 @@ module.exports = {
 
 
         embedLog
-          .setAuthor({ name: `${language_result.inviteCreate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${language_result.inviteCreate.embed_footer}`, iconURL: `${language_result.inviteCreate.embed_icon_url}` })
-          .setDescription(language_result.inviteCreate.embed_description)
-          .setColor(0x32a852);
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+          .setDescription(`## ${language_result.inviteCreate.embed_title}\n` + language_result.inviteCreate.embed_description)
+          .setThumbnail(variables.getBotFooterIcon())
+          .setColor(colors.general.success);
         channel_logs.send({ embeds: [embedLog] })
       }
     }
     catch (error) {
-      errorSendControls(error, invite.client, invite.guild, "\\logs_system\\InviteCreate.js");
+      errorSendControls(error, invite.client, invite.guild, "\\logs_system\\InviteCreate.js", variables);
     }
   },
 };

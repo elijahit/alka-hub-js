@@ -2,4 +2,6 @@ node_modules
 config.json
 *.db
 utils/twitch-system/tokens.json
-utils_backup/
+utils_backup
+logs.log
+package-lock.json

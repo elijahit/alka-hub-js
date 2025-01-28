@@ -1,34 +1,45 @@
+// Code: utils/logs-system/events/GuildBanRemove.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file GuildBanRemove.js
+ * @module GuildBanRemove
+ * @description Questo file contiene l'evento per il sistema di Logs
+ */
+
 const { Events, EmbedBuilder, TextChannel } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
-
-// QUERY DEFINITION
-let sqlChannelId_log = `SELECT guildBanState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
-// ------------ //
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.GuildBanRemove,
-  async execute(ban) {
-    let customEmoji = await getEmojifromUrl(ban.guild.client, "unban");
+  async execute(ban, variables) {
+    let customEmoji = emoji.logsSystem.unBanMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, ban.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(ban.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(ban.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, ban.guild.id);
     try {
-      if (!result?.guildBanState_channel) return;
-      if (result.guildBanState_channel?.length < 5) return;
       // CONTROLLO DELLA LINGUA
       if (ban.guild?.id) {
-        let data = await language.databaseCheck(ban.guild.id);
+        let data = await language.databaseCheck(ban.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await ban.guild.channels.fetch(result.guildBanState_channel);
+        let resultDb = await findLogsByGuildId(ban.guild.id, variables);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["ban_state_channel"]) return;
+
+        let channel_logs = await ban.guild.channels.fetch(resultDb["ban_state_channel"]);
         const fields = [];
         fields.push(
           { name: `${language_result.guildBanRemove.ban_user}`, value: `${ban.user}`, inline: true },
@@ -49,11 +60,11 @@ module.exports = {
         }
 
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.guildBanRemove.ban_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${language_result.guildBanRemove.ban_footer}`, iconURL: `${language_result.guildBanRemove.ban_icon_url}` })
-          .setDescription(language_result.guildBanRemove.ban_remove)
-          .setColor(0x368c29);
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+          .setDescription(`## ${language_result.guildBanRemove.ban_title}\n` + language_result.guildBanRemove.ban_remove)
+          .setThumbnail(variables.getBotFooterIcon())
+          .setColor(colors.general.success);
         if (ban.user.avatar) {
           embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${ban.user.id}/${ban.user.avatar}.png`);
         }
@@ -61,7 +72,7 @@ module.exports = {
       }
     }
     catch (error) {
-      errorSendControls(error, ban.guil.client, ban.guild, "\\logs_system\\GuildBanRemove.js");
+      errorSendControls(error, ban.guil.client, ban.guild, "\\logs_system\\GuildBanRemove.js", variables);
     }
   },
 };

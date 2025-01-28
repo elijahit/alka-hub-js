@@ -1,24 +1,31 @@
+// Code: utils/autoVoice-system/events/voiceState.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file voiceState.js
+ * @module voiceState
+ * @description Questo file contiene l'evento per il controllo dello stato vocale degli utenti
+ */
+
 const { Events, EmbedBuilder } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
-const { readDb, readDbAllWith2Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findAutoVoiceByChannelId } = require('../../../bin/service/DatabaseService');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
 
-// QUERY DEFINITION
-let sqlEnabledFeature = `SELECT autoVoiceSystem_enabled FROM guilds_config WHERE guildId = ?`;
-// ----------------
+
 // FUNCTION
 
-async function createChannel(oldState, newState) {
-  let check;
-  try {
-    check = await readDbAllWith2Params(`SELECT * FROM autovoice_system_creator WHERE guildId = ? AND categoryId = ?`, newState.guild.id, newState.channel.parentId);
-  } catch {
-    return;
-  }
-  if(check.length > 0) {
+async function createChannel(oldState, newState, variables) {
+
+  let check = await findAutoVoiceByChannelId(newState.guild.id, newState.channel.parentId, variables);
+  check = check?.get({ plain: true }) ?? false;
+
+  if(check) {
     // TIPO NUMERICO
-    if (check.length > 0 && check[0].typeVoice == 2) {
+    if (check.type == 2) {
       let channelName = newState.channel.name.split(" ");
       let channelNameResult = "";
       await channelName.forEach(value => {
@@ -28,7 +35,7 @@ async function createChannel(oldState, newState) {
         }
       })
   
-      let category = await oldState.guild.channels.fetch(check[0].categoryId);
+      let category = await oldState.guild.channels.fetch(check.channel_id);
       const checkSizeChannel = await category.children.cache;
       let channelAvaiable = 0;
       let channelCount = 0;
@@ -45,24 +52,19 @@ async function createChannel(oldState, newState) {
           name: newState.channel.name.replace(channelNameResult, `${channelCount + 1}`),
         });
         newChannel.setPosition(channelCount+2); // Imposto la posizione del nuovo canale
-        console.log(newChannel.position)
       }
     }
   }
 
 }
 
-async function deleteChannel(oldState) {
-  let check;
-  try {
-    check = await readDbAllWith2Params(`SELECT * FROM autovoice_system_creator WHERE guildId = ? AND categoryId = ?`, oldState.guild.id, oldState.channel.parentId);
-  } catch {
-    return;
-  }
+async function deleteChannel(oldState, variables) {
+  let check = await findAutoVoiceByChannelId(oldState.guild.id, oldState.channel.parentId, variables);
+  check = check?.get({ plain: true }) ?? false;
 
-  if (check.length > 0) {
+  if (check) {
     if (oldState.channel.members.size < 1) {
-      let category = await oldState.guild.channels.fetch(check[0].categoryId);
+      let category = await oldState.guild.channels.fetch(check.channel_id);
       const checkSizeChannel = await category.children.cache;
       let sizeChannel = 0;
 
@@ -71,8 +73,8 @@ async function deleteChannel(oldState) {
           sizeChannel++;
         }
       })
-
       setTimeout(async () => {
+
         if (sizeChannel > 1) {
 
 
@@ -93,7 +95,7 @@ async function deleteChannel(oldState) {
             const renameChannel = await category.children.cache;
             let channelCount = 0;
             await renameChannel.each(async value => {
-              if (value.type == 2 && value?.parentId == check[0].categoryId) {
+              if (value.type == 2 && value?.parentId == check.channel_id) {
                 let regex = /^[0-9]+$/;
                 let name = value.name.split(" ");
                 let nameResult = "";
@@ -118,41 +120,38 @@ async function deleteChannel(oldState) {
 
 module.exports = {
   name: Events.VoiceStateUpdate,
-  async execute(oldState, newState) {
+  async execute(oldState, newState, variables) {
+    if(!await checkFeatureSystemDisabled(3)) return;
+    if(!await checkFeaturesIsEnabled(newState.guild.id, 3, variables)) return;
+    if(!await checkPremiumFeature(newState.guild.id, 3, variables)) return;
 
-
-
-    // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, newState.guild.id);
-    if (!result_Db) return;
-    if (result_Db.autoVoiceSystem_enabled != 1) return;
     try {
       // CONTROLLO DELLA LINGUA
       if (oldState.guild?.id) {
-        let data = await language.databaseCheck(oldState.guild.id);
+        let data = await language.databaseCheck(oldState.guild.id, variables);
         const langagues_path = readFileSync(`./languages/autoVoice-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         // UN UTENTE SI E' SPOSTATO DA UN CANALE A UN ALTRO
         if (oldState.channel?.id && newState.channel?.id && oldState.channel?.id != newState.channel?.id) {
-          await deleteChannel(oldState);
-          await createChannel(oldState, newState);
+          await deleteChannel(oldState, variables);
+          await createChannel(oldState, newState, variables);
         }
 
         // UN UTENTE HA EFFETTUATO L'ACCESSO IN UN NUOVO CANALE
         if (!oldState.channel?.id && newState.channel?.id) {
-          await createChannel(oldState, newState);
+          await createChannel(oldState, newState, variables);
         }
 
         // UN UTENTE SI E' DISCONNESSO DAI CANALI VOCALI
         if (oldState.channel?.id && !newState.channel?.id) {
-          await deleteChannel(oldState);
+          await deleteChannel(oldState, variables);
         }
 
       }
     }
     catch (error) {
-      errorSendControls(error, oldState.client, oldState.guild, "\\autoVoice-system\\voiceState.js");
+      errorSendControls(error, oldState.client, oldState.guild, "\\autoVoice-system\\voiceState.js", variables);
     }
   },
 };

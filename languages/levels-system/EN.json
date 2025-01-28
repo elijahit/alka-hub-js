@@ -1,15 +1,15 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Levels System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Levels System",
+    "description_limit_premium": "You have reached the maximum number of LevelsRoles available in your plan. Upgrade to the Premium plan to unlock unlimited LevelsRoles!",
+    "description_premium_feature": "This feature is only available with the Premium plan. Upgrade your plan now to unlock it!",
     "description_embed": "You do not have permission to use this command!",
-    "description_embed_no_features": "The feature is currently disabled. An administrator needs to enable it for it to be usable."
+    "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable.",
+    "description_embed_no_features_by_system": "This feature is temporarily disabled for scheduled maintenance. Please bear with us; it will be available again shortly."
   },
   "levelsCommand": {
-    "embed_title": "Alka Hub | Levels System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Levels System",
+
     "description_embed_delete": "The configuration of the Levels System has been removed, the channel {0} has been deleted and will no longer receive notifications.",
     "description_embed": "The Levels System has been configured and the channel {0} has been set, it will now receive level advancement notifications for various users.",
     "newLevel_embed": "Congratulations {0}, you have leveled up now you are level {1}.",
@@ -17,6 +17,14 @@
     "description_embed_delrole": "You have successfully removed role {0} and it will now no longer be set",
     "description_embed_addrole": "You have successfully added the role {0} and it will now be set to members with level {1}",
     "description_embed_stats": "Member {0} is level **{1}**\n**Experience**: {2}/{3}",
-    "description_embed_statsNotFound": "The user has no statistics available yet, please try again later"
+    "description_embed_statsNotFound": "The user has no statistics available yet, please try again later",
+    "missing_permissions": "The role {0} was not assigned to the user {1} because the bot does not have the necessary permissions. Ensure that the bot has the appropriate permissions to assign roles and that its highest role is above the role to be assigned. If the problem persists, contact an administrator.",
+    "description_embed_no_role": "This role was not found in the database, please try again or view them with /levellist."
+  },
+  "listCommand": {
+    "embed_title": "Levels System",
+    "description_embed": "Here is the list of all the role that are currently recording levels on your server.",
+    "no_channel": "No roles set yet, set them up with /levelrole.",
+    "most_lenght": "... Many more"
   }
 }

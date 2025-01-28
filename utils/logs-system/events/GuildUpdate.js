@@ -1,34 +1,45 @@
+// Code: utils/logs-system/events/GuildUpdate.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file GuildUpdate.js
+ * @module GuildUpdate
+ * @description Questo file contiene l'evento per il sistema di Logs
+ */
+
 const { Events, EmbedBuilder, TextChannel } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
-
-// QUERY DEFINITION
-let sqlChannelId_log = `SELECT guildState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
-// ------------ //
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.GuildUpdate,
-  async execute(oldGuild, newGuild) {
-    let customEmoji = await getEmojifromUrl(oldGuild.client, "guildupdate");
+  async execute(oldGuild, newGuild, variables) {
+    let customEmoji = emoji.logsSystem.guildUpdateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, oldGuild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(oldGuild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(oldGuild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, oldGuild.id);
     try {
-      if (!result?.guildState_channel) return;
-      if (result.guildState_channel?.length < 5) return;
       // CONTROLLO DELLA LINGUA
       if (oldGuild?.id) {
-        let data = await language.databaseCheck(oldGuild.id);
+        let data = await language.databaseCheck(oldGuild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await oldGuild.channels.fetch(result.guildState_channel);
+        let resultDb = await findLogsByGuildId(oldGuild.id, variables);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["guild_state_channel"]) return;
+
+        let channel_logs = await oldGuild.channels.fetch(resultDb["guild_state_channel"]);
         const fields = [];
         const embedLog = new EmbedBuilder();
         let changeCheck = false;
@@ -80,6 +91,8 @@ module.exports = {
             { name: " ", value: `${language_result.guildUpdate.embed_icon}` });
           if (newGuild.icon) {
             embedLog.setThumbnail(`https://cdn.discordapp.com/icons/${newGuild.id}/${newGuild.icon}.png`)
+          } else {
+            embedLog.setThumbnail(variables.getBotFooterIcon());
           }
         }
 
@@ -111,7 +124,6 @@ module.exports = {
         // SE IL PROPRIETARIO VIENE CAMBIATO
         if (oldGuild.ownerId != newGuild.ownerId) {
           changeCheck = true;
-          let oldOwner, newOwner;
           fields.push(
             { name: ` `, value: ` ` }
           );
@@ -128,15 +140,15 @@ module.exports = {
 
         if (!changeCheck) return;
         embedLog
-          .setAuthor({ name: `${language_result.guildUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${language_result.guildUpdate.embed_footer}`, iconURL: `${language_result.guildUpdate.embed_icon_url}` })
-          .setColor(0x3464eb);
+          .setDescription(`## ${language_result.guildUpdate.embed_title}\n`)
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+          .setColor(colors.general.blue);
         channel_logs.send({ embeds: [embedLog] });
       }
     }
     catch (error) {
-      errorSendControls(error, oldGuild.client, oldGuild, "\\logs_system\\GuildUpdate.js");
+      errorSendControls(error, oldGuild.client, oldGuild, "\\logs_system\\GuildUpdate.js", variables);
     }
   },
 };

@@ -1,36 +1,46 @@
+// Code: utils/logs-system/events/MessageReactionRemoveAll.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file MessageReactionRemoveAll.js
+ * @module MessageReactionRemoveAll
+ * @description Questo file contiene l'evento per il sistema di Logs
+ */
+
 const { Events, EmbedBuilder, TextChannel } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
-
-// QUERY DEFINITION
-let sqlChannelId_log = `SELECT messageState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
-// ------------ //
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.MessageReactionRemoveAll,
-  async execute(message, reactions) {
-    let customEmoji = await getEmojifromUrl(message.client, "reactionremoveall");
+  async execute(message, reactions, variables) {
+    console.log(message.guild.id)
+    let customEmoji = emoji.general.deleteMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, message.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(message.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(message.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, message.guild.id);
     try {
-
-      if (!result?.messageState_channel) return;
-      if (result.messageState_channel?.length < 5) return;
-      if (message.author == message.client.user) return;
       // CONTROLLO DELLA LINGUA
       if (message.guild?.id) {
-        let data = await language.databaseCheck(message.guild.id);
+        let data = await language.databaseCheck(message.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await message.guild.channels.fetch(result.messageState_channel);
+        let resultDb = await findLogsByGuildId(message.guild.id, variables);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["message_state_channel"]) return;
+
+        let channel_logs = await message.guild.channels.fetch(resultDb["message_state_channel"]);
         const fields = [];
 
         fields.push(
@@ -44,21 +54,22 @@ module.exports = {
         await reactions.each(reaction => {
           reactionsContainer += `> ${reaction._emoji} (${reaction.count})\n`;
         })
+        if(reactionsContainer == "") reactionsContainer = "Undefined";
 
         fields.push({ name: `${language_result.messageReactionRemoveAll.embed_reactions}`, value: `${reactionsContainer}` });
 
         const embedLog = new EmbedBuilder();
         embedLog
-          .setAuthor({ name: `${language_result.messageReactionRemoveAll.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setDescription(language_result.messageReactionRemoveAll.embed_description)
-          .setFooter({ text: `${language_result.messageReactionRemoveAll.embed_footer}`, iconURL: `${language_result.messageReactionRemoveAll.embed_icon_url}` })
-          .setColor(0x34ebeb);
+          .setDescription(`## ${language_result.messageReactionRemoveAll.embed_title}\n` + language_result.messageReactionRemoveAll.embed_description)
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+          .setThumbnail(variables.getBotFooterIcon())
+          .setColor(colors.general.error);
         channel_logs.send({ embeds: [embedLog] });
       }
     }
     catch (error) {
-      errorSendControls(error, message.client, message.guild, "\\logs_system\\MessageReactionRemoveAll.js");
+      errorSendControls(error, message.client, message.guild, "\\logs_system\\MessageReactionRemoveAll.js", variables);
     }
   },
 };

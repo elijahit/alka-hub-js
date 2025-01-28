@@ -1,34 +1,44 @@
+// Code: utils/logs-system/events/GuildMemberUpdate.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file GuildMemberUpdate.js
+ * @module GuildMemberUpdate
+ * @description Questo file contiene l'evento per il sistema di Logs
+ */
+
 const { Events, EmbedBuilder, TextChannel } = require('discord.js');
 const { readFileSync, read } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
-
-// QUERY DEFINITION
-let sqlChannelId_log = `SELECT guildMemberState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
-// ------------ //
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.GuildMemberUpdate,
-  async execute(oldMember, newMember) {
-    let customEmoji = await getEmojifromUrl(oldMember.client, "memberupdate");
+  async execute(oldMember, newMember, variables) {
+    let customEmoji = emoji.logsSystem.updateMemberMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, oldMember.guild.id);
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(oldMember.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(oldMember.guild.id, 1, variables)) return;
     try {
-      if (!result_Db) return;
-      if (result_Db.logSystem_enabled != 1) return;
-      // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-      const result = await readDb(sqlChannelId_log, oldMember.guild.id);
-      if (!result?.guildMemberState_channel) return;
-      if (result.guildMemberState_channel?.length < 5) return;
       // CONTROLLO DELLA LINGUA
       if (oldMember.guild?.id) {
-        let data = await language.databaseCheck(oldMember.guild.id);
+        let data = await language.databaseCheck(oldMember.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await oldMember.guild.channels.fetch(result.guildMemberState_channel);
+        let resultDb = await findLogsByGuildId(oldMember.guild.id, variables);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["member_state_channel"]) return;
+
+        let channelLogs = await oldMember.guild.channels.fetch(resultDb["member_state_channel"]);
         const fields = [];
         let changeCheck = false;
 
@@ -91,16 +101,16 @@ module.exports = {
         }
         if (!changeCheck) return;
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.guildMemberUpdate.embed_title}`, iconURL: customEmoji })
           .addFields(fields)
-          .setFooter({ text: `${language_result.guildMemberUpdate.embed_footer}`, iconURL: `${language_result.guildMemberUpdate.embed_icon_url}` })
-          .setDescription(language_result.guildMemberUpdate.embed_description)
-          .setColor(0x4287f5);
+          .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+          .setDescription(`## ${language_result.guildMemberUpdate.embed_title}\n` + language_result.guildMemberUpdate.embed_description)
+          .setThumbnail(variables.getBotFooterIcon())
+          .setColor(colors.general.blue);
         if (oldMember.user.avatar) {
           embedLog.setThumbnail(`https://cdn.discordapp.com/avatars/${oldMember.id}/${oldMember.user.avatar}.png`);
         }
         try {
-          channel_logs.send({ embeds: [embedLog] });;
+          channelLogs.send({ embeds: [embedLog] });;
         }
         catch {
           return;
@@ -108,7 +118,7 @@ module.exports = {
       }
     }
     catch (error) {
-      errorSendControls(error, oldMember.client, oldMember.guild, "\\logs_system\\GuildMemberUpdate.js");
+      errorSendControls(error, oldMember.client, oldMember.guild, "\\logs_system\\GuildMemberUpdate.js", variables);
     }
   },
 };

@@ -1,89 +1,76 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "You do not have permission to use this command!",
     "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable."
   },
   "messageChannel": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "modalTitleDescription": "Ticket Title",
     "modalTitlePlaceHolder": "Enter the title for the ticket",
     "modalDescriptionDescription": "Message Description",
     "modalDescriptionPlaceHolder": "Message to be sent in the ticket channel"
   },
   "selectTicketChannel": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "Select the channel where you want to send the ticket initialization message, where users can open their tickets.",
     "placeholder": "Select the ticket embed channel",
     "description_embed_two": "You have initiated the process of creating the **Ticket System**, we have created the channel {0} for you, follow there for configuration."
   },
   "errorDb": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "We encountered a problem, please try again."
   },
   "selectCategoryTicket": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "Select now the category in which the tickets will be opened.",
     "placeholder": "Select the ticket category"
   },
   "selectTranscriptTicket": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "Select now the channel where the ticket transcripts will be sent.",
     "placeholder": "Select the transcript channel"
   },
   "endSetupTicket": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "You have successfully completed the setup of the **Ticket System**, now add your components (buttons) that will allow users to submit tickets."
   },
   "noFoundMessage": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "The message was not found in the database! Make sure to execute the command in the channel where your ticket message is located."
   },
   "ticketComponentsAdd": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "You have successfully added the component to the ticket message.",
     "error_prefix": "We have encountered an error, please refrain from using the same prefix as other components within the same message."
   },
   "ticketInteractionSend": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "You have successfully opened ticket {0}. Now, please provide the details of your request to allow the administrators to address your issue."
   },
   "ticketChannelSend": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "Your ticket has been submitted to the administrators, who will respond to your request shortly. In the meantime, please detail your issue thoroughly to expedite the resolution of your ticket."
   },
   "ticketChannelDuplicate": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "You cannot open duplicate tickets of the same type. If this is an error, please contact an administrator."
   },
   "ticketChannelClaim": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "The administrator {0} has taken charge of your ticket and will respond to your inquiries."
   },
   "ticketButton": {
@@ -95,27 +82,23 @@
     "description_embed": "{0} has entered the chat"
   },
   "ticketClaimToAuthor": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "Your ticket {0} has been taken over by {1}, please check its status."
   },
   "ticketCloseToAuthor": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "description_embed": "Your ticket has been deleted by {0}. If you believe the issue persists, feel free to reopen a ticket."
   },
   "ticketCloseModal": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "modalDescriptionDescription": "REASON",
+    "embed_title": "Ticket System",
+"modalDescriptionDescription": "REASON",
     "modalDescriptionPlaceHolder": "Insert reason"
   },
   "ticketTranscription": {
-    "embed_title": "Alka Hub | Ticket System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Ticket System",
+
     "user": "User",
     "admin": "Admin",
     "reason": "Reason",

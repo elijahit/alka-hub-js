@@ -1,36 +1,48 @@
+// Code: utils/logs-system/events/ChannelUpdate.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file ChannelUpdate.js
+ * @module ChannelUpdate
+ * @description Questo file contiene l'evento per il sistema di logs
+ */
+
 const { Events, EmbedBuilder, TextChannel } = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb, readDbAllWith2Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
-
-// QUERY DEFINITION
-let sqlChannelId_log = `SELECT channelState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
-// ------------ //
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { findByGuildIdAndChannelIdStatistics, findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.ChannelUpdate,
-  async execute(oldChannel, newChannel) {
-    let customEmoji = await getEmojifromUrl(oldChannel.client, "update");
+  async execute(oldChannel, newChannel, variables) {
+    let customEmoji = emoji.general.updateMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, oldChannel.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    if (!await checkFeatureSystemDisabled(1)) return;
+    if (!await checkFeaturesIsEnabled(oldChannel.guild.id, 1, variables)) return;
+    if (!await checkPremiumFeature(oldChannel.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, oldChannel.guild.id);
     try {
-      const channelStatsSystem = await readDbAllWith2Params(`SELECT * FROM stats_system_channel WHERE channelId = ? AND guildId = ?`, oldChannel.id, oldChannel.guild.id);
-      if (channelStatsSystem[0]?.channelId) return;
-      if (!result?.channelState_channel) return;
-      if (result.channelState_channel?.length < 5) return;
       // CONTROLLO DELLA LINGUA
       if (oldChannel.guild?.id) {
-        let data = await language.databaseCheck(oldChannel.guild.id);
+        let data = await language.databaseCheck(oldChannel.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await oldChannel.guild.channels.fetch(result.channelState_channel);
+        let channelStatsSystem = await findByGuildIdAndChannelIdStatistics(oldChannel.guild.id, oldChannel.id, variables);
+        channelStatsSystem = channelStatsSystem?.get({ plain: true });
+        if (channelStatsSystem?.channel_id) return;
+        let resultDb = await findLogsByGuildId(oldChannel.guild.id, variables);
+        resultDb = resultDb?.get({ plain: true });
+        if (!resultDb || !resultDb["channel_state_channel"]) return;
+
+        let channel_logs = await oldChannel.guild.channels.fetch(resultDb["channel_state_channel"]);
         // SE IL NOME DI UN CANALE VIENE CAMBIATO
         if (oldChannel.name != newChannel.name) {
           const fields = [{ name: `${language_result.channelUpdate.old_name}`, value: `${oldChannel.name}`, inline: true },
@@ -44,11 +56,11 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.name_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.name_change_embed)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE LA CATEGORIA DI UN CANALE VIENE CAMBIATA
@@ -71,11 +83,11 @@ module.exports = {
             { name: `${language_result.channelUpdate.go_channel}`, value: `${newChannel.url}`, inline: true })
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.category_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.category_change_embed)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE IL BITRATE VIENE CAMBIATO
@@ -91,11 +103,11 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.bitrate_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.bitrate_change_embed)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE IL LIMITE DEGLI UTENTI VIENE CAMBIATO
@@ -111,11 +123,11 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.userlimit_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.userlimit_change_embed)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE LA DESCRIZIONE VIENE CAMBIATA
@@ -136,11 +148,11 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.description_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.description_change_embed)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE LO SLOWMODE VIENE CAMBIATO
@@ -165,11 +177,11 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.ratelimit_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.ratelimit_change_embed)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE I PERMESSI VENGONO AGGIORNATI
@@ -180,12 +192,12 @@ module.exports = {
               try {
                 let value = await oldChannel.guild.roles.fetch(perms.id);
                 oldValuePermissions += `${value}\n`;
-              } catch {}
+              } catch { }
             } else if (perms.type == 1) {
               try {
                 let value = await oldChannel.guild.members.fetch(perms.id);
                 oldValuePermissions += `${value}\n`;
-              } catch {}
+              } catch { }
             }
           });
           newChannel.permissionOverwrites.cache.each(async perms => {
@@ -207,17 +219,17 @@ module.exports = {
             fields.push({ name: `${language_result.channelUpdate.category_channel}`, value: `${newChannel.parent.name}`, inline: true });
           }
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelUpdate.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelUpdate.permissions_change_embed)
-            .setFooter({ text: `${language_result.channelUpdate.embed_footer}`, iconURL: `${language_result.channelUpdate.embed_icon_url}` })
-            .setColor(0xebb734);
+            .setDescription(`## ${language_result.channelUpdate.embed_title}\n` + language_result.channelUpdate.permissions_change_embed)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.danger);
           channel_logs.send({ embeds: [embedLog] });
         }
       }
     }
     catch (error) {
-      errorSendControls(error, oldChannel.client, oldChannel.guild, "\\logs_system\\ChannelUpdate.js");
+      errorSendControls(error, oldChannel.client, oldChannel.guild, "\\logs_system\\ChannelUpdate.js", variables);
     }
   },
 };

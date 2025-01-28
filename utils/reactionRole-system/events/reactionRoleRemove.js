@@ -1,16 +1,24 @@
+// Code: utils/reactionRole-system/events/reactionRoleRemove.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file reactionRoleRemove.js
+ * @module reactionRoleRemove
+ * @description Questo file gestisce l'evento per la rimozione di un ruolo reazione!
+ */
+
 const { Events, EmbedBuilder} = require('discord.js');
 const { readFileSync } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb, readDbAllWith1Params, readDbAllWith2Params, readDbWith3Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
-
-// QUERY DEFINITION
-let sqlEnabledFeature = `SELECT reactionRoleSystem_enabled FROM guilds_config WHERE guildId = ?`;
-// ----------------
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const { findByGuildIdAndMessageIdAndEmojiReactions } = require('../../../bin/service/DatabaseService');
 
 module.exports = {
   name: Events.MessageReactionRemove,
-  async execute(messageReaction, user) {
+  async execute(messageReaction, user, burst, variables) {
     if(!user.bot) {
       const message = messageReaction.message;
       const emoji = messageReaction.emoji;
@@ -19,9 +27,9 @@ module.exports = {
   
   
       // CONTROLLO SE LA FUNZIONE E' ABILITATA
-      const result_Db = await readDb(sqlEnabledFeature, guild.id);
-      if (!result_Db) return;
-      if (result_Db.reactionRoleSystem_enabled != 1) return;
+      if (!await checkFeatureSystemDisabled(5)) return;
+      if (!await checkFeaturesIsEnabled(messageReaction.message.guild.id, 5, variables)) return;
+      if (!await checkPremiumFeature(messageReaction.message.guild.id, 5, variables)) return;
   
       try {
         let emojiResolve = "";
@@ -31,21 +39,21 @@ module.exports = {
           emojiResolve = emoji.name;
         }
   
-        const roles = await readDbWith3Params('SELECT * FROM reactionrole_system_reactions WHERE guildId = ? AND messageId = ? AND emoji = ?', guild.id, message.id, emojiResolve);
+        let roles = await findByGuildIdAndMessageIdAndEmojiReactions(messageReaction.message.guild.id, message.id, emojiResolve, variables);
+        roles = roles?.get({ plain: true });
         if(roles) {
           try {
-            const role = await member.guild.roles.fetch(roles.roleId);
+            const role = await member.guild.roles.fetch(roles.role_id);
             await member.roles.remove(role);
-          }
-          catch (error) {
-            //pass
+          } catch {
+            errorSendControls(error, member.client, guild, "\\autoRole-system\\autoRoleState.js", variables);
           }
         }
       
   
       }
       catch (error) {
-        errorSendControls(error, member.client, guild, "\\autoRole-system\\autoRoleState.js");
+        errorSendControls(error, member.client, guild, "\\autoRole-system\\autoRoleState.js", variables);
       }
     }
   },

@@ -1,36 +1,52 @@
+// Code: utils/logs-system/events/ChannelDelete.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file ChannelDelete.js
+ * @module ChannelDelete
+ * @description Questo file contiene l'evento per il sistema di Logs
+ */
+
 const { Events, EmbedBuilder, TextChannel } = require('discord.js');
 const { readFileSync, read } = require('fs');
 const language = require('../../../languages/languages');
 const { readDb, readDbAllWith2Params } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
+const { findByGuildIdAndChannelIdStatistics, findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 // QUERY DEFINITION
-let sqlChannelId_log = `SELECT channelState_channel FROM log_system_config WHERE guildId = ?`;
-let sqlEnabledFeature = `SELECT logSystem_enabled FROM guilds_config WHERE guildId = ?`;
+let sql = `SELECT * FROM logs_system WHERE guilds_id = ?`;
 // ------------ //
 
 module.exports = {
   name: Events.ChannelDelete,
-  async execute(channel) {
-    let customEmoji = await getEmojifromUrl(channel.client, "delete");
+  async execute(channel, variables) {
+    let customEmoji = emoji.general.deleteMarker;
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, channel.guild.id);
-    if (!result_Db) return;
-    if (result_Db.logSystem_enabled != 1) return;
+    if(!await checkFeatureSystemDisabled(1)) return;
+    if(!await checkFeaturesIsEnabled(channel.guild.id, 1, variables)) return;
+    if(!await checkPremiumFeature(channel.guild.id, 1, variables)) return;
     // CERCO L'ID DEL CANALE DI LOG NEL DATABASE
-    const result = await readDb(sqlChannelId_log, channel.guild.id);
     try {
-      const channelStatsSystem = await readDbAllWith2Params(`SELECT * FROM stats_system_channel WHERE channelId = ? AND guildId = ?`, channel.id, channel.guild.id);
-      if (channelStatsSystem[0]?.channelId) return;
-      if (!result?.channelState_channel) return;
-      if (result.channelState_channel?.length < 5) return;
       // CONTROLLO DELLA LINGUA
       if (channel.guild?.id) {
-        let data = await language.databaseCheck(channel.guild.id);
+        let data = await language.databaseCheck(channel.guild.id, variables);
         const langagues_path = readFileSync(`./languages/logs-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
-        let channel_logs = await channel.guild.channels.fetch(result.channelState_channel);
+        let channelStatsSystem = await findByGuildIdAndChannelIdStatistics(channel.guild.id, channel.id, variables);
+        channelStatsSystem = channelStatsSystem?.get({plain: true});
+        if (channelStatsSystem?.channel_id) return;
+        let resultDb = await findLogsByGuildId(channel.guild.id, variables);
+        resultDb = resultDb?.get({plain: true});
+        if(!resultDb || !resultDb["channel_state_channel"]) return;
+
+        let channel_logs = await channel.guild.channels.fetch(resultDb["channel_state_channel"]);
         // SE VIENE CANCELLATO UN CANALE TESTUALE
         if (channel.type == 0) {
           const fields = [{ name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
@@ -42,11 +58,11 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_channel)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_channel)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
         // SE VIENE CANCELLATO UN CANALE VOCALE
@@ -60,23 +76,23 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_channel_voice)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_channel_voice)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
         // SE VIENE CREATA UNA CATEGORIA
         else if (channel.type == 4) {
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(
               { name: `${language_result.channelDelete.name_channel}`, value: `${channel.name}`, inline: true },
               { name: `${language_result.channelDelete.id_channel}`, value: `${channel.id}`, inline: true })
-            .setDescription(language_result.channelDelete.deleted_category)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_category)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CANCELLATO UN FORUM
@@ -90,11 +106,11 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_forum)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_forum)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] })
         }
         // SE VIENE CANCELLATO UN CANALE MEDIA
@@ -108,11 +124,11 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_media)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_media)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CANCELLATO UN CANALE THREAD PRIVATO
@@ -126,11 +142,11 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_private_thread)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_private_thread)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CANCELLATO UN CANALE THREAD PUBBLICO
@@ -144,11 +160,11 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_public_thread)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_public_thread)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CANCELLATO UN CANALE STAGE
@@ -162,11 +178,11 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_stage)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_stage)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
         // SE VIENE CANCELLATO UN CANALE DI ANNUNCI
@@ -180,17 +196,17 @@ module.exports = {
           }
 
           const embedLog = new EmbedBuilder()
-            .setAuthor({ name: `${language_result.channelDelete.embed_title}`, iconURL: customEmoji })
             .addFields(fields)
-            .setDescription(language_result.channelDelete.deleted_announce)
-            .setFooter({ text: `${language_result.channelDelete.embed_footer}`, iconURL: `${language_result.channelDelete.embed_icon_url}` })
-            .setColor(0x80131e);
+            .setDescription(`## ${language_result.channelDelete.embed_title}\n` + language_result.channelDelete.deleted_announce)
+            .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+            .setThumbnail(variables.getBotFooterIcon())
+            .setColor(colors.general.error);
           channel_logs.send({ embeds: [embedLog] });
         }
       }
     }
     catch (error) {
-      errorSendControls(error, channel.guild.client, channel.guild, "\\logs_system\\ChannelDelete.js");
+      errorSendControls(error, channel.guild.client, channel.guild, "\\logs_system\\ChannelDelete.js", variables);
     }
 
 

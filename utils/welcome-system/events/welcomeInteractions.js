@@ -1,38 +1,49 @@
-const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder } = require('discord.js');
+// Code: utils/welcome-system/events/welcomeInteractions.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file welcomeInteractions.js
+ * @module welcomeInteractions
+ * @description Questo file gestisce le interazioni per il sistema di benvenuto!
+ */
+
+const { Events, ChannelSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, EmbedBuilder, PermissionFlagsBits, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder, Colors } = require('discord.js');
 const { readFileSync, writeFileSync, unlinkSync } = require('fs');
 const language = require('../../../languages/languages');
-const { readDbAllWith2Params, runDb, readDbWith3Params, readDbWith4Params, readDb } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl, returnPermission, noHavePermission, noEnabledFunc } = require('../../../bin/HandlingFunctions');
+const { errorSendControls } = require('../../../bin/HandlingFunctions');
+const emoji = require('../../../bin/data/emoji');
+const color = require('../../../bin/data/colors');
+const { updateWelcome } = require('../../../bin/service/DatabaseService');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 
 module.exports = {
   name: Events.InteractionCreate,
-  async execute(interaction) {
+  async execute(interaction, variables) {
     if (!interaction.guild) return;
     try {
       // CONTROLLO LINGUA
-      let data = await language.databaseCheck(interaction.guild.id);
+      let data = await language.databaseCheck(interaction.guild.id, variables);
       const langagues_path = readFileSync(`./languages/welcome-system/${data}.json`);
       const language_result = JSON.parse(langagues_path);
 
       if (interaction.customId == 'welcomeMessageSetting') {
         const text = interaction.fields.getTextInputValue('descriptionWelcome');
 
-        await runDb('UPDATE welcome_message_container SET text = ? WHERE guildId = ?', text, interaction.guild.id);
+				await updateWelcome({ text: text }, {where: { guild_id: interaction.guild.id, config_id: variables.getConfigId() }});
 
-        let customEmoji = await getEmojifromUrl(interaction.client, "welcome");
+
         const embedLog = new EmbedBuilder()
-          .setAuthor({ name: `${language_result.welcomeModal.embed_title}`, iconURL: customEmoji })
-          .setFooter({ text: `${language_result.welcomeModal.embed_footer}`, iconURL: `${language_result.welcomeModal.embed_icon_url}` })
-          .setDescription(language_result.welcomeModal.description)
-          .setColor(0xebae34);
-        await interaction.reply({embeds: [embedLog], ephemeral: true});
+          .setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+          .setDescription(`## ${language_result.welcomeModal.embed_title}\n` + language_result.welcomeModal.description)
+          .setThumbnail(variables.getBotFooterIcon())
+          .setColor(color.general.danger);
+        await interaction.reply({embeds: [embedLog], flags: 64});
       }
 
     }
     catch (error) {
       console.log(error)
-      errorSendControls(error, interaction.guild.client, interaction.guild, "\\welcome-system\\welcomeInteractions.js");
+      errorSendControls(error, interaction.guild.client, interaction.guild, "\\welcome-system\\welcomeInteractions.js", variables);
     }
   },
 };

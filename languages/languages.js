@@ -1,11 +1,15 @@
-const {readDb} = require('../bin/database');
+// Code: languages - languages/languages.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+// Description: Questo file contiene un metodo per verificare la lingua di un server tramite il suo ID
 
-let sqlConfigGuilds = `SELECT * FROM guilds_config WHERE guildId = ?`;
+const { findGuildById } = require('../bin/service/DatabaseService');
 
-async function databaseCheck (guilds) {
+async function databaseCheck (guildId, variables) {
   try {
-    const result = await readDb(sqlConfigGuilds, guilds);
-    return result.languages;
+    let result = await findGuildById(guildId, variables);
+    if(!result) return "EN";
+    
+    return result.get({plain: true}).language;
   } catch {
     return "EN"
   }

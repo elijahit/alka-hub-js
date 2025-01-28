@@ -1,15 +1,15 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+    "description_limit_premium": "Hai raggiunto il numero massimo di AutoVoice disponibili nel tuo piano. Passa al piano Premium per sbloccare AutoVoice illimitati!",
+    "description_premium_feature": "Questa funzionalità è disponibile solo con il piano Premium. Aggiorna subito il tuo piano per sbloccarla!",
     "description_embed": "Non hai il permesso per usare questo comando!",
-    "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
+    "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla.",
+    "description_embed_no_features_by_system": "Questa funzionalità è temporaneamente disabilitata per manutenzione straordinaria. Ti invitiamo a pazientare: sarà nuovamente disponibile a breve."
   },
   "selectSetup": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+
     "description_embed": "Benvenuto nel setup per configurare l'Auto Voice System, per prima cosa scegliamo attentamente che tipo di Auto Voice vogliamo configurare. Abbiamo due possibilità:\n- **Interaction Create**: La creazione tramite interazione avviene mediante un canale testuale che servirà come contenitore del messaggio che ne permetterà la creazione tramite un components (bottone).\n- **Automatic Create**: La creazione tramite il processo automatico avviene mediante un canale vocale che servirà come entry point per avviarne il processo. Ogni utente che ne farà accesso avrà di conseguenza un canale vocale creato.\n\n*(!) Nessun canale dev'essere creato, Alka ne gestirà la creazione.*",
     "placeholder": "Insert your choice",
     "label_interaction": "Interaction Create",
@@ -18,18 +18,16 @@
     "description_embed_two": "Hai avviato il processo di creazione del **Auto Voice System**, abbiamo creato per te il canale {0}, segui li la configurazione."
   },
   "selectSetup_Creator": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+
     "description_embed": "Abbiamo selezionato il tipo di Auto Voice vogliamo utilizzare, adesso dobbiamo selezionare se vogliamo utilizzare dei canali privati o con accesso libero:\n- **Privato:** La categoria privata utilizza un sistema di permessi che viene registrato nel database relazionale, questo sistema consente all'utente tramite un comando che necessità l'assegnazione di hash di permesso (Leggi la documentazione) a dare accesso a determinati utenti nel proprio canale vocale privato.\n- **Libero**: La categoria libera non utilizza sistemi di permessi consente l'accesso libero a tutti e può essere utile come lobby di stanze di vari giochi per consentire la ricerca di un party.",
     "placeholder": "Insert your choice",
     "label_private": "Private",
     "label_free": "Free"
   },
   "selectSetup_TypeAccess": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+
     "description_embed": "Ci siamo quasi, adesso dobbiamo scegliere che tipo di nome vogliamo che i nostri canali abbiano! Abbiamo tre scelte stavolta:\n- **Numerico:** Impostando un nome al canale, quel nome verrà utilizzato per incrementare il numero automaticamente ad esempio: (Vocale 1, Vocale 2, Vocale 3).\n- **Nickname:** Utilizzeremo il nickname dell'utente e questa selezione controllerà per impedire che canali multipli vengano creati per impedire una clonazione dei canali.\n- **Random:** Imposteremo un numero randomico al canale come ad esempio: (8456246).",
     "placeholder": "Insert your choice",
     "label_numeric": "Numerico",
@@ -37,26 +35,33 @@
     "label_random": "Random"
   },
   "endSetup_message": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+
     "description_embed": "Hai completato con successo il setup di Auto Voice, adesso i tuoi canali vocali sono impostati per funzionare come da te scelto in fase di setup.",
     "description_embed_errorcategory": "Abbiamo annullato il setup di Auto Voice, non puoi impostare nuovamente una categoria che già ha un Auto Voice impostato, creane una nuova!"
   },
   "select_category": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+
     "description_embed": "Adesso scegliamo la categoria in cui vuoi che i canali vengano creati.",
     "placeholder": "Scegli la categoria"
   },
   "select_size": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+
     "placeholder": "0 = Illimitato",
     "label": "Numero di persone massime nel canale",
     "label_message": "Messaggio da inviare",
     "placeholder_message": "Messaggio per il canale"
+  },
+  "remove": {
+    "embed_title": "Auto Voice System",
+    "success_description": "Hai rimosso con successo la configurazione Auto Voice System ID {0}.",
+    "error_description": "Questa configurazione non esiste, controlla l'ID e riprova."
+  },
+  "list": {
+    "embed_title": "Auto Voice System",
+    "description_embed": "Ecco la lista delle configurazioni Auto Voice attualmente attive nel server.",
+    "description_embed_empty": "Non ci sono configurazioni Auto Voice attive."
   }
 }

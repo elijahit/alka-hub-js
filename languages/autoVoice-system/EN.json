@@ -1,15 +1,15 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+    "description_limit_premium": "You have reached the maximum number of AutoVoice available in your plan. Upgrade to the Premium plan to unlock unlimited AutoVoice!",
+    "description_premium_feature": "This feature is only available with the Premium plan. Upgrade your plan now to unlock it!",
     "description_embed": "You do not have permission to use this command!",
-    "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable."
+    "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable.",
+    "description_embed_no_features_by_system": "This feature is temporarily disabled for scheduled maintenance. Please bear with us; it will be available again shortly."
   },
   "selectSetup": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+
     "description_embed": "Welcome to the setup to configure the Auto Voice System. First, let's carefully choose what type of Auto Voice we want to configure. We have two options:\n- **Interaction Create**: Creation through interaction occurs via a textual channel that will serve as the container of the message allowing its creation through a component (button).\n- **Automatic Create**: Creation through the automatic process occurs via a voice channel that will serve as the entry point to initiate the process. Every user accessing it will consequently have a voice channel created.\n\n*(!) No channels should be created; Alka will handle their creation.*",
     "placeholder": "Insert your choice",
     "label_interaction": "Interaction Create",
@@ -18,18 +18,16 @@
     "description_embed_two": "You have initiated the process of creating the **Auto Voice System**, we have created the channel {0} for you, follow there for configuration."
   },
   "selectSetup_Creator": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+
     "description_embed": "We have selected the type of Auto Voice we want to use, now we need to select whether we want to use private or open-access channels:\n- **Private:** The private category utilizes a permission system that is recorded in the relational database. This system allows the user, through a command that requires the assignment of permission hashes (Read the documentation), to grant access to certain users in their own private voice channel.\n- **Free:** The free category does not use permission systems and allows open access to everyone. It can be useful as a lobby for rooms of various games to allow for party searching.",
     "placeholder": "Insert your choice",
     "label_private": "Private",
     "label_free": "Free"
   },
   "selectSetup_TypeAccess": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+
     "description_embed": "We're almost there, now we need to choose what type of name we want our channels to have! This time we have three choices:\n- **Numeric:** By setting a name for the channel, that name will be used to automatically increment the number, for example: (Voice 1, Voice 2, Voice 3).\n- **Nickname:** We will use the user's nickname and this selection will control to prevent multiple channels being created to prevent channel cloning.\n- **Random:** We will set a random number to the channel, for example: (8456246).",
     "placeholder": "Insert your choice",
     "label_numeric": "Numeric",
@@ -37,26 +35,34 @@
     "label_random": "Random"
   },
   "endSetup_message": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+
     "description_embed": "You have successfully completed the Auto Voice setup. Your voice channels are now configured to function as you selected during the setup phase.",
     "description_embed_errorcategory": "We have cancelled the Auto Voice setup; you cannot set up a category that already has an Auto Voice assigned. Please create a new one!"
   },
   "select_category": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+
     "description_embed": "Now we choose the category where you want the channels to be created.",
     "placeholder": "Choose the category"
   },
   "select_size": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+
     "placeholder": "0 = Unlimited",
     "label": "Maximum number of people in the channel",
     "label_message": "Message to send",
     "placeholder_message": "Message for the channel"
+  },
+  "remove": {
+    "embed_title": "Auto Voice System",
+    "success_description": "You have successfully removed the Auto Voice System configuration ID {0}.",
+    "error_description": "This configuration does not exist; check the ID and try again."
+  },
+  "list": {
+    "embed_title": "Auto Voice System",
+    "description_embed": "Here is a list of all Auto Voice System configurations.",
+    "description_embed_empty": "There are no Auto Voice System configurations."
   }
+
 }

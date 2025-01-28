@@ -1,15 +1,15 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Reaction Role System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Reaction Role System",
+    "description_limit_premium": "You have reached the maximum number of Reaction Roles available in your plan. Upgrade to the Premium plan to unlock unlimited Roles!",
+    "description_premium_feature": "This feature is only available with the Premium plan. Upgrade your plan now to unlock it!",
     "description_embed": "You do not have permission to use this command!",
-    "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable."
+    "description_embed_no_features": "The feature is currently disabled. An administrator needs to enable it for it to be usable.",
+    "description_embed_no_features_by_system": "This feature is temporarily disabled for extraordinary maintenance. Please be patient: it will be available again shortly."
   },
   "addCommand": {
-    "embed_title": "Alka Hub | Reaction Role System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Reaction Role System",
+
     "description_embed": "You have successfully set the reaction role for the role {0}. Now, when a user reacts to the message, the role will be assigned.",
     "description_embed_alreadyset": "The reaction role you are trying to set already exists. There cannot be a reaction role with the same emoji.",
     "description_embed_missingpermissions": "The role you are trying to set/remove is above the role {0}, which belongs to Alka. To set/remove it from the list, move Alka's role above the role you want to set.",
@@ -17,17 +17,15 @@
     "description_embed_emojinotfound": "The selected emoji was not found on your server. Please insert a valid emoji!"
   },
   "listCommand": {
-    "embed_title": "Alka Hub | Reaction Role System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Reaction Role System",
+
     "description_embed": "{0} Here is the list of Reaction Roles currently set.",
     "no_role": "No reaction roles set yet, set them with /reactionrole.",
     "most_lenght": "... Many others"
   },
   "removeCommand": {
-    "embed_title": "Alka Hub | Reaction Role System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Reaction Role System",
+
     "description_embed": "You have successfully removed the reaction role. It is no longer available.",
     "description_embed_notset": "The reaction role you are trying to remove does not exist in our database. Please try again.",
     "description_embed_missingpermissions": "The role you are trying to set/remove is above the role {0}, which belongs to Alka. To set/remove it from the list, move Alka's role above the role you want to set.",

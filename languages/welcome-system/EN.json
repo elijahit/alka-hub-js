@@ -1,21 +1,20 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Welcome",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Welcome System",
+    "description_limit_premium": "Upgrade to the Premium plan to unlock unlimited features!",
+    "description_premium_feature": "This feature is only available with the Premium plan. Upgrade now to unlock it!",
     "description_embed": "You do not have permission to use this command!",
-    "description_embed_no_features": "The function is currently disabled. An administrator needs to enable it for it to be usable."
+    "description_embed_no_features": "The feature is currently disabled. An administrator needs to enable it for it to be usable.",
+    "description_embed_no_features_by_system": "This feature is temporarily disabled for extraordinary maintenance. Please be patient: it will be available again shortly."
   },
   "welcomeMessage": {
-    "embed_title": "Alka Hub | Welcome",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Welcome System",
+
     "description_embed": "WELCOME ON"
   },
   "welcomeModal": {
-    "embed_title": "Alka Hub | Welcome",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Welcome System",
+
     "descriptionWelcome": "DESCRIPTION",
     "description": "You have successfully configured the welcome message. Now, when new users join the server, the message will be sent to the selected channel."
   }

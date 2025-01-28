@@ -1,147 +1,104 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const { Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
-const { token, presenceStatusName, botState } = require('./config.json');
-const { cleanerDatabase, reactionRoleCached, statisticsUpdate } = require('./bin/HandlingFunctions');
-const { client } = require('./bin/client');
-const { checkGiveawayTiming } = require('./utils/giveaway-system/giveawayTiming');
+const pm2 = require('pm2');
+const Redis = require('ioredis');
+const { config } = require('./worker/config');
+const { findAllConfig } = require('./bin/service/DatabaseService');
 
-client.commands = new Collection();
 
-// FUNZIONE PER RECUPERARE LE CARTELLE DI ESEGUZIONE DEL CODICE DEI MODULI
-function executeFolderModule(mainDir) {
-  const foldersPath = path.join(__dirname, mainDir);
-  const moduleFolder = fs.readdirSync(foldersPath);
+const redis = new Redis({
+  host: config.redis.host,
+  port: config.redis.port,
+  password: config.redis.password,
+});
 
-  for (const folder of moduleFolder) {
-    const modulePath = path.join(foldersPath, folder);
-    const eventsPathResolve = `${modulePath}/events`;
-    const commandsPathResolve = `${modulePath}/command`;
-    const eventsFiles = fs.readdirSync(eventsPathResolve).filter(file => file.endsWith('.js'));
-    const commandFiles = fs.readdirSync(commandsPathResolve).filter(file => file.endsWith('.js'));
-    for (const file of commandFiles) {
-      try {
-        const filePath = path.join(commandsPathResolve, file);
-        const command = require(filePath);
+const envStart = process.env.START || false;
 
-        if ('data' in command && 'execute' in command) {
-          client.commands.set(command.data.name, command);
-        }
-      }
-      catch {
-        console.error(`[!C] ${file} non caricato`);
-      }
-    }
-    for (const file of eventsFiles) {
-      try {
-        const filePath = path.join(eventsPathResolve, file);
-        const event = require(filePath);
-        client.on(event.name, (...args) => event.execute(...args));
-      }
-      catch {
-        console.error(`[!E] ${file} non caricato`);
-      }
-    }
-  }
+if (!envStart) {
+  console.error('[❌] Errore: START non definito. Usa npm run prod (per la produzione) o npm run dev (per il test)');
+  process.exit(1);
 }
 
-// EVENT LISTNER PER I COMANDI
-// Questo EVENT LISTNER serve per ascoltare i comandi che vengono lanciati con (/) slashCommands dopo averli ascoltati li invierà all'esecutore che è presente nei file dei comandi.
+if (envStart === "prod") redis.flushall();
 
-client.on(Events.InteractionCreate, async interaction => {
-  if (!interaction.isChatInputCommand()) return;
-  if (!interaction.guild) return;
+console.clear();
+console.log('\x1b[34m%s\x1b[0m', '   __    __    _  _    __      ____  _____  ____ ');
+console.log('\x1b[34m%s\x1b[0m', '  /__\\  (  )  ( )/ )  /__\\    (  _ \\(  _  )(_  _)');
+console.log('\x1b[34m%s\x1b[0m', ' /(__)\\  )(__  )  (  /(__)\\    ) _ < )(_)(   )(  ');
+console.log('\x1b[34m%s\x1b[0m', '(__)(__)(____)(_)\_) (__)(__)  (____/(_____) (__) ');
+console.log('\x1b[36m%s\x1b[0m', 'ALKA HUB BOT v2.0.0 - ALKA NETWORK - WHITE LABEL');
+console.log('\x1b[32m%s\x1b[0m', 'Author: Elijah (Gabriele Mario Tosto) <g.tosto@flazio.com>');
+console.log('\x1b[32m%s\x1b[0m', 'Since: 02/2024');
+console.log('\x1b[32m%s\x1b[0m', 'Technology: JavaScript - Node - Discord.js');
+console.log('\x1b[32m%s\x1b[0m', 'Powered by alkanetwork.eu');
+console.log('\x1b[32m%s\x1b[0m', 'Environment:', envStart === 'prod' ? 'Produzione' : 'Test');
+console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
+console.log('\x1b[34m%s\x1b[0m', `App in avvio... Creazione Woker principale.`);
+console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
 
-  const command = interaction.client.commands.get(interaction.commandName);
-
-  if (!command) {
-    console.error(`[WARNING] Il comando ${interaction.commandName} lanciato da ${interaction.user.username} non è stato trovato.`);
-    return;
+pm2.connect(function (err) {
+  if (err) {
+    console.error(err);
+    process.exit(2);
   }
-
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    console.error(error);
-    if (interaction.replied || interaction.deferred) {
-      await interaction.followUp({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', ephemeral: true });
+  pm2.delete('all', (err) => {
+    if (err) {
+      console.error('[❌] Errore durante l’eliminazione dei processi');
     } else {
-      await interaction.reply({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', ephemeral: true });
+      console.log('[✅] Tutti i processi PM2 sono stati eliminati con successo.');
     }
-  }
-});
-
-// ERROR LISTENER
-client.on(Events.ShardError, error => {
-  console.log(error);
-})
-
-// EVENT LISTNER PER AVVIO DEL BOT
-
-client.once(Events.ClientReady, readyClient => {
-  console.clear();
-  console.log('-------------------------------------');
-  console.log('ALKA HUB BOT v1.0.0 BETA');
-  console.log('Author: Elijah (Gabriele Mario Tosto)');
-  console.log('Since: 2024');
-  console.log('Technology: JavaScript - NodeJs');
-  console.log('-------------------------------------');
-  // FUNZIONI
-  executeFolderModule('utils');
-
-  let count = 0;
-  const presenceArray = ["👷‍♂️ by alkanetwork.eu", "🕵️‍♀️ Multibot and multilanguage",
-    "🎫 Tickets - Logs and more", "💸 buy a custom bot now", "🤯 try me with /help",
-    "😏 custom bot start 1.99€", "💨 2.0.0 in coming!"];
-
-  if (presenceArray.length == 1) {
-    client.user.setPresence({
-      activities: [{ name: presenceArray[count], state: presenceArray[count], type: ActivityType.Custom }],
-      status: 'online'
-    });
-  } else {
-    setInterval(async () => {
-      
-      client.user.setPresence({
-        activities: [{ name: presenceArray[count], state: presenceArray[count], type: ActivityType.Custom }],
-        status: 'online'
-      });
-      count = count + 1;
-      if (count == presenceArray.length - 1) {
-        count = 0;
+    pm2.start({
+      script: './worker/worker.js',
+      name: `${config.worker.workerId}`,
+      exec_mode: '',
+      env: {WORKER_ID: config.worker.workerId }
+    }, function (err, apps) {
+      pm2.disconnect();   // Disconnects from PM2
+      if (err) {
+        console.error('[❌] Errore durante la creazione del worker default:', err);
+      } else {
+        console.log('[✅] Worker default avviato.');
       }
-    }, 5000);
-  }
-
-  // FUNZIONI DI HandlingFunction
-
-  // FUNZIONE DI CLEANER PER IL DATABASE
-  setInterval(async () => {
-    await cleanerDatabase(client);
-  }, 21600000);
-
-  // FUNZIONE DI reactionRole-system
-  setTimeout(async () => {
-    await reactionRoleCached(client);
-    console.log('[REACTION ROLES] Cache caricata con successo!');
-  }, 3000);
-
-  // FUNZIONE DI statsServer-system
-  setInterval(async () => {
-    await statisticsUpdate(client);
-  }, 600000);
-
-  // FUNZIONE DI giveaway-system
-  setInterval(async () => {
-    await checkGiveawayTiming();
-  }, 60000);
-
-  // FUNCTION OTHER SYSTEM
-  require('./utils/twitch-system/twitch'); //Twitch System
-  require('./utils/youtube-system/youtubeApi'); //Youtube System
+    });
+  });
 });
 
 
-//  --------- //
+findAllConfig().then((configs) => {
+  configs.forEach((configBot) => {
+    const start = envStart === 'prod' ? configBot.isActive == 1 : configBot.isActive == 2;
+    if (start) {
+      const configJson = JSON.parse(configBot.json)
+      const botConfig = {
+        botName: configJson.botName,
+        botFooter: configJson.botFooter,
+        botFooterIcon: configJson.botFooterIcon,
+        isActive: configBot.isActive,
+        premium: configBot.premium,
+        token: configJson.token,
+        clientId: configJson.clientId,
+        presenceStatus: configJson.presenceStatus,
+        commandDeploy: configBot.command_deploy,
+        id: configBot.id,
+      };
 
-client.login(token);
+      const commandData = JSON.stringify({ command: "start", botId: botConfig.id, botConfig: botConfig });
+
+      if (envStart === "prod") {
+        redis.rpush('bot_commands_queue', commandData, (err, result) => {
+          if (err) {
+            console.error('[❌] Errore durante l’invio del comando a bot_commands_queue:', err);
+          } else {
+            console.log('[✅] Comando inviato a bot_commands_queue con successo config:', configBot.id);
+          }
+        });
+      } else if(envStart === "test") {
+        redis.rpush(`worker_commands_queue:${config.worker.workerId}`, commandData, (err, result) => {
+          if (err) {
+            console.error('[❌] Errore durante l’invio del comando a worker_commands_queue:', err);
+          } else {
+            console.log('[✅] Comando inviato a worker_commands_queue con successo config:', configBot.id);
+          }
+        });
+      }
+    }
+  });
+});    

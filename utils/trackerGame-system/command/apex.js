@@ -1,9 +1,19 @@
+// Code: utils/trackerGame-system/command/apex.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file apex.js
+ * @module apex
+ * @description Questo file gestisce il comando per visualizzare le informazioni di un utente di Apex Legends!
+ */
+
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
-const { readFileSync, read } = require('fs');
-const { readDb, runDb } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
+const { readFileSync } = require('fs');
+const { errorSendControls } = require('../../../bin/HandlingFunctions');
 const axios = require('axios').default;
+const colors = require('../../../bin/data/colors');
+const emoji = require('../../../bin/data/emoji');
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 // --- API CONFIG ----
 // Token by https://portal.apexlegendsapi.com/
@@ -20,6 +30,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('apex')
 		.setDescription('Displays the information of an Apex Legends user')
+		.setDescriptionLocalization("it", "Vedi le informazioni di un utente di Apex Legends")
 		.addStringOption(value =>
 			value
 				.setName('username')
@@ -44,15 +55,15 @@ module.exports = {
 				})
 				.setRequired(true)
 		),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		// RECUPERO LA LINGUA
-		let data = await language.databaseCheck(interaction.guild.id);
+		let data = await language.databaseCheck(interaction.guild.id, variables);
 		const langagues_path = readFileSync(`./languages/trackerGame-system/${data}.json`);
 		const language_result = JSON.parse(langagues_path);
 		const username = interaction.options.data[0].value;
 		const platform = interaction.options.data[1].value;
 
-		let customEmoji = await getEmojifromUrl(interaction.client, "apexlegends");
+		let customEmoji = emoji.gameTrackerSystem.apex;
 		try {
 			await interaction.deferReply();
 			let resultApi = await checkApi(username, platform);
@@ -122,25 +133,25 @@ module.exports = {
 					{ name: language_result.apexTracker.rank, value: `${resultApi.data.global.rank.rankName} (${resultApi.data.global.rank.rankScore})` }
 				];
 				const embedLog = new EmbedBuilder()
-					.setAuthor({ name: `${language_result.apexTracker.embed_title}`, iconURL: customEmoji })
 					.addFields(fields)
-					.setFooter({ text: `${language_result.apexTracker.embed_footer}`, iconURL: `${language_result.apexTracker.embed_icon_url}` })
+					.setDescription(`## ${language_result.apexTracker.embed_title}\n`)
+					.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
 					.setThumbnail(resultApi.data.global.avatar)
-					.setColor(0xfcba03);
+					.setColor(colors.general.danger);
 				await interaction.editReply({ embeds: [embedLog] });
 			}
 		}
 		catch (error) {
 			if (error == "AxiosError: Request failed with status code 404") {
 				const embedLog = new EmbedBuilder()
-					.setAuthor({ name: `${language_result.apexTracker.embed_title}`, iconURL: customEmoji })
-					.setDescription(language_result.apexTracker.noResult)
-					.setFooter({ text: `${language_result.apexTracker.embed_footer}`, iconURL: `${language_result.apexTracker.embed_icon_url}` })
-					.setColor(0x9e1114);
+					.setDescription(`## ${language_result.apexTracker.embed_title}\n` + language_result.apexTracker.noResult)
+					.setFooter({ text: variables.getBotFooter(), iconURL: variables.getBotFooterIcon() })
+					.setThumbnail(variables.getBotFooterIcon())
+					.setColor(colors.general.error);
 				await interaction.editReply({ embeds: [embedLog] });
 				return;
 			}
-			errorSendControls(error, interaction.client, interaction.guild, "\\trackerGame-system\\apex.js");
+			errorSendControls(error, interaction.client, interaction.guild, "\\trackerGame-system\\apex.js", variables);
 		}
 	},
 };

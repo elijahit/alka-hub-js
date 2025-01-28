@@ -1,0 +1,84 @@
+// Code: mainEvents - bin/functions/mainEvents.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file mainEvents.js
+ * @module mainEvents
+ * @description Contiene il metodo {mainEvents}
+ */
+
+const { Events, ActivityType } = require('discord.js');
+const executeFolderModule = require('./executeFunctions');
+const LogClasses = require('../classes/LogClasses');
+const { statisticsUpdate } = require('../../utils/statsServer-system/functions/statisticsUpdate');
+const CommandsDeploy = require('../classes/CommandsDeploy');
+
+
+const mainEvents = async (client, variables) => {
+  const commands = new CommandsDeploy();
+  await commands.deploy(variables);
+  
+  await client.on(Events.InteractionCreate, async interaction => {
+    if (!interaction.isChatInputCommand()) return;
+    if (!interaction.guild) return;
+
+    const command = interaction.client.commands.get(interaction.commandName);
+
+    if (!command) {
+      console.error(`[WARNING] Il comando ${interaction.commandName} lanciato da ${interaction.user.username} non è stato trovato.`);
+      LogClasses.createLog(interaction.guild.id, 'ERRORE', `Il comando ${interaction.commandName} lanciato da ${interaction.user.username} non è stato trovato.`, variables);
+      return;
+    }
+
+    try {
+      await command.execute(interaction, variables);
+      LogClasses.createLog(interaction.guild.id, 'COMANDO', `Il comando ${interaction.commandName} è stato eseguito da ${interaction.user.username}`, variables);
+    } catch (error) {
+      console.error(error);
+      if (interaction.replied || interaction.deferred) {
+        LogClasses.createLog(interaction.guild.id, 'ERRORE', `Errore eseguendo il comando ${interaction.commandName} da ${interaction.user.username}`, variables);
+        await interaction.followUp({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', flags: 64 });
+      } else {
+        LogClasses.createLog(interaction.guild.id, 'ERRORE', `Errore eseguendo il comando ${interaction.commandName} da ${interaction.user.username}`, variables);
+        await interaction.reply({ content: 'Abbiamo riscontrato un errore eseguendo questo comando! Contatta un amministratore.', flags: 64 });
+      }
+    }
+  });
+
+  // ERROR LISTENER
+  await client.on(Events.ShardError, error => {
+    console.log(error);
+  })
+
+  // EVENT LISTNER PER AVVIO DEL BOT
+
+  await client.once(Events.ClientReady, async readyClient => {
+    // FUNZIONI
+    await executeFolderModule(client, 'utils', variables);
+    statisticsUpdate(client, variables);
+    console.log(`[✅] Bot ${variables.getBotName()} (${variables.getConfigId()}) avviato con successo!`);
+    LogClasses.createLog("NULL", 'AVVIO', `Bot ${variables.getBotName()} (${variables.getConfigId()}) avviato con successo!`, variables);
+
+    
+    const presenceArray = variables.getPresenceStatus();
+    if(presenceArray.length == 1) {
+      await client.user.setPresence({
+        activities: [{ name: presenceArray[count], state: presenceArray[count], type: ActivityType.Custom }],
+        status: 'online'
+      });
+    } else {
+      setInterval(async () => {
+        const count = variables.getPresenceCounter();
+        await client.user.setPresence({
+          activities: [{ name: presenceArray[count], state: presenceArray[count], type: ActivityType.Custom }],
+          status: 'online'
+        });
+        variables.setPresenceCounter(count + 1)
+        if (count == presenceArray.length-1) {
+          variables.setPresenceCounter(0);
+        }
+      }, 5000);
+    }
+  })
+}
+
+module.exports = mainEvents;

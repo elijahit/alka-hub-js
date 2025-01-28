@@ -1,17 +1,30 @@
+// Code: utils/general/command/help.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file help.js
+ * @module help
+ * @description Questo file contiene il comando per visualizzare la lista completa dei comandi nel server
+ */ 
+
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const language = require('../../../languages/languages');
 const { readFileSync, read } = require('fs');
 const { readDb, runDb } = require('../../../bin/database');
 const { errorSendControls, getEmojifromUrl, returnPermission, noInitGuilds, noHavePermission } = require('../../../bin/HandlingFunctions');
+const emoji = require("../../../bin/data/emoji")
+const colors = require("../../../bin/data/colors");
+const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
 		.setDescription('Command to view the complete list of commands in the server')
+		.setDescriptionLocalization("it", "Comando per visualizzare la lista completa dei comandi nel server")
 		.addStringOption(value =>
 			value
 				.setName('module')
 				.setDescription('Select a module to view its help page')
+				.setDescriptionLocalization("it", "Seleziona un modulo per visualizzare la sua pagina di aiuto")
 				.addChoices({
 					name: "General Command",
 					value: "general",
@@ -65,36 +78,35 @@ module.exports = {
 					value: "welcome",
 				})
 		),
-	async execute(interaction) {
+	async execute(interaction, variables) {
 		let moduleSelect = await interaction.options.get("module")?.value;
 		// RECUPERO LA LINGUA
 		try {
-			let data = await language.databaseCheck(interaction.guild.id);
+			let data = await language.databaseCheck(interaction.guild.id, variables);
 			const langagues_path = readFileSync(`./languages/general/${data}.json`);
 			const language_result = JSON.parse(langagues_path);
 
 			let fields = [];
 			const embedLog = new EmbedBuilder();
-			if(moduleSelect) {
+			if (moduleSelect) {
 				fields = [
-					{name: language_result.helpCommand[`${moduleSelect}_category`], value: language_result.helpCommand[`${moduleSelect}_commands`]},
-					{name: " ", value: language_result.helpCommand.documentationRefer
-				.replace('{0}', moduleSelect)}
+					{ name: language_result.helpCommand[`${moduleSelect}_category`], value: language_result.helpCommand[`${moduleSelect}_commands`].replaceAll("{0}", variables.getBotName()) }
 				];
-				embedLog.setDescription(language_result.helpCommand.description_embed);
+				embedLog.setDescription(`## ${language_result.helpCommand.embed_title}\n` + language_result.helpCommand.description_embed);
 			} else {
-				fields = [{name: language_result.helpCommand.noModuleSelectTitle, value: language_result.helpCommand.noModuleSelectEmbed}]
+				fields = [{ name: language_result.helpCommand.noModuleSelectTitle, value: language_result.helpCommand.noModuleSelectEmbed.replaceAll("{0}", variables.getBotName()) }]
+				embedLog.setDescription(`## ${language_result.helpCommand.embed_title}`);
 			}
-			const customEmoji = await getEmojifromUrl(interaction.client, "help");
+			const customEmoji = emoji.general.helpMaker;
 			embedLog
-				.setAuthor({ name: `${language_result.helpCommand.embed_title}`, iconURL: customEmoji })
 				.addFields(fields)
-				.setFooter({ text: `${language_result.helpCommand.embed_footer}`, iconURL: `${language_result.helpCommand.embed_icon_url}` })
-				.setColor(0x3262a8);
-			await interaction.reply({embeds: [embedLog], ephemeral: true});
+				.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
+				.setThumbnail(variables.getBotFooterIcon())
+				.setColor(colors.general.blue);
+			await interaction.reply({ embeds: [embedLog], flags: 64 });
 		}
 		catch (error) {
-			errorSendControls(error, interaction.client, interaction.guild, "\\general\\help.js");
+			errorSendControls(error, interaction.client, interaction.guild, "\\general\\help.js", variables);
 		}
 	},
 };

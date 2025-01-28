@@ -1,41 +1,36 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | General",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "General",
     "description_embed": "Non hai il permesso per usare questo comando!"
   },
   "disabledFeatures": {
-    "embed_title": "Alka Hub | General",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_embed": "Hai disabilitato la funzione **{0}** con successo."
+    "embed_title": "General",
+    "description_embed": "Hai disabilitato la funzione **{0}** con successo.",
+    "feature_disabled_by_alka": "La funzione è disabilitata al momento e non può essere attivata/disabilitata.",
+    "feature_premium": "Questa funzionalità è premium, compra la versione pro a **€1,99**/mese o acquista il tuo bot White Label e rendi tuo Alka Hub a soli **€3,99**/mese. Vedi termini e condizioni su [alkanetwork.eu](https://alkanetwork.eu/)"
   },
   "enabledFeatures": {
-    "embed_title": "Alka Hub | General",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "General",
     "description_embed": "Hai abilitato la funzione **{0}** con successo."
   },
   "initCommand": {
-    "embed_title": "Alka Hub | General",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "description_already_embed": "Questo server è già stato inizializzato. Non è possibile procedere con un'ulteriore inizializzazione. Utilizza **/config** per modificarne la configurazione.",
-    "error_timezone": "La timezone inserita non risulta riconosciuta, utilizza ad esempio \"GB\" per la time zone inglese, se reputi che questo sia un errore contatta il supporto nel discord ufficiale che trovi in https://docs.alkanetwork.eu/",
-    "description_embed": "Hai inizializzato Alka Hub con successo. Ora puoi godere appieno di tutte le funzionalità di Alka Hub!"
+    "embed_title": "Generale",
+    "language_label": "Lingua",
+    "language_placeHolder": "Inserisci la lingua (IT/EN)",
+    "time_zone_label": "Fuso orario",
+    "time_zone_placeHolder": "Inserisci il fuso orario (GB/IT..altri)",
+    "plan_label": "Piano attivo",
+    "plan_placeHolder": "Questo campo è di sola lettura",
+    "error_timezone": "Il fuso orario inserito non è riconosciuto, usa ad esempio \"GB\" per il fuso orario inglese. Se pensi che si tratti di un errore, contatta il supporto nel server ufficiale Discord all'indirizzo https://docs.alkanetwork.eu/",
+    "description_embed": "Hai inizializzato correttamente {0}. Ora puoi usufruire di tutte le funzionalità di {0}!"
   },
   "helpCommand": {
-    "embed_title": "Alka Hub | Help Commands",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
-    "documentationRefer":"**->** Approfondisci nella nostra [documentazione](https://docs.alkanetwork.eu/it/{0})",
+    "embed_title": "Help Commands",
     "noModuleSelectTitle": "Sei pronto?",
-    "noModuleSelectEmbed": "[->] Non sai come utilizzare Alka Hub?\n[->] Visita la nostra documentazione al link https://docs.alkanetwork.eu/\n[->] Se hai bisogno di aiuto contatta il supporto nel nostro discord ufficiale https://discord.gg/DqRcKB75N5\nSeleziona un modulo dai parametri del comando /help per approfondirne il contenuto.",
+    "noModuleSelectEmbed": "{0} è qui per semplificarti la vita! Utilizza il comando /help seguito da un modulo specifico per ottenere dettagli su ogni funzionalità.\n\n:bulb: Esempio: /help [nome_modulo]\n\n:pushpin: Esplora i moduli disponibili per scoprire tutto ciò che puoi fare con {0}.",
     "description_embed": "Ecco una spiegazione del modulo richiesto!\n\n[!] Gli HASH sono delle variabili che possono essere utilizzate nel modulo **Admin Ranks**.",
-    "footer": "Ti raccomandiamo di leggere la **nostra documentazione** per ogni dubbio, la trovi nel nostro [Discord Ufficiale](https://discord.gg/DqRcKB75N5) -> alka-docs; per qualsiasi problema puoi aprire una segnalazione -> Technical Support.",
     "general_category": "Generale",
-    "general_commands": "- **/help** *[NO HASH]* - Il comando mostra la lista completa dei comandi disponibili.\n- **/init** *[NO HASH]* - Il comando inizializza le configurazioni del server e lingua da utilizzare tra quelle disponibili.\n- **/features** *[features]* - Il comando abilita o disabilita le funzionalità disponibili in Alka Hub.",
+    "general_commands": "- **/help** *[NO HASH]* - Il comando mostra la lista completa dei comandi disponibili.\n- **/init** *[NO HASH]* - Il comando inizializza le configurazioni del server e lingua da utilizzare tra quelle disponibili.\n- **/features** *[features]* - Il comando abilita o disabilita le funzionalità disponibili in {0}.",
     "logs_category": "Logs System",
     "logs_commands": "- **/logschannel** *[logschannel]* - Il comando imposta i vari canali di logs per inviare gli eventi del Logs System.",
     "permissions_category": "Admin Ranks System",

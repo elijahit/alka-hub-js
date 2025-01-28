@@ -1,23 +1,20 @@
 {
   "noPermission": {
-    "embed_title": "Alka Hub | Auto Voice System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Voice System",
+
     "description_embed": "Non hai il permesso per usare questo comando!",
     "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
   },
   "addCommand": {
-    "embed_title": "Alka Hub | Auto Role System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Role System",
+
     "description_embed": "Hai impostato con successo il ruolo {0} nella lista di Auto Role da impostare all'ingresso di un nuovo utente.",
     "description_embed_delete": "Il ruolo {0} è stato rimosso con successo dalla lista Auto Role e non verrà più impostato all'ingresso di un nuovo utente.",
     "description_embed_missingpermissions": "Il ruolo che stai cercando di impostare/rimuovere si trova sopra al ruolo {0}, che è di proprietà di Alka. Per poterlo impostare/rimuovere dalla lista, sposta il ruolo di Alka al di sopra del ruolo che vuoi impostare."
   },
   "listCommand": {
-    "embed_title": "Alka Hub | Auto Role System",
-    "embed_footer": "Alka Hub by alkanetwork.eu",
-    "embed_icon_url": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png",
+    "embed_title": "Auto Role System",
+
     "description_embed": "{0} Eccoti la lista degli Auto Role attualmente impostati per assegnarli ai nuovi utenti nel server.",
     "no_role": "Nessun ruolo ancora impostato, impostali con /autorole.",
     "most_lenght": "... Molti altri"
