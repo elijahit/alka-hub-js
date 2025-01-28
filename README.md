@@ -92,11 +92,10 @@ You can modify the maximum bot limit configured in the file:
 ---
 
 ## 📄 License
-[Alka Hub - WhiteLabel Bot](https://github.com/elijahit/alka-hub-js) by [Gabriele Mario Tosto](https://www.linkedin.com/in/gabriele-tosto) is licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1).
 
-[![Creative Commons License](https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1)](https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1)
-[![BY](https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1)](https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1)
-[![NC](https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1)](https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1)
+This project is licensed under the Apache License, Version 2.0. See the [LICENSE](../LICENSE) file for details.
+
+[![Apache License](https://www.apache.org/img/asf_logo.png)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ---
 
