@@ -1,99 +1,98 @@
 
-# Alka Hub 🌐  
+# Alka Hub 🌐
 
-Benvenuto nel repository ufficiale di **Alka Hub**, una piattaforma scalabile e multi-lingua per la creazione di bot white-label su Discord.
+Welcome to the official repository of **Alka Hub**, a scalable and multi-language platform for creating white-label bots on Discord.
 
-## 📋 Descrizione
-**Alka Hub** è progettato per gestire bot multi-server su Discord, offrendo una soluzione personalizzabile per utenti che necessitano di una configurazione flessibile e multi-lingua.
+## 📋 Description
+**Alka Hub** is designed to manage multi-server bots on Discord, offering a customizable solution for users who need flexible and multi-language configuration.
 
 ---
 
-## ✍️ Autore  
+## ✍️ Author
 **Elijah (Gabriele Mario Tosto)**
 
 ---
 
-## 🛠️ Tecnologie Utilizzate  
+## 🛠️ Technologies Used
 
-### Linguaggio  
-- **JavaScript (Node.js)**  
+### Language
+- **JavaScript (Node.js)**
 
-### Dipendenze Principali  
-- **[discord.js](https://discord.js.org/)**: Gestione delle API di Discord.  
-- **[sequelize](https://sequelize.org/)**: ORM per la gestione dei database.  
-- **[axios](https://axios-http.com/)**: Richieste HTTP asincrone.  
-- **[ioredis](https://github.com/luin/ioredis)**: Client Redis per caching avanzato.  
-- **[jimp](https://github.com/oliver-moran/jimp)**: Manipolazione di immagini.  
-- **[moment-timezone](https://momentjs.com/timezone/)**: Gestione dei fusi orari.  
-- **[mysql2](https://www.npmjs.com/package/mysql2)**: Connessione al database mysql.  
+### Main Dependencies
+- **[discord.js](https://discord.js.org/)**: Management of Discord APIs.
+- **[sequelize](https://sequelize.org/)**: ORM for database management.
+- **[axios](https://axios-http.com/)**: Asynchronous HTTP requests.
+- **[ioredis](https://github.com/luin/ioredis)**: Redis client for advanced caching.
+- **[jimp](https://github.com/oliver-moran/jimp)**: Image manipulation.
+- **[moment-timezone](https://momentjs.com/timezone/)**: Timezone management.
+- **[mysql2](https://www.npmjs.com/package/mysql2)**: MySQL database connection.
 
-### Database  
-- **MySQL**: Per la gestione dei dati.  
-
----
-
-## 📦 Installazione  
-
-### Prerequisiti  
-1. **Node.js** (v20.14.0 o superiore).  
-2. **MySQL** installato e configurato.  
-3. **Discord Bot Token** con permessi adeguati.  
-4. **PM2** per orchestrare i processi del bot.  
-
-### Setup  
-1. Clona il repository:  
-   ```bash  
-   git clone https://github.com/elijahit/alka-hub-js.git  
-   cd alka-hub-js  
-   ```
-2. Installa le dipendenze:  
-   ```bash  
-   npm install  
-   ```
-
-3. Configura il database MySQL:  
-   - Importa il file `alka_bot.sql` per inizializzare la struttura del database.
-
-4. Configura i token e le credenziali:  
-   Utilizza la tabella ```configs``` per gestire le tue configurazioni e token:
-   - ```name```(TEXT): Inserisci il nome della configurazione, ti aiuterà a visualizzare logs o errori.
-   - ```main_discord_id```(TEXT): L'id del discord in cui saranno inviate eventuali comunicazioni con REDIS/Dashboard (-1 invierà la comunicazione a tutti i discord in cui il BOT è presente).
-   - ```json```(TEXT): La configrazione in formato JSON effettiva del bot come segue 
-   ```json 
-   { "botName": "Nome Bot", "botFooter": "Bot Footer", "botFooterIcon": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png", "token": "TOKEN_HERE", "clientId": "ID_APPLICAZIONE", "presenceStatus": ["PRESENCE 1", "PRESENCE 2", "PRESENCE 3", ...] }
-   ```
-   - ```IsActive```(INT): 0 = Non attiva, 1 = Attivo, 2 = Testing (Avviabile con npm run dev).
-   - ```server_max```(INT): Il numero di server in cui può essere presente il bot (-1 = illimitato).
-   - ```premium```(INT): 0 = Free, 1 = Premium (se impostato a 1 tutte le guild in cui il bot è presente saranno trattate come premium).
-   - ```command_deploy```(INT): 0 = Da deployare, 1 = Deployati (Se impostato a 0 al avvio del worker tutti i comandi default saranno registrati).
-   
+### Database
+- **MySQL**: For data management.
 
 ---
 
-## 🚀 Avvio  
+## 📦 Installation
 
-### Modalità di Sviluppo  
-Avvia il bot in modalità sviluppo:  
+### Prerequisites
+1. **Node.js** (v20.14.0 or higher).
+2. **MySQL** installed and configured.
+3. **Discord Bot Token** with appropriate permissions.
+4. **PM2** to orchestrate bot processes.
+
+### Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/elijahit/alka-hub-js.git
+   cd alka-hub-js
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Configure the MySQL database:
+   - Import the `alka_bot.sql` file to initialize the database structure.
+
+4. Configure tokens and credentials:
+   Use the `configs` table to manage your configurations and tokens:
+   - `name`(TEXT): Enter the configuration name, it will help you view logs or errors.
+   - `main_discord_id`(TEXT): The Discord ID where communications with REDIS/Dashboard will be sent (-1 will send communication to all Discords where the BOT is present).
+   - `json`(TEXT): The actual bot configuration in JSON format as follows:
+   ```json
+   { "botName": "Bot Name", "botFooter": "Bot Footer", "botFooterIcon": "https://cdn.discordapp.com/app-icons/843183839869665280/6bafa96797abd3b0344721c58d6e5502.png", "token": "TOKEN_HERE", "clientId": "APPLICATION_ID", "presenceStatus": ["PRESENCE 1", "PRESENCE 2", "PRESENCE 3", ...] }
+   ```
+   - `IsActive`(INT): 0 = Inactive, 1 = Active, 2 = Testing (Startable with npm run dev).
+   - `server_max`(INT): The number of servers the bot can be present in (-1 = unlimited).
+   - `premium`(INT): 0 = Free, 1 = Premium (if set to 1 all guilds where the bot is present will be treated as premium).
+   - `command_deploy`(INT): 0 = To be deployed, 1 = Deployed (If set to 0 at worker startup all default commands will be registered).
+
+---
+
+## 🚀 Launch
+
+### Development Mode
+Start the bot in development mode:
 ```bash
 npm run dev
 ```
 
-### Modalità di Produzione  
-Avvia il bot in modalità produzione:  
+### Production Mode
+Start the bot in production mode:
 ```bash
 npm run prod
 ```
 
-### Configurazione  
-Puoi modificare il limite massimo di bot configurato nel file:  
+### Configuration
+You can modify the maximum bot limit configured in the file:
 ```bash
 /worker/config.js
 ```
 
 ---
 
-## 📄 Licenza  
-[Alka Hub - WhiteLabel Bot](https://github.com/elijahit/alka-hub-js) by [Gabriele Mario Tosto](https://www.linkedin.com/in/gabriele-tosto) è rilasciato sotto licenza [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1).  
+## 📄 License
+[Alka Hub - WhiteLabel Bot](https://github.com/elijahit/alka-hub-js) by [Gabriele Mario Tosto](https://www.linkedin.com/in/gabriele-tosto) is licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1).
 
 [![Creative Commons License](https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1)](https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1)
 [![BY](https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1)](https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1)
@@ -101,11 +100,12 @@ Puoi modificare il limite massimo di bot configurato nel file:
 
 ---
 
-## 🐛 Segnalazione Bug  
-Per segnalare un problema, utilizza la sezione [Issues](https://github.com/elijahit/alka-hub-js/issues).
+## 🐛 Bug Reporting
+To report an issue, use the [Issues](https://github.com/elijahit/alka-hub-js/issues) section.
 
 ---
 
-## 🌐 Link Utili  
-- [Repository](https://github.com/elijahit/alka-hub-js)  
-- [Homepage](https://github.com/elijahit/alka-hub-js#readme)  
+## 🌐 Useful Links
+- [Repository](https://github.com/elijahit/alka-hub-js)
+- [Homepage](https://github.com/elijahit/alka-hub-js#readme)
+
