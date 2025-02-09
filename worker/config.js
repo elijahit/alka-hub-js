@@ -16,7 +16,7 @@ const config = {
   redis: {
     host: configFile.redis.host,
     port: configFile.redis.port,
-    password: this.config.redis.password, 
+    password: configFile.redis.password, 
   },
   worker: {
     maxBot: configFile.worker.maxBot,
