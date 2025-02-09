@@ -7,22 +7,22 @@
  */
 
 const configTemplate = {
-  database: {
-    host: "INSERT_IP_HERE",
-    port: 3306,
-    user: "INSERT_USER_HERE",
-    password: "INSERT_PASSWORD_HERE",
-    database: "INSERT_DATABASE_HERE",
-    dialect: "INSERT_DIALECT_HERE"
+  database: { // database configuration
+    host: "INSERT_IP_HERE", // database host
+    port: 3306, // database port
+    user: "INSERT_USER_HERE", // database user
+    password: "INSERT_PASSWORD_HERE", // database password
+    database: "INSERT_DATABASE_HERE", // database name
+    dialect: "INSERT_DIALECT_HERE" // database dialect
   },
-  redis: {
-    host: "INSERT_IP_HERE",
-    port: 6379,
-    password: "INSERT_PASSWORD_HERE"
+  redis: { // redis configuration
+    host: "INSERT_IP_HERE", // redis host
+    port: 6379, // redis port
+    password: "INSERT_PASSWORD_HERE" // redis password
   },
-  worker: {
-    maxBot: 10,
-    retryDelay: 5000
+  worker: { // worker configuration
+    maxBot: 10, // maximum number of bots
+    retryDelay: 5000 // retry delay
   }
 }
 
