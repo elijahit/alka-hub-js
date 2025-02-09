@@ -4,7 +4,7 @@
 Welcome to the official repository of **Alka Hub**, a scalable and multi-language platform for creating white-label bots on Discord.
 
 ## 📋 Description
-**Alka Hub** is designed to manage multi-server bots on Discord, offering a customizable solution for users who need flexible and multi-language configuration.
+**Alka Hub** is an open-source platform designed to manage multi-server bots on Discord, offering a customizable solution for users who need flexible and multi-language configuration.
 
 ---
 
