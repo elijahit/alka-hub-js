@@ -8,7 +8,7 @@
 
 const fs = require('fs');
 
-const configJson = fs.readFileSync('/config.json', 'utf8');
+const configJson = fs.readFileSync('../config.json', 'utf8');
 const configFile = JSON.parse(configJson);
 
 const config = {
