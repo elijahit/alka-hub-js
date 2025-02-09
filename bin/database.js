@@ -7,11 +7,13 @@
  */
 
 const { Sequelize } = require('sequelize');
+const configJson = fs.readFileSync('../config.json', 'utf8');
+const configFile = JSON.parse(configJson);
 
-
-const database = new Sequelize('alka_bot', 'alka', '', {
-  host: 'alkanetwork.eu',
-  dialect: 'mysql',
+const database = new Sequelize(configFile.database.database, configFile.database.user, 
+  configFile.database.password, {
+  host: configFile.database.host,
+  dialect: configFile.database.dialect,
 });
 
 module.exports = {

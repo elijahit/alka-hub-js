@@ -6,16 +6,21 @@
  * @description Contiene la configurazione del worker e di redis
  */
 
+const fs = require('fs');
+
+const configJson = fs.readFileSync('../config.json', 'utf8');
+const configFile = JSON.parse(configJson);
+
 const config = {
   redis: {
-    host: 'alkanetwork.eu',
-    port: 6379,
-    password: 'Aarontosto20!', 
+    host: configFile.redis.host,
+    port: configFile.redis.port,
+    password: this.config.redis.password, 
   },
   worker: {
-    maxBot: 10,
-    retryDelay: 5000,
-    workerId: Math.floor(Math.random() * 10000),
+    maxBot: configFile.worker.maxBot,
+    retryDelay: configFile.worker.retryDelay,
+    workerId: Math.floor(Math.random() * 10000)
   }
 };
 
