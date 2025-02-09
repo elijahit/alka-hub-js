@@ -8,7 +8,9 @@
 
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
-const configJson = fs.readFileSync('../config.json', 'utf8');
+const path = require('path');
+const configPath = path.resolve(__dirname, '../config.json');
+const configJson = fs.readFileSync(configPath, 'utf8');
 const configFile = JSON.parse(configJson);
 
 const database = new Sequelize(configFile.database.database, configFile.database.user, 
