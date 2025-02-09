@@ -10,6 +10,8 @@ const { findAllConfig } = require('./bin/service/DatabaseService');
 // Controllo o creazione del file di configurazione
 if (!fs.existsSync('./config.json')) {
   fs.writeFileSync('./config.json', JSON.stringify(configTemplate, null, 2));
+  console.log('[✅] File di configurazione creato con successo. Modifica il file config.json con i tuoi dati.');
+  process.exit(0);
 }
 
 const redis = new Redis({
