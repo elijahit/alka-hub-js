@@ -15,6 +15,11 @@ const configTemplate = {
   worker: {
     maxBot: 10,
     retryDelay: 5000
+  },
+  test: {
+    test1: {
+      test: "test"
+    }
   }
 }
 

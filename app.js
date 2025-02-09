@@ -1,13 +1,11 @@
 const pm2 = require('pm2');
 const fs = require('fs');
 const Redis = require('ioredis');
-const { configTemplate } = require('./bin/data/configTemplate');
+
 // Controllo o creazione del file di configurazione
-if (!fs.existsSync('./config.json')) {
-  fs.writeFileSync('./config.json', JSON.stringify(configTemplate, null, 2));
-  console.log('[✅] File di configurazione creato con successo. Modifica il file config.json con i tuoi dati.');
-  process.exit(0);
-}
+const checkConfigApp = require('./bin/functions/checkConfigApp');
+checkConfigApp();
+// fine controllo file di configurazione
 
 const { findAllConfig } = require('./bin/service/DatabaseService');
 const { config } = require('./worker/config');
