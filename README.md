@@ -50,11 +50,12 @@ Welcome to the official repository of **Alka Hub**, a scalable and multi-languag
    ```bash
    npm install
    ```
+3. Configure the `config.json` file that will be automatically created after the first startup
 
-3. Configure the MySQL database:
+4. Configure the MySQL database:
    - Import the `alka_bot.sql` file to initialize the database structure.
 
-4. Configure tokens and credentials:
+5. Configure tokens and credentials:
    Use the `configs` table to manage your configurations and tokens:
    - `name`(TEXT): Enter the configuration name, it will help you view logs or errors.
    - `main_discord_id`(TEXT): The Discord ID where communications with REDIS/Dashboard will be sent (-1 will send communication to all Discords where the BOT is present).
