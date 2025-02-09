@@ -125,10 +125,6 @@ npm run prod
 ```
 
 ### Configuration
-You can modify the maximum bot limit configured worker in the file:
-```bash
-/worker/config.js
-```
 You need to update the configuration file created after the first startup
 ```bash
 /config.json
