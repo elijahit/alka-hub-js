@@ -1,3 +1,11 @@
+// Code: bin/functions/checkConfigApp.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file checkConfigApp.js
+ * @module checkConfigApp
+ * @description Controllo del file di configurazione di massimo 3 livelli di annidamento (key, subKey, subSubKey)
+ */
+
 const fs = require('fs');
 const path = require('path');
 const configPath = path.resolve(__dirname, '../../config.json');

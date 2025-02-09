@@ -1,3 +1,11 @@
+// Code: bin/data/configTemplate.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file configTemplate.js
+ * @module configTemplate
+ * @description Template di configurazione, con controllo in checkConfigApp.js con massimo 3 livelli di annidamento (key, subKey, subSubKey)
+ */
+
 const configTemplate = {
   database: {
     host: "INSERT_IP_HERE",

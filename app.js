@@ -1,3 +1,11 @@
+// Code: APP - app.js
+// Author: Gabriele Mario Tosto <g.tosto@flazio.com> - Alka Hub 2024/25
+/**
+ * @file app.js
+ * @module app
+ * @description Avvio del applicazione Alka Hub Bot
+ */
+
 const pm2 = require('pm2');
 const fs = require('fs');
 const Redis = require('ioredis');
