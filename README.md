@@ -146,6 +146,7 @@ To report an issue, use the [Issues](https://github.com/elijahit/alka-hub-js/iss
 ---
 
 ## 🌐 Useful Links
+- [Discord](https://discord.gg/DqRcKB75N5)
 - [Repository](https://github.com/elijahit/alka-hub-js)
 - [Homepage](https://github.com/elijahit/alka-hub-js#readme)
 
