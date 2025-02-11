@@ -138,7 +138,7 @@ This project is available under **dual licence**:
 - **Commercial licence** (for companies or proprietary projects)
 
 🔹 **To purchase a commercial licence**, please contact gabriele.tosto@outlook.com.  
-🔹 **To read licence details**, see the files [LICENSE](./LICENSE) and [COMMERCIAL_LICENSE.txt](./COMMERCIAL_LICENSE.txt).
+🔹 **To read licence details**, see the files [LICENSE](./LICENSE) and [COMMERCIAL_LICENSE.txt](./COMMERCIAL_LICENSE).
 
 ---
 
