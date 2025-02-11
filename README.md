@@ -137,7 +137,7 @@ This project is available under **dual licence**:
 - **AGPLv3** (for open-source and non-commercial projects)
 - **Commercial licence** (for companies or proprietary projects)
 
-🔹 **To purchase a commercial licence**, please contact [Your Email].  
+🔹 **To purchase a commercial licence**, please contact gabriele.tosto@outlook.com.  
 🔹 **To read licence details**, see the files [LICENSE](./LICENSE) and [COMMERCIAL_LICENSE.txt](./COMMERCIAL_LICENSE.txt).
 
 ---
