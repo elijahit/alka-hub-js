@@ -1,7 +1,7 @@
 {
   "noPermission": {
     "embed_title": "Auto Voice System",
-
+    "description_limit_premium": "Hai raggiunto il numero massimo di Auto Roles disponibili nel tuo piano. Esegui l'upgrade al piano Premium per sbloccare un numero illimitato di Auto Roles!",
     "description_embed": "Non hai il permesso per usare questo comando!",
     "description_embed_no_features": "La funzione è attualmente disabilitata. È necessario che un amministratore la abiliti affinché sia possibile utilizzarla."
   },
