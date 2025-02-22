@@ -2,11 +2,17 @@ const { Events } = require('discord.js');
 const { errorSendControls } = require('../../../bin/HandlingFunctions');
 const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
 const { findAllAutoRolesByGuildId } = require('../../../bin/service/DatabaseService');
+const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
+const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
+const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
 
 
 module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member, variables) {
+    if (!await checkFeatureSystemDisabled(4)) return;
+    if (!await checkFeaturesIsEnabled(member.guild.id, 4, variables)) return;
+    if (!await checkPremiumFeature(member.guild.id, 4, variables)) return;
     try {
       const roles = await findAllAutoRolesByGuildId(member.guild.id, variables);
 
