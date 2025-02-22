@@ -8,8 +8,9 @@
 
 const {WebhookClient, EmbedBuilder} = require('discord.js');
 const color = require('../data/colors');
-const webhook = require('../data/webhooks');
-const Variables = require('../classes/GlobalVariables');
+const configPath = path.resolve(__dirname, '../config.json');
+const configJson = fs.readFileSync(configPath, 'utf8');
+const configFile = JSON.parse(configJson);
 
 class WebhookService {
   constructor() {
@@ -18,7 +19,7 @@ class WebhookService {
 
   async sendWebhooksEmbedErrorLog(message, others, variables) {
     try {
-      const webhookClient = new WebhookClient({ url: webhook.log.error });
+      const webhookClient = new WebhookClient({ url: configFile.webhook.error });
       const embed = new EmbedBuilder()
       .setTitle(`Alka Webhook | Errore - (${variables.getConfigId()}) ${variables.getNameConfiguration()}`) 
       .setColor(color.general.error)
@@ -33,7 +34,7 @@ class WebhookService {
 
   async sendWebhooksEmbedLogs(message, others, variables) {
     try {
-      const webhookClient = new WebhookClient({ url: webhook.log.general });
+      const webhookClient = new WebhookClient({ url: configFile.webhook.general });
       const embed = new EmbedBuilder()
       .setTitle(`Alka Webhook | Logs - (${variables.getConfigId()}) ${variables.getNameConfiguration()}`) 
       .setColor(color.general.aquamarine)

@@ -23,6 +23,10 @@ const configTemplate = {
   worker: { // worker configuration
     maxBot: 10, // maximum number of bots
     retryDelay: 5000 // retry delay
+  },
+  webhook: {
+    error: "INSERT_WEBHOOK_URL_HERE", // error webhook discord url
+    general: "INSERT_WEBHOOK_URL_HERE" // general webhook discord url
   }
 }
 
