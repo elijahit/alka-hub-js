@@ -3,17 +3,17 @@
 /**
  * @file app.js
  * @module app
- * @description Avvio del applicazione Alka Hub Bot
+ * @description Start of the Alka Hub Bot application
  */
 
 const pm2 = require('pm2');
 const fs = require('fs');
 const Redis = require('ioredis');
 
-// Controllo o creazione del file di configurazione
+// Check or create the configuration file
 const checkConfigApp = require('./bin/functions/checkConfigApp');
 checkConfigApp();
-// fine controllo file di configurazione
+// end of configuration file check
 
 const { findAllConfig } = require('./bin/service/DatabaseService');
 const { config } = require('./worker/config');
@@ -27,7 +27,7 @@ const redis = new Redis({
 const envStart = process.env.START || false;
 
 if (!envStart) {
-  console.error('[❌] Errore: START non definito. Usa npm run prod (per la produzione) o npm run dev (per il test)');
+  console.error('[❌] Error: START not defined. Use npm run prod (for production) or npm run dev (for testing)');
   process.exit(1);
 }
 
@@ -43,9 +43,9 @@ console.log('\x1b[32m%s\x1b[0m', 'Author: Elijah (Gabriele Mario Tosto) <g.tosto
 console.log('\x1b[32m%s\x1b[0m', 'Since: 02/2024');
 console.log('\x1b[32m%s\x1b[0m', 'Technology: JavaScript - Node - Discord.js');
 console.log('\x1b[32m%s\x1b[0m', 'Powered by alkanetwork.eu');
-console.log('\x1b[32m%s\x1b[0m', 'Environment:', envStart === 'prod' ? 'Produzione' : 'Test');
+console.log('\x1b[32m%s\x1b[0m', 'Environment:', envStart === 'prod' ? 'Production' : 'Test');
 console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
-console.log('\x1b[34m%s\x1b[0m', `App in avvio... Creazione Woker principale.`);
+console.log('\x1b[34m%s\x1b[0m', `App starting... Creating main Worker.`);
 console.log('\x1b[34m%s\x1b[0m', '-------------------------------------');
 
 pm2.connect(function (err) {
@@ -55,9 +55,9 @@ pm2.connect(function (err) {
   }
   pm2.delete('all', (err) => {
     if (err) {
-      console.error('[❌] Errore durante l’eliminazione dei processi');
+      console.error('[❌] Error while deleting processes');
     } else {
-      console.log('[✅] Tutti i processi PM2 sono stati eliminati con successo.');
+      console.log('[✅] All PM2 processes have been successfully deleted.');
     }
     pm2.start({
       script: './worker/worker.js',
@@ -67,9 +67,9 @@ pm2.connect(function (err) {
     }, function (err, apps) {
       pm2.disconnect();   // Disconnects from PM2
       if (err) {
-        console.error('[❌] Errore durante la creazione del worker default:', err);
+        console.error('[❌] Error while creating the default worker:', err);
       } else {
-        console.log('[✅] Worker default avviato.');
+        console.log('[✅] Default worker started.');
       }
     });
   });
@@ -99,20 +99,20 @@ findAllConfig().then((configs) => {
       if (envStart === "prod") {
         redis.rpush('bot_commands_queue', commandData, (err, result) => {
           if (err) {
-            console.error('[❌] Errore durante l’invio del comando a bot_commands_queue:', err);
+            console.error('[❌] Error while sending the command to bot_commands_queue:', err);
           } else {
-            console.log('[✅] Comando inviato a bot_commands_queue con successo config:', configBot.id);
+            console.log('[✅] Command successfully sent to bot_commands_queue config:', configBot.id);
           }
         });
       } else if(envStart === "test") {
         redis.rpush(`worker_commands_queue:${config.worker.workerId}`, commandData, (err, result) => {
           if (err) {
-            console.error('[❌] Errore durante l’invio del comando a worker_commands_queue:', err);
+            console.error('[❌] Error while sending the command to worker_commands_queue:', err);
           } else {
-            console.log('[✅] Comando inviato a worker_commands_queue con successo config:', configBot.id);
+            console.log('[✅] Command successfully sent to worker_commands_queue config:', configBot.id);
           }
         });
       }
     }
   });
-});    
+});

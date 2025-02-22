@@ -3,7 +3,7 @@
 /**
  * @file checkConfigApp.js
  * @module checkConfigApp
- * @description Controllo del file di configurazione di massimo 3 livelli di annidamento (key, subKey, subSubKey)
+ * @description Check the configuration file with a maximum of 3 levels of nesting (key, subKey, subSubKey)
  */
 
 const fs = require('fs');
@@ -12,47 +12,47 @@ const configPath = path.resolve(__dirname, '../../config.json');
 
 const checkConfigApp = function () {
   const { configTemplate } = require('../data/configTemplate');
-  // Controllo o creazione del file di configurazione
+  // Check or create the configuration file
   console.log(fs.existsSync(configPath))
   if (!fs.existsSync(configPath)) {
     fs.writeFileSync(configPath, JSON.stringify(configTemplate, null, 2));
-    console.log('[✅] File di configurazione creato con successo. Modifica il file config.json con i tuoi dati.');
+    console.log('[✅] Configuration file created successfully. Edit the config.json file with your data.');
     process.exit(0);
   } else {
-    console.log('[✅] File di configurazione trovato.');
-    console.log('[⚠] Controllo il file config.json per eventuali modifiche.');
+    console.log('[✅] Configuration file found.');
+    console.log('[⚠] Checking the config.json file for any changes.');
     const configJson = require(configPath);
-    // Controllo key e value del file di configurazione
-    // massimo 3 livelli di annidamento (key, subKey, subSubKey)
+    // Check key and value of the configuration file
+    // maximum 3 levels of nesting (key, subKey, subSubKey)
     for (const key in configTemplate) {
       if (!configJson.hasOwnProperty(key)) {
-        console.error(`[❌] Errore: la chiave ${key} non è stata trovata nel file di configurazione.`);
+        console.error(`[❌] Error: the key ${key} was not found in the configuration file.`);
         process.exit(1);
       }
       else if (typeof configJson[key] !== typeof configTemplate[key]) {
-        console.error(`[❌] Errore: il tipo di dati per la chiave ${key} non corrisponde.`);
+        console.error(`[❌] Error: the data type for the key ${key} does not match.`);
         process.exit(1);
       }
       if (typeof configJson[key] === 'object') {
-        // Controllo subKey e subValue del file di configurazione
+        // Check subKey and subValue of the configuration file
         for (const subKey in configTemplate[key]) {
           if (!configJson[key].hasOwnProperty(subKey)) {
-            console.error(`[❌] Errore: la chiave ${subKey} non è stata trovata nel file di configurazione.`);
+            console.error(`[❌] Error: the key ${subKey} was not found in the configuration file.`);
             process.exit(1);
           }
           if (typeof configJson[key][subKey] !== typeof configTemplate[key][subKey]) {
-            console.error(`[❌] Errore: il tipo di dati per la chiave ${subKey} non corrisponde.`);
+            console.error(`[❌] Error: the data type for the key ${subKey} does not match.`);
             process.exit(1);
           }
           if (typeof configJson[key][subKey] === 'object') {
-            // Controllo subSubKey e subSubValue del file di configurazione
+            // Check subSubKey and subSubValue of the configuration file
             for (const subSubKey in configTemplate[key][subKey]) {
               if (!configJson[key][subKey].hasOwnProperty(subSubKey)) {
-                console.error(`[❌] Errore: la chiave ${subSubKey} non è stata trovata nel file di configurazione.`);
+                console.error(`[❌] Error: the key ${subSubKey} was not found in the configuration file.`);
                 process.exit(1);
               }
               if (typeof configJson[key][subKey][subSubKey] !== typeof configTemplate[key][subKey][subSubKey]) {
-                console.error(`[❌] Errore: il tipo di dati per la chiave ${subSubKey} non corrisponde.`);
+                console.error(`[❌] Error: the data type for the key ${subSubKey} does not match.`);
                 process.exit(1);
               }
             }
@@ -60,9 +60,9 @@ const checkConfigApp = function () {
         }
       }
     }
-    console.log('[✅] Avvio del processo di avvio...');
+    console.log('[✅] Starting the startup process...');
   }
-  // Fine controllo file di configurazione
+  // End of configuration file check
 }
 
 module.exports = checkConfigApp;
