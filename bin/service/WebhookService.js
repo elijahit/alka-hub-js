@@ -8,7 +8,7 @@
 
 const {WebhookClient, EmbedBuilder} = require('discord.js');
 const color = require('../data/colors');
-const configPath = path.resolve(__dirname, '../config.json');
+const configPath = path.resolve(__dirname, '../../config.json');
 const configJson = fs.readFileSync(configPath, 'utf8');
 const configFile = JSON.parse(configJson);
 
