@@ -8,7 +8,7 @@
 
 const { EmbedBuilder } = require('discord.js');
 const { checkPremiumLimitation, checkPremiumFeature } = require('../../bin/functions/checkPremiumFeature');
-const { findAllLevelsRolesByGuildId, findAllAutoVoiceByGuildId, findAllReactionsByGuildId, findAllByGuildIdStatistics } = require('../../bin/service/DatabaseService');
+const { findAllLevelsRolesByGuildId, findAllAutoVoiceByGuildId, findAllReactionsByGuildId, findAllByGuildIdStatistics, findAllAutoRolesByGuildId } = require('../../bin/service/DatabaseService');
 const { checkFeatureSystemDisabled } = require('../../bin/functions/checkFeatureSystemDisabled');
 const checkFeaturesIsEnabled = require('../../bin/functions/checkFeaturesIsEnabled');
 const { noEnabledFunc } = require('../HandlingFunctions');
@@ -34,7 +34,6 @@ async function allCheckFeatureForCommands(interaction, guildId, featureId, featu
   if (await checkFeaturesIsEnabled(guildId, featureId, variables)) {
     
     const howManyLengthUseForFeature = await getLengthFeature(featureId, guildId, variables);
-    
     if (await checkPremiumLimitation(guildId, featureId, variables) == -1 || howManyLengthUseForFeature < await checkPremiumLimitation(guildId, featureId, variables) || featureLimitationControl == false) {
       if (await checkPremiumFeature(guildId, featureId, variables)) {
         if (await checkFeatureSystemDisabled(featureId)) {
@@ -94,6 +93,8 @@ async function getLengthFeature(featureId, guildId, variables) {
         howManyLengthUseForFeature = (await findAllAutoVoiceByGuildId(guildId, variables)).length;
         break;
       case 4:
+        howManyLengthUseForFeature = (await findAllAutoRolesByGuildId(guildId, variables)).length;
+        console.log(howManyLengthUseForFeature);
         break;
       case 5:
         howManyLengthUseForFeature = (await findAllReactionsByGuildId(guildId, variables)).length;
