@@ -26,8 +26,10 @@ const { findByHashName,
 // findByHashName -> Permette di cercare un permesso tramite il suo hashName
 // findAllCorrespondenceByHashName -> Permette di cercare un permesso tramite hashName e restituisce tutte le sue corrispondenze della tabella permissions
 
-const { finByRoleId: autoRolesFindByRoleId } = require('../repository/AutoRoles');
+const { finByRoleId: autoRolesFindByRoleId, create: createAutoRoles, update: updateAutoRoles, findAllByGuildId: findAllAutoRolesByGuildId, remove: autoRolesRemove } = require('../repository/AutoRoles');
 // autoRolesFindByRoleId -> Permette di cercare un ruolo nella tabella AutoRoles
+// createAutoRoles -> Permette di creare un autoRuolo nella tabella AutoRoles
+// updateAutoRoles -> Permette di aggiornare un autoRuolo nella tabella AutoRoles
 
 const { getFeatureIsEnabled, 
   findById: findFeatureById } = require('../repository/Feature');
@@ -301,5 +303,9 @@ module.exports = {
   findByGuildIdTranslate,
   createTranslate,
   deleteByGuildIdTranslate,
-  updateTranslate
+  updateTranslate,
+  findAllAutoRolesByGuildId,
+  createAutoRoles,
+  updateAutoRoles,
+  autoRolesRemove
 }
