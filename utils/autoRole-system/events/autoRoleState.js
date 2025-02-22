@@ -11,8 +11,8 @@ module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member, variables) {
     if (!await checkFeatureSystemDisabled(4)) return;
-      if (!await checkFeaturesIsEnabled(member.guild.id, 4, variables)) return;
-      if (!await checkPremiumFeature(member.guild.id, 4, variables)) return;
+    if (!await checkFeaturesIsEnabled(member.guild.id, 4, variables)) return;
+    if (!await checkPremiumFeature(member.guild.id, 4, variables)) return;
     try {
       const roles = await findAllAutoRolesByGuildId(member.guild.id, variables);
 
