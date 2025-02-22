@@ -132,11 +132,13 @@ You need to update the configuration file created after the first startup
 ```
 ---
 
-## 📄 License
+## 📜 Licence
+This project is available under **dual licence**:
+- **AGPLv3** (for open-source and non-commercial projects)
+- **Commercial licence** (for companies or proprietary projects)
 
-This project is licensed under the Apache License, Version 2.0. See the [LICENSE](/license) file for details.
-
-[![Apache License](https://www.apache.org/img/asf_logo.png)](http://www.apache.org/licenses/LICENSE-2.0)
+🔹 **To purchase a commercial licence**, please contact gabriele.tosto@outlook.com.  
+🔹 **To read licence details**, see the files [LICENSE](./license) and [COMMERCIAL_LICENSE](./COMMERCIAL_LICENSE).
 
 ---
 
