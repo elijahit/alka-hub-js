@@ -1,35 +1,24 @@
-const { Events, EmbedBuilder } = require('discord.js');
-const { readFileSync } = require('fs');
-const language = require('../../../languages/languages');
-const { readDb, readDbAllWith1Params } = require('../../../bin/database');
-const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFunctions');
-
-// QUERY DEFINITION
-let sqlEnabledFeature = `SELECT autoRoleSystem_enabled FROM guilds_config WHERE guildId = ?`;
-// ----------------
+const { Events } = require('discord.js');
+const { errorSendControls } = require('../../../bin/HandlingFunctions');
+const { allCheckFeatureForCommands } = require('../../../bin/functions/allCheckFeatureForCommands');
+const { findAllAutoRolesByGuildId } = require('../../../bin/service/DatabaseService');
 
 
 module.exports = {
   name: Events.GuildMemberAdd,
-  async execute(member) {
-
-
-
-    // CONTROLLO SE LA FUNZIONE E' ABILITATA
-    const result_Db = await readDb(sqlEnabledFeature, member.guild.id);
-    if (!result_Db) return;
-    if (result_Db.autoRoleSystem_enabled != 1) return;
+  async execute(member, variables) {
     try {
-      const roles = await readDbAllWith1Params('SELECT * FROM autorole_system_roles WHERE guildId = ?', member.guild.id);
+      const roles = await findAllAutoRolesByGuildId(member.guild.id, variables);
 
       if(roles?.length > 0) {
-        for (const value of roles) {
+        for (let value of roles) {
+          value = value?.get({ plain: true });
           try {
-            const role = await member.guild.roles.fetch(value.roleId);
+            const role = await member.guild.roles.fetch(value.role_id);
             await member.roles.add(role);
           }
           catch {
-            //pass
+            errorSendControls(`Error: ${value.role_id} not found`, member.client, member.guild, "\\autoRole-system\\autoRoleState.js", variables);
           }
       }
       }

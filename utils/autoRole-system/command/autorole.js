@@ -40,7 +40,7 @@ module.exports = {
 					// CONTROLLO SE IL RUOLO SI TROVA SOTTO AL RUOLO DA IMPOSTARE
 					if (interaction.guild.roles.botRoleFor(interaction.client.user).rawPosition < role.rawPosition) {
 						const embedLog = new EmbedBuilder()
-							.setDescription(`###${language_result.addCommand.embed_title}\n${language_result.addCommand.description_embed_missingpermissions.replace("{0}", `${interaction.guild.roles.botRoleFor(interaction.client.user)}`)}`)
+							.setDescription(`## ${language_result.addCommand.embed_title}\n${language_result.addCommand.description_embed_missingpermissions.replace("{0}", `${interaction.guild.roles.botRoleFor(interaction.client.user)}`)}`)
 							.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 							.setColor(color.general.error)
 							.setThumbnail(variables.getBotFooterIcon());
@@ -51,7 +51,7 @@ module.exports = {
 						await autoRolesRemove(roleId, variables);
 
 						const embedLog = new EmbedBuilder()
-							.setDescription(`### ${language_result.addCommand.embed_title}\n${language_result.addCommand.description_embed_delete.replace("{0}", `${role}`)}`)
+							.setDescription(`## ${language_result.addCommand.embed_title}\n${language_result.addCommand.description_embed_delete.replace("{0}", `${role}`)}`)
 							.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 							.setColor(color.general.error)
 							.setThumbnail(variables.getBotFooterIcon());
@@ -61,7 +61,7 @@ module.exports = {
 					await createAutoRoles(roleId, interaction.guild.id, variables);
 
 					const embedLog = new EmbedBuilder()
-						.setDescription(`### ${language_result.addCommand.embed_title}\n${language_result.addCommand.description_embed.replace("{0}", `${role}`)}`)
+						.setDescription(`## ${language_result.addCommand.embed_title}\n${language_result.addCommand.description_embed.replace("{0}", `${role}`)}`)
 						.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 						.setColor(color.general.success)
 						.setThumbnail(variables.getBotFooterIcon());
