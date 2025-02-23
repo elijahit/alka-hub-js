@@ -501,6 +501,7 @@ module.exports = {
                 // passa avanti
               }
               unlinkSync(`./utils/ticket-system/temporary_transcript//${checkSql.id}.txt`);
+              await interaction.deferReply();
             }
           }
           else {
