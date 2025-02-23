@@ -29,7 +29,7 @@ module.exports = {
 
 					let checkSql = await findByGuildAndAuthorIdTicketMessages(interaction.guild.id, interaction.user.id, variables);
 					checkSql = checkSql?.get({ plain: true });
-					if (checkSql) {
+					if (checkSql && checkSql.message_id == null && checkSql.channel_id == null) {
 						await removeTicketMessages(checkSql.id, variables);
 					}
 
@@ -59,7 +59,7 @@ module.exports = {
 
 				}
 				else {
-					await noHavePermission(interaction, language_result);
+					await noHavePermission(interaction, language_result, variables);
 				}
 			}
 			catch (error) {

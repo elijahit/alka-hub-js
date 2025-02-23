@@ -17,6 +17,8 @@ const OldTickets = database.define('old_ticket_tickets', {
   message_id: { type: Sequelize.STRING },
   ticketPrefix: { type: Sequelize.STRING },
   ticketSystemMessage_id: { type: Sequelize.STRING },
+  createdAt: { type: Sequelize.DATE },
+  updatedAt: { type: Sequelize.DATE },
 });
 
 

@@ -46,6 +46,17 @@ async function findByMessageAndChannelAndGuildId(messageId, guildId, channelId, 
   return await OldTicketsMessage.findOne({where: {message_id: messageId, channel_id: channelId, guild_id: guildId, config_id: variables.getConfigId()}});
 }
 
+
+/**
+ * @param {string} messageId 
+ * @param {string} guildId
+ * @param {object} variables
+ * @returns {Promise<Model>}
+ */
+async function findByMessageAndGuildId(messageId, guildId, variables) {
+  return await OldTicketsMessage.findOne({where: {message_id: messageId, guild_id: guildId, config_id: variables.getConfigId()}});
+}
+
 /**
  * @param {string} guildId 
  * @param {object} authorId
@@ -99,5 +110,6 @@ module.exports = {
   findAllByGuildId,
   findByGuildAndAuthorId,
   findByMessageAndChannelAndGuildId,
+  findByMessageAndGuildId,
   remove
 }

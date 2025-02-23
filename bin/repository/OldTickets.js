@@ -27,6 +27,17 @@ async function findAllByGuildId(guildId, variables) {
 }
 
 /**
+ * 
+ * @param {*} guildId 
+ * @param {*} messageId 
+ * @param {*} variables 
+ * @returns 
+ */
+async function findByGuildIdAndMessageId(guildId, messageId, variables) {
+  return await OldTickets.findOne({where: {guild_id: guildId, message_id: messageId, config_id: variables.getConfigId()}});
+}
+
+/**
  * @param {string} ticketId 
  * @param {object} variables
  * @returns {Promise<Model>}
@@ -34,16 +45,31 @@ async function findAllByGuildId(guildId, variables) {
 async function findByTicketId(ticketId, variables) {
   return await OldTickets.findOne({where: {ticket_id: ticketId, config_id: variables.getConfigId()}});
 }
+/**
+ * @param {string} guildId
+ * @param {string} authorId
+ * @param {string} ticketSystemMessage_id
+ * @param {string} ticketPrefix
+ * @param {object} variables
+ */
+async function findTicketOpened(guildId, authorId, ticketSystemMessage_id, ticketPrefix, variables) {
+  return await OldTickets.findOne({where: {guild_id: guildId, author_id: authorId, ticketSystemMessage_id: ticketSystemMessage_id, ticketPrefix: ticketPrefix, config_id: variables.getConfigId()}});
+}
 
 /**
  * @param {string} ticketId 
  * @param {string} guildId 
+ * @param {string} authorId
+ * @param {string} messageId
+ * @param {string} ticketPrefix
+ * @param {string} ticketSystemMessage_Id
+ * @param {string} channelId
  * @param {object} variables
  * @returns {Promise<Model>}
  */
-async function create(ticketId, guildId, variables) {
-  if(await OldTickets.findOne({where: {ticket_id: ticketId, guild_id: guildId, config_id: variables.getConfigId()}})) return null;
-  return await OldTickets.create({ticket_id: ticketId , guild_id: guildId, config_id: variables.getConfigId()});
+async function create(guildId, authorId, messageId, ticketPrefix, ticketSystemMessage_id, channelId, variables) {
+  if (await OldTickets.findOne({ where: { guild_id: guildId, author_id: authorId, message_id: messageId, ticketPrefix: ticketPrefix, ticketSystemMessage_id: ticketSystemMessage_id, channel_id: channelId, config_id: variables.getConfigId() } })) return null;
+  return await OldTickets.create({ guild_id: guildId, author_id: authorId, message_id: messageId, ticketPrefix: ticketPrefix, ticketSystemMessage_id: ticketSystemMessage_id, channel_id: channelId, config_id: variables.getConfigId() });
 }
 
 /**
@@ -63,7 +89,7 @@ async function update(objToUpdate, objToCondition) {
  * @returns {Promise<number>}
  */
 async function remove(id, variables) {
-  return await OldTickets.destroy({where: {ticket_id: id, config_id: variables.getConfigId()}});
+  return await OldTickets.destroy({where: {id: id, config_id: variables.getConfigId()}});
 }
 
 
@@ -73,5 +99,7 @@ module.exports = {
   create,
   update,
   findAllByGuildId,
+  findTicketOpened,
+  findByGuildIdAndMessageId,
   remove
 }

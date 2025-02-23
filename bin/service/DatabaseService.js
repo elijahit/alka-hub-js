@@ -219,7 +219,9 @@ const {
   findByTicketId: findByTicketIdTickets,
   create: createTicket,
   update: updateTicket,
-  remove: removeTicket
+  remove: removeTicket,
+  findTicketOpened: findTicketOpened,
+  findByGuildIdAndMessageId: findByMessageAndChannelAndGuildIdTicketMessages
 } = require('../repository/OldTickets');
 // findAllTicketsByGuildId -> Permette di cercare tutte le configurazioni di OldTickets nella tabella old_tickets tramite guildId
 // findAllTickets -> Permette di cercare tutte le configurazioni di OldTickets nella tabella old_tickets
@@ -233,10 +235,11 @@ const {
   findAll: findAllTicketMessages,
   findByMessageId: findByMessageIdTicketMessages,
   findByGuildAndAuthorId: findByGuildAndAuthorIdTicketMessages,
-  findByMessageAndChannelAndGuildId: findByMessageAndChannelAndGuildIdTicketMessages,
+  findByMessageAndChannelAndGuildId: findByMessageAndChannelAndGuildIdTicket,
   create: createTicketMessages,
   update: updateTicketMessages,
-  remove: removeTicketMessages
+  remove: removeTicketMessages,
+  findByMessageAndGuildId: findByMessageAndGuildIdTicketMessages
 } = require('../repository/OldTicketMessage');
 // findAllByGuildId -> Permette di cercare tutte le configurazioni di OldTicketMessages nella tabella old_ticket_messages tramite guildId
 // findAll -> Permette di cercare tutte le configurazioni di OldTicketMessages nella tabella old_ticket_messages
@@ -352,5 +355,8 @@ module.exports = {
   findByGuildAndAuthorIdTicketMessages,
   removeTicketMessages,
   removeTicket,
-  findByMessageAndChannelAndGuildIdTicketMessages
+  findByMessageAndChannelAndGuildIdTicketMessages,
+  findTicketOpened,
+  findByMessageAndChannelAndGuildIdTicket,
+  findByMessageAndGuildIdTicketMessages
 }
