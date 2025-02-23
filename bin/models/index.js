@@ -30,6 +30,8 @@ const { StatisticsCategory } = require('./StatisticsCategory');
 const { Log } = require('./Log');
 const { Commands } = require('./Commands');
 const { Translate } = require('./Translate');
+const { OldTickets } = require('./OldTickets');
+const { OldTicketsMessage } = require('./OldTicketsMessage');
 
 
 
@@ -91,5 +93,7 @@ module.exports = {
   StatisticsCategory,
   Log,
   Commands,
-  Translate
+  Translate,
+  OldTickets,
+  OldTicketsMessage
 }

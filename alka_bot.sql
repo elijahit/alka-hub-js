@@ -517,6 +517,47 @@ CREATE TABLE `welcome` (
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
+--
+-- Struttura della tabella `old_ticket_messages`
+--
+
+CREATE TABLE `old_ticket_messages` (
+ `id` int NOT NULL AUTO_INCREMENT,
+ `config_id` int NOT NULL,
+ `guild_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+ `channel_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+ `message_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+ `category_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+ `transcript_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+ `initAuthorId` text,
+ `initDescription` text,
+ `initTitle` text,
+ `initChannel` text,
+ `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+--
+-- Struttura della tabella `old_ticket_tickets`
+--
+
+	CREATE TABLE `old_ticket_tickets` (
+ `id` int NOT NULL AUTO_INCREMENT,
+ `config_id` int NOT NULL,
+ `guild_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+ `author_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+ `channel_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+ `message_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+ `ticketPrefix` text,
+ `ticketSystemMessage_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+ `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 --
 -- Indici per le tabelle scaricate
 --

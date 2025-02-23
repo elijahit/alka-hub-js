@@ -213,6 +213,40 @@ const {
 // deleteByGuildIdTranslate -> Permette di rimuovere una configurazione di Translate nella tabella translates tramite guildId
 // updateTranslate -> Permette di aggiornare una configurazione di Translate nella tabella translates
 
+const {
+  findAllByGuildId: findAllTicketsByGuildId,
+  findAll: findAllTickets,
+  findByTicketId: findByTicketIdTickets,
+  create: createTicket,
+  update: updateTicket,
+  remove: removeTicket,
+  findTicketOpened: findTicketOpened,
+  findByGuildIdAndMessageId: findByMessageAndChannelAndGuildIdTicketMessages
+} = require('../repository/OldTickets');
+// findAllTicketsByGuildId -> Permette di cercare tutte le configurazioni di OldTickets nella tabella old_tickets tramite guildId
+// findAllTickets -> Permette di cercare tutte le configurazioni di OldTickets nella tabella old_tickets
+// findByTicketIdTickets -> Permette di cercare una configurazione di OldTickets nella tabella old_tickets tramite ticketId
+// createTicket -> Permette di creare una configurazione di OldTickets nella tabella old_tickets
+// updateTicket -> Permette di aggiornare una configurazione di OldTickets nella tabella old_tickets
+
+
+const {
+  findAllByGuildId: findAllTicketMessagesByGuildId,
+  findAll: findAllTicketMessages,
+  findByMessageId: findByMessageIdTicketMessages,
+  findByGuildAndAuthorId: findByGuildAndAuthorIdTicketMessages,
+  findByMessageAndChannelAndGuildId: findByMessageAndChannelAndGuildIdTicket,
+  create: createTicketMessages,
+  update: updateTicketMessages,
+  remove: removeTicketMessages,
+  findByMessageAndGuildId: findByMessageAndGuildIdTicketMessages
+} = require('../repository/OldTicketMessage');
+// findAllByGuildId -> Permette di cercare tutte le configurazioni di OldTicketMessages nella tabella old_ticket_messages tramite guildId
+// findAll -> Permette di cercare tutte le configurazioni di OldTicketMessages nella tabella old_ticket_messages
+// findByMessageId -> Permette di cercare una configurazione di OldTicketMessages nella tabella old_ticket_messages tramite messageId
+// findByGuildAndAuthorId -> Permette di cercare una configurazione di OldTicketMessages nella tabella old_ticket_messages tramite guildId e authorId
+// create -> Permette di creare una configurazione di OldTicketMessages nella tabella old_ticket_messages
+// update -> Permette di aggiornare una configurazione di OldTicketMessages nella tabella old_ticket_messages
 
 
 module.exports = {
@@ -307,5 +341,22 @@ module.exports = {
   findAllAutoRolesByGuildId,
   createAutoRoles,
   updateAutoRoles,
-  autoRolesRemove
+  autoRolesRemove,
+  findAllTicketsByGuildId,
+  findAllTickets,
+  findByTicketIdTickets,
+  createTicket,
+  updateTicket,
+  findAllTicketMessagesByGuildId,
+  findAllTicketMessages,
+  findByMessageIdTicketMessages,
+  createTicketMessages,
+  updateTicketMessages,
+  findByGuildAndAuthorIdTicketMessages,
+  removeTicketMessages,
+  removeTicket,
+  findByMessageAndChannelAndGuildIdTicketMessages,
+  findTicketOpened,
+  findByMessageAndChannelAndGuildIdTicket,
+  findByMessageAndGuildIdTicketMessages
 }
