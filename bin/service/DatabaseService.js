@@ -237,7 +237,7 @@ const {
   create: createTicketMessages,
   update: updateTicketMessages,
   remove: removeTicketMessages
-} = require('../repository/OldTicketMessages');
+} = require('../repository/OldTicketMessage');
 // findAllByGuildId -> Permette di cercare tutte le configurazioni di OldTicketMessages nella tabella old_ticket_messages tramite guildId
 // findAll -> Permette di cercare tutte le configurazioni di OldTicketMessages nella tabella old_ticket_messages
 // findByMessageId -> Permette di cercare una configurazione di OldTicketMessages nella tabella old_ticket_messages tramite messageId

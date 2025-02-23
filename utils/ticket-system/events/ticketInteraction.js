@@ -13,16 +13,13 @@ module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction, variables) {
     if (!interaction.guild) return;
-    if (!await checkFeatureSystemDisabled(2)) return;
-    if (!await checkFeaturesIsEnabled(message.guild.id, 2, variables)) return;
-    if (!await checkPremiumFeature(message.guild.id, 2, variables)) return;
     try {
-      // CONTROLLO LINGUA
-      let data = await language.databaseCheck(interaction.guild.id);
-      const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
-      const language_result = JSON.parse(langagues_path);
 
       if (interaction.customId == 'ticketModal') {
+        let data = await language.databaseCheck(interaction.guild.id);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        const language_result = JSON.parse(langagues_path);
+        
         let description = interaction.fields.getTextInputValue('ticketModalDescription');
         let title = interaction.fields.getTextInputValue('ticketModalTitle');
 
@@ -54,13 +51,13 @@ module.exports = {
 
 
         const embedLog = new EmbedBuilder()
-          .setDescription(`##${language_result.selectTicketChannel.embed_title}\n${language_result.selectTicketChannel.description_embed}`)
+          .setDescription(`## ${language_result.selectTicketChannel.embed_title}\n${language_result.selectTicketChannel.description_embed}`)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setColor(color.general.blue)
           .setThumbnail(variables.getBotFooterIcon());
 
         const embedLogTwo = new EmbedBuilder()
-          .setDescription(`##${language_result.selectTicketChannel.embed_title}\n${language_result.selectTicketChannel.description_embed_two.replace("{0}", initChannel)}`)
+          .setDescription(`## ${language_result.selectTicketChannel.embed_title}\n${language_result.selectTicketChannel.description_embed_two.replace("{0}", initChannel)}`)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setColor(color.general.blue)
           .setThumbnail(variables.getBotFooterIcon());
@@ -68,11 +65,15 @@ module.exports = {
         await interaction.reply({ embeds: [embedLogTwo], flag: 64 });
         await initChannel.send({ embeds: [embedLog], components: [row] });
 
-        await createTicketMessages(interaction.guild.id, interaction.user.id, description, title, interaction.channel.id);
+        await createTicketMessages(interaction.guild.id, interaction.user.id, title, description, interaction.channel.id, variables);
 
       }
 
       if (interaction.customId == "ticketChannelSelect") {
+        let data = await language.databaseCheck(interaction.guild.id);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        const language_result = JSON.parse(langagues_path);
+        
         let channel = interaction.values[0];
 
         let checkSql = await findByGuildAndAuthorIdTicketMessages(interaction.guild.id, interaction.user.id, variables);
@@ -91,7 +92,7 @@ module.exports = {
             .addComponents(ticketSelectCategory);
 
           const embedLog = new EmbedBuilder()
-            .setDescription(`##${language_result.selectCategoryTicket.embed_title}\n` + language_result.selectCategoryTicket.description_embed)
+            .setDescription(`## ${language_result.selectCategoryTicket.embed_title}\n` + language_result.selectCategoryTicket.description_embed)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(color.general.blue)
             .setThumbnail(variables.getBotFooterIcon());
@@ -101,14 +102,19 @@ module.exports = {
 
         } else {
           const embedLog = new EmbedBuilder()
-            .setDescription(`##${language_result.errorDb.embed_title}\n` + language_result.errorDb.description_embed)
+            .setDescription(`## ${language_result.errorDb.embed_title}\n` + language_result.errorDb.description_embed)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(color.general.error)
             .setThumbnail(variables.getBotFooterIcon());
           await interaction.reply({ embeds: [embedLog], flag: 64 });
         }
       }
+
       if (interaction.customId == "ticketCategorySelect") {
+        let data = await language.databaseCheck(interaction.guild.id);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        const language_result = JSON.parse(langagues_path);
+
         let channel = interaction.values[0];
 
         let checkSql = await findByGuildAndAuthorIdTicketMessages(interaction.guild.id, interaction.user.id, variables);
@@ -127,7 +133,7 @@ module.exports = {
             .addComponents(ticketTranscriptSelect);
 
           const embedLog = new EmbedBuilder()
-            .setDescription(`##${language_result.selectTranscriptTicket.embed_title}\n` + language_result.selectTranscriptTicket.description_embed)
+            .setDescription(`## ${language_result.selectTranscriptTicket.embed_title}\n` + language_result.selectTranscriptTicket.description_embed)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(color.general.blue)
             .setThumbnail(variables.getBotFooterIcon());
@@ -137,14 +143,19 @@ module.exports = {
           await updateTicketMessages({category_id: channel}, {where: {guild_id: interaction.guild.id, initAuthorId: interaction.user.id}});
         } else {
           const embedLog = new EmbedBuilder()
-            .setDescription(`##${language_result.errorDb.embed_title}\n` + language_result.errorDb.description_embed)
+            .setDescription(`## ${language_result.errorDb.embed_title}\n` + language_result.errorDb.description_embed)
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(color.general.error)
             .setThumbnail(variables.getBotFooterIcon());
           await interaction.reply({ embeds: [embedLog], flag: 64 });
         }
       }
+
       if (interaction.customId == "ticketTranscriptSelect") {
+        let data = await language.databaseCheck(interaction.guild.id);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        const language_result = JSON.parse(langagues_path);
+
         await interaction.deferReply();
         let channel = interaction.values[0];
         let checkSql = await findByGuildAndAuthorIdTicketMessages(interaction.guild.id, interaction.user.id, variables);
@@ -162,7 +173,7 @@ module.exports = {
 
         // MESSAGGIO CHE VIENE INVIATO AL CANALE DI INIZIALIZZAZIONE
         const embedLog = new EmbedBuilder()
-          .setDescription(`##${language_result.endSetupTicket.embed_title}\n` + language_result.endSetupTicket.description_embed)
+          .setDescription(`## ${language_result.endSetupTicket.embed_title}\n` + language_result.endSetupTicket.description_embed)
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setColor(color.general.olive)
           .setThumbnail(variables.getBotFooterIcon());
@@ -173,17 +184,23 @@ module.exports = {
       }
 
       // INTERACTION TICKET SYSTEM START 
-      // TODO sono arrivato qui
       if(interaction.type == 3) {
-        let checkChannelForInteraction = await findByMessageAndChannelAndGuildIdTicketMessages(interaction.message?.id, interaction.guild?.id, interaction.message?.channel.id, variables);
+        let data = await language.databaseCheck(interaction.guild.id);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        const language_result = JSON.parse(langagues_path);
+
+        let checkChannelForInteraction = await findByMessageAndChannelAndGuildIdTicketMessages(interaction.message?.id, interaction.guild?.id, interaction.message?.channelId, variables);
         checkChannelForInteraction = checkChannelForInteraction?.get({ plain: true });
         if (checkChannelForInteraction) {
-          const checkFeaturesisEnabled = await readDb(`SELECT ticketSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
-          if(!checkFeaturesisEnabled?.ticketSystem_enabled) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
+
+          if (!await checkFeatureSystemDisabled(2)) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
+          if (!await checkFeaturesIsEnabled(message.guild.id, 2, variables)) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
+
           await interaction.deferReply({ flag: 64 });
           const category = await interaction.guild.channels.fetch(checkChannelForInteraction.categoryId);
 
-          // CONTROLLO SE IL TICKET E' GIA' APERTO
+          // CONTROLLO SE IL TICKET E' GIA' APERTO 
+          //TODO Siamo qui
           const checkAlreadyTicketOpen = await readDbWith4Params(`SELECT * FROM ticket_system_tickets WHERE guildId = ? AND authorId = ? AND ticketSystemMessage_Id = ? AND ticketPrefix = ?`, interaction.guild.id, interaction.user.id, interaction.message.id, interaction.customId);
           if (checkAlreadyTicketOpen) {
             let customEmoji = await getEmojifromUrl(interaction.client, "permissiondeny");
@@ -248,9 +265,14 @@ module.exports = {
           await interaction.editReply({ embeds: [embedLog], flag: 64 });
         }
       }
+
       // INTERACTION TICKET SYSTEM END
       // TICKET CLAIM
       if (interaction.customId == "ticketClaim") {
+        let data = await language.databaseCheck(interaction.guild.id);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        const language_result = JSON.parse(langagues_path);
+
         const checkFeaturesisEnabled = await readDb(`SELECT ticketSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
         if(!checkFeaturesisEnabled?.ticketSystem_enabled) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
         await returnPermission(interaction, "ticketClaim", async result => {
@@ -323,6 +345,10 @@ module.exports = {
 
       // TICKET CANCEL
       if (interaction.customId == "ticketCancel") {
+        let data = await language.databaseCheck(interaction.guild.id);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        const language_result = JSON.parse(langagues_path);
+
         const checkFeaturesisEnabled = await readDb(`SELECT ticketSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
         if(!checkFeaturesisEnabled?.ticketSystem_enabled) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
         await returnPermission(interaction, "ticketCancel", async result => {
@@ -360,6 +386,10 @@ module.exports = {
 
       // TICKET CLOSE
       if (interaction.customId == "ticketClose") {
+        let data = await language.databaseCheck(interaction.guild.id);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        const language_result = JSON.parse(langagues_path);
+
         const checkFeaturesisEnabled = await readDb(`SELECT ticketSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
         if(!checkFeaturesisEnabled?.ticketSystem_enabled) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
         await returnPermission(interaction, "ticketClose", async result => {
@@ -394,6 +424,10 @@ module.exports = {
 
       // TICKET CLOSE MODAL
       if (interaction.customId == "ticketCloseModal") {
+        let data = await language.databaseCheck(interaction.guild.id);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        const language_result = JSON.parse(langagues_path);
+
         const checkFeaturesisEnabled = await readDb(`SELECT ticketSystem_enabled from guilds_config WHERE guildId = ?`, interaction.guild.id);
         if(!checkFeaturesisEnabled?.ticketSystem_enabled) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
         await returnPermission(interaction, "ticketClose", async result => {
@@ -483,8 +517,7 @@ module.exports = {
 
     }
     catch (error) {
-      console.log(error)
-      errorSendControls(error, interaction.guild.client, interaction.guild, "\\ticket-system\\ticketInteraction.js");
+      errorSendControls(error, interaction.guild.client, interaction.guild, "\\ticket-system\\ticketInteraction.js", variables);
     }
   },
 };

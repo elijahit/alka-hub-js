@@ -19,7 +19,9 @@ const OldTicketsMessage = database.define('old_ticket_messages', {
   initAuthorId: { type: Sequelize.STRING },
   initDescription: { type: Sequelize.STRING },
   initTitle: { type: Sequelize.STRING },
-  initChannel: { type: Sequelize.STRING }
+  initChannel: { type: Sequelize.STRING },
+  createdAt: { type: Sequelize.DATE },
+  updatedAt: { type: Sequelize.DATE },
 });
 
 
