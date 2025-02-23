@@ -61,7 +61,7 @@ module.exports = {
           .setColor(color.general.blue)
           .setThumbnail(variables.getBotFooterIcon());
 
-        await interaction.reply({ embeds: [embedLogTwo], flag: 64 });
+        await interaction.reply({ embeds: [embedLogTwo], flags: 64 });
         await initChannel.send({ embeds: [embedLog], components: [row] });
 
         await createTicketMessages(interaction.guild.id, interaction.user.id, title, description, interaction.channel.id, variables);
@@ -105,7 +105,7 @@ module.exports = {
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(color.general.error)
             .setThumbnail(variables.getBotFooterIcon());
-          await interaction.reply({ embeds: [embedLog], flag: 64 });
+          await interaction.reply({ embeds: [embedLog], flags: 64 });
         }
       }
 
@@ -146,7 +146,7 @@ module.exports = {
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(color.general.error)
             .setThumbnail(variables.getBotFooterIcon());
-          await interaction.reply({ embeds: [embedLog], flag: 64 });
+          await interaction.reply({ embeds: [embedLog], flags: 64 });
         }
       }
 
@@ -176,7 +176,7 @@ module.exports = {
           .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
           .setColor(color.general.olive)
           .setThumbnail(variables.getBotFooterIcon());
-        await initChannel.send({ content: `${interaction.user}`, embeds: [embedLog], flag: 64 });
+        await initChannel.send({ content: `${interaction.user}`, embeds: [embedLog], flags: 64 });
 
         await updateTicketMessages({transcript_id: channel, message_id: message.id}, {where: {guild_id: interaction.guild.id, initAuthorId: interaction.user.id}});
         await interaction.channel.delete();
@@ -195,7 +195,7 @@ module.exports = {
           if (!await checkFeatureSystemDisabled(2)) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
           if (!await checkFeaturesIsEnabled(interaction.message.guild.id, 2, variables)) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
 
-          await interaction.deferReply({ flag: 64 });
+          await interaction.deferReply({ flags: 64 });
           const category = await interaction.guild.channels.fetch(checkChannelForInteraction.categoryId);
 
           // CONTROLLO SE IL TICKET E' GIA' APERTO 
@@ -208,7 +208,7 @@ module.exports = {
               .setColor(color.general.error)
               .setThumbnail(variables.getBotFooterIcon());
 
-            await interaction.editReply({ embeds: [embedLog], flag: 64 });
+            await interaction.editReply({ embeds: [embedLog], flags: 64 });
             return;
           }
 
@@ -259,7 +259,7 @@ module.exports = {
             .setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
             .setColor(color.general.olive)
             .setThumbnail(variables.getBotFooterIcon());
-          await interaction.editReply({ embeds: [embedLog], flag: 64 });
+          await interaction.editReply({ embeds: [embedLog], flags: 64 });
         }
       }
 
