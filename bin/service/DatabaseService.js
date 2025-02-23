@@ -213,6 +213,21 @@ const {
 // deleteByGuildIdTranslate -> Permette di rimuovere una configurazione di Translate nella tabella translates tramite guildId
 // updateTranslate -> Permette di aggiornare una configurazione di Translate nella tabella translates
 
+const {
+  findAllByGuildId: findAllTicketsByGuildId,
+  findAll: findAllTickets,
+  findByTicketId: findByTicketIdTickets,
+  create: createTicket,
+  update: updateTicket
+} = require('../repository/OldTickets');
+
+const {
+  findAllByGuildId: findAllTicketMessagesByGuildId,
+  findAll: findAllTicketMessages,
+  findByMessageId: findByMessageIdTicketMessages,
+  create: createTicketMessages,
+  update: updateTicketMessages
+} = require('../repository/OldTicketMessages');
 
 
 module.exports = {
@@ -307,5 +322,15 @@ module.exports = {
   findAllAutoRolesByGuildId,
   createAutoRoles,
   updateAutoRoles,
-  autoRolesRemove
+  autoRolesRemove,
+  findAllTicketsByGuildId,
+  findAllTickets,
+  findByTicketIdTickets,
+  createTicket,
+  updateTicket,
+  findAllTicketMessagesByGuildId,
+  findAllTicketMessages,
+  findByMessageIdTicketMessages,
+  createTicketMessages,
+  updateTicketMessages
 }
