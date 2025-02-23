@@ -58,7 +58,7 @@ module.exports = {
 						.setFooter({ text: `${language_result.listCommand.embed_footer}`, iconURL: `${variables.getBotFooterIcon()}` })
 						.setColor(color.general.olive)
 						.setThumbnail(variables.getBotFooterIcon());
-					await interaction.reply({ embeds: [embedLog], flag: 64 });
+					await interaction.reply({ embeds: [embedLog], flags: 64 });
 				}
 				else {
 					await noHavePermission(interaction, language_result);

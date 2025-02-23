@@ -135,7 +135,7 @@ module.exports = {
 								.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 								.setColor(color.general.error)
 								.setThumbnail(variables.getBotFooterIcon());
-							await interaction.reply({ embeds: [embedLog], flag: 64 });
+							await interaction.reply({ embeds: [embedLog], flags: 64 });
 							return;
 						}
 						embedLog
@@ -143,7 +143,7 @@ module.exports = {
 							.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 							.setColor(color.general.success)
 							.setThumbnail(variables.getBotFooterIcon());
-						await interaction.reply({ embeds: [embedLog], flag: 64 });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 
 					} else {
 						const embedLog = new EmbedBuilder()
@@ -151,7 +151,7 @@ module.exports = {
 							.setFooter({ text: `${variables.getBotFooter()}`, iconURL: `${variables.getBotFooterIcon()}` })
 							.setColor(color.general.error)
 							.setThumbnail(variables.getBotFooterIcon());
-						await interaction.reply({ embeds: [embedLog], flag: 64 });
+						await interaction.reply({ embeds: [embedLog], flags: 64 });
 					}
 
 
