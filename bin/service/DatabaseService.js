@@ -218,16 +218,32 @@ const {
   findAll: findAllTickets,
   findByTicketId: findByTicketIdTickets,
   create: createTicket,
-  update: updateTicket
+  update: updateTicket,
+  remove: removeTicket
 } = require('../repository/OldTickets');
+// findAllTicketsByGuildId -> Permette di cercare tutte le configurazioni di OldTickets nella tabella old_tickets tramite guildId
+// findAllTickets -> Permette di cercare tutte le configurazioni di OldTickets nella tabella old_tickets
+// findByTicketIdTickets -> Permette di cercare una configurazione di OldTickets nella tabella old_tickets tramite ticketId
+// createTicket -> Permette di creare una configurazione di OldTickets nella tabella old_tickets
+// updateTicket -> Permette di aggiornare una configurazione di OldTickets nella tabella old_tickets
+
 
 const {
   findAllByGuildId: findAllTicketMessagesByGuildId,
   findAll: findAllTicketMessages,
   findByMessageId: findByMessageIdTicketMessages,
+  findByGuildAndAuthorId: findByGuildAndAuthorIdTicketMessages,
+  findByMessageAndChannelAndGuildId: findByMessageAndChannelAndGuildIdTicketMessages,
   create: createTicketMessages,
-  update: updateTicketMessages
+  update: updateTicketMessages,
+  remove: removeTicketMessages
 } = require('../repository/OldTicketMessages');
+// findAllByGuildId -> Permette di cercare tutte le configurazioni di OldTicketMessages nella tabella old_ticket_messages tramite guildId
+// findAll -> Permette di cercare tutte le configurazioni di OldTicketMessages nella tabella old_ticket_messages
+// findByMessageId -> Permette di cercare una configurazione di OldTicketMessages nella tabella old_ticket_messages tramite messageId
+// findByGuildAndAuthorId -> Permette di cercare una configurazione di OldTicketMessages nella tabella old_ticket_messages tramite guildId e authorId
+// create -> Permette di creare una configurazione di OldTicketMessages nella tabella old_ticket_messages
+// update -> Permette di aggiornare una configurazione di OldTicketMessages nella tabella old_ticket_messages
 
 
 module.exports = {
@@ -332,5 +348,9 @@ module.exports = {
   findAllTicketMessages,
   findByMessageIdTicketMessages,
   createTicketMessages,
-  updateTicketMessages
+  updateTicketMessages,
+  findByGuildAndAuthorIdTicketMessages,
+  removeTicketMessages,
+  removeTicket,
+  findByMessageAndChannelAndGuildIdTicketMessages
 }

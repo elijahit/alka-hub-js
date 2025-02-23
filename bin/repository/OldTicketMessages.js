@@ -37,13 +37,36 @@ async function findByMessageId(messageId, variables) {
 
 /**
  * @param {string} messageId 
- * @param {string} guildId 
+ * @param {string} guildId
+ * @param {string} channelId
  * @param {object} variables
  * @returns {Promise<Model>}
  */
-async function create(messageId, guildId, variables) {
-  if(await OldTicketMessages.findOne({where: {message_id: messageId, guild_id: guildId, config_id: variables.getConfigId()}})) return null;
-  return await OldTicketMessages.create({message_id: messageId , guild_id: guildId, config_id: variables.getConfigId()});
+async function findByMessageAndChannelAndGuildId(messageId, guildId, channelId, variables) {
+  return await OldTicketMessages.findOne({where: {message_id: messageId, channel_id: channelId, guild_id: guildId, config_id: variables.getConfigId()}});
+}
+
+/**
+ * @param {string} guildId 
+ * @param {object} authorId
+ * @param {object} variables
+ * @returns {Promise<Model>}
+ */
+async function findByGuildAndAuthorId(guildId, authorId, variables) {
+  return await OldTicketMessages.findOne({where: {guild_id: guildId, initAuthorId: authorId,  config_id: variables.getConfigId()}});
+}
+
+/**
+ * @param {string} guildId
+ * @param {string} initAuthorId
+ * @param {string} initTitle
+ * @param {string} initChannel
+ * @param {object} variables
+ * @returns {Promise<Model>}
+ */
+async function create(guildId, initAuthorId, initTitle, initChannel, variables) {
+  if(await OldTicketMessages.findOne({where: {guild_id: guildId, initAuthorId: initAuthorId, initTitle: initTitle, initChannel: initChannel, config_id: variables.getConfigId()}})) return null;
+  return await OldTicketMessages.create({guild_id: guildId, initAuthorId: initAuthorId, initTitle: initTitle, initChannel: initChannel, config_id: variables.getConfigId()});
 }
 
 /**
@@ -63,7 +86,7 @@ async function update(objToUpdate, objToCondition) {
  * @returns {Promise<number>}
  */
 async function remove(id, variables) {
-  return await OldTicketMessages.destroy({where: {message_id: id, config_id: variables.getConfigId()}});
+  return await OldTicketMessages.destroy({where: {id: id, config_id: variables.getConfigId()}});
 }
 
 
@@ -73,5 +96,7 @@ module.exports = {
   create,
   update,
   findAllByGuildId,
+  findByGuildAndAuthorId,
+  findByMessageAndChannelAndGuildId,
   remove
 }
