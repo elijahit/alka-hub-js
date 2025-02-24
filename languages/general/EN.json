@@ -55,5 +55,22 @@
     "giveaway_commands": "- **/giveaway** *[giveaway]* - The command starts a giveaway in the channel where the command is typed.\n- **/giveawayparticipants** *[giveaway]* - The command shows the current list of participants in the giveaway using its ID.\n- **/giveawayend** *[giveaway]* - The command immediately ends the giveaway without waiting for the expiration date, selecting a winner.",
     "welcome_category": "Welcome Message",
     "welcome_commands": "- **/welcome** *[welcome]* - The command configures the Welcome Message."
-  }  
+  },
+  
+  "whoisCommand": {
+    "embed_title": "Whois System | General",
+    "general_info": "General Information",
+    "user_name": "Username",
+    "user_status": "User Status",
+    "user_created": "Created on",
+    "user_joined": "Joined on",
+    "others_info": "Other Information",
+    "last_boost": "Last Boost",
+    "verified_storyline": "Verified Storyline",
+    "unverified_storyline": "Storyline Not Verified by other servers",
+    "verified_report": "verified reports",
+    "and_others": "and others",
+    "unverified_report": "unverified reports",
+    "no_report": "No reports"
+  }
 }
