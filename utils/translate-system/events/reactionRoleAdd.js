@@ -19,7 +19,7 @@ const color = require('../../../bin/data/colors');
 module.exports = {
   name: Events.MessageReactionAdd,
   async execute(messageReaction, user, burst, variables) {
-    if (!user.bot || !messageReaction.message.guild || !messageReaction.message.user.bot) {
+    if (user?.bot || !messageReaction?.message?.guild || messageReaction?.message?.author?.bot) return;
       const message = messageReaction.message;
       const emoji = messageReaction.emoji;
       const guild = message.guild;
