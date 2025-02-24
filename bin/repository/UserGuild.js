@@ -27,7 +27,7 @@ async function addUser(userId, guildId, username, variables) {
       await User.create(userId, username);
     }
     if (!guild) {
-      await Guild.create(guildId, null, null, variables);
+      await Guild.create(guildId, "EN", "Europe/London", variables);
     }
 
     const userGuild = await UserGuild.findOne({where: {user_id: userId, guild_id: guildId}});
