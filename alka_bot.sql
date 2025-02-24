@@ -560,6 +560,23 @@ CREATE TABLE `welcome` (
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+--
+-- Dump dei dati per la tabella `user_reports`
+--
+
+CREATE TABLE `user_reports` (
+ `id` int NOT NULL AUTO_INCREMENT,
+ `user_id` varchar(19) NOT NULL,
+ `guild_id` varchar(19) NOT NULL,
+ `reports` int NOT NULL COMMENT '0: ban, 1: warn',
+ `reason` varchar(128) NOT NULL,
+ `isVerified` int NOT NULL,
+ `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 --
 -- Indici per le tabelle scaricate
 --
