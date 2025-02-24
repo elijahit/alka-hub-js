@@ -1,10 +1,11 @@
--- Date: 2025-01-06 10:23:00
--- Modello di database: mysql
--- Versione del server: 5.7.33
--- Versione PHP: 7.4.3
--- Author: Gabriele Mario Tosto <g.tosto@flazio.com>
--- Database: `alka_bot`
--- --------------------------------------------------------
+-- phpMyAdmin SQL Dump
+-- version 4.9.5deb2
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:3306
+-- Creato il: Feb 24, 2025 alle 14:10
+-- Versione del server: 8.0.41-0ubuntu0.20.04.1
+-- Versione PHP: 7.4.3-4ubuntu2.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -102,9 +103,10 @@ CREATE TABLE `commands` (
 CREATE TABLE `configs` (
   `id` int NOT NULL,
   `name` text NOT NULL,
-  `owner_discord_id` text NOT NULL,
+  `main_discord_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `json` text NOT NULL,
   `isActive` int NOT NULL DEFAULT '1',
+  `server_max` int NOT NULL DEFAULT '1',
   `premium` int NOT NULL DEFAULT '0',
   `command_deploy` tinyint NOT NULL DEFAULT '0',
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -288,6 +290,47 @@ CREATE TABLE `logs_system` (
   `message_state_channel` varchar(19) DEFAULT NULL,
   `join_member_channel` varchar(19) DEFAULT NULL,
   `exit_member_channel` varchar(19) DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `old_ticket_messages`
+--
+
+CREATE TABLE `old_ticket_messages` (
+  `id` int NOT NULL,
+  `config_id` int NOT NULL,
+  `guild_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `channel_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `message_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `category_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `transcript_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `initAuthorId` text,
+  `initDescription` text,
+  `initTitle` text,
+  `initChannel` text,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `old_ticket_tickets`
+--
+
+CREATE TABLE `old_ticket_tickets` (
+  `id` int NOT NULL,
+  `config_id` int NOT NULL,
+  `guild_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `author_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `channel_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `message_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `ticketPrefix` text,
+  `ticketSystemMessage_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -517,47 +560,6 @@ CREATE TABLE `welcome` (
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- --------------------------------------------------------
---
--- Struttura della tabella `old_ticket_messages`
---
-
-CREATE TABLE `old_ticket_messages` (
- `id` int NOT NULL AUTO_INCREMENT,
- `config_id` int NOT NULL,
- `guild_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
- `channel_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
- `message_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
- `category_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
- `transcript_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
- `initAuthorId` text,
- `initDescription` text,
- `initTitle` text,
- `initChannel` text,
- `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
- `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
---
--- Struttura della tabella `old_ticket_tickets`
---
-
-	CREATE TABLE `old_ticket_tickets` (
- `id` int NOT NULL AUTO_INCREMENT,
- `config_id` int NOT NULL,
- `guild_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
- `author_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
- `channel_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
- `message_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
- `ticketPrefix` text,
- `ticketSystemMessage_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
- `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
- `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 --
 -- Indici per le tabelle scaricate
 --
@@ -647,6 +649,18 @@ ALTER TABLE `logs_system`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indici per le tabelle `old_ticket_messages`
+--
+ALTER TABLE `old_ticket_messages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indici per le tabelle `old_ticket_tickets`
+--
+ALTER TABLE `old_ticket_tickets`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indici per le tabelle `permissions`
 --
 ALTER TABLE `permissions`
@@ -686,13 +700,15 @@ ALTER TABLE `translates`
 -- Indici per le tabelle `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_id` (`user_id`,`name`);
 
 --
 -- Indici per le tabelle `users_guilds`
 --
 ALTER TABLE `users_guilds`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_id` (`user_id`,`guild_id`);
 
 --
 -- Indici per le tabelle `welcome`
@@ -786,6 +802,18 @@ ALTER TABLE `logs`
 -- AUTO_INCREMENT per la tabella `logs_system`
 --
 ALTER TABLE `logs_system`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT per la tabella `old_ticket_messages`
+--
+ALTER TABLE `old_ticket_messages`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT per la tabella `old_ticket_tickets`
+--
+ALTER TABLE `old_ticket_tickets`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
