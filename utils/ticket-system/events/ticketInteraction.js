@@ -195,7 +195,7 @@ module.exports = {
           if (!await checkFeatureSystemDisabled(2)) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
           if (!await checkFeaturesIsEnabled(interaction.message.guild.id, 2, variables)) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
 
-          await interaction.deferReply({ flags: 64 });
+          await interaction.deferReply({ ephemeral: true });
           const category = await interaction.guild.channels.fetch(checkChannelForInteraction.categoryId);
 
           // CONTROLLO SE IL TICKET E' GIA' APERTO 
@@ -480,7 +480,8 @@ module.exports = {
               }
 
               await removeTicket(checkSql.id, variables);
-
+              
+              await interaction.deferReply();
               await interaction.channel.delete();
 
               try {
@@ -501,7 +502,6 @@ module.exports = {
                 // passa avanti
               }
               unlinkSync(`./utils/ticket-system/temporary_transcript//${checkSql.id}.txt`);
-              await interaction.deferReply();
             }
           }
           else {
