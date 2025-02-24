@@ -13,7 +13,7 @@ const { User } = require('./User');
 
 const UserGuild = database.define('users_guilds', {
   user_id: { type: Sequelize.STRING },
-  guild_id: { type: Sequelize.INTEGER }
+  guild_id: { type: Sequelize.STRING }
 
 }, {tableName: 'users_guilds'});
 

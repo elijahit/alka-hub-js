@@ -11,7 +11,8 @@ const { Sequelize } = require('sequelize');
 
 const User = database.define('users', {
   user_id: { type: Sequelize.STRING },
-  name: { type: Sequelize.STRING }
+  name: { type: Sequelize.STRING },
+  state: { type: Sequelize.INTEGER },
 
 }, {tableName: 'users'});
 
