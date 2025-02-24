@@ -15,8 +15,8 @@ module.exports = {
     try {
 
       if (interaction.customId == 'ticketModal') {
-        let data = await language.databaseCheck(interaction.guild.id);
-        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        let data = await language.databaseCheck(interaction.guild.id, variables);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
         
         let description = interaction.fields.getTextInputValue('ticketModalDescription');
@@ -69,8 +69,8 @@ module.exports = {
       }
 
       if (interaction.customId == "ticketChannelSelect") {
-        let data = await language.databaseCheck(interaction.guild.id);
-        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        let data = await language.databaseCheck(interaction.guild.id, variables);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
         
         let channel = interaction.values[0];
@@ -110,8 +110,8 @@ module.exports = {
       }
 
       if (interaction.customId == "ticketCategorySelect") {
-        let data = await language.databaseCheck(interaction.guild.id);
-        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        let data = await language.databaseCheck(interaction.guild.id, variables);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         let channel = interaction.values[0];
@@ -151,8 +151,8 @@ module.exports = {
       }
 
       if (interaction.customId == "ticketTranscriptSelect") {
-        let data = await language.databaseCheck(interaction.guild.id);
-        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        let data = await language.databaseCheck(interaction.guild.id, variables);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         await interaction.deferReply();
@@ -184,8 +184,8 @@ module.exports = {
 
       // INTERACTION TICKET SYSTEM START 
       if(interaction.type == 3) {
-        let data = await language.databaseCheck(interaction.guild.id);
-        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        let data = await language.databaseCheck(interaction.guild.id, variables);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         let checkChannelForInteraction = await findByMessageAndChannelAndGuildIdTicket(interaction.message?.id, interaction.guild?.id, interaction.message?.channelId, variables);
@@ -266,8 +266,8 @@ module.exports = {
       // INTERACTION TICKET SYSTEM END
       // TICKET CLAIM
       if (interaction.customId == "ticketClaim") {
-        let data = await language.databaseCheck(interaction.guild.id);
-        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        let data = await language.databaseCheck(interaction.guild.id, variables);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         if (!await checkFeatureSystemDisabled(2)) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
@@ -341,8 +341,8 @@ module.exports = {
 
       // TICKET CANCEL
       if (interaction.customId == "ticketCancel") {
-        let data = await language.databaseCheck(interaction.guild.id);
-        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        let data = await language.databaseCheck(interaction.guild.id, variables);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         if (!await checkFeatureSystemDisabled(2)) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
@@ -380,8 +380,8 @@ module.exports = {
 
       // TICKET CLOSE
       if (interaction.customId == "ticketClose") {
-        let data = await language.databaseCheck(interaction.guild.id);
-        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        let data = await language.databaseCheck(interaction.guild.id, variables);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         if (!await checkFeatureSystemDisabled(2)) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
@@ -419,8 +419,8 @@ module.exports = {
 
       // TICKET CLOSE MODAL
       if (interaction.customId == "ticketCloseModal") {
-        let data = await language.databaseCheck(interaction.guild.id);
-        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`, variables);
+        let data = await language.databaseCheck(interaction.guild.id, variables);
+        const langagues_path = readFileSync(`./languages/ticket-system/${data}.json`);
         const language_result = JSON.parse(langagues_path);
 
         if (!await checkFeatureSystemDisabled(2)) return await noEnabledFunc(interaction, language_result.noPermission.description_embed_no_features);
