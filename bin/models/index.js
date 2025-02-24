@@ -32,6 +32,8 @@ const { Commands } = require('./Commands');
 const { Translate } = require('./Translate');
 const { OldTickets } = require('./OldTickets');
 const { OldTicketsMessage } = require('./OldTicketsMessage');
+const { UserReports } = require('./UserReports');
+
 
 
 
@@ -95,5 +97,6 @@ module.exports = {
   Commands,
   Translate,
   OldTickets,
-  OldTicketsMessage
+  OldTicketsMessage,
+  UserReports
 }

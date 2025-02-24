@@ -249,6 +249,14 @@ const {
 // update -> Permette di aggiornare una configurazione di OldTicketMessages nella tabella old_ticket_messages
 
 
+const { 
+  findByUserId: findUserReportsById,
+  create: createUserReports,
+  update: updateUserReports,
+  findAll: findAllUserReports
+ } = require('../repository/UserReports');
+// findUserById -> Permette di cercare un utente tramite discordId
+
 module.exports = {
   findAllWelcome,
   findByGuildIdAndChannelIdWelcome,
@@ -358,5 +366,9 @@ module.exports = {
   findByMessageAndChannelAndGuildIdTicketMessages,
   findTicketOpened,
   findByMessageAndChannelAndGuildIdTicket,
-  findByMessageAndGuildIdTicketMessages
+  findByMessageAndGuildIdTicketMessages,
+  findUserReportsById,
+  createUserReports,
+  updateUserReports,
+  findAllUserReports
 }

@@ -14,15 +14,18 @@ const { errorSendControls, getEmojifromUrl } = require('../../../bin/HandlingFun
 const colors = require('../../../bin/data/colors');
 const emoji = require('../../../bin/data/emoji');
 const checkFeaturesIsEnabled = require('../../../bin/functions/checkFeaturesIsEnabled');
-const { findLogsByGuildId } = require('../../../bin/service/DatabaseService');
+const { findLogsByGuildId, createUserReports } = require('../../../bin/service/DatabaseService');
 const { checkFeatureSystemDisabled } = require('../../../bin/functions/checkFeatureSystemDisabled');
 const { checkPremiumFeature } = require('../../../bin/functions/checkPremiumFeature');
-const Variables = require('../../../bin/classes/GlobalVariables');
 
 module.exports = {
   name: Events.GuildBanAdd,
   async execute(ban, variables) {
-    let customEmoji = emoji.logsSystem.banMarker;
+    if(ban.user.bot) return;
+    
+    // CREAZIONE DELLA SEGNALAZIONE
+    await createUserReports(ban.user.id, ban.guild.id, 0, ban.reason ?? "No reason provided", 0);
+
     // CONTROLLO SE LA FUNZIONE E' ABILITATA
     if (!await checkFeatureSystemDisabled(1)) return;
     if (!await checkFeaturesIsEnabled(ban.guild.id, 1, variables)) return;

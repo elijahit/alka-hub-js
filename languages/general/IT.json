@@ -55,6 +55,23 @@
     "giveaway_commands": "- **/giveawy** *[giveaway]* - Il comando permettere di avviare un giveaway sul canale in cui viene digitato il comando.\n- **/giveawayparticipants** *[giveaway]* - Il comando permette di vedere la lista dei partecipanti attuali al giveaway tramite l'id del giveaway.\n- **/giveawayend** *[giveaway]* - Il comando permette di concludere immediatamente il giveaway senza attendere la data di scadenza, sorteggiando un vincitore.",
     "welcome_category": "Welcome Message",
     "welcome_commands": "- **/welcome** *[welcome]* - Il comando permette di configurare il Welcome Message."
+  },
+  
+  "whoisCommand": {
+    "embed_title": "Whois System | General",
+    "general_info": "Informazioni Generali",
+    "user_name": "Nome Utente",
+    "user_status": "Stato Utente",
+    "user_created": "Creato il",
+    "user_joined": "Entrato il",
+    "others_info": "Altre Informazioni",
+    "last_boost": "Ultimo Boost",
+    "verified_storyline": "Storyline Verificata",
+    "unverified_storyline": "Storyline Non Verificata da altri server",
+    "verified_report": "report verificati",
+    "and_others": "e altri",
+    "unverified_report": "report non verificati",
+    "no_report": "Nessun report"
   }
   
 }
